@@ -1,0 +1,61 @@
+.bm-menu {
+    background: rgb(59,59,59);
+    padding: 0.5em 0.5em 0;
+    font-size: 1.15em;
+}
+
+.ql-editor p, .ql-editor ol, .ql-editor ul, .ql-editor pre, .ql-editor blockquote, .ql-editor h1, .ql-editor h2, .ql-editor h3, .ql-editor h4, .ql-editor h5, .ql-editor h6 {
+    color: #ffffff;
+
+}
+.react-layout-components--box {
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+}
+.userlist *,
+.userdetails{
+    color: #fff;
+    font: 12px Arial, sans-serif;
+}
+.userlist{
+    margin: 0;
+    padding: 0;
+}
+template{
+  display:none;
+}
+.userlist li{
+    padding: 10px;
+    border-bottom: 1px solid #555;
+    cursor: pointer;
+    list-style-type: none;
+}
+
+.userlist li:hover{
+    background: #666;
+}
+
+.userlist li.selected{
+    background: orange;
+    font-weight: bold;
+}
+.userdetails *{
+  color: #fff;
+}
+
+.userdetails{
+    padding: 10px;
+    overflow: hidden;
+}
+
+.userdetails img{
+    float: left;
+    margin-right: 10px;
+}
+
+.userdetails h2{
+    margin-top: 0;
+}
