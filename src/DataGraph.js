@@ -99,7 +99,7 @@ class DataGraph extends Component
   selectData = (event) =>
   {
     
-    let url = "/gateway/sandbox/gateway/sandbox/pvgdpr_server/home/graph";
+    let url = "/gateway/sandbox/pvgdpr_server/home/graph";
     if (this.h_request !== null)
     {
       clearTimeout(this.h_request);
@@ -113,7 +113,7 @@ class DataGraph extends Component
       let CancelToken = axios.CancelToken;
       self.req = CancelToken.source();
       
-      axios.post(url, event.id, {
+      axios.post(url, {graphId : event.id}, {
         headers: {
           'Content-Type': 'application/json'
           , 'Accept': 'application/json'
