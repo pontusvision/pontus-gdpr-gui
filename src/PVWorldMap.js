@@ -70,7 +70,7 @@ class PVWorldMap extends React.Component
       let CancelToken = axios.CancelToken;
       self.req = CancelToken.source();
       axios.post(url,
-        searchStr
+        {searchStr: searchStr}
         // {
         //   searchStr: searchStr
         // }
