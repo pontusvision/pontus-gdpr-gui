@@ -1,6 +1,5 @@
 import React from 'react';
-import {Flex, Box} from 'reflexbox';
-
+import {Box} from 'reflexbox';
 import ResizeAware from 'react-resize-aware';
 
 // import GoldenLayout from 'golden-layout';
