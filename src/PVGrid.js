@@ -31,6 +31,8 @@ class RemoteModel extends React.Component
     this.sortdir = 1;
     this.h_request = null;
     this.req = null; // ajax request
+    this.url = props.url || "/gateway/sandbox/pvgdpr_server/home/records";
+    this.namespace = "";
     
     // events
     // this.onDataLoading = new Event();
@@ -95,12 +97,12 @@ class RemoteModel extends React.Component
     {
       // TODO:  look-ahead
       
-      this.props.glEventHub.emit('pvgrid-on-data-loaded', {from: from, to: to});
+      this.props.glEventHub.emit(this.namespace + 'pvgrid-on-data-loaded', {from: from, to: to});
       //  this.onDataLoaded.notify({from: from, to: to});
       return;
     }
  
-    let url = "/gateway/sandbox/pvgdpr_server/home/records";
+    let url = this.url;
     if (this.h_request !== null)
     {
       clearTimeout(this.h_request);
@@ -184,7 +186,7 @@ class RemoteModel extends React.Component
     }
     
     this.req = null;
-    this.props.glEventHub.emit('pvgrid-on-data-loaded', {from: from, to: to});
+    this.props.glEventHub.emit(this.namespace +'pvgrid-on-data-loaded', {from: from, to: to});
     
     // this.onDataLoaded.notify({from: from, to: to});
   };
@@ -236,6 +238,7 @@ class PVGrid extends React.Component
 {
   constructor(props)
   {
+    
     super(props);
     // this.columns = [
     //   {key: 'name', name: 'Name'},
@@ -262,13 +265,20 @@ class PVGrid extends React.Component
     }
     
     
+    // if (!this.props.url){
+    //   let err = "Must set the url property control where this component sends its requests";
+    //   throw (err);
+    // }
+    
     // this.props.columnSettings = [
     //   {id: "name", name: "Name", field: "name", sortable: true},
     //
     //   {id: "street", name: "Street", field: "street", sortable: true}
     // ];
-    this.loader = new RemoteModel(props);
+    this.loader = new RemoteModel(this.props);
     this.extraSearch = [];
+    this.setNamespace("");
+    
   }
   
   
@@ -287,6 +297,11 @@ class PVGrid extends React.Component
     this.gridDiv = gridDiv;
   };
   
+  setNamespace = (namespace) =>
+  {
+    this.namespace = namespace;
+  }
+  
   componentDidMount()
   {
     /* you can pass config as prop, or use a predefined one */
@@ -298,19 +313,28 @@ class PVGrid extends React.Component
       
       this.grid.onViewportChanged.subscribe(this.onViewportChanged);
       this.grid.onSort.subscribe(this.onSort);
-      this.props.glEventHub.on('pvgrid-on-data-loaded', this.onDataLoadedCb);
-      this.props.glEventHub.on('pvgrid-on-search-changed', this.setSearch);
-      this.props.glEventHub.on('pvgrid-on-search-exact-changed', this.setSearchExact);
-      this.props.glEventHub.on('pvgrid-on-col-settings-changed', this.setColumnSettings);
-      this.props.glEventHub.on('pvgrid-on-extra-search-changed', this.setExtraSearch);
+      this.props.glEventHub.on(this.namespace +'pvgrid-on-data-loaded', this.onDataLoadedCb);
+      this.props.glEventHub.on(this.namespace +'pvgrid-on-search-changed', this.setSearch);
+      this.props.glEventHub.on(this.namespace +'pvgrid-on-search-exact-changed', this.setSearchExact);
+      this.props.glEventHub.on(this.namespace +'pvgrid-on-col-settings-changed', this.setColumnSettings);
+      this.props.glEventHub.on(this.namespace +'pvgrid-on-extra-search-changed', this.setExtraSearch);
       
       // this.loader.onDataLoaded.subscribe(this.onDataLoadedCb);
+  
+  
+      // if (this.props.colSettings !== null){
+      //   this.setColumnSettings(this.props.colSettings)
+      // }
       this.grid.resizeCanvas();
       
       this.onViewportChanged();
       
+      
+  
     }
-    
+  
+  
+  
   }
   
   onClick = (e, clickInfo) =>
@@ -322,7 +346,7 @@ class PVGrid extends React.Component
     {
       var val = this.grid.getDataItem(clickInfo.row);
       // alert (val);
-      this.props.glEventHub.emit('pvgrid-on-click-row', val);
+      this.props.glEventHub.emit(this.namespace + 'pvgrid-on-click-row', val);
   
     }
   }
@@ -351,10 +375,10 @@ class PVGrid extends React.Component
   
   componentWillUnmount()
   {
-    this.props.glEventHub.off('pvgrid-on-data-loaded', this.onDataLoadedCb);
-    this.props.glEventHub.off('pvgrid-on-search-changed', this.setSearch);
-    this.props.glEventHub.off('pvgrid-on-col-settings-changed', this.setColumnSettings);
-    this.props.glEventHub.off('pvgrid-on-extra-search-changed', this.setExtraSearch);
+    this.props.glEventHub.off(this.namespace +'pvgrid-on-data-loaded', this.onDataLoadedCb);
+    this.props.glEventHub.off(this.namespace +'pvgrid-on-search-changed', this.setSearch);
+    this.props.glEventHub.off(this.namespace +'pvgrid-on-col-settings-changed', this.setColumnSettings);
+    this.props.glEventHub.off(this.namespace +'pvgrid-on-extra-search-changed', this.setExtraSearch);
     
   }
   

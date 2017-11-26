@@ -4,9 +4,9 @@ import ResizeAware from 'react-resize-aware';
 
 import GoldenLayout from 'golden-layout';
 
-import PVGrid from './PVGrid';
-import UserSearch from './UserSearch';
-import DataGraph from './DataGraph';
+import PVGridEmployees from './PVGridEmployees';
+import PVGridAwarenessCampaign from './PVGridAwarenessCampaign';
+
 import PVEmailEditor from './PVEmailEditor';
 
 
@@ -47,11 +47,11 @@ class NavPanelAwareness extends Component
             }, {
               title: 'Employees',
               type: 'react-component',
-              component: 'awareness-campaign-employees'
+              component: 'employees-grid'
             }, {
-              title: 'Employees',
+              title: 'Charts',
               type: 'react-component',
-              component: 'awareness-campaign-employees'
+              component: 'awareness-campaign-employees-pie-charts'
             }
 
           ]
@@ -90,10 +90,9 @@ class NavPanelAwareness extends Component
     
     // instance = new GoldenLayout(config, this.node);
     /* register components or bind events to your new instance here */
-    this.instance.registerComponent('data-grid', PVGrid);
-    this.instance.registerComponent('data-search', UserSearch);
-    this.instance.registerComponent('compliance-email', PVEmailEditor);
-    this.instance.registerComponent('data-graph', DataGraph);
+    this.instance.registerComponent('awareness-campaign-data-grid', PVGridAwarenessCampaign);
+    this.instance.registerComponent('employees-grid', PVGridEmployees);
+    this.instance.registerComponent('awareness-campaign-employees-pie-charts', PVEmailEditor);
     this.instance.init();
     
     this.instance.on('tabCreated', function (tab)

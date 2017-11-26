@@ -81,7 +81,7 @@ class NavPanelChildren extends Component
     /* you can pass config as prop, or use a predefined one */
     
     // var savedState = null;// LPPM: TODO: re-enable this later localStorage.getItem('savedStatePontusPanel');
-    var savedState =  localStorage.getItem('savedStateNavPanelConsent');
+    var savedState =  localStorage.getItem('savedStateNavPanelChildren');
     
     
     if (savedState !== null)
@@ -118,7 +118,7 @@ class NavPanelChildren extends Component
   saveState = () =>
   {
     var state = JSON.stringify(this.instance.toConfig());
-    localStorage.setItem('savedStateNavPanelConsent', state);
+    localStorage.setItem('savedStateNavPanelChildren', state);
     
   };
   

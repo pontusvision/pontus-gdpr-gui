@@ -244,8 +244,8 @@ class App extends React.Component
     
     /* you can pass config as prop, or use a predefined one */
     
-    var
-      savedState = null;// LPPM: TODO: re-enable this later localStorage.getItem('savedState');
+    // var
+    //   savedState = null;// LPPM: TODO: re-enable this later localStorage.getItem('savedState');
     
     // if (savedState !== null)
     // {

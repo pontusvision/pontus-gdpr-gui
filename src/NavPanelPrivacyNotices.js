@@ -81,7 +81,7 @@ class NavPanelPrivacyNotices extends Component
     /* you can pass config as prop, or use a predefined one */
     
     // var savedState = null;// LPPM: TODO: re-enable this later localStorage.getItem('savedStatePontusPanel');
-    var savedState =  localStorage.getItem('savedStateNavPanelInformationYouHold');
+    var savedState =  localStorage.getItem('savedStateNavPanelPrivacyNotices');
     
     
     if (savedState !== null)
@@ -118,7 +118,7 @@ class NavPanelPrivacyNotices extends Component
   saveState = () =>
   {
     var state = JSON.stringify(this.instance.toConfig());
-    localStorage.setItem('savedStateNavPanelInformationYouHold', state);
+    localStorage.setItem('savedStateNavPanelPrivacyNotices', state);
     
   };
   
