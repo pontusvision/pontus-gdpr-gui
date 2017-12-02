@@ -7,8 +7,7 @@ import GoldenLayout from 'golden-layout';
 import PVGridEmployees from './PVGridEmployees';
 import PVGridAwarenessCampaign from './PVGridAwarenessCampaign';
 
-import PVEmailEditor from './PVEmailEditor';
-
+import PVDoughnutChart from './PVDoughnutChart';
 
 class NavPanelAwareness extends Component
 {
@@ -92,7 +91,7 @@ class NavPanelAwareness extends Component
     /* register components or bind events to your new instance here */
     this.instance.registerComponent('awareness-campaign-data-grid', PVGridAwarenessCampaign);
     this.instance.registerComponent('employees-grid', PVGridEmployees);
-    this.instance.registerComponent('awareness-campaign-employees-pie-charts', PVEmailEditor);
+    this.instance.registerComponent('awareness-campaign-employees-pie-charts', PVDoughnutChart);
     this.instance.init();
     
     this.instance.on('tabCreated', function (tab)
