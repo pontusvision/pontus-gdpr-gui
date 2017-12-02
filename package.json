@@ -6,31 +6,31 @@
   "dependencies": {
     "axios": "^0.16.2",
     "chart.js": "^2.7.1",
-    "d3": "^4.11.0",
+    "d3": "^4.12.0",
     "datamaps": "^0.5.8",
     "draft-js": "^0.10.4",
     "fbemitter": "^2.1.1",
     "golden-layout": "^1.5.9",
-    "i18n-iso-countries": "^3.2.0",
+    "i18n-iso-countries": "^3.2.2",
     "prop-types": "^15.6.0",
     "react": "^15.6.2",
     "react-bootstrap-multiselect": "^2.4.1",
-    "react-burger-menu": "^2.1.9",
+    "react-burger-menu": "^2.1.11",
     "react-chartjs-2": "^2.6.4",
     "react-desktop": "^0.3.3",
     "react-dnr": "^0.4.0",
     "react-dom": "^15.6.2",
     "react-graph-vis": "^0.1.4",
     "react-icons-kit": "^1.0.7",
-    "react-iframe": "^1.0.7",
+    "react-iframe": "^1.1.0",
     "react-layout-components": "^3.0.6",
-    "react-quill": "^1.1.0",
+    "react-quill": "^1.2.2",
     "react-resize-aware": "^2.7.0",
-    "react-scripts": "^1.0.14",
+    "react-scripts": "^1.0.17",
     "react-search-bar": "^2.2.0",
-    "react-select": "^1.0.0-rc.10",
+    "react-select": "^1.1.0",
     "react-sidenav": "^2.1.2",
-    "react-tabs": "^2.1.0",
+    "react-tabs": "^2.1.1",
     "reflexbox": "^3.0.0-0",
     "slickgrid-es6": "^2.1.0"
   },
@@ -42,6 +42,6 @@
   },
   "proxy": "https://localhost:18443/gateway/sandbox/pvgdpr_server",
   "devDependencies": {
-    "less": "^2.7.2"
+    "less": "^2.7.3"
   }
 }
