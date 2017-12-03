@@ -10,19 +10,38 @@ import axios from "axios";
 // import "slickgrid-es6/dist/slick-default-theme.less";
 import {Flex, Box} from 'reflexbox'
 
-// import { options, columns } from './grid-config';
-class RemoteModel extends React.Component
+
+
+class PVGrid extends React.Component
 {
-  /***
-   * A sample AJAX data store implementation.
-   * Right now, it's hooked up to load Hackernews stories, but can
-   * easily be extended to support any JSONP-compatible backend that accepts paging parameters.
-   */
-  // private
-  
   constructor(props)
   {
+    
     super(props);
+    // this.columns = [
+    //   {key: 'name', name: 'Name'},
+    //   {key: 'street', name: 'Street'}
+    // ];
+    
+    this.state = {
+      columnSettings: []
+      , totalRecords: 0
+    }
+    
+    if (!this.props.settings)
+    {
+      this.settings = {
+        multiColumnSort: true,
+        defaultColumnWidth: 125,
+        rowHeight: 26
+      };
+    }
+    else
+    {
+      this.settings = this.props.settings;
+      
+    }
+  
     this.PAGESIZE = 50;
     this.data = {length: 0};
     this.searchstr = "";
@@ -33,12 +52,81 @@ class RemoteModel extends React.Component
     this.req = null; // ajax request
     this.url = props.url || "/gateway/sandbox/pvgdpr_server/home/records";
     this.namespace = "";
+  
+    // if (!this.props.url){
+    //   let err = "Must set the url property control where this component sends its requests";
+    //   throw (err);
+    // }
     
-    // events
-    // this.onDataLoading = new Event();
-    // this.onDataLoaded = new Event();
+    // this.props.columnSettings = [
+    //   {id: "name", name: "Name", field: "name", sortable: true},
+    //
+    //   {id: "street", name: "Street", field: "street", sortable: true}
+    // ];
+    // this.loader = new RemoteModel(this.props);
+    this.extraSearch = [];
+    this.setNamespace("");
     
   }
+  
+  
+  handleResize = () =>
+  {
+    if (this.grid)
+    {
+      this.grid.resizeCanvas();
+      this.onViewportChanged();
+      
+    }
+  };
+  
+  setGridDiv = (gridDiv) =>
+  {
+    this.gridDiv = gridDiv;
+  };
+  
+  setNamespace = (namespace) =>
+  {
+    this.namespace = namespace;
+  }
+  
+  componentDidMount()
+  {
+    /* you can pass config as prop, or use a predefined one */
+    if (this.gridDiv && this.state)
+    {
+      this.grid = new Grid(this.gridDiv, this.data, this.state.columnSettings, this.settings);
+      
+      this.grid.onClick.subscribe(this.onClick); //({ row: number, cell: number })
+      
+      this.grid.onViewportChanged.subscribe(this.onViewportChanged);
+      this.grid.onSort.subscribe(this.onSort);
+      this.props.glEventHub.on(this.namespace +'pvgrid-on-data-loaded', this.onDataLoadedCb);
+      this.props.glEventHub.on(this.namespace +'pvgrid-on-search-changed', this.setSearch);
+      this.props.glEventHub.on(this.namespace +'pvgrid-on-search-exact-changed', this.setSearchExact);
+      this.props.glEventHub.on(this.namespace +'pvgrid-on-col-settings-changed', this.setColumnSettings);
+      this.props.glEventHub.on(this.namespace +'pvgrid-on-extra-search-changed', this.setExtraSearch);
+      
+      // this.loader.onDataLoaded.subscribe(this.onDataLoadedCb);
+  
+  
+      // if (this.props.colSettings !== null){
+      //   this.setColumnSettings(this.props.colSettings)
+      // }
+      this.grid.resizeCanvas();
+      
+      this.onViewportChanged();
+      
+      
+  
+    }
+  
+  
+  
+  }
+  
+  
+  
   
   
   isDataLoaded = (from, to) =>
@@ -101,7 +189,7 @@ class RemoteModel extends React.Component
       //  this.onDataLoaded.notify({from: from, to: to});
       return;
     }
- 
+    
     let url = this.url;
     if (this.h_request !== null)
     {
@@ -153,8 +241,8 @@ class RemoteModel extends React.Component
           this.onError(thrown, fromPage, toPage);
         }
       });
-
-
+      
+      
       this.req.fromPage = fromPage;
       this.req.toPage = toPage;
     }, 50);
@@ -232,110 +320,6 @@ class RemoteModel extends React.Component
     
   }
   
-}
-
-class PVGrid extends React.Component
-{
-  constructor(props)
-  {
-    
-    super(props);
-    // this.columns = [
-    //   {key: 'name', name: 'Name'},
-    //   {key: 'street', name: 'Street'}
-    // ];
-    
-    this.state = {
-      columnSettings: []
-      , totalRecords: 0
-    }
-    
-    if (!this.props.settings)
-    {
-      this.settings = {
-        multiColumnSort: true,
-        defaultColumnWidth: 125,
-        rowHeight: 26
-      };
-    }
-    else
-    {
-      this.settings = this.props.settings;
-      
-    }
-    
-    
-    // if (!this.props.url){
-    //   let err = "Must set the url property control where this component sends its requests";
-    //   throw (err);
-    // }
-    
-    // this.props.columnSettings = [
-    //   {id: "name", name: "Name", field: "name", sortable: true},
-    //
-    //   {id: "street", name: "Street", field: "street", sortable: true}
-    // ];
-    this.loader = new RemoteModel(this.props);
-    this.extraSearch = [];
-    this.setNamespace("");
-    
-  }
-  
-  
-  handleResize = () =>
-  {
-    if (this.grid)
-    {
-      this.grid.resizeCanvas();
-      this.onViewportChanged();
-      
-    }
-  };
-  
-  setGridDiv = (gridDiv) =>
-  {
-    this.gridDiv = gridDiv;
-  };
-  
-  setNamespace = (namespace) =>
-  {
-    this.namespace = namespace;
-  }
-  
-  componentDidMount()
-  {
-    /* you can pass config as prop, or use a predefined one */
-    if (this.gridDiv && this.state)
-    {
-      this.grid = new Grid(this.gridDiv, this.loader.data, this.state.columnSettings, this.settings);
-      
-      this.grid.onClick.subscribe(this.onClick); //({ row: number, cell: number })
-      
-      this.grid.onViewportChanged.subscribe(this.onViewportChanged);
-      this.grid.onSort.subscribe(this.onSort);
-      this.props.glEventHub.on(this.namespace +'pvgrid-on-data-loaded', this.onDataLoadedCb);
-      this.props.glEventHub.on(this.namespace +'pvgrid-on-search-changed', this.setSearch);
-      this.props.glEventHub.on(this.namespace +'pvgrid-on-search-exact-changed', this.setSearchExact);
-      this.props.glEventHub.on(this.namespace +'pvgrid-on-col-settings-changed', this.setColumnSettings);
-      this.props.glEventHub.on(this.namespace +'pvgrid-on-extra-search-changed', this.setExtraSearch);
-      
-      // this.loader.onDataLoaded.subscribe(this.onDataLoadedCb);
-  
-  
-      // if (this.props.colSettings !== null){
-      //   this.setColumnSettings(this.props.colSettings)
-      // }
-      this.grid.resizeCanvas();
-      
-      this.onViewportChanged();
-      
-      
-  
-    }
-  
-  
-  
-  }
   
   onClick = (e, clickInfo) =>
   {
@@ -355,23 +339,11 @@ class PVGrid extends React.Component
   {
     
     this.grid.setColumns(colSettings);
-    this.loader.setColumns(colSettings);
+    this.setColumns(colSettings);
   }
   
-  setSearch = (search) =>
-  {
-    this.loader.setSearch(search);
-    
-  }
-  setSearchExact = (search) =>
-  {
-    this.loader.setSearchExact(search);
-    
-  }
-  setExtraSearch = (extraSearch) =>
-  {
-    this.loader.setExtraSearch(extraSearch);
-  }
+  
+  
   
   componentWillUnmount()
   {
@@ -386,14 +358,14 @@ class PVGrid extends React.Component
   onViewportChanged = (/*e, args*/) =>
   {
     let vp = this.grid.getViewport();
-    this.loader.ensureData(vp.top, vp.bottom);
+    this.ensureData(vp.top, vp.bottom);
     
   };
   onSort = (e, args) =>
   {
-    this.loader.setSort(args.sortCols[0].sortCol, args.sortCols[0].sortAsc ? 1 : -1);
+    this.setSort(args.sortCols[0].sortCol, args.sortCols[0].sortAsc ? 1 : -1);
     let vp = this.grid.getViewport();
-    this.loader.ensureData(vp.top, vp.bottom);
+    this.ensureData(vp.top, vp.bottom);
   };
   onDataLoadedCb = (args) =>
   {
