@@ -52,13 +52,13 @@ class PVDoughnutChart extends React.Component
   componentDidMount()
   {
     // super.componentDidMount();
-    this.props.glEventHub.on('PVGridAwarenessCampaign-pvgrid-on-click-row', this.onClickedPVGridAwarenessCampaign);
+    // this.props.glEventHub.on('PVGridAwarenessCampaign-pvgrid-on-click-row', this.onClickedPVGridAwarenessCampaign);
     
     
   }
   componentWillUnmount()
   {
-    this.props.glEventHub.off('PVGridAwarenessCampaign-pvgrid-on-click-row', this.onClickedPVGridAwarenessCampaign);
+    // this.props.glEventHub.off('PVGridAwarenessCampaign-pvgrid-on-click-row', this.onClickedPVGridAwarenessCampaign);
     
     // super.componentWillUnmount();
   }
@@ -271,7 +271,31 @@ class PVDoughnutChart extends React.Component
   
   render()
   {
-   
+  
+    var data = {
+      labels: ['Children (no consent)', 'Children (consent pending)','Children (consent)', 'Adults (consent pending)', 'Adults (no consent)','Adults (consent)'],
+      datasets: [{
+        data: [37, 44, 1000, 200, 50, 1500],
+        backgroundColor: [
+          '#FF0000',
+          '#FF8800',
+          '#00FF00',
+          '#FF0077',
+          '#FF8877',
+          '#00FF77'
+
+
+        ],
+        hoverBackgroundColor: [
+          '#FF0000',
+          '#FF8800',
+          '#00FF00',
+          '#FF0077',
+          '#FF8877',
+          '#00FF77'
+        ]
+      }]
+    };
     
     return (
       
@@ -279,7 +303,7 @@ class PVDoughnutChart extends React.Component
         style={{flex: 1}}
         /* , maxHeight: this.state.maxHeight, width: this.state.width, height: this.state.height}}*/
         ref={this.setObj}
-        data={this.state.data}
+        data={data}
         redraw={true}
       
       />

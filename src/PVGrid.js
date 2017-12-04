@@ -11,7 +11,6 @@ import axios from "axios";
 import {Flex, Box} from 'reflexbox'
 
 
-
 class PVGrid extends React.Component
 {
   constructor(props)
@@ -41,7 +40,7 @@ class PVGrid extends React.Component
       this.settings = this.props.settings;
       
     }
-  
+    
     this.PAGESIZE = 50;
     this.data = {length: 0};
     this.searchstr = "";
@@ -52,7 +51,7 @@ class PVGrid extends React.Component
     this.req = null; // ajax request
     this.url = props.url || "/gateway/sandbox/pvgdpr_server/home/records";
     this.namespace = "";
-  
+    
     // if (!this.props.url){
     //   let err = "Must set the url property control where this component sends its requests";
     //   throw (err);
@@ -101,15 +100,15 @@ class PVGrid extends React.Component
       
       this.grid.onViewportChanged.subscribe(this.onViewportChanged);
       this.grid.onSort.subscribe(this.onSort);
-      this.props.glEventHub.on(this.namespace +'pvgrid-on-data-loaded', this.onDataLoadedCb);
-      this.props.glEventHub.on(this.namespace +'pvgrid-on-search-changed', this.setSearch);
-      this.props.glEventHub.on(this.namespace +'pvgrid-on-search-exact-changed', this.setSearchExact);
-      this.props.glEventHub.on(this.namespace +'pvgrid-on-col-settings-changed', this.setColumnSettings);
-      this.props.glEventHub.on(this.namespace +'pvgrid-on-extra-search-changed', this.setExtraSearch);
+      // this.props.glEventHub.on(this.namespace + 'pvgrid-on-data-loaded', this.onDataLoadedCb);
+      this.props.glEventHub.on(this.namespace + 'pvgrid-on-search-changed', this.setSearch);
+      this.props.glEventHub.on(this.namespace + 'pvgrid-on-search-exact-changed', this.setSearchExact);
+      this.props.glEventHub.on(this.namespace + 'pvgrid-on-col-settings-changed', this.setColumnSettings);
+      this.props.glEventHub.on(this.namespace + 'pvgrid-on-extra-search-changed', this.setExtraSearch);
       
       // this.loader.onDataLoaded.subscribe(this.onDataLoadedCb);
-  
-  
+      
+      
       // if (this.props.colSettings !== null){
       //   this.setColumnSettings(this.props.colSettings)
       // }
@@ -118,15 +117,10 @@ class PVGrid extends React.Component
       this.onViewportChanged();
       
       
-  
     }
-  
-  
-  
+    
+    
   }
-  
-  
-  
   
   
   isDataLoaded = (from, to) =>
@@ -152,6 +146,19 @@ class PVGrid extends React.Component
     this.data.length = 0;
   };
   
+  getSearchObj = (from, to, searchstr, searchExact, cols, extraSearch, sortcol, sortdir) =>
+  {
+    return {
+      
+      search: {
+        searchStr: searchstr, searchExact: searchExact, cols: cols, extraSearch: extraSearch
+      },
+      from: from,
+      to: to,
+      sortBy: sortcol,
+      sortDir: ((sortdir > 0) ? "+asc" : "+desc")
+    }
+  }
   
   ensureData = (from, to) =>
   {
@@ -184,8 +191,9 @@ class PVGrid extends React.Component
     if (fromPage > toPage || ((fromPage === toPage) && this.data[fromPage * this.PAGESIZE] !== undefined && this.data[fromPage * this.PAGESIZE] !== null))
     {
       // TODO:  look-ahead
-      
-      this.props.glEventHub.emit(this.namespace + 'pvgrid-on-data-loaded', {from: from, to: to});
+  
+      this.onDataLoadedCb({from: from, to: to});
+      // this.props.glEventHub.emit(this.namespace + 'pvgrid-on-data-loaded', {from: from, to: to});
       //  this.onDataLoaded.notify({from: from, to: to});
       return;
     }
@@ -215,22 +223,16 @@ class PVGrid extends React.Component
       
       
       // http.post(url)
-      axios.post(url, {
-        
-        search: {
-          searchStr: self.searchstr, searchExact: self.searchExact, cols: this.cols, extraSearch: this.extraSearch
-        },
-        from: from,
-        to: to,
-        sortBy: self.sortcol,
-        sortDir: ((self.sortdir > 0) ? "+asc" : "+desc")
-      }, {
+      axios.post(url
+        , self.getSearchObj(from, to, self.searchstr, self.searchExact, self.cols, self.extraSearch,
+            self.sortcol, self.sortdir)
+        , {
         headers: {
           'Content-Type': 'application/json'
           , 'Accept': 'application/json'
         }
         , cancelToken: self.req.token
-      }).then(this.onSuccess).catch((thrown) =>
+      }).then(self.onSuccess).catch((thrown) =>
       {
         if (axios.isCancel(thrown))
         {
@@ -238,13 +240,13 @@ class PVGrid extends React.Component
         }
         else
         {
-          this.onError(thrown, fromPage, toPage);
+          self.onError(thrown, fromPage, toPage);
         }
       });
-      
-      
-      this.req.fromPage = fromPage;
-      this.req.toPage = toPage;
+  
+  
+      self.req.fromPage = fromPage;
+      self.req.toPage = toPage;
     }, 50);
   };
   onError = (err, fromPage, toPage) =>
@@ -274,7 +276,10 @@ class PVGrid extends React.Component
     }
     
     this.req = null;
-    this.props.glEventHub.emit(this.namespace +'pvgrid-on-data-loaded', {from: from, to: to});
+  
+    this.onDataLoadedCb({from: from, to: to});
+  
+    // this.props.glEventHub.emit(this.namespace + 'pvgrid-on-data-loaded', {from: from, to: to});
     
     // this.onDataLoaded.notify({from: from, to: to});
   };
@@ -331,7 +336,7 @@ class PVGrid extends React.Component
       var val = this.grid.getDataItem(clickInfo.row);
       // alert (val);
       this.props.glEventHub.emit(this.namespace + 'pvgrid-on-click-row', val);
-  
+      
     }
   }
   
@@ -343,14 +348,12 @@ class PVGrid extends React.Component
   }
   
   
-  
-  
   componentWillUnmount()
   {
-    this.props.glEventHub.off(this.namespace +'pvgrid-on-data-loaded', this.onDataLoadedCb);
-    this.props.glEventHub.off(this.namespace +'pvgrid-on-search-changed', this.setSearch);
-    this.props.glEventHub.off(this.namespace +'pvgrid-on-col-settings-changed', this.setColumnSettings);
-    this.props.glEventHub.off(this.namespace +'pvgrid-on-extra-search-changed', this.setExtraSearch);
+    // this.props.glEventHub.off(this.namespace + 'pvgrid-on-data-loaded', this.onDataLoadedCb);
+    this.props.glEventHub.off(this.namespace + 'pvgrid-on-search-changed', this.setSearch);
+    this.props.glEventHub.off(this.namespace + 'pvgrid-on-col-settings-changed', this.setColumnSettings);
+    this.props.glEventHub.off(this.namespace + 'pvgrid-on-extra-search-changed', this.setExtraSearch);
     
   }
   

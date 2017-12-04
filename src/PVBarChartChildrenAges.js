@@ -2,11 +2,11 @@ import React from 'react';
 
 
 import axios from "axios";
-import {Doughnut} from 'react-chartjs-2';
+import {Bar} from 'react-chartjs-2';
 // import PVDatamaps from './PVDatamaps';
 
 
-class PVDoughnutChart extends React.Component
+class PVBarChartChildrenAges extends React.Component
 {
   constructor(props)
   {
@@ -52,13 +52,13 @@ class PVDoughnutChart extends React.Component
   componentDidMount()
   {
     // super.componentDidMount();
-    this.props.glEventHub.on('PVGridAwarenessCampaign-pvgrid-on-click-row', this.onClickedPVGridAwarenessCampaign);
+    // this.props.glEventHub.on('PVGridAwarenessCampaign-pvgrid-on-click-row', this.onClickedPVGridAwarenessCampaign);
     
     
   }
   componentWillUnmount()
   {
-    this.props.glEventHub.off('PVGridAwarenessCampaign-pvgrid-on-click-row', this.onClickedPVGridAwarenessCampaign);
+    // this.props.glEventHub.off('PVGridAwarenessCampaign-pvgrid-on-click-row', this.onClickedPVGridAwarenessCampaign);
     
     // super.componentWillUnmount();
   }
@@ -271,15 +271,26 @@ class PVDoughnutChart extends React.Component
   
   render()
   {
-   
-    
+  
+    var data = {
+      labels: ['Children (5-10)', 'Pre-Teens (11-12)', 'Mid Teens (13-15)', 'Late Teens (16-18)'],
+      datasets: [{
+        data: [22, 33, 244, 758],
+        backgroundColor: ['#FF0000',
+          '#FF8800',
+          '#0000FF',
+          '#00FF00'],
+        hoverBackgroundColor: ['#FF0000', '#FF8800','#0000FF', '#00FF00']
+      }]
+    };
+  
     return (
       
-      <Doughnut
+      <Bar
         style={{flex: 1}}
         /* , maxHeight: this.state.maxHeight, width: this.state.width, height: this.state.height}}*/
         ref={this.setObj}
-        data={this.state.data}
+        data={data}
         redraw={true}
       
       />
@@ -292,4 +303,4 @@ class PVDoughnutChart extends React.Component
 }
 
 
-export default PVDoughnutChart;
+export default PVBarChartChildrenAges;

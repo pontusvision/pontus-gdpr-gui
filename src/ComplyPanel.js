@@ -5,9 +5,11 @@ import NavPanelInformationYouHold from "./NavPanelInformationYouHold";
 import NavPanelAwareness from "./NavPanelAwareness";
 import NavPanelPrivacyNotices from "./NavPanelPrivacyNotices";
 import NavPanelSubjectAccessRequest from "./NavPanelSubjectAccessRequest";
+import NavPanelLawfulBasis from "./NavPanelLawfulBasis";
 import NavPanelConsent from "./NavPanelConsent";
 import NavPanelChildren from "./NavPanelChildren";
 import NavPanelDataBreaches from "./NavPanelDataBreaches";
+import NavPanelDataProcedures from "./NavPanelDataProcedures";
 import NavPanelInternational from "./NavPanelInternational";
 
 import Icon from 'react-icons-kit';
@@ -81,9 +83,9 @@ class ComplyPanel extends Component
           {this.renderItem("Awareness", <NavPanelAwareness/>, <Icon icon={book_2}/>)}
           {this.renderItem("Info You Hold", <NavPanelInformationYouHold/>, <Icon icon={info}/>)}
           {this.renderItem("Privacy Notices", <NavPanelPrivacyNotices/>, <Icon icon={eyeBlocked}/>)}
-          {this.renderItem("Data Procedures", <NavPanelPrivacyNotices/>, <Icon icon={iosPricetagsOutline}/>)}
+          {this.renderItem("Data Procedures", <NavPanelDataProcedures/>, <Icon icon={iosPricetagsOutline}/>)}
           {this.renderItem("Subj Access Req", <NavPanelSubjectAccessRequest/>, <Icon icon={download}/>)}
-          {this.renderItem("Lawful Basis", <NavPanelSubjectAccessRequest/>, <Icon icon={balanceScale}/>)}
+          {this.renderItem("Lawful Basis", <NavPanelLawfulBasis/>, <Icon icon={balanceScale}/>)}
           {this.renderItem("Consent", <NavPanelConsent/>, <Icon icon={check}/>)}
           {this.renderItem("Children", <NavPanelChildren/>, <Icon icon={ic_child_care}/>)}
           {this.renderItem("Data Breaches", <NavPanelDataBreaches/>, <Icon icon={unlocked}/>)}

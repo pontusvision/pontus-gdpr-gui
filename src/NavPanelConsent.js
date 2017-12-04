@@ -7,7 +7,7 @@ import GoldenLayout from 'golden-layout';
 import PVGrid from './PVGrid';
 import UserSearch from './UserSearch';
 import DataGraph from './DataGraph';
-import PVEmailEditor from './PVEmailEditor';
+import PVDoughnutChartConsent from './PVDoughnutChartConsent';
 
 
 class NavPanelConsent extends Component
@@ -50,9 +50,9 @@ class NavPanelConsent extends Component
               component: 'data-search'
             }
             ,{
-              title: 'Compliance Emails',
+              title: 'Consent Chart',
               type: 'react-component',
-              component: 'compliance-email'
+              component: 'consent-chart'
             }
             ,{
               title: 'Data Graph',
@@ -97,7 +97,7 @@ class NavPanelConsent extends Component
     /* register components or bind events to your new instance here */
     this.instance.registerComponent('data-grid', PVGrid);
     this.instance.registerComponent('data-search', UserSearch);
-    this.instance.registerComponent('compliance-email', PVEmailEditor);
+    this.instance.registerComponent('consent-chart', PVDoughnutChartConsent);
     this.instance.registerComponent('data-graph', DataGraph);
     this.instance.init();
     

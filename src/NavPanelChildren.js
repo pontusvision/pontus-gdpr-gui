@@ -5,9 +5,9 @@ import ResizeAware from 'react-resize-aware';
 import GoldenLayout from 'golden-layout';
 
 import PVGrid from './PVGrid';
+import PVBarChartChildrenAges from './PVBarChartChildrenAges';
+import PVDoughnutChartChildrenConsent from './PVDoughnutChartChildrenConsent';
 import UserSearch from './UserSearch';
-import DataGraph from './DataGraph';
-import PVEmailEditor from './PVEmailEditor';
 
 
 class NavPanelChildren extends Component
@@ -50,14 +50,14 @@ class NavPanelChildren extends Component
               component: 'data-search'
             }
             ,{
-              title: 'Compliance Emails',
+              title: 'Children Ages',
               type: 'react-component',
-              component: 'compliance-email'
+              component: 'children-ages'
             }
             ,{
-              title: 'Data Graph',
+              title: 'Children Consent',
               type: 'react-component',
-              component: 'data-graph'
+              component: 'children-consent'
             }
           ]
         }
@@ -97,8 +97,8 @@ class NavPanelChildren extends Component
     /* register components or bind events to your new instance here */
     this.instance.registerComponent('data-grid', PVGrid);
     this.instance.registerComponent('data-search', UserSearch);
-    this.instance.registerComponent('compliance-email', PVEmailEditor);
-    this.instance.registerComponent('data-graph', DataGraph);
+    this.instance.registerComponent('children-ages', PVBarChartChildrenAges);
+    this.instance.registerComponent('children-consent', PVDoughnutChartChildrenConsent);
     this.instance.init();
     
     this.instance.on('tabCreated', function (tab)

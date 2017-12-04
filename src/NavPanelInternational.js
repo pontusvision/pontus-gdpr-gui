@@ -7,7 +7,8 @@ import GoldenLayout from 'golden-layout';
 import PVGrid from './PVGrid';
 import UserSearch from './UserSearch';
 import DataGraph from './DataGraph';
-import PVEmailEditor from './PVEmailEditor';
+// import PVEmailEditor from './PVEmailEditor';
+import PVWorldMap from "./PVWorldMap";
 
 
 class NavPanelInternational extends Component
@@ -50,9 +51,9 @@ class NavPanelInternational extends Component
               component: 'data-search'
             }
             ,{
-              title: 'Compliance Emails',
+              title: 'World Map',
               type: 'react-component',
-              component: 'compliance-email'
+              component: 'world-map'
             }
             ,{
               title: 'Data Graph',
@@ -97,7 +98,7 @@ class NavPanelInternational extends Component
     /* register components or bind events to your new instance here */
     this.instance.registerComponent('data-grid', PVGrid);
     this.instance.registerComponent('data-search', UserSearch);
-    this.instance.registerComponent('compliance-email', PVEmailEditor);
+    this.instance.registerComponent('world-map', PVWorldMap);
     this.instance.registerComponent('data-graph', DataGraph);
     this.instance.init();
     
