@@ -1,4 +1,5 @@
 #!/bin/bash
+git pull
 DIR="$( cd "$(dirname "$0")" ; pwd -P )"
 VERSION=PVGDPR_Sandbox-001
 NODE_VERSION=node-v8.4.0-linux-x64
