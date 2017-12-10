@@ -4,13 +4,13 @@ import ResizeAware from 'react-resize-aware';
 
 import GoldenLayout from 'golden-layout';
 
-import PVGridLawfulBasis from './PVGridLawfulBasis';
-// import UserSearch from './UserSearch';
+import PVGrid from './PVGrid';
+import PVWorldMap from './PVWorldMap';
+import UserSearch from './UserSearch';
 import DataGraph from './DataGraph';
-// import PVEmailEditor from './PVEmailEditor';
 
 
-class NavPanelLawfulBasis extends Component
+class NavPanelTrackSimple extends Component
 {
   constructor(props)
   {
@@ -44,6 +44,15 @@ class NavPanelLawfulBasis extends Component
               title: 'Data',
               type: 'react-component',
               component: 'data-grid'
+            }, {
+              title: 'Data Search',
+              type: 'react-component',
+              component: 'data-search'
+            }
+            ,{
+              title: 'World Map',
+              type: 'react-component',
+              component: 'data-world-map'
             }
             ,{
               title: 'Data Graph',
@@ -57,22 +66,24 @@ class NavPanelLawfulBasis extends Component
     };
     
   }
-  
   select= ()=>{
   
   };
   
+  shouldComponentUpdate(){
+    return false;
+  }
+  
   deselect= ()=>{
   
   };
-  
   
   componentDidMount()
   {
     /* you can pass config as prop, or use a predefined one */
     
     // var savedState = null;// LPPM: TODO: re-enable this later localStorage.getItem('savedStatePontusPanel');
-    var savedState =  localStorage.getItem('savedStateNavPanelLawfulBasis');
+    var savedState =  localStorage.getItem('savedStateNavPanelTrackSimple');
     
     
     if (savedState !== null)
@@ -86,7 +97,9 @@ class NavPanelLawfulBasis extends Component
     
     // instance = new GoldenLayout(config, this.node);
     /* register components or bind events to your new instance here */
-    this.instance.registerComponent('data-grid', PVGridLawfulBasis);
+    this.instance.registerComponent('data-grid', PVGrid);
+    this.instance.registerComponent('data-search', UserSearch);
+    this.instance.registerComponent('data-world-map', PVWorldMap);
     this.instance.registerComponent('data-graph', DataGraph);
     this.instance.init();
     
@@ -107,7 +120,7 @@ class NavPanelLawfulBasis extends Component
   saveState = () =>
   {
     var state = JSON.stringify(this.instance.toConfig());
-    localStorage.setItem('savedStateNavPanelLawfulBasis', state);
+    localStorage.setItem('savedStateNavPanelTrackSimple', state);
     
   };
   
@@ -118,22 +131,22 @@ class NavPanelLawfulBasis extends Component
   
   handleResize = ({width, height}) =>
   {
-    if (height > 0)
-    {
+    if (height > 0){
       this.instance.updateSize(width, height);
   
     }
     else{
       this.instance.updateSize(width,window.innerHeight - 50);
-  
     }
   };
   
   render()
   {
     
-    return (         <ResizeAware
-        style={{height: 'calc(100% - 20px)', width: '100%'}}
+    return (
+      
+      <ResizeAware
+        // style={{height: '500px', width: '100%'}}
         onResize={this.handleResize}
       >
         <div style={{height: '100%', width: '100%'}} ref={this.setNode}/>
@@ -142,4 +155,4 @@ class NavPanelLawfulBasis extends Component
     
   }
 }
-export default NavPanelLawfulBasis;
+export default NavPanelTrackSimple;

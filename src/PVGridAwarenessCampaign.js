@@ -20,7 +20,7 @@ class PVGridAwarenessCampaign extends PVGrid
   
   
     this.setColumnSettings(colSettings);
-    this.setExtraSearch({value:"Object.AwarenessCampaign"});
+    this.setExtraSearch({value:"Object.Awareness_Campaign"});
   
   
   }

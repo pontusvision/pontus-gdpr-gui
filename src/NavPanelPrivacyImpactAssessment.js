@@ -1,16 +1,13 @@
-
 import React, {Component} from 'react';
 import ResizeAware from 'react-resize-aware';
 
 import GoldenLayout from 'golden-layout';
 
-import PVGridLawfulBasis from './PVGridLawfulBasis';
-// import UserSearch from './UserSearch';
+import PVGridPrivacyImpactAssessments from './PVGridPrivacyImpactAssessments';
 import DataGraph from './DataGraph';
-// import PVEmailEditor from './PVEmailEditor';
 
 
-class NavPanelLawfulBasis extends Component
+class NavPanelPrivacyImpactAssessment extends Component
 {
   constructor(props)
   {
@@ -44,8 +41,7 @@ class NavPanelLawfulBasis extends Component
               title: 'Data',
               type: 'react-component',
               component: 'data-grid'
-            }
-            ,{
+            },  {
               title: 'Data Graph',
               type: 'react-component',
               component: 'data-graph'
@@ -58,11 +54,13 @@ class NavPanelLawfulBasis extends Component
     
   }
   
-  select= ()=>{
+  select = () =>
+  {
   
   };
   
-  deselect= ()=>{
+  deselect = () =>
+  {
   
   };
   
@@ -72,21 +70,28 @@ class NavPanelLawfulBasis extends Component
     /* you can pass config as prop, or use a predefined one */
     
     // var savedState = null;// LPPM: TODO: re-enable this later localStorage.getItem('savedStatePontusPanel');
-    var savedState =  localStorage.getItem('savedStateNavPanelLawfulBasis');
+    var savedState = localStorage.getItem('savedStateNavPanelPrivacyImpactAssessment');
     
     
-    if (savedState !== null)
+    try
     {
-      this.instance = new GoldenLayout(JSON.parse(savedState), this.node);
+      if (savedState !== null)
+      {
+        this.instance = new GoldenLayout(JSON.parse(savedState), this.node);
+      }
+      else
+      {
+        this.instance = new GoldenLayout(this.config, this.node);
+      }
     }
-    else
-    {
+    catch (e){
       this.instance = new GoldenLayout(this.config, this.node);
+  
     }
     
     // instance = new GoldenLayout(config, this.node);
     /* register components or bind events to your new instance here */
-    this.instance.registerComponent('data-grid', PVGridLawfulBasis);
+    this.instance.registerComponent('data-grid', PVGridPrivacyImpactAssessments);
     this.instance.registerComponent('data-graph', DataGraph);
     this.instance.init();
     
@@ -107,7 +112,7 @@ class NavPanelLawfulBasis extends Component
   saveState = () =>
   {
     var state = JSON.stringify(this.instance.toConfig());
-    localStorage.setItem('savedStateNavPanelLawfulBasis', state);
+    localStorage.setItem('savedStateNavPanelPrivacyImpactAssessment', state);
     
   };
   
@@ -121,11 +126,12 @@ class NavPanelLawfulBasis extends Component
     if (height > 0)
     {
       this.instance.updateSize(width, height);
-  
+      
     }
-    else{
-      this.instance.updateSize(width,window.innerHeight - 50);
-  
+    else
+    {
+      this.instance.updateSize(width, window.innerHeight - 50);
+      
     }
   };
   
@@ -142,4 +148,5 @@ class NavPanelLawfulBasis extends Component
     
   }
 }
-export default NavPanelLawfulBasis;
+
+export default NavPanelPrivacyImpactAssessment;

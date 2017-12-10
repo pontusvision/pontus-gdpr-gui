@@ -10,6 +10,7 @@ import NavPanelConsent from "./NavPanelConsent";
 import NavPanelChildren from "./NavPanelChildren";
 import NavPanelDataBreaches from "./NavPanelDataBreaches";
 import NavPanelDataProcedures from "./NavPanelDataProcedures";
+import NavPanelPrivacyImpactAssessment from './NavPanelPrivacyImpactAssessment';
 import NavPanelInternational from "./NavPanelInternational";
 
 import Icon from 'react-icons-kit';
@@ -24,6 +25,7 @@ import { balanceScale } from 'react-icons-kit/fa/balanceScale';
 import { globe } from 'react-icons-kit/ikons/globe';
 import { check } from 'react-icons-kit/fa/check';
 
+import { shareAlt } from  'react-icons-kit/fa/shareAlt';
 
 
 class ComplyPanel extends Component
@@ -58,7 +60,7 @@ class ComplyPanel extends Component
     super(props);
     this.state = {
       selected: 'Awareness',
-      height: window.innerHeight - 40
+      height: window.innerHeight - 200
     }
   }
   
@@ -89,6 +91,7 @@ class ComplyPanel extends Component
           {this.renderItem("Consent", <NavPanelConsent/>, <Icon icon={check}/>)}
           {this.renderItem("Children", <NavPanelChildren/>, <Icon icon={ic_child_care}/>)}
           {this.renderItem("Data Breaches", <NavPanelDataBreaches/>, <Icon icon={unlocked}/>)}
+          {this.renderItem("Priv Impact Asmnt", <NavPanelPrivacyImpactAssessment/>, <Icon icon={shareAlt}/>)}
           {this.renderItem("International", <NavPanelInternational/>, <Icon icon={globe}/>)}
           
           

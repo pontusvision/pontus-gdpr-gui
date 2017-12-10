@@ -4,13 +4,12 @@ import ResizeAware from 'react-resize-aware';
 
 import GoldenLayout from 'golden-layout';
 
-import PVGridLawfulBasis from './PVGridLawfulBasis';
-// import UserSearch from './UserSearch';
 import DataGraph from './DataGraph';
-// import PVEmailEditor from './PVEmailEditor';
+import PVAceGremlinEditor from "./PVAceGremlinEditor";
+import PVAceGremlinJSONQueryResults from "./PVAceGremlinJSONQueryResults";
 
 
-class NavPanelLawfulBasis extends Component
+class NavPanelTrackExpert extends Component
 {
   constructor(props)
   {
@@ -41,15 +40,19 @@ class NavPanelLawfulBasis extends Component
           type: 'column',
           content: [
             {
-              title: 'Data',
+              title: 'Gremlin Editor',
               type: 'react-component',
-              component: 'data-grid'
-            }
-            ,{
-              title: 'Data Graph',
+              component: 'gremlin-editor'
+            }, {
+              title: 'Query Results',
+              type: 'react-component',
+              component: 'query-results'
+            }, {
+              title: 'Query Graph',
               type: 'react-component',
               component: 'data-graph'
             }
+            
           ]
         }
       ]
@@ -57,22 +60,24 @@ class NavPanelLawfulBasis extends Component
     };
     
   }
-  
   select= ()=>{
   
   };
   
+  shouldComponentUpdate(){
+    return false;
+  }
+  
   deselect= ()=>{
   
   };
-  
   
   componentDidMount()
   {
     /* you can pass config as prop, or use a predefined one */
     
     // var savedState = null;// LPPM: TODO: re-enable this later localStorage.getItem('savedStatePontusPanel');
-    var savedState =  localStorage.getItem('savedStateNavPanelLawfulBasis');
+    var savedState =  localStorage.getItem('savedStateNavPanelTrackExpert');
     
     
     if (savedState !== null)
@@ -86,7 +91,8 @@ class NavPanelLawfulBasis extends Component
     
     // instance = new GoldenLayout(config, this.node);
     /* register components or bind events to your new instance here */
-    this.instance.registerComponent('data-grid', PVGridLawfulBasis);
+    this.instance.registerComponent('gremlin-editor', PVAceGremlinEditor);
+    this.instance.registerComponent('query-results', PVAceGremlinJSONQueryResults);
     this.instance.registerComponent('data-graph', DataGraph);
     this.instance.init();
     
@@ -107,7 +113,7 @@ class NavPanelLawfulBasis extends Component
   saveState = () =>
   {
     var state = JSON.stringify(this.instance.toConfig());
-    localStorage.setItem('savedStateNavPanelLawfulBasis', state);
+    localStorage.setItem('savedStateNavPanelTrackExpert', state);
     
   };
   
@@ -118,22 +124,22 @@ class NavPanelLawfulBasis extends Component
   
   handleResize = ({width, height}) =>
   {
-    if (height > 0)
-    {
+    if (height > 0){
       this.instance.updateSize(width, height);
   
     }
     else{
       this.instance.updateSize(width,window.innerHeight - 50);
-  
     }
   };
   
   render()
   {
     
-    return (         <ResizeAware
-        style={{height: 'calc(100% - 20px)', width: '100%'}}
+    return (
+      
+      <ResizeAware
+        // style={{height: '500px', width: '100%'}}
         onResize={this.handleResize}
       >
         <div style={{height: '100%', width: '100%'}} ref={this.setNode}/>
@@ -142,4 +148,4 @@ class NavPanelLawfulBasis extends Component
     
   }
 }
-export default NavPanelLawfulBasis;
+export default NavPanelTrackExpert;

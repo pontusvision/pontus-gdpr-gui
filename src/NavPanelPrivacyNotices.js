@@ -4,10 +4,9 @@ import ResizeAware from 'react-resize-aware';
 
 import GoldenLayout from 'golden-layout';
 
-import PVGrid from './PVGrid';
-import UserSearch from './UserSearch';
+import PVGridPrivacyNotices from './PVGridPrivacyNotices';
 import DataGraph from './DataGraph';
-import PVEmailEditor from './PVEmailEditor';
+// import PVEmailEditor from './PVEmailEditor';
 
 
 class NavPanelPrivacyNotices extends Component
@@ -44,15 +43,6 @@ class NavPanelPrivacyNotices extends Component
               title: 'Data',
               type: 'react-component',
               component: 'data-grid'
-            }, {
-              title: 'Data Search',
-              type: 'react-component',
-              component: 'data-search'
-            }
-            ,{
-              title: 'Compliance Emails',
-              type: 'react-component',
-              component: 'compliance-email'
             }
             ,{
               title: 'Data Graph',
@@ -95,9 +85,7 @@ class NavPanelPrivacyNotices extends Component
     
     // instance = new GoldenLayout(config, this.node);
     /* register components or bind events to your new instance here */
-    this.instance.registerComponent('data-grid', PVGrid);
-    this.instance.registerComponent('data-search', UserSearch);
-    this.instance.registerComponent('compliance-email', PVEmailEditor);
+    this.instance.registerComponent('data-grid', PVGridPrivacyNotices);
     this.instance.registerComponent('data-graph', DataGraph);
     this.instance.init();
     
