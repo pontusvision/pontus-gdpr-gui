@@ -10,6 +10,7 @@ export DISTDIR="$DIR/../pontus-dist/opt/pontus/pontus-gui/$VERSION/lib";
 
 CURDIR=`pwd`
 cd $DIR
+$NODE_DIR/bin/npm update
 $NODE_DIR/bin/npm run-script build
 
 if [[ ! -d $NODE_DISTDIR ]]; then

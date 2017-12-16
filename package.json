@@ -4,6 +4,7 @@
   "homepage": "pvgdpr/",
   "private": true,
   "dependencies": {
+    "ajv": "^5.5.2",
     "axios": "^0.16.2",
     "chart.js": "^2.7.1",
     "d3": "^4.12.0",
