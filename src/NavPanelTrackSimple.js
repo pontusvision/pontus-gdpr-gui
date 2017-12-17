@@ -144,12 +144,16 @@ class NavPanelTrackSimple extends Component
   {
     
     return (
-      
       <ResizeAware
-        // style={{height: '500px', width: '100%'}}
-        onResize={this.handleResize}
+        style={{height: '100%', width: '100%'}}
+  
       >
-        <div style={{height: '100%', width: '100%'}} ref={this.setNode}/>
+        <div
+          style={{height: '100%', width: '100%'}}
+          ref={this.setNode}
+          // height={this.state.height}
+          // width={this.state.width}
+        />
       </ResizeAware>
     )
     

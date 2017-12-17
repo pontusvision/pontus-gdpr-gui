@@ -1,14 +1,24 @@
 import React from 'react';
+// import ReactDOM from 'react-dom'
+// import RaisedButton from 'material-ui/RaisedButton';
+//
+// import {Toolbar, ToolbarGroup, ToolbarSeparator, ToolbarTitle} from 'material-ui/Toolbar';
+import {Menu} from 'semantic-ui-react';
 
-// import brace from 'brace';
+import {Flex, Box} from 'reflexbox'
+
 import AceEditor from 'react-ace';
-import ResizeAware from 'react-resize-aware';
+// import ResizeAware from 'react-resize-aware';
+// import ReactResizeDetector from 'react-resize-detector';
 
 import 'brace/mode/groovy';
 import 'brace/theme/monokai';
 
+// import {throttle} from 'lodash';
+
 
 import axios from "axios";
+
 // import "slickgrid-es6/dist/slick-default-theme.less";
 
 
@@ -16,27 +26,34 @@ class PVAceGremlinEditor extends React.Component
 {
   constructor(props)
   {
-  
+    
     super(props);
     // this.columns = [
     //   {key: 'name', name: 'Name'},
     //   {key: 'street', name: 'Street'}
     // ];
     this.url = props.url || "/gateway/sandbox/pvgdpr_graph";
-  
+    this.state = {height: 1000, width: 1000};
+    this.namespace = props.namespace || "";
     
-  
-  
   }
+  
   getSearchObj = (data) =>
   {
     
     return {
-      gremlin: JSON.stringify(data)
+      gremlin: data //JSON.stringify(data)
       
     }
   };
   
+  runQuery = () =>
+  {
+    let val = localStorage.getItem('savedStatePVAceGremlinEditor') || "";
+    
+    this.sendData(val);
+    
+  }
   
   
   sendData = (data) =>
@@ -46,7 +63,7 @@ class PVAceGremlinEditor extends React.Component
       this.req.cancel();
     }
     
-   
+    
     let url = this.url;
     if (this.h_request !== null)
     {
@@ -62,17 +79,16 @@ class PVAceGremlinEditor extends React.Component
       self.req = CancelToken.source();
       
       
-      
       // http.post(url)
       axios.post(url
         , self.getSearchObj(data)
         , {
-        headers: {
-          'Content-Type': 'application/json'
-          , 'Accept': 'application/json'
-        }
-        , cancelToken: self.req.token
-      }).then(self.onSuccess).catch((thrown) =>
+          headers: {
+            'Content-Type': 'application/json'
+            , 'Accept': 'application/json'
+          }
+          , cancelToken: self.req.token
+        }).then(self.onSuccess).catch((thrown) =>
       {
         if (axios.isCancel(thrown))
         {
@@ -83,7 +99,7 @@ class PVAceGremlinEditor extends React.Component
           self.onError(thrown);
         }
       });
-  
+      
     }, 50);
   };
   onError = (err) =>
@@ -99,55 +115,127 @@ class PVAceGremlinEditor extends React.Component
   setObj = (obj) =>
   {
     this.obj = obj;
+    // this.obj.container.parentNode.onresize = this.resize;
+    // this.obj.container.parentNode.addEventListener("resize", this.resize);
   };
   
-  handleResize = ({width, height}) =>
+  
+  handleResize = () =>
   {
-    if (this.obj && this.obj.editingArea)
+    try
     {
-      this.obj.editingArea.childNodes[0].style.maxHeight =  (height - 30) + "px";
       
+      let width = this.od.offsetParent.offsetWidth;
+      let height = this.od.offsetParent.offsetHeight;
+      this.setState({height: height, width: width});
+      
+      console.log(this);
     }
-    this.setState({maxHeight: height});
+    catch (e)
+    {
+      console.log(e);
+    }
     
   };
   
-  onChange = (val, ev) => {
-  
-    localStorage.setItem('savedStatePVAceGremlinEditor',val);
+  onChange = (val, ev) =>
+  {
+    
+    localStorage.setItem('savedStatePVAceGremlinEditor', val);
     // this.setState({value: val})
   }
+  
+  setOuterDiv = (od) =>
+  {
+    this.od = od;
+    try
+    {
+      window.addResizeListener(this.od.offsetParent, this.handleResize);
+      
+    }
+    catch (e)
+    {
+    
+    }
+  };
+  
+  componentWillUnmount()
+  {
+    window.removeResizeListener(this.od.offsetParent, this.handleResize);
+    
+  }
+  
   
   render()
   {
     // let eventHub = this.props.glEventHub;
     //
-    let val = localStorage.getItem('savedStatePVAceGremlinEditor')|| "";
-    
+    let val = localStorage.getItem('savedStatePVAceGremlinEditor') || "";
+    //
+    // <ResizeAware
+    //   style={{width: '100%', height: 'calc(100% - 20px)', flex: 1 }}
+    //   onResize={this.handleResize}
+    //   ref={this.setObj}
+    //
+    //
+//
+//
+//
+//
+// // >
+//  <ReactResizeDetector handleWidth handleHeight onResize={this.handleResize}
+//                       style={{height: this.state.height + 'px', width: this.state.width + 'px'}}
+//
+//  >
     return (
-      <ResizeAware
-        style={{width: '100%', height: 'calc(100% - 20px)', flex: 1}}
-        onResize={this.handleResize}
-      >
-  
-      <AceEditor
-        mode="groovy"
-        theme="monokai"
-       onChange={this.onChange}
-        name="gremlin-editor"
-        editorProps={{$blockScrolling: true}}
-        enableBasicAutocompletion={true}
-        enableLiveAutocompletion={true}
-        tabSize={2}
-        ref={this.setObj}
-        value={val}
-
-        // height={this.state.height}
-        // width={'100%'}
-
-      />
       
-      </ResizeAware>
+      <div
+        // style={{
+        //   height: 'calc(100%-5px)', width: 'calc(100%)', position: 'relative',
+        // }}
+        height={this.state.height}
+        width={this.state.width}
+        ref={this.setOuterDiv}
+      >
+        
+        
+        <Flex column w={1} wrap={true}>
+          <Box px={2} w={1 / 4}>
+            
+            <Menu>
+              <Menu.Item
+                name='sendquery'
+                active={true}
+                onClick={this.runQuery}
+              >
+                Send Query
+              </Menu.Item>
+            
+            </Menu>
+          </Box>
+          <Box px={2} w={1 / 4}>
+            <AceEditor
+              mode="groovy"
+              theme="monokai"
+              onChange={this.onChange}
+              name="gremlin-editor"
+              editorProps={{$blockScrolling: true}}
+              enableBasicAutocompletion={true}
+              enableLiveAutocompletion={true}
+              tabSize={2}
+              value={val}
+              height={this.state.height + "px"}
+              width={this.state.width -20 + "px"}
+              style={{overflow: 'auto'}}
+              
+              ref={this.setObj}
+            />
+          </Box>
+        </Flex>
+      
+      
+      </div>
+    
     );
     
     /*       return (

@@ -14,7 +14,7 @@ class GremlinComboBox extends Component
     super(props);
     
     this.req = null;
-    if (this.props.url == null){
+    if (this.props.url === null){
       let err = "must set the URL to forward requests";
       throw (err);
     }
@@ -129,7 +129,7 @@ class GremlinComboBox extends Component
             name={this.props.name||"form-field-name"}
             key={this.state.value.length}
             value={this.state.value}
-            multi={this.props.multi == null? true : this.props.multi}
+            multi={this.props.multi === null? true : this.props.multi}
             options={this.state.options}
             joinValues={true}
             delimiter={","}

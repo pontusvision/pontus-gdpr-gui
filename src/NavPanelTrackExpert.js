@@ -43,11 +43,14 @@ class NavPanelTrackExpert extends Component
               title: 'Gremlin Editor',
               type: 'react-component',
               component: 'gremlin-editor'
-            }, {
+            }
+            ,
+            {
               title: 'Query Results',
               type: 'react-component',
               component: 'query-results'
-            }, {
+            }
+            , {
               title: 'Query Graph',
               type: 'react-component',
               component: 'data-graph'
@@ -59,10 +62,9 @@ class NavPanelTrackExpert extends Component
       
     };
     
+    this.state = {height: props.height , width: props.width};
+    
   }
-  select= ()=>{
-  
-  };
   
   shouldComponentUpdate(){
     return false;
@@ -96,6 +98,10 @@ class NavPanelTrackExpert extends Component
     this.instance.registerComponent('data-graph', DataGraph);
     this.instance.init();
     
+    // this.instance.on('resize', ({a,b})=>{
+    //   this.handleResize({width:a, height: b });
+    // });
+    
     this.instance.on('tabCreated', function (tab)
     {
       tab.closeElement.off('click').click(function ()
@@ -122,28 +128,68 @@ class NavPanelTrackExpert extends Component
     this.node = node;
   };
   
-  handleResize = ({width, height}) =>
-  {
-    if (height > 0){
-      this.instance.updateSize(width, height);
+  // handleResize = ({width, height}) =>
+  // {
+  //   if (height > 0){
+  //     this.instance.updateSize(width, height);
+  //
+  //   }
+  //   else{
+  //     this.instance.updateSize(width,window.innerHeight - 50);
+  //   }
+  // };
   
+  
+  handleResize = () =>
+  {
+    try
+    {
+      
+      let width = this.node.offsetParent.offsetWidth;
+      let height = this.node.offsetParent.offsetHeight;
+      // this.setState({height: height, width: width});
+      if (this.instance){
+        this.instance.updateSize(width, height);
+  
+      }
+  
+      console.log(this);
     }
-    else{
-      this.instance.updateSize(width,window.innerHeight - 50);
+    catch (e)
+    {
+      console.log(e);
     }
+    
   };
+  
+ 
+  
+  
+  
+  
+  /*
+ 
+   <div
+   // style={{height: this.state.height+'px', width: this.state.width+'px'}}
+   height={this.state.height}
+   width={this.state.width }
+ 
+   ref={this.setOuterDiv}/>
+   */
   
   render()
   {
     
     return (
-      
       <ResizeAware
-        // style={{height: '500px', width: '100%'}}
-        onResize={this.handleResize}
+         style={{height: '100%', width: '100%'}}
       >
-        <div style={{height: '100%', width: '100%'}} ref={this.setNode}/>
+        <div
+         style={{height: '100%', width: '100%'}}
+          ref={this.setNode}
+        />
       </ResizeAware>
+  
     )
     
   }
