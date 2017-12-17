@@ -8,7 +8,7 @@ build/
 package-lock.json
 *.iml
 yarn.lock
-
+.idea/
 # Runtime data
 pids
 *.pid
