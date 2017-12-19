@@ -77,7 +77,7 @@ class PVBarChartChildrenAges extends React.Component
     
     return {
       gremlin: "g.V(Long.parseLong(pg_awarenessId))" +
-      ".in().as('events').groupCount().by('Event.Training_event.Status')"
+      ".in().as('events').groupCount().by('Event.Training.Status')"
       , bindings: {
         pg_awarenessId: id
       }
