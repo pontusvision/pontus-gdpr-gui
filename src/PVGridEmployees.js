@@ -4,11 +4,6 @@ import PVGrid from './PVGrid';
 class PVGridEmployees extends PVGrid
 {
   
-  // constructor(props)
-  // {
-  //   super(props);
-  //
-  // }
   
   getSearchObj = (from, to, searchstr, searchExact, cols, extraSearch, sortcol, sortdir) =>
   {
@@ -49,71 +44,6 @@ class PVGridEmployees extends PVGrid
   onSuccess = (resp) =>
   {
     
-    /*
-  {
-    "requestId" : "78d1f400-72f7-4199-9d79-eece6ccf2f4c"
-   ,"status":{
-        "message":"", "code" : 200, "attributes":
-        { "@type":"g:Map", "@value":[] }
-    }
-   ,"result": {
-        "data": {
-          "@type": "g:List"
-        , "@value":
-          [
-            {
-              "@type": "g:Map", "@value": [
-                "title", "mrs", "event_status", "Link Sent", "full_name", "aada laakso", "nationality", "FI", "emp_id", {
-                  "@type": "g:Int64", "@value": 2228304
-                }, "event_id", {"@type": "g:Int64", "@value": 1196032}
-              ]
-            }
-          , {
-            "@type": "g:Map", "@value": [
-              "title", "miss", "event_status", "Failed", "full_name", "aada latt", "nationality", "FI", "emp_id", {
-                "@type": "g:Int64", "@value": 286800
-                }, "event_id", {"@type": "g:Int64", "@value": 41226248}
-              ]
-            }
-          ]
-        }
-      ,"meta" :{
-          "@type": "g:Map", "@value": []
-      }
-    }
-  }
-    */
-    
-    
-    
-    
-    
-    // let from = resp.data.from, to = from + resp.data.records.length;
-    // this.data.length = Math.min(parseInt(resp.data.totalAvailable, 10), 1000000); // limitation of the API
-    //
-    // for (let i = 0; i < resp.data.records.length; i++)
-    // {
-    //   let item = JSON.parse(resp.data.records[i]);
-    //
-    //   // Old IE versions can't parse ISO dates, so change to universally-supported format.
-    //   // item.create_ts = item.create_ts.replace(/^(\d+)-(\d+)-(\d+)T(\d+:\d+:\d+)Z$/, "$2/$3/$1 $4 UTC");
-    //   // item.create_ts = new Date(item.create_ts);
-    //
-    //   this.data[from + i] = item;
-    //   this.data[from + i].index = item.id;
-    // }
-    //
-    // this.req = null;
-    // // this.props.glEventHub.emit(this.namespace + 'pvgrid-on-data-loaded', {from: from, to: to});
-    //
-    //
-    // for (let i = args.from; i <= args.to; i++)
-    // {
-    //   this.grid.invalidateRow(i);
-    // }
-    // this.grid.updateRowCount();
-    // this.grid.render();
-  
     let respParsed =  {};
     let itemsParsed =  [];
     
@@ -154,23 +84,12 @@ class PVGridEmployees extends PVGrid
         }
       }
   
-      // for (var i = 0, ilen = itemsParsed.length; i < ilen; i++){
-      //   this.data[this.from + i] = itemsParsed[i];
-      //   // this.data[this.from + i].index = itemsParsed[i].index['@value'];
-      // }
       this.data.length = Math.max(itemsParsed.length + this.from, this.to + 10); // limitation of the API
   
       this.req = null;
   
       this.onDataLoadedCb({from: this.from, to: this.to});
   
-      // for (let i = this.from; i <= this.to; i++)
-      // {
-      //   this.grid.invalidateRow(i);
-      // }
-      // this.grid.updateRowCount();
-      // this.grid.render();
-      //
   
     }
     catch (e){

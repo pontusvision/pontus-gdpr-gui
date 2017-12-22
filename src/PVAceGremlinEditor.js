@@ -3,7 +3,7 @@ import React from 'react';
 // import RaisedButton from 'material-ui/RaisedButton';
 //
 // import {Toolbar, ToolbarGroup, ToolbarSeparator, ToolbarTitle} from 'material-ui/Toolbar';
-import {Menu} from 'semantic-ui-react';
+// import {Menu} from 'semantic-ui-react';
 
 import {Flex, Box} from 'reflexbox'
 
@@ -202,16 +202,12 @@ class PVAceGremlinEditor extends React.Component
         <Flex column w={1} wrap={true}>
           <Box px={2} w={1 / 4}>
             
-            <Menu>
-              <Menu.Item
-                name='sendquery'
-                active={true}
+            <button>
                 onClick={this.runQuery}
               >
                 Send Query
-              </Menu.Item>
             
-            </Menu>
+            </button>
           </Box>
           <Box px={2} w={1 / 4}>
             <AceEditor
@@ -224,7 +220,7 @@ class PVAceGremlinEditor extends React.Component
               enableLiveAutocompletion={true}
               tabSize={2}
               value={val}
-              height={this.state.height + "px"}
+              height={this.state.height -20 + "px"}
               width={this.state.width -20 + "px"}
               style={{overflow: 'auto'}}
               
