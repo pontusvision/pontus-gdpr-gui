@@ -3,7 +3,7 @@ import React from 'react';
 // import RaisedButton from 'material-ui/RaisedButton';
 //
 // import {Toolbar, ToolbarGroup, ToolbarSeparator, ToolbarTitle} from 'material-ui/Toolbar';
-// import {Menu} from 'semantic-ui-react';
+import {Menu, Button} from 'semantic-ui-react';
 
 import {Flex, Box} from 'reflexbox'
 
@@ -202,12 +202,12 @@ class PVAceGremlinEditor extends React.Component
         <Flex column w={1} wrap={true}>
           <Box px={2} w={1 / 4}>
             
-            <button>
+            <Menu>
+              <Button
                 onClick={this.runQuery}
-              >
-                Send Query
-            
-            </button>
+                label={'Send Query'}
+              />
+            </Menu>
           </Box>
           <Box px={2} w={1 / 4}>
             <AceEditor
