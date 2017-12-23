@@ -2,12 +2,12 @@ import PVGrid from './PVGrid';
 
 //
 
-class PVGridPrivacyImpactAssessments extends PVGrid
+class NavPanelPrivacyImpactAssessmentPVGrid extends PVGrid
 {
   
   componentDidMount()
   {
-    this.setNamespace("PVGridPrivacyImpactAssessments-");
+    this.setNamespace("NavPanelPrivacyImpactAssessment");
   
     super.componentDidMount();
     
@@ -33,4 +33,4 @@ class PVGridPrivacyImpactAssessments extends PVGrid
 }
 
 
-export default PVGridPrivacyImpactAssessments;
+export default NavPanelPrivacyImpactAssessmentPVGrid;

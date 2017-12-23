@@ -3,8 +3,8 @@ import ResizeAware from 'react-resize-aware';
 
 import GoldenLayout from 'golden-layout';
 
-import PVGridPrivacyImpactAssessments from './PVGridPrivacyImpactAssessments';
-import DataGraph from './DataGraph';
+import NavPanelPrivacyImpactAssessmentPVGrid from './NavPanelPrivacyImpactAssessmentPVGrid';
+import NavPanelPrivacyImpactAssessmentDataGraph from './NavPanelPrivacyImpactAssessmentDataGraph';
 
 
 class NavPanelPrivacyImpactAssessment extends Component
@@ -91,8 +91,8 @@ class NavPanelPrivacyImpactAssessment extends Component
     
     // instance = new GoldenLayout(config, this.node);
     /* register components or bind events to your new instance here */
-    this.instance.registerComponent('data-grid', PVGridPrivacyImpactAssessments);
-    this.instance.registerComponent('data-graph', DataGraph);
+    this.instance.registerComponent('data-grid', NavPanelPrivacyImpactAssessmentPVGrid);
+    this.instance.registerComponent('data-graph', NavPanelPrivacyImpactAssessmentDataGraph);
     this.instance.init();
     
     this.instance.on('tabCreated', function (tab)
@@ -138,7 +138,8 @@ class NavPanelPrivacyImpactAssessment extends Component
   render()
   {
     
-    return (         <ResizeAware
+    return (
+      <ResizeAware
         style={{height: 'calc(100% - 20px)', width: '100%'}}
         onResize={this.handleResize}
       >

@@ -25,6 +25,8 @@ class UserSearch extends Component
     this.nodePropertyNamesReactSelect = null;
     this.vertexLabels = null;
     this.propsSelected = null;
+    
+    this.namespace = this.props.namespace || "";
   }
   
   
@@ -49,7 +51,7 @@ class UserSearch extends Component
     
     this.vertexLabels = val;
     this.nodePropertyNamesReactSelect.getOptions({labels: val});
-    this.props.glEventHub.emit('pvgrid-on-extra-search-changed', val);
+    this.props.glEventHub.emit(this.namespace + '-pvgrid-on-extra-search-changed', val);
   
   };
 
@@ -80,7 +82,7 @@ class UserSearch extends Component
     // for (val)
   
   
-    this.props.glEventHub.emit('pvgrid-on-col-settings-changed', colSettings);
+    this.props.glEventHub.emit(this.namespace + '-pvgrid-on-col-settings-changed', colSettings);
   };
   
   setObjNodePropertyNames = (reactSelect) =>
@@ -92,7 +94,7 @@ class UserSearch extends Component
   {
   
     // this.props.glEventHub.emit('pvgrid-on-search-changed', {searchStr : searchStr, propsSelected: this.propsSelected, vertexLabels: this.vertexLabels});
-    this.props.glEventHub.emit('pvgrid-on-search-changed', searchStr);
+    this.props.glEventHub.emit(this.namespace + '-pvgrid-on-search-changed', searchStr);
   
   
   }
@@ -101,7 +103,7 @@ class UserSearch extends Component
   {
     this.setState({checkedFuzzy: !this.state.checkedFuzzy});
     // this.props.glEventHub.emit('pvgrid-on-search-changed', {searchStr : searchStr, propsSelected: this.propsSelected, vertexLabels: this.vertexLabels});
-    this.props.glEventHub.emit('pvgrid-on-search-exact-changed', this.state.checkedFuzzy);
+    this.props.glEventHub.emit(this.namespace+'-pvgrid-on-search-exact-changed', this.state.checkedFuzzy);
   
   
   }
@@ -117,7 +119,7 @@ class UserSearch extends Component
   
   componentWillUnmount()
   {
-    this.props.glEventHub.off('pvgrid-on-data-loaded', this.onDataLoadedCb);
+    this.props.glEventHub.off(this.namespace+'-pvgrid-on-data-loaded', this.onDataLoadedCb);
   }
   
   
@@ -173,6 +175,7 @@ class UserSearch extends Component
             
             <Box px={2} w={1 / 2}>
               <GremlinComboBox
+                namespace = {this.namespace}
                 name="node-types"
                 multi={false}
                 onChange={this.onChangeVertexLabels}
@@ -191,6 +194,8 @@ class UserSearch extends Component
             <Box px={2} w={1 / 2}>
               <GremlinComboBox
                 name="node-property-types"
+                namespace = {this.namespace}
+
                 multi={true}
                 onChange={this.onChangeNodePropertyNames}
                 onError={this.onError}
@@ -216,6 +221,7 @@ class UserSearch extends Component
               <SearchBar
                 autoFocus
                 // renderClearButton
+
                 renderSearchButton
                 placeholder="Search Properties..."
                 onChange={()=>{}}

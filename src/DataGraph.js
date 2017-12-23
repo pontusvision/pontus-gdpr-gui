@@ -13,7 +13,7 @@ class DataGraph extends Component
   {
     super(props);
     
-    this.props.glEventHub.on('pvgrid-on-click-row', this.selectData);
+    this.subscription = (this.props.namespace ? this.props.namespace  : "" ) + '-pvgrid-on-click-row';
     
     this.state = {
       graph: {
@@ -37,15 +37,15 @@ class DataGraph extends Component
             align: 'left'
           }
         },
-        layout: {
-          hierarchical: {
-            direction: "UD",
-            sortMethod: "directed",
-            levelSeparation: 500,
-            nodeSpacing: 500,
-            treeSpacing: 500
-          }
-        },
+        // layout: {
+        //   hierarchical: {
+        //     direction: "UD",
+        //     sortMethod: "directed",
+        //     levelSeparation: 500,
+        //     nodeSpacing: 500,
+        //     treeSpacing: 500
+        //   }
+        // },
         interaction: {dragNodes: true},
         physics: {enabled: false},
         
@@ -66,16 +66,16 @@ class DataGraph extends Component
   
   doubleClick = (param) =>
   {
-    var event = {id: param.nodes[0]};
+    let event = {id: param.nodes[0]};
     this.selectData(event);
-  }
+  };
   // This is called from the render() ref={} area to give us a reference to the
   // value that was created by the render() function.
   setGraph = (graph) =>
   {
     this.graph = graph;// new Graph({graph:this.state.graph, options: this.state.options, events:this.state.events});
     
-  }
+  };
   
   setNetwork = (network) =>
   {
@@ -83,7 +83,7 @@ class DataGraph extends Component
     this.network.setOptions(this.state.options);
     this.network.on("doubleClick", this.doubleClick);
     
-  }
+  };
   
   // selectUser = (event) =>
   // {
@@ -113,7 +113,7 @@ class DataGraph extends Component
       let CancelToken = axios.CancelToken;
       self.req = CancelToken.source();
       
-      axios.post(url, {graphId : event.id}, {
+      axios.post(url, {graphId: event.id}, {
         headers: {
           'Content-Type': 'application/json'
           , 'Accept': 'application/json'
@@ -145,9 +145,12 @@ class DataGraph extends Component
   {
     if (this.network)
     {
-      var graph = {nodes: res.data.nodes, edges: res.data.edges};
-      // this.setState(graph);
-      this.network.setData(graph);
+      let graph = {nodes: res.data.nodes, edges: res.data.edges};
+      this.setState({graph: graph});
+      localStorage.setItem(this.subscription, graph);
+  
+  
+      // this.network.setData(graph);
     }
   };
   
@@ -159,6 +162,29 @@ class DataGraph extends Component
       
     }
   };
+  
+  componentWillMount()
+  {
+    let val = localStorage.getItem(this.subscription) || null;
+    
+    if (val)
+    {
+      if (val instanceof Object)
+      {
+        this.setState({graph: val});
+      }
+    }
+    this.props.glEventHub.on(this.subscription, this.selectData);
+  
+  }
+  
+  componentWillUnmount()
+  {
+    this.props.glEventHub.off(this.subscription, this.selectData);
+    
+    
+  }
+  
   
   render()
   {

@@ -44,7 +44,7 @@ class PVAceGremlinJSONQueryResults extends React.Component
   {
     
     // super.componentDidMount();
-    this.props.glEventHub.on(this.namespace + 'PVAceGremlinEditor-on-change', this.setValue);
+    this.props.glEventHub.on(this.namespace + '-PVAceGremlinEditor-on-change', this.setValue);
     
   }
   
@@ -52,7 +52,7 @@ class PVAceGremlinJSONQueryResults extends React.Component
   {
     // super.componentWillUnmount();
     // this.props.glEventHub.off(this.namespace + 'pvgrid-on-data-loaded', this.onDataLoadedCb);
-    this.props.glEventHub.off(this.namespace + 'PVAceGremlinEditor-on-change', this.setValue);
+    this.props.glEventHub.off(this.namespace + '-PVAceGremlinEditor-on-change', this.setValue);
     window.removeResizeListener(this.od.offsetParent, this.handleResize);
   
   }

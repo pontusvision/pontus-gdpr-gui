@@ -4,9 +4,9 @@ import ResizeAware from 'react-resize-aware';
 
 import GoldenLayout from 'golden-layout';
 
-import PVGridLawfulBasis from './PVGridLawfulBasis';
+import NavPanelLawfulBasisPVGrid from './NavPanelLawfulBasisPVGrid';
 // import UserSearch from './UserSearch';
-import DataGraph from './DataGraph';
+import NavPanelLawfulBasisDataGraph from './NavPanelLawfulBasisDataGraph';
 // import PVEmailEditor from './PVEmailEditor';
 
 
@@ -86,8 +86,8 @@ class NavPanelLawfulBasis extends Component
     
     // instance = new GoldenLayout(config, this.node);
     /* register components or bind events to your new instance here */
-    this.instance.registerComponent('data-grid', PVGridLawfulBasis);
-    this.instance.registerComponent('data-graph', DataGraph);
+    this.instance.registerComponent('data-grid', NavPanelLawfulBasisPVGrid);
+    this.instance.registerComponent('data-graph', NavPanelLawfulBasisDataGraph);
     this.instance.init();
     
     this.instance.on('tabCreated', function (tab)

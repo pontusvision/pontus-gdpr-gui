@@ -7,7 +7,7 @@ class PVGridAwarenessCampaign extends PVGrid
   
   componentDidMount()
   {
-    this.setNamespace("PVGridAwarenessCampaign-");
+    this.setNamespace("PVGridAwarenessCampaign");
   
     super.componentDidMount();
     
@@ -18,6 +18,7 @@ class PVGridAwarenessCampaign extends PVGrid
     colSettings[2] = {id: "Object.Awareness_Campaign.Start_Date", name: "Start Date", field:"Object.Awareness_Campaign.Start_Date", sortable:true  };
     colSettings[3] = {id: "Object.Awareness_Campaign.Stop_Date", name: "Stop Date",   field:"Object.Awareness_Campaign.Stop_Date", sortable:true  };
   
+    this.url = "/gateway/sandbox/pvgdpr_graph";
   
     this.setColumnSettings(colSettings);
     this.setExtraSearch({value:"Object.Awareness_Campaign"});
@@ -41,7 +42,18 @@ class PVGridAwarenessCampaign extends PVGrid
       ".has('Metadata.Type','Object.Awareness_Campaign')" +
       ".order().by(pg_orderCol == null ? 'Object.Awareness_Campaign.Description' :pg_orderCol.toString() ,pg_orderDir == (1)? incr: decr)" +
       ".range(pg_from,pg_to)" +
-      ".properties('Object.Awareness_Campaign.Description','Object.Awareness_Campaign.URL','Object.Awareness_Campaign.Start_Date','Object.Awareness_Campaign.Stop_Date')"
+      ".  match(\n" +
+      "        __.as('data').id().as('event_id')\n" +
+      "      , __.as('data').values('Object.Awareness_Campaign.Description').as('Object.Awareness_Campaign.Description')\n" +
+      "      , __.as('data').values('Object.Awareness_Campaign.URL').as('Object.Awareness_Campaign.URL')\n" +
+      "      , __.as('data').values('Object.Awareness_Campaign.Start_Date').as('Object.Awareness_Campaign.Start_Date')\n" +
+      "      , __.as('data').values('Object.Awareness_Campaign.Stop_Date').as('Object.Awareness_Campaign.Stop_Date')\n" +
+      "      )\n" +
+      ".  select('Object.Awareness_Campaign.Description'\n" +
+      "      , 'Object.Awareness_Campaign.URL'\n" +
+      "      , 'Object.Awareness_Campaign.Start_Date'\n" +
+      "      , 'Object.Awareness_Campaign.Stop_Date'\n" +
+      "      , 'event_id')\n"
       , bindings: {
           pg_from: from
         , pg_to: to
@@ -83,10 +95,20 @@ class PVGridAwarenessCampaign extends PVGrid
           for (let j = 0, jlen = vals.length; j < jlen; j+=2){
             let key = vals[j];
             let val = vals[j+1];
-            if (key.endsWith("_id"))
+            if (val instanceof Object )
             {
-              if (key === ("emp_id")){
+              if (key === ("event_id")){
                 itemParsed['index'] = val['@value'];
+              }
+              else{
+                if (val['@type'] === 'g:Date'){
+                  itemParsed[key] = new Date(val['@value']);
+  
+                }
+                else {
+                  itemParsed[key] = val['@value'];
+  
+                }
               }
             }
             else{
@@ -99,7 +121,12 @@ class PVGridAwarenessCampaign extends PVGrid
         }
       }
       
-      this.data.length = Math.max(itemsParsed.length + this.from, this.to + 10); // limitation of the API
+      this.data.length =  Math.min(itemsParsed.length + this.from, this.to); // limitation of the API
+      
+      if (this.data.length === this.to){
+        this.data.length++;
+      }
+      // if (this.data.length == this.to)
       
       this.req = null;
       

@@ -33,8 +33,9 @@ class PVDoughnutChart extends React.Component
   
     // this.datamaps = new PVDatamaps(props);
   
-    this.url = props.url || "/gateway/sandbox/pvgdpr_graph";
-    
+    // this.url = props.url || "/gateway/sandbox/pvgdpr_graph";
+    this.url = "/gateway/sandbox/pvgdpr_graph";
+  
   }
   
   
@@ -66,7 +67,7 @@ class PVDoughnutChart extends React.Component
   
   onClickedPVGridAwarenessCampaign = (val) =>
   {
-    this.ensureData(val.id)
+    this.ensureData(val.index)
   }
   
   
@@ -76,7 +77,7 @@ class PVDoughnutChart extends React.Component
   {
     
     return {
-      gremlin: "g.V(Long.parseLong(pg_awarenessId))" +
+      gremlin: "g.V((pg_awarenessId))" +
       ".in().as('events').groupCount().by('Event.Training.Status')"
       , bindings: {
         pg_awarenessId: id

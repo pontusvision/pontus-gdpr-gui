@@ -21,7 +21,8 @@ class PVGrid extends React.Component
     //   {key: 'name', name: 'Name'},
     //   {key: 'street', name: 'Street'}
     // ];
-    
+    this.errCounter = 0;
+  
     this.state = {
       columnSettings: []
       , totalRecords: 0
@@ -41,7 +42,7 @@ class PVGrid extends React.Component
       
     }
     
-    this.PAGESIZE = 50;
+    this.PAGESIZE = 300;
     this.data = {length: 0};
     this.searchstr = "";
     this.searchExact = true;
@@ -101,10 +102,10 @@ class PVGrid extends React.Component
       this.grid.onViewportChanged.subscribe(this.onViewportChanged);
       this.grid.onSort.subscribe(this.onSort);
       // this.props.glEventHub.on(this.namespace + 'pvgrid-on-data-loaded', this.onDataLoadedCb);
-      this.props.glEventHub.on(this.namespace + 'pvgrid-on-search-changed', this.setSearch);
-      this.props.glEventHub.on(this.namespace + 'pvgrid-on-search-exact-changed', this.setSearchExact);
-      this.props.glEventHub.on(this.namespace + 'pvgrid-on-col-settings-changed', this.setColumnSettings);
-      this.props.glEventHub.on(this.namespace + 'pvgrid-on-extra-search-changed', this.setExtraSearch);
+      this.props.glEventHub.on(this.namespace + '-pvgrid-on-search-changed', this.setSearch);
+      this.props.glEventHub.on(this.namespace + '-pvgrid-on-search-exact-changed', this.setSearchExact);
+      this.props.glEventHub.on(this.namespace + '-pvgrid-on-col-settings-changed', this.setColumnSettings);
+      this.props.glEventHub.on(this.namespace + '-pvgrid-on-extra-search-changed', this.setExtraSearch);
       
       // this.loader.onDataLoaded.subscribe(this.onDataLoadedCb);
       
@@ -160,7 +161,7 @@ class PVGrid extends React.Component
     }
   }
   
-  ensureData = (from, to) =>
+  ensureData = (fromReq, toReq) =>
   {
     if (this.req)
     {
@@ -169,32 +170,47 @@ class PVGrid extends React.Component
         this.data[i * this.PAGESIZE] = undefined;
     }
     
-    if (from < 0)
+    if (fromReq < 0)
     {
-      from = 0;
+      fromReq = 0;
     }
     
     if (this.data.length > 0)
     {
-      to = Math.min(to, this.data.length - 1);
+      to = Math.min(toReq, this.data.length - 1);
     }
     
-    let fromPage = Math.floor(from / this.PAGESIZE);
-    let toPage = Math.floor(to / this.PAGESIZE);
+    let fromPage = Math.floor(fromReq / this.PAGESIZE);
+    let toPage = Math.floor(toReq / this.PAGESIZE);
     
     while (this.data[fromPage * this.PAGESIZE] !== undefined && fromPage < toPage)
       fromPage++;
     
     while (this.data[toPage * this.PAGESIZE] !== undefined && fromPage < toPage)
       toPage--;
-    
+  
+    let from = (fromPage * this.PAGESIZE);
+    let to = from + (((toPage - fromPage) * this.PAGESIZE) + this.PAGESIZE);
+  
+  
     if (fromPage > toPage || ((fromPage === toPage) && this.data[fromPage * this.PAGESIZE] !== undefined && this.data[fromPage * this.PAGESIZE] !== null))
     {
       // TODO:  look-ahead
+      
   
       this.onDataLoadedCb({from: from, to: to});
       // this.props.glEventHub.emit(this.namespace + 'pvgrid-on-data-loaded', {from: from, to: to});
       //  this.onDataLoaded.notify({from: from, to: to});
+      
+      
+      // let delta = (to - from );
+      // if ( to + 2 * delta < this.data.length){
+      //   return;
+      //
+      // }
+      //
+      // to += delta;
+      // from += delta;
       return;
     }
     
@@ -218,8 +234,6 @@ class PVGrid extends React.Component
       let CancelToken = axios.CancelToken;
       self.req = CancelToken.source();
       
-      let from = (fromPage * self.PAGESIZE);
-      let to = from + (((toPage - fromPage) * self.PAGESIZE) + self.PAGESIZE);
       
       
       // http.post(url)
@@ -232,7 +246,7 @@ class PVGrid extends React.Component
           , 'Accept': 'application/json'
         }
         , cancelToken: self.req.token
-      }).then(self.onSuccess).catch((thrown) =>
+      }).then(self.onSuccessProxy).catch((thrown) =>
       {
         if (axios.isCancel(thrown))
         {
@@ -251,7 +265,22 @@ class PVGrid extends React.Component
   };
   onError = (err, fromPage, toPage) =>
   {
-    alert("error loading pages " + fromPage + " to " + toPage + ":" + err);
+    this.errCounter++;
+    
+    if (this.errCounter < 3)
+    {
+      this.ensureData(
+        this.from, this.to
+      );
+    }
+    
+  };
+  
+  onSuccessProxy = (resp) =>
+  {
+    this.errCounter = 0;
+  
+    this.onSuccess(resp);
   };
   
   onSuccess = (resp) =>
@@ -335,7 +364,7 @@ class PVGrid extends React.Component
     {
       var val = this.grid.getDataItem(clickInfo.row);
       // alert (val);
-      this.props.glEventHub.emit(this.namespace + 'pvgrid-on-click-row', val);
+      this.props.glEventHub.emit(this.namespace + '-pvgrid-on-click-row', val);
       
     }
   }
@@ -351,9 +380,9 @@ class PVGrid extends React.Component
   componentWillUnmount()
   {
     // this.props.glEventHub.off(this.namespace + 'pvgrid-on-data-loaded', this.onDataLoadedCb);
-    this.props.glEventHub.off(this.namespace + 'pvgrid-on-search-changed', this.setSearch);
-    this.props.glEventHub.off(this.namespace + 'pvgrid-on-col-settings-changed', this.setColumnSettings);
-    this.props.glEventHub.off(this.namespace + 'pvgrid-on-extra-search-changed', this.setExtraSearch);
+    this.props.glEventHub.off(this.namespace + '-pvgrid-on-search-changed', this.setSearch);
+    this.props.glEventHub.off(this.namespace + '-pvgrid-on-col-settings-changed', this.setColumnSettings);
+    this.props.glEventHub.off(this.namespace + '-pvgrid-on-extra-search-changed', this.setExtraSearch);
     
   }
   

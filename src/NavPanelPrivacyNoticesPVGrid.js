@@ -2,12 +2,12 @@ import PVGrid from './PVGrid';
 
 //
 
-class PVGridPrivacyNotices extends PVGrid
+class NavPanelPrivacyNoticesPVGrid extends PVGrid
 {
   
   componentDidMount()
   {
-    this.setNamespace("PVGridPrivacyNotices-");
+    this.setNamespace("NavPanelPrivacyNotices");
   
     super.componentDidMount();
     
@@ -37,4 +37,4 @@ class PVGridPrivacyNotices extends PVGrid
 }
 
 
-export default PVGridPrivacyNotices;
+export default NavPanelPrivacyNoticesPVGrid;

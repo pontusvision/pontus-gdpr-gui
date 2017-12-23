@@ -9,10 +9,15 @@ class PVGridEmployees extends PVGrid
   {
     this.from = from;
     this.to = to;
-    
-    return {
-      gremlin: "g.V(Long.parseLong(pg_awarenessId))" +
-      // ".has('Object.Awareness_Campaign.Campaign_URL','https://trainingcourses.com')" +
+    return ({
+      bindings: {
+        pg_awarenessId: this.awarenessCampaignId
+        , pg_from: from
+        , pg_to: to + 2 // add a few extra in the request so we can check if there are more items (in onSuccess)
+        , pg_orderCol: sortcol === null ? null : sortcol.id
+        , pg_orderDir: sortdir
+      },
+      gremlin: "g.V((pg_awarenessId))" +
       ".in().as('events')" +
       ".out()" +
       ".has('Metadata.Type','Person.Employee')" +
@@ -26,73 +31,93 @@ class PVGridEmployees extends PVGrid
       ", __.as('employees').id().as('emp_id')" +
       ")" +
       ".select('Person.Title','event_status','Person.Full_Name','Person.Nationality','emp_id', 'event_id')"
-      , bindings: {
-        pg_awarenessId: this.awarenessCampaignId
-        , pg_from: from
-        , pg_to: to
-        , pg_orderCol: sortcol === null ? null : sortcol.id
-        , pg_orderDir: sortdir
-      }
       
-    }
+      
+    });
   };
   
-  onError = (err, fromPage, toPage) =>{
-    // ignore.
+  onError = (err, fromPage, toPage) =>
+  {
+    this.errCounter++;
+    
+    if (this.errCounter < 3)
+    {
+      this.ensureData(
+        this.from, this.to
+      );
+    }
+    
   };
   
   onSuccess = (resp) =>
   {
     
-    let respParsed =  {};
-    let itemsParsed =  [];
-    
-    
+    let respParsed = {};
+    let itemsParsed = [];
   
-    try{
-      if (typeof resp !== 'object'){
+    try
+    {
+      if (typeof resp !== 'object')
+      {
         respParsed = JSON.parse(resp);
       }
-      else{
+      else
+      {
         respParsed = resp;
       }
       if (respParsed.status === 200)
       {
         let items = respParsed.data.result.data['@value'];
-  
-  
-        for (let i = 0, ilen = items.length; i < ilen; i++){
+        
+        
+        for (let i = 0, ilen = items.length; i < ilen; i++)
+        {
           let vals = items[i]['@value'];
           let itemParsed = {};
-  
-          for (let j = 0, jlen = vals.length; j < jlen; j+=2){
+          
+          for (let j = 0, jlen = vals.length; j < jlen; j += 2)
+          {
             let key = vals[j];
-            let val = vals[j+1];
+            let val = vals[j + 1];
             if (key.endsWith("_id"))
             {
-              if (key === ("emp_id")){
+              if (key === ("emp_id"))
+              {
                 itemParsed['index'] = val['@value'];
               }
             }
-            else{
+            else
+            {
               itemParsed[key] = val;
             }
           }
           itemsParsed[i] = (itemParsed);
           this.data[this.from + i] = itemsParsed[i];
-  
+          
         }
       }
-  
-      this.data.length = Math.max(itemsParsed.length + this.from, this.to + 10); // limitation of the API
-  
+      
+      
+      // we always ask for a few more items than this.to; so we can set the data.length to
+      // the this.from + the number received.  This should take care of the end of the data
+      // stream plus ask for a bit more each time.
+      this.data.length = itemsParsed.length + this.from;
+      
+      for (let i = this.to; i < this.data.length; i++)
+      {
+        this.data[i] = undefined;
+      }
+      
+      //Math.min(itemsParsed.length + this.from, this.to); // limitation of the API
+      
       this.req = null;
-  
+      
       this.onDataLoadedCb({from: this.from, to: this.to});
-  
-  
+      
+      
     }
-    catch (e){
+    catch (e)
+    {
       // e;
     }
     
@@ -100,24 +125,30 @@ class PVGridEmployees extends PVGrid
   };
   
   
-  
-  
   onClickedPVGridAwarenessCampaign = (val) =>
   {
-    this.awarenessCampaignId = val.id;
-    let colSettings = [];
+    try
+    {
+      
+      
+      this.awarenessCampaignId = val.index;
+      let colSettings = [];
+      
+      colSettings[0] = {id: "Person.Title", name: "Title", field: "Person.Title", sortable: true};
+      colSettings[1] = {id: "Person.Full_Name", name: "Full Name", field: "Person.Full_Name", sortable: true};
+      colSettings[2] = {id: "Person.Nationality", name: "Nationality", field: "Person.Nationality", sortable: true};
+      colSettings[3] = {id: "event_status", name: "Campaign Status", field: "event_status", sortable: false};
+      
+      
+      this.url = "/gateway/sandbox/pvgdpr_graph";
+      
+      
+      this.setColumnSettings(colSettings);
+    }
+    catch (e)
+    {
     
-    colSettings[0] = {id: "Person.Title", name: "Title", field: "Person.Title", sortable: true};
-    colSettings[1] = {id: "Person.Full_Name", name: "Full Name", field: "Person.Full_Name", sortable: true};
-    colSettings[2] = {id: "Person.Nationality", name: "Nationality", field: "Person.Nationality", sortable: true};
-    colSettings[3] = {id: "event_status", name: "Campaign Status", field: "event_status", sortable: false};
-    
-    
-    this.url = "/gateway/sandbox/pvgdpr_graph";
-    
-    
-    this.setColumnSettings(colSettings);
-    
+    }
     
   };
   
@@ -127,15 +158,16 @@ class PVGridEmployees extends PVGrid
     
     super.componentDidMount();
     this.props.glEventHub.on('PVGridAwarenessCampaign-pvgrid-on-click-row', this.onClickedPVGridAwarenessCampaign);
-  
+    
     // this.setExtraSearch({value:"Person.Employee"});
     
     
   }
+  
   componentWillUnmount()
   {
     this.props.glEventHub.off('PVGridAwarenessCampaign-pvgrid-on-click-row', this.onClickedPVGridAwarenessCampaign);
-  
+    
     super.componentWillUnmount();
   }
 }

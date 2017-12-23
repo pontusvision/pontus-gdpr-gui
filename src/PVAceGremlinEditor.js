@@ -104,12 +104,12 @@ class PVAceGremlinEditor extends React.Component
   };
   onError = (err) =>
   {
-    this.props.glEventHub.emit(this.namespace + 'PVAceGremlinEditor-on-change', err);
+    this.props.glEventHub.emit(this.namespace + '-PVAceGremlinEditor-on-change', err);
   };
   
   onSuccess = (resp) =>
   {
-    this.props.glEventHub.emit(this.namespace + 'PVAceGremlinEditor-on-change', resp);
+    this.props.glEventHub.emit(this.namespace + '-PVAceGremlinEditor-on-change', resp);
   };
   
   setObj = (obj) =>
@@ -204,9 +204,15 @@ class PVAceGremlinEditor extends React.Component
             
             <Menu>
               <Button
+                className={'compact'}
                 onClick={this.runQuery}
-                label={'Send Query'}
-              />
+                // inverted={false}
+                // color={'black'}
+                style={{border:0, background:'rgb(69,69,69)'}}
+                size={'small'}
+              >
+                Send Query
+              </Button>
             </Menu>
           </Box>
           <Box px={2} w={1 / 4}>
@@ -215,9 +221,9 @@ class PVAceGremlinEditor extends React.Component
               theme="monokai"
               onChange={this.onChange}
               name="gremlin-editor"
-              editorProps={{$blockScrolling: true}}
+              editorProps={{$blockScrolling: true, useIncrementalSearch: true}}
               enableBasicAutocompletion={true}
-              enableLiveAutocompletion={true}
+              // enableLiveAutocompletion={true}
               tabSize={2}
               value={val}
               height={this.state.height -20 + "px"}

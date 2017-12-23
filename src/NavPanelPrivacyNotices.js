@@ -4,8 +4,8 @@ import ResizeAware from 'react-resize-aware';
 
 import GoldenLayout from 'golden-layout';
 
-import PVGridPrivacyNotices from './PVGridPrivacyNotices';
-import DataGraph from './DataGraph';
+import PVGridPrivacyNotices from './NavPanelPrivacyNoticesPVGrid';
+import NavPanelPrivacyNoticesDataGraph from './NavPanelPrivacyNoticesDataGraph';
 // import PVEmailEditor from './PVEmailEditor';
 
 
@@ -86,7 +86,7 @@ class NavPanelPrivacyNotices extends Component
     // instance = new GoldenLayout(config, this.node);
     /* register components or bind events to your new instance here */
     this.instance.registerComponent('data-grid', PVGridPrivacyNotices);
-    this.instance.registerComponent('data-graph', DataGraph);
+    this.instance.registerComponent('data-graph', NavPanelPrivacyNoticesDataGraph);
     this.instance.init();
     
     this.instance.on('tabCreated', function (tab)

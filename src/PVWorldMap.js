@@ -13,13 +13,14 @@ import {Flex, Box} from 'reflexbox'
 
 class PVWorldMap extends React.Component
 {
-  // constructor(props)
-  // {
-  //   super(props);
-  //
-  //
-  //
-  // }
+  constructor(props)
+  {
+    super(props);
+ 
+    this.namespace = this.props.namespace || "";
+
+
+  }
   
   
   
@@ -35,21 +36,14 @@ class PVWorldMap extends React.Component
   
   componentDidMount()
   {
-    // this.props.glEventHub.on('pvgrid-on-data-loaded', this.onDataLoadedCb);
-    this.props.glEventHub.on('pvgrid-on-search-changed', this.searchDataByCountry);
-    // this.props.glEventHub.on('pvgrid-on-search-exact-changed', this.setSearchExact);
-    // this.props.glEventHub.on('pvgrid-on-col-settings-changed', this.setColumnSettings);
-    // this.props.glEventHub.on('pvgrid-on-extra-search-changed', this.setExtraSearch);
+    this.props.glEventHub.on(this.namespace + '-pvgrid-on-search-changed', this.searchDataByCountry);
   
   }
   
   
   componentWillUnmount()
   {
-    // this.props.glEventHub.off('pvgrid-on-data-loaded', this.onDataLoadedCb);
-    this.props.glEventHub.off('pvgrid-on-search-changed', this.searchDataByCountry);
-    // this.props.glEventHub.off('pvgrid-on-col-settings-changed', this.setColumnSettings);
-    // this.props.glEventHub.off('pvgrid-on-extra-search-changed', this.setExtraSearch);
+    this.props.glEventHub.off(this.namespace + '-pvgrid-on-search-changed', this.searchDataByCountry);
     
   }
   
