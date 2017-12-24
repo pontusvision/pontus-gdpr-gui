@@ -47,7 +47,7 @@ class DataGraph extends Component
         //   }
         // },
         interaction: {dragNodes: true},
-        physics: {enabled: true},
+        physics: {enabled: false},
         shapeProperties: {useImageSize: true},
         
         edges: {
