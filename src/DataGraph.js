@@ -13,7 +13,7 @@ class DataGraph extends Component
   {
     super(props);
     
-    this.subscription = (this.props.namespace ? this.props.namespace  : "" ) + '-pvgrid-on-click-row';
+    this.subscription = (this.props.namespace ? this.props.namespace : "" ) + '-pvgrid-on-click-row';
     
     this.state = {
       graph: {
@@ -47,7 +47,8 @@ class DataGraph extends Component
         //   }
         // },
         interaction: {dragNodes: true},
-        physics: {enabled: false},
+        physics: {enabled: true},
+        shapeProperties: {useImageSize: true},
         
         edges: {
           color: "#FFFFFF"
@@ -148,8 +149,8 @@ class DataGraph extends Component
       let graph = {nodes: res.data.nodes, edges: res.data.edges};
       this.setState({graph: graph});
       localStorage.setItem(this.subscription, graph);
-  
-  
+      
+      
       // this.network.setData(graph);
     }
   };
@@ -175,7 +176,7 @@ class DataGraph extends Component
       }
     }
     this.props.glEventHub.on(this.subscription, this.selectData);
-  
+    
   }
   
   componentWillUnmount()
