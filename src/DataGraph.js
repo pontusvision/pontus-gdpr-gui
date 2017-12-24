@@ -35,7 +35,9 @@ class DataGraph extends Component
         nodes: {
           font: {
             align: 'left'
-          }
+          },
+          shapeProperties: {useImageSize: true}
+  
         },
         // layout: {
         //   hierarchical: {
@@ -48,7 +50,6 @@ class DataGraph extends Component
         // },
         interaction: {dragNodes: true},
         physics: {enabled: false},
-        shapeProperties: {useImageSize: true},
         
         edges: {
           color: "#FFFFFF"
