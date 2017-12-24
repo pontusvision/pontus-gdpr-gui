@@ -53,8 +53,7 @@ class DataGraph extends Component
         //   }
         // },
         interaction: {dragNodes: true},
-        physics: {stabilization: false},
-        
+        physics: {enabled: false},
         
         edges: {
           color: "#FFFFFF"
