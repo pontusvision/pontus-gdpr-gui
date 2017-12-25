@@ -4,13 +4,11 @@ import ResizeAware from 'react-resize-aware';
 
 import GoldenLayout from 'golden-layout';
 
-import PVGrid from './PVGrid';
-import UserSearch from './UserSearch';
-import DataGraph from './DataGraph';
-import PVEmailEditor from './PVEmailEditor';
+import NavPanelSubjectAccessRequestPVGrid    from './NavPanelSubjectAccessRequestPVGrid';
+import NavPanelSubjectAccessRequestDataGraph from './NavPanelSubjectAccessRequestDataGraph';
 
 
-class NavPanelPrivacyNotices extends Component
+class NavPanelSubjectAccessRequest extends Component
 {
   constructor(props)
   {
@@ -80,7 +78,7 @@ class NavPanelPrivacyNotices extends Component
   {
     /* you can pass config as prop, or use a predefined one */
     
-    // var savedState = null;// LPPM: TODO: re-enable this later localStorage.getItem('savedStatePontusPanel');
+
     var savedState =  localStorage.getItem('savedStateNavPanelSubjectAccessRequest');
     
     
@@ -95,10 +93,9 @@ class NavPanelPrivacyNotices extends Component
     
     // instance = new GoldenLayout(config, this.node);
     /* register components or bind events to your new instance here */
-    this.instance.registerComponent('data-grid', PVGrid);
-    this.instance.registerComponent('data-search', UserSearch);
-    this.instance.registerComponent('compliance-email', PVEmailEditor);
-    this.instance.registerComponent('data-graph', DataGraph);
+    this.instance.registerComponent('data-grid', NavPanelSubjectAccessRequestPVGrid);
+
+    this.instance.registerComponent('data-graph', NavPanelSubjectAccessRequestDataGraph);
     this.instance.init();
     
     this.instance.on('tabCreated', function (tab)
@@ -153,4 +150,4 @@ class NavPanelPrivacyNotices extends Component
     
   }
 }
-export default NavPanelPrivacyNotices;
+export default NavPanelSubjectAccessRequest;
