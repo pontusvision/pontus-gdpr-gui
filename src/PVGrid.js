@@ -177,7 +177,7 @@ class PVGrid extends React.Component
     
     if (this.data.length > 0)
     {
-      to = Math.min(toReq, this.data.length - 1);
+      toReq = Math.min(toReq, this.data.length - 1);
     }
     
     let fromPage = Math.floor(fromReq / this.PAGESIZE);

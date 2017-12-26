@@ -42,15 +42,6 @@ class NavPanelSubjectAccessRequest extends Component
               title: 'Data',
               type: 'react-component',
               component: 'data-grid'
-            }, {
-              title: 'Data Search',
-              type: 'react-component',
-              component: 'data-search'
-            }
-            ,{
-              title: 'Compliance Emails',
-              type: 'react-component',
-              component: 'compliance-email'
             }
             ,{
               title: 'Data Graph',
