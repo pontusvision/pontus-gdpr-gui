@@ -5,7 +5,6 @@ import PVGrid from './PVGrid';
 class NavPanelSubjectAccessRequestPVGrid extends PVGrid
 {
   
-
   
   componentDidMount()
   {
@@ -15,25 +14,24 @@ class NavPanelSubjectAccessRequestPVGrid extends PVGrid
     
     let colSettings = [];
     
-    colSettings[0] = {id: "Event.Subject_Access_Request.Status", name: "SAR Status", field:"sar_status", sortable:true  };
-    colSettings[1] = {id: "Event.Subject_Access_Request.Request_Type", name: "SAR Type",  field:"sar_req_type", sortable:true  };
-    colSettings[2] = {id: "Metadata.Create_Date", name: "Request Date", field:"sar_creation", sortable:true  };
-    colSettings[3] = {id: "Metadata.Update_Date", name: "Update Date",   field:"sar_update", sortable:true  };
-    colSettings[4] = {id: "Person.Full_Name", name: "Requester",   field:"person_full_name", sortable:true  };
-    colSettings[5] = {id: "Person.Employee.Full_Name", name: "Handler",   field:"employee_full_name", sortable:true  };
+    colSettings[0] = {
+      id: "Event.Subject_Access_Request.Status", name: "SAR Status", field: "sar_status", sortable: true
+    };
+    colSettings[1] = {
+      id: "Event.Subject_Access_Request.Request_Type", name: "SAR Type", field: "sar_req_type", sortable: true
+    };
+    colSettings[2] = {id: "Metadata.Create_Date", name: "Request Date", field: "sar_creation", sortable: true};
+    colSettings[3] = {id: "Metadata.Update_Date", name: "Update Date", field: "sar_update", sortable: true};
+    colSettings[4] = {id: "Person.Full_Name", name: "Requester", field: "person_full_name", sortable: true};
+    colSettings[5] = {id: "Person.Employee.Full_Name", name: "Handler", field: "employee_full_name", sortable: true};
     
     this.url = "/gateway/sandbox/pvgdpr_graph";
     
     this.setColumnSettings(colSettings);
-    this.setExtraSearch({value:"Event.Subject_Access_Request"});
+    this.setExtraSearch({value: "Event.Subject_Access_Request"});
     
     
   }
-  
-  
-  
-  
-  
   
   
   getSearchObj = (from, to, searchstr, searchExact, cols, extraSearch, sortcol, sortdir) =>
@@ -41,23 +39,10 @@ class NavPanelSubjectAccessRequestPVGrid extends PVGrid
     this.from = from;
     this.to = to;
     
+    let sortcolId = sortcol == null ? null : sortcol.id;
     
     
-    
-    return {
-      gremlin: "g.V()" +
-      ".has('Metadata.Type','Event.Subject_Access_Request')" +
-      ".order().by(pg_orderCol == null ? 'Metadata.Create_Date' :pg_orderCol.toString() ,pg_orderDir == (1)? incr: decr)" +
-      ".range(pg_from,pg_to).as('sars')" +
-      ".match(" +
-      "    __.as('sars').values('Event.Subject_Access_Request.Status').as('sar_status')\n" +
-      "  , __.as('sars').values('Event.Subject_Access_Request.Request_Type').as('sar_req_type')\n" +
-      "  , __.as('sars').values('Metadata.Create_Date').as('sar_creation')\n" +
-      "  , __.as('sars').values('Metadata.Update_Date').as('sar_update')\n" +
-      "  , __.as('sars').in().has('Metadata.Type','Person').values('Person.Full_Name').as('person_full_name')\n" +
-      "  , __.as('sars').in().has('Metadata.Type','Person.Employee').values('Person.Full_Name').as('employee_full_name')\n" +
-      "  , __.as('sars').id().as('event_id')\n" +
-      "  )\n" +
+    let selectBody =
       "  .select('event_id',\n" +
       "        ,'sar_req_type'       \n" +
       "        ,'sar_creation'\n" +
@@ -65,34 +50,118 @@ class NavPanelSubjectAccessRequestPVGrid extends PVGrid
       "        ,'person_full_name'\n" +
       "        ,'employee_full_name'\n" +
       "        ,'sar_status'\n" +
-      "        )"
-      , bindings: {
-        pg_from: from
-        , pg_to: to
-        , pg_orderCol: sortcol === null ? null : sortcol.id
-        , pg_orderDir: sortdir
-      }
-      
+      "        )";
+  
+  
+    if (
+      sortcolId === null
+      || sortcolId === 'Event.Subject_Access_Request.Status'
+      || sortcolId === 'Event.Subject_Access_Request.Request_Type'
+      || sortcolId === 'Metadata.Create_Date'
+      || sortcolId === 'Metadata.Update_Date'
+    )
+    {
+      return {
+        gremlin: "g.V()" +
+        ".has('Metadata.Type','Event.Subject_Access_Request')" +
+        ".order().by(pg_orderCol == null ? 'Metadata.Create_Date' :pg_orderCol.toString() ,pg_orderDir == (1)? incr: decr)" +
+        ".range(pg_from,pg_to).as('sars')" +
+        ".match(" +
+        "    __.as('sars').values('Event.Subject_Access_Request.Status').as('sar_status')\n" +
+        "  , __.as('sars').values('Event.Subject_Access_Request.Request_Type').as('sar_req_type')\n" +
+        "  , __.as('sars').values('Metadata.Create_Date').as('sar_creation')\n" +
+        "  , __.as('sars').values('Metadata.Update_Date').as('sar_update')\n" +
+        "  , __.as('sars').in().has('Metadata.Type','Person').values('Person.Full_Name').as('person_full_name')\n" +
+        "  , __.as('sars').in().has('Metadata.Type','Person.Employee').values('Person.Full_Name').as('employee_full_name')\n" +
+        "  , __.as('sars').id().as('event_id')\n" +
+        "  )\n" +
+        selectBody
+        , bindings: {
+          pg_from: from
+          , pg_to: to
+          , pg_orderCol: sortcolId
+          , pg_orderDir: sortdir
+        }
+        
+      };
     }
+    else if (sortcolId === 'Person.Full_Name'){
+      return {
+        gremlin: "g.V()" +
+        ".has('Metadata.Type','Person')" +
+        ".order().by('Person.Full_Name' ,pg_orderDir == (1)? incr: decr)" +
+        ".as('people')" +
+        ".match(" +
+        "    __.as('people').out().has('Metadata.Type','Event.Subject_Access_Request').range(pg_from,pg_to).as('sars') " +
+        "  , __.as('sars').in().has('Metadata.Type','Person.Employee').as('employees') " +
+        "  , __.as('sars').values('Event.Subject_Access_Request.Status').as('sar_status')\n" +
+        "  , __.as('sars').values('Event.Subject_Access_Request.Request_Type').as('sar_req_type')\n" +
+        "  , __.as('sars').values('Metadata.Create_Date').as('sar_creation')\n" +
+        "  , __.as('sars').values('Metadata.Update_Date').as('sar_update')\n" +
+        "  , __.as('people').values('Person.Full_Name').as('person_full_name')\n" +
+        "  , __.as('employees').values('Person.Full_Name').as('employee_full_name')\n" +
+        "  , __.as('sars').id().as('event_id')\n" +
+        "  )\n"+
+        selectBody
+        , bindings: {
+          pg_from: from
+          , pg_to: to
+          , pg_orderDir: sortdir
+        }
+    
+      };
+    }
+    else if (sortcolId === 'Person.Employee.Full_Name'){
+      return {
+        gremlin: "g.V()" +
+        ".has('Metadata.Type','Person.Employee')" +
+        ".order().by('Person.Full_Name' ,pg_orderDir == (1)? incr: decr)" +
+        ".as('employees')" +
+        ".match(" +
+        "    __.as('employees').out().has('Metadata.Type','Event.Subject_Access_Request').as('sars') " +
+        "  , __.as('sars').in().has('Metadata.Type','Person').as('people') " +
+        "  , __.as('sars').values('Event.Subject_Access_Request.Status').as('sar_status')\n" +
+        "  , __.as('sars').values('Event.Subject_Access_Request.Request_Type').as('sar_req_type')\n" +
+        "  , __.as('sars').values('Metadata.Create_Date').as('sar_creation')\n" +
+        "  , __.as('sars').values('Metadata.Update_Date').as('sar_update')\n" +
+        "  , __.as('people').values('Person.Full_Name').as('person_full_name')\n" +
+        "  , __.as('employees').values('Person.Full_Name').as('employee_full_name')\n" +
+        "  , __.as('sars').id().as('event_id')\n" +
+        "  )\n"+
+        selectBody
+        , bindings: {
+          pg_from: from
+          , pg_to: to
+          , pg_orderDir: sortdir
+        }
+    
+      };
+    }
+    
+    
+    
   };
   
-  onError = (err, fromPage, toPage) =>{
+  onError = (err, fromPage, toPage) =>
+  {
     // ignore.
   };
   
   onSuccess = (resp) =>
   {
     
-    let respParsed =  {};
-    let itemsParsed =  [];
+    let respParsed = {};
+    let itemsParsed = [];
     
     
-    
-    try{
-      if (typeof resp !== 'object'){
+    try
+    {
+      if (typeof resp !== 'object')
+      {
         respParsed = JSON.parse(resp);
       }
-      else{
+      else
+      {
         respParsed = resp;
       }
       if (respParsed.status === 200)
@@ -100,30 +169,37 @@ class NavPanelSubjectAccessRequestPVGrid extends PVGrid
         let items = respParsed.data.result.data['@value'];
         
         
-        for (let i = 0, ilen = items.length; i < ilen; i++){
+        for (let i = 0, ilen = items.length; i < ilen; i++)
+        {
           let vals = items[i]['@value'];
           let itemParsed = {};
           
-          for (let j = 0, jlen = vals.length; j < jlen; j+=2){
+          for (let j = 0, jlen = vals.length; j < jlen; j += 2)
+          {
             let key = vals[j];
-            let val = vals[j+1];
-            if (val instanceof Object )
+            let val = vals[j + 1];
+            if (val instanceof Object)
             {
-              if (key === ("event_id")){
+              if (key === ("event_id"))
+              {
                 itemParsed['index'] = val['@value'];
               }
-              else{
-                if (val['@type'] === 'g:Date'){
+              else
+              {
+                if (val['@type'] === 'g:Date')
+                {
                   itemParsed[key] = new Date(val['@value']);
                   
                 }
-                else {
+                else
+                {
                   itemParsed[key] = val['@value'];
                   
                 }
               }
             }
-            else{
+            else
+            {
               itemParsed[key] = val;
             }
           }
@@ -133,9 +209,10 @@ class NavPanelSubjectAccessRequestPVGrid extends PVGrid
         }
       }
       
-      this.data.length =  Math.min(itemsParsed.length + this.from, this.to); // limitation of the API
+      this.data.length = Math.min(itemsParsed.length + this.from, this.to); // limitation of the API
       
-      if (this.data.length === this.to){
+      if (this.data.length === this.to)
+      {
         this.data.length++;
       }
       // if (this.data.length == this.to)
@@ -146,14 +223,13 @@ class NavPanelSubjectAccessRequestPVGrid extends PVGrid
       
       
     }
-    catch (e){
+    catch (e)
+    {
       // e;
     }
     
     
   };
-  
-  
   
   
 }

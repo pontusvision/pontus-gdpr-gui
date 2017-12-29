@@ -4,10 +4,10 @@ import ResizeAware from 'react-resize-aware';
 
 import GoldenLayout from 'golden-layout';
 
-import PVGrid from './PVGrid';
+import NavPanelInformationYouHoldPVGrid from './NavPanelInformationYouHoldPVGrid';
 import UserSearch from './UserSearch';
 import DataGraph from './DataGraph';
-import PVEmailEditor from './PVEmailEditor';
+import PVTimeline from './PVTimeline';
 
 
 class NavPanelInformationYouHold extends Component
@@ -95,11 +95,10 @@ class NavPanelInformationYouHold extends Component
     
     // instance = new GoldenLayout(config, this.node);
     /* register components or bind events to your new instance here */
-    this.instance.registerComponent('data-grid', PVGrid);
+    this.instance.registerComponent('data-grid', NavPanelInformationYouHoldPVGrid);
     this.instance.registerComponent('data-search', UserSearch);
-    this.instance.registerComponent('compliance-email', PVEmailEditor);
+    this.instance.registerComponent('compliance-email', PVTimeline);
     this.instance.registerComponent('data-graph', DataGraph);
-    this.instance.init();
     
     this.instance.on('tabCreated', function (tab)
     {
@@ -112,7 +111,8 @@ class NavPanelInformationYouHold extends Component
     });
     
     this.instance.on('stateChanged', this.saveState);
-    
+    this.instance.init();
+  
   }
   
   saveState = () =>

@@ -4,10 +4,11 @@ import ResizeAware from 'react-resize-aware';
 
 import GoldenLayout from 'golden-layout';
 
-import PVGrid from './PVGrid';
-import UserSearch from './UserSearch';
-import DataGraph from './DataGraph';
-import PVDoughnutChartConsent from './PVDoughnutChartConsent';
+import NavPanelConsentPVGridPrivacyNotices from './NavPanelConsentPVGridPrivacyNotices';
+import NavPanelConsentPVGridEventConsent from './NavPanelConsentPVGridEventConsent';
+// import UserSearch from './';
+import NavPanelConsentDataGraph from './NavPanelConsentDataGraph';
+import NavPanelConsentPVDoughnutChartConsentStatus from './NavPanelConsentPVDoughnutChartConsentStatus';
 
 
 class NavPanelConsent extends Component
@@ -41,16 +42,17 @@ class NavPanelConsent extends Component
           type: 'column',
           content: [
             {
-              title: 'Data',
+              title: 'Privacy Notices',
               type: 'react-component',
-              component: 'data-grid'
-            }, {
-              title: 'Data Search',
-              type: 'react-component',
-              component: 'data-search'
+              component: 'data-grid-privacy-notices'
             }
             ,{
-              title: 'Consent Chart',
+              title: 'Consent Events',
+              type: 'react-component',
+              component: 'data-grid-consent-events'
+            }
+            ,{
+              title: 'Consent Chart (Privacy Notice)',
               type: 'react-component',
               component: 'consent-chart'
             }
@@ -95,10 +97,10 @@ class NavPanelConsent extends Component
     
     // instance = new GoldenLayout(config, this.node);
     /* register components or bind events to your new instance here */
-    this.instance.registerComponent('data-grid', PVGrid);
-    this.instance.registerComponent('data-search', UserSearch);
-    this.instance.registerComponent('consent-chart', PVDoughnutChartConsent);
-    this.instance.registerComponent('data-graph', DataGraph);
+    this.instance.registerComponent('data-grid-privacy-notices', NavPanelConsentPVGridPrivacyNotices);
+    this.instance.registerComponent('data-grid-consent-events', NavPanelConsentPVGridEventConsent);
+    this.instance.registerComponent('consent-chart', NavPanelConsentPVDoughnutChartConsentStatus);
+    this.instance.registerComponent('data-graph', NavPanelConsentDataGraph);
     this.instance.init();
     
     this.instance.on('tabCreated', function (tab)
@@ -117,8 +119,13 @@ class NavPanelConsent extends Component
   
   saveState = () =>
   {
-    var state = JSON.stringify(this.instance.toConfig());
-    localStorage.setItem('savedStateNavPanelConsent', state);
+    try{
+      let state = JSON.stringify(this.instance.toConfig());
+      localStorage.setItem('savedStateNavPanelConsent', state);
+  
+    }catch(e){
+      // ignore
+    }
     
   };
   

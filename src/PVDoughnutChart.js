@@ -85,7 +85,7 @@ class PVDoughnutChart extends React.Component
       
       
     };
-  }
+  };
   
   
   ensureData = (id) =>

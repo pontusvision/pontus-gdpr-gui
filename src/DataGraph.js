@@ -2,6 +2,10 @@ import React, {Component} from 'react';
 import ResizeAware from 'react-resize-aware';
 import Graph from 'react-graph-vis';
 import axios from 'axios';
+// import "http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css";
+// import "http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css";
+//
+
 
 
 /***************************
@@ -41,6 +45,27 @@ class DataGraph extends Component
             useImageSize: true
             , interpolation: false
             
+          }
+          
+        }
+        , groups: {
+          "Object Privacy Notice": {
+            shape: 'icon',
+            icon: {
+              face: 'FontAwesome',
+              code: '\uf0c0',
+              size: 50,
+              color: '#57169a'
+            }
+          },
+          "Object Lawful Basis": {
+            shape: 'icon',
+            icon: {
+              face: 'FontAwesome',
+              code: '\uf007',
+              size: 50,
+              color: '#aa00ff'
+            }
           }
         },
         // layout: {
@@ -101,11 +126,80 @@ class DataGraph extends Component
   //   this.props.glEventHub.emit('user-select', this.state.users[nodes[0] - 1])
   // };
   
+  getQuery = (eventId) =>
+  {
+    return {
+      bindings: {
+        vid: eventId
+      }
+      , gremlin: " g.V(vid).as('orig').bothE().match(\n" +
+      "   __.as('e').inV().label().as('outVLabel')\n" +
+      ",  __.as('e').outV().label().as('inVLabel')\n" +
+      ",  __.as('e').label().as('edgeLabel')\n" +
+      "   ).select( 'edgeLabel','inVLabel','outVLabel').groupCount().map{\n" +
+      "\n" +
+      "    HashSet nodesSet = new HashSet()\n" +
+      "    HashSet edgesSet = new HashSet()\n" +
+      "     \n" +
+      "     it.get().forEach(\n" +
+      "       \n" +
+      "       {  key,val -> outerLoop:{\n" +
+      "            if (key instanceof Map){\n" +
+      "              String fromNodeId = key.get('inVLabel').replaceAll('[_.]',' ');\n" +
+      "\n" +
+      "              StringBuffer sb = new StringBuffer('{ \"id\":\"');\n" +
+      "              sb.append(fromNodeId).append('\",\"label\":\"')\n" +
+      "                .append(fromNodeId).append('\",\"group\":\"')\n" +
+      "                .append(fromNodeId).append('\"}')\n" +
+      "                \n" +
+      "              nodesSet.add( sb.toString() );\n" +
+      "              \n" +
+      "              sb.setLength(0);\n" +
+      "              \n" +
+      "              String toNodeId = key.get('outVLabel').replaceAll('[_.]',' ');\n" +
+      "\n" +
+      "              sb.append('{ \"id\":\"') \n" +
+      "                .append(toNodeId).append('\",\"label\":\"')\n" +
+      "                .append(toNodeId).append('\",\"group\":\"')\n" +
+      "                .append(toNodeId).append('\"}')\n" +
+      "                \n" +
+      "              nodesSet.add( sb.toString() );\n" +
+      "              \n" +
+      "              sb.setLength(0);\n" +
+      "\n" +
+      "              String edgeLabel = key.get('edgeLabel').replaceAll('[_.]',' ');\n" +
+      "              sb.append('{ \"from\":\"')\n" +
+      "                .append(fromNodeId).append('\",\"to\":\"')\n" +
+      "                .append(toNodeId).append('\",\"label\":\"')\n" +
+      "                .append(edgeLabel).append(' (')\n" +
+      "                .append(val).append(')\",\"value\":')\n" +
+      "                .append(val).append('}')\n" +
+      "                \n" +
+      "              edgesSet.add (sb.toString());\n" +
+      "                \n" +
+      "\n" +
+      "            }\n" +
+      "         } \n" +
+      "      \n" +
+      "       })\n" +
+      "\n" +
+      "     StringBuffer sb2 = new StringBuffer('{ \"nodes\":' );\n" +
+      "     \n" +
+      "     sb2.append(nodesSet).append(', \"edges\":').append(edgesSet)\n" +
+      "      .append('}')\n" +
+      "      \n" +
+      "     sb2.toString()\n" +
+      "\n" +
+      "   }\n"
+      
+    };
+  };
+  
   
   selectData = (event) =>
   {
     
-    let url = "/gateway/sandbox/pvgdpr_server/home/graph";
+    let url = "/gateway/sandbox/pvgdpr_graph"; // "/gateway/sandbox/pvgdpr_server/home/graph";
     if (this.h_request !== null)
     {
       clearTimeout(this.h_request);
@@ -119,7 +213,7 @@ class DataGraph extends Component
       let CancelToken = axios.CancelToken;
       self.req = CancelToken.source();
       
-      axios.post(url, {graphId: event.id}, {
+      axios.post(url, this.getQuery(event.id || event.index), {
         headers: {
           'Content-Type': 'application/json'
           , 'Accept': 'application/json'
@@ -147,10 +241,61 @@ class DataGraph extends Component
   {
     alert("Failed to get graph data:" + thrown);
   }
-  onSuccess = (res) =>
+  
+  
+  onSuccess = (resp) =>
+  {
+    
+    let respParsed = {};
+    
+    
+    try
+    {
+      if (typeof resp !== 'object')
+      {
+        respParsed = JSON.parse(resp);
+      }
+      else
+      {
+        respParsed = resp;
+      }
+      if (respParsed.status === 200)
+      {
+        let items = respParsed.data.result.data['@value'][0];
+        
+        
+        if (typeof items !== 'object')
+        {
+          items = JSON.parse(items);
+        }
+        
+        let graph = {nodes: items.nodes, edges: items.edges};
+        
+        this.setState({graph: graph});
+        localStorage.setItem(this.subscription, graph);
+        
+      }
+      
+      
+    }
+    catch (e)
+    {
+      // e;
+    }
+    
+  };
+  
+  
+  onSuccessOld = (res) =>
   {
     if (this.network)
     {
+      
+      /*
+       .data.result.data["@value"]
+       */
+      
+      
       let graph = {nodes: res.data.nodes, edges: res.data.edges};
       this.setState({graph: graph});
       localStorage.setItem(this.subscription, graph);

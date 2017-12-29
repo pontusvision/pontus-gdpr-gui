@@ -6,7 +6,8 @@ import GoldenLayout from 'golden-layout';
 
 import NavPanelSubjectAccessRequestPVGrid    from './NavPanelSubjectAccessRequestPVGrid';
 import NavPanelSubjectAccessRequestDataGraph from './NavPanelSubjectAccessRequestDataGraph';
-
+import NavPanelSubjectAccessRequestPVDoughnutChartReqType from './NavPanelSubjectAccessRequestPVDoughnutChartReqType';
+import NavPanelSubjectAccessRequestPVDoughnutChartReqStatus from './NavPanelSubjectAccessRequestPVDoughnutChartReqStatus';
 
 class NavPanelSubjectAccessRequest extends Component
 {
@@ -48,6 +49,16 @@ class NavPanelSubjectAccessRequest extends Component
               type: 'react-component',
               component: 'data-graph'
             }
+            ,{
+              title: 'Request Types',
+              type: 'react-component',
+              component: 'req-types'
+            }
+            ,{
+              title: 'Request Status',
+              type: 'react-component',
+              component: 'req-status'
+            }
           ]
         }
       ]
@@ -87,6 +98,10 @@ class NavPanelSubjectAccessRequest extends Component
     this.instance.registerComponent('data-grid', NavPanelSubjectAccessRequestPVGrid);
 
     this.instance.registerComponent('data-graph', NavPanelSubjectAccessRequestDataGraph);
+    this.instance.registerComponent('req-types', NavPanelSubjectAccessRequestPVDoughnutChartReqType);
+    this.instance.registerComponent('req-status', NavPanelSubjectAccessRequestPVDoughnutChartReqStatus);
+    
+    
     this.instance.init();
     
     this.instance.on('tabCreated', function (tab)
@@ -105,8 +120,13 @@ class NavPanelSubjectAccessRequest extends Component
   
   saveState = () =>
   {
-    var state = JSON.stringify(this.instance.toConfig());
-    localStorage.setItem('savedStateNavPanelSubjectAccessRequest', state);
+    try{
+      var state = JSON.stringify(this.instance.toConfig());
+      localStorage.setItem('savedStateNavPanelSubjectAccessRequest', state);
+  
+    }catch(e){
+      // ignore
+    }
     
   };
   

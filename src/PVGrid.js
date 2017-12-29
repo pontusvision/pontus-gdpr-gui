@@ -163,6 +163,10 @@ class PVGrid extends React.Component
   
   ensureData = (fromReq, toReq) =>
   {
+    if (undefined === (fromReq) || undefined  === toReq )
+    {
+      return;
+    }
     if (this.req)
     {
       this.req.cancel();
