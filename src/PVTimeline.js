@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import ResizeAware from 'react-resize-aware';
 // import Graph from 'react-graph-vis';
-import Timeline from 'react-visjs-timeline';
+// import Timeline from 'react-visjs-timeline';
 import * as Vis from 'vis';
 
 
