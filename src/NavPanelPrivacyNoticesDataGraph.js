@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 // import ResizeAware from 'react-resize-aware';
-import DataGraph from './DataGraph';
+import PVDataGraph from './PVDataGraph';
 // import axios from 'axios';
 
 
@@ -17,7 +17,7 @@ class NavPanelPrivacyNoticesDataGraph extends Component
     //         <Graph graph={this.state.graph} options={this.state.options} events={this.state.events}/>
     
     return (
-        <DataGraph glEventHub={this.props.glEventHub} style={{height: '100%', width: '100%'}} namespace={"NavPanelPrivacyNotices"}/>
+        <PVDataGraph glEventHub={this.props.glEventHub} style={{height: '100%', width: '100%'}} namespace={"NavPanelPrivacyNotices"}/>
     
     );
     

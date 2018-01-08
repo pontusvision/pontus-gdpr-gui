@@ -1,13 +1,13 @@
 import React, {Component} from 'react';
 // import ResizeAware from 'react-resize-aware';
-import PVDataGraphShowNeighbouringNodes from './PVDataGraphShowNeighbouringNodes';
+import PVDataGraphShowAllNodes from './PVDataGraphShowAllNodes';
 // import axios from 'axios';
 
 
 /***************************
  * UserList Component
  ***************************/
-class NavPanelPrivacyImpactAssessmentDataGraph extends Component
+class NavPanelDataBreachPVDataGraphInfrastructure extends Component
 {
   
   
@@ -17,7 +17,7 @@ class NavPanelPrivacyImpactAssessmentDataGraph extends Component
     //         <Graph graph={this.state.graph} options={this.state.options} events={this.state.events}/>
     
     return (
-        <PVDataGraphShowNeighbouringNodes glEventHub={this.props.glEventHub} style={{height: '100%', width: '100%'}} namespace={"NavPanelPrivacyImpactAssessment"}/>
+        <PVDataGraphShowAllNodes glEventHub={this.props.glEventHub} style={{height: '100%', width: '100%'}} namespace={"NavPanelDataBreach"}/>
     
     );
     
@@ -25,4 +25,4 @@ class NavPanelPrivacyImpactAssessmentDataGraph extends Component
   }
 }
 
-export default NavPanelPrivacyImpactAssessmentDataGraph;
+export default NavPanelDataBreachPVDataGraphInfrastructure;

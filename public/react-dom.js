@@ -10728,13 +10728,13 @@ function isValidOwner(object) {
  *   var MyComponent = React.createClass({
  *     render: function() {
  *       return (
- *         <div onClick={this.handleClick}>
+ *         <div onClick={this.onClickPreview}>
  *           <CustomComponent ref="custom" />
  *         </div>
  *       );
  *     },
- *     handleClick: function() {
- *       this.refs.custom.handleClick();
+ *     onClickPreview: function() {
+ *       this.refs.custom.onClickPreview();
  *     },
  *     componentDidMount: function() {
  *       this.refs.custom.initialize();

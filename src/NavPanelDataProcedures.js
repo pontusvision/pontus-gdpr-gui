@@ -1,12 +1,10 @@
 
 import React, {Component} from 'react';
 import ResizeAware from 'react-resize-aware';
-
 import GoldenLayout from 'golden-layout';
-
-import PVGrid from './PVGrid';
-import UserSearch from './UserSearch';
-import DataGraph from './DataGraph';
+import NavPanelDataProceduresPVGrid from './NavPanelDataProceduresPVGrid';
+import NavPanelDataProceduresPVGridNoticeTemplates from './NavPanelDataProceduresPVGridNoticeTemplates';
+import PVDataGraph from './PVDataGraph';
 import PVEmailEditor from './PVEmailEditor';
 
 
@@ -41,23 +39,19 @@ class NavPanelDataProcedures extends Component
           type: 'column',
           content: [
             {
-              title: 'Data',
+              title: 'Data Procedures',
               type: 'react-component',
               component: 'data-grid'
-            }, {
-              title: 'Data Search',
-              type: 'react-component',
-              component: 'data-search'
             }
             ,{
-              title: 'Compliance Emails',
+              title: 'Compliance Notices',
               type: 'react-component',
               component: 'compliance-email'
             }
             ,{
-              title: 'Data Graph',
+              title: 'Compliance Notices Grid',
               type: 'react-component',
-              component: 'data-graph'
+              component: 'compliance-grid'
             }
           ]
         }
@@ -80,7 +74,6 @@ class NavPanelDataProcedures extends Component
   {
     /* you can pass config as prop, or use a predefined one */
     
-    // var savedState = null;// LPPM: TODO: re-enable this later localStorage.getItem('savedStatePontusPanel');
     var savedState =  localStorage.getItem('savedStateNavPanelDataProcedures');
     
     
@@ -95,10 +88,9 @@ class NavPanelDataProcedures extends Component
     
     // instance = new GoldenLayout(config, this.node);
     /* register components or bind events to your new instance here */
-    this.instance.registerComponent('data-grid', PVGrid);
-    this.instance.registerComponent('data-search', UserSearch);
+    this.instance.registerComponent('data-grid', NavPanelDataProceduresPVGrid);
     this.instance.registerComponent('compliance-email', PVEmailEditor);
-    this.instance.registerComponent('data-graph', DataGraph);
+    this.instance.registerComponent('compliance-grid', NavPanelDataProceduresPVGridNoticeTemplates);
     this.instance.init();
     
     this.instance.on('tabCreated', function (tab)
