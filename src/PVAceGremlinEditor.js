@@ -1,20 +1,10 @@
 import React from 'react';
-// import ReactDOM from 'react-dom'
-// import RaisedButton from 'material-ui/RaisedButton';
-//
-// import {Toolbar, ToolbarGroup, ToolbarSeparator, ToolbarTitle} from 'material-ui/Toolbar';
 import {Menu, Button} from 'semantic-ui-react';
-
-import {Flex, Box} from 'reflexbox'
-
+import {Flex, Box} from 'reflexbox';
 import AceEditor from 'react-ace';
-// import ResizeAware from 'react-resize-aware';
-// import ReactResizeDetector from 'react-resize-detector';
-
 import 'brace/mode/groovy';
 import 'brace/theme/monokai';
 
-// import {throttle} from 'lodash';
 
 
 import axios from "axios";

@@ -5,8 +5,7 @@ import ResizeAware from 'react-resize-aware';
 import GoldenLayout from 'golden-layout';
 
 import NavPanelInformationYouHoldPVGrid from './NavPanelInformationYouHoldPVGrid';
-import UserSearch from './UserSearch';
-import DataGraph from './DataGraph';
+import NavPanelInformationYouHoldPVDataGraph from './NavPanelInformationYouHoldPVDataGraph';
 import PVTimeline from './PVTimeline';
 
 
@@ -44,10 +43,6 @@ class NavPanelInformationYouHold extends Component
               title: 'Data',
               type: 'react-component',
               component: 'data-grid'
-            }, {
-              title: 'Data Search',
-              type: 'react-component',
-              component: 'data-search'
             }
             ,{
               title: 'Compliance Emails',
@@ -96,9 +91,8 @@ class NavPanelInformationYouHold extends Component
     // instance = new GoldenLayout(config, this.node);
     /* register components or bind events to your new instance here */
     this.instance.registerComponent('data-grid', NavPanelInformationYouHoldPVGrid);
-    this.instance.registerComponent('data-search', UserSearch);
     this.instance.registerComponent('compliance-email', PVTimeline);
-    this.instance.registerComponent('data-graph', DataGraph);
+    this.instance.registerComponent('data-graph', NavPanelInformationYouHoldPVDataGraph);
     
     this.instance.on('tabCreated', function (tab)
     {

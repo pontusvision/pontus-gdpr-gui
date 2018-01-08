@@ -7,7 +7,7 @@ import GoldenLayout from 'golden-layout';
 import PVGrid from './PVGrid';
 import PVWorldMap from './PVWorldMap';
 import UserSearch from './UserSearch';
-import DataGraph from './DataGraph';
+import PVDataGraph from './PVDataGraph';
 
 
 class NavPanelTrackSimple extends Component
@@ -100,7 +100,7 @@ class NavPanelTrackSimple extends Component
     this.instance.registerComponent('data-grid', PVGrid);
     this.instance.registerComponent('data-search', UserSearch);
     this.instance.registerComponent('data-world-map', PVWorldMap);
-    this.instance.registerComponent('data-graph', DataGraph);
+    this.instance.registerComponent('data-graph', PVDataGraph);
     this.instance.init();
     
     this.instance.on('tabCreated', function (tab)

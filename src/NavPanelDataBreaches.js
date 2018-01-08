@@ -4,9 +4,9 @@ import ResizeAware from 'react-resize-aware';
 
 import GoldenLayout from 'golden-layout';
 
-import PVGrid from './PVGrid';
+import NavPanelDataBreachPVGridDataBreachEvents from './NavPanelDataBreachPVGridDataBreachEvents';
 import UserSearch from './UserSearch';
-import DataGraph from './DataGraph';
+import NavPanelDataBreachPVDataGraphInfrastructure from './NavPanelDataBreachPVDataGraphInfrastructure';
 import PVEmailEditor from './PVEmailEditor';
 
 
@@ -55,7 +55,7 @@ class NavPanelDataBreaches extends Component
               component: 'compliance-email'
             }
             ,{
-              title: 'Data Graph',
+              title: 'Infrastructure Graph',
               type: 'react-component',
               component: 'data-graph'
             }
@@ -95,10 +95,10 @@ class NavPanelDataBreaches extends Component
     
     // instance = new GoldenLayout(config, this.node);
     /* register components or bind events to your new instance here */
-    this.instance.registerComponent('data-grid', PVGrid);
+    this.instance.registerComponent('data-grid', NavPanelDataBreachPVGridDataBreachEvents);
     this.instance.registerComponent('data-search', UserSearch);
     this.instance.registerComponent('compliance-email', PVEmailEditor);
-    this.instance.registerComponent('data-graph', DataGraph);
+    this.instance.registerComponent('data-graph', NavPanelDataBreachPVDataGraphInfrastructure);
     this.instance.init();
     
     this.instance.on('tabCreated', function (tab)

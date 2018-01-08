@@ -6,7 +6,7 @@ import GoldenLayout from 'golden-layout';
 
 import PVGrid from './PVGrid';
 import UserSearch from './UserSearch';
-import DataGraph from './DataGraph';
+import PVDataGraph from './PVDataGraph';
 // import PVEmailEditor from './PVEmailEditor';
 import PVWorldMap from "./PVWorldMap";
 
@@ -99,7 +99,7 @@ class NavPanelInternational extends Component
     this.instance.registerComponent('data-grid', PVGrid);
     this.instance.registerComponent('data-search', UserSearch);
     this.instance.registerComponent('world-map', PVWorldMap);
-    this.instance.registerComponent('data-graph', DataGraph);
+    this.instance.registerComponent('data-graph', PVDataGraph);
     this.instance.init();
     
     this.instance.on('tabCreated', function (tab)

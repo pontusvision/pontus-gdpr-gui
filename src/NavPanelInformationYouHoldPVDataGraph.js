@@ -7,7 +7,7 @@ import PVDataGraphShowNeighbouringNodes from './PVDataGraphShowNeighbouringNodes
 /***************************
  * UserList Component
  ***************************/
-class NavPanelPrivacyImpactAssessmentDataGraph extends Component
+class NavPanelInformationYouHoldPVDataGraph extends Component
 {
   
   
@@ -17,7 +17,7 @@ class NavPanelPrivacyImpactAssessmentDataGraph extends Component
     //         <Graph graph={this.state.graph} options={this.state.options} events={this.state.events}/>
     
     return (
-        <PVDataGraphShowNeighbouringNodes glEventHub={this.props.glEventHub} style={{height: '100%', width: '100%'}} namespace={"NavPanelPrivacyImpactAssessment"}/>
+        <PVDataGraphShowNeighbouringNodes glEventHub={this.props.glEventHub} style={{height: '100%', width: '100%'}} namespace={"NavPanelInformationYouHold"}/>
     
     );
     
@@ -25,4 +25,4 @@ class NavPanelPrivacyImpactAssessmentDataGraph extends Component
   }
 }
 
-export default NavPanelPrivacyImpactAssessmentDataGraph;
+export default NavPanelInformationYouHoldPVDataGraph;

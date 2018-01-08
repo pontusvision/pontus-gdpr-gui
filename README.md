@@ -431,7 +431,7 @@ export { moduleA };
 import React, { Component } from 'react';
 
 class App extends Component {
-  handleClick = () => {
+  onClickPreview = () => {
     import('./moduleA')
       .then(({ moduleA }) => {
         // Use moduleA
@@ -444,7 +444,7 @@ class App extends Component {
   render() {
     return (
       <div>
-        <button onClick={this.handleClick}>Load</button>
+        <button onClick={this.onClickPreview}>Load</button>
       </div>
     );
   }

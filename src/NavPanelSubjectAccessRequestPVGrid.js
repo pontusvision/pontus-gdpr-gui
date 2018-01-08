@@ -141,96 +141,9 @@ class NavPanelSubjectAccessRequestPVGrid extends PVGrid
     
     
   };
+ 
   
-  onError = (err, fromPage, toPage) =>
-  {
-    // ignore.
-  };
-  
-  onSuccess = (resp) =>
-  {
-    
-    let respParsed = {};
-    let itemsParsed = [];
-    
-    
-    try
-    {
-      if (typeof resp !== 'object')
-      {
-        respParsed = JSON.parse(resp);
-      }
-      else
-      {
-        respParsed = resp;
-      }
-      if (respParsed.status === 200)
-      {
-        let items = respParsed.data.result.data['@value'];
-        
-        
-        for (let i = 0, ilen = items.length; i < ilen; i++)
-        {
-          let vals = items[i]['@value'];
-          let itemParsed = {};
-          
-          for (let j = 0, jlen = vals.length; j < jlen; j += 2)
-          {
-            let key = vals[j];
-            let val = vals[j + 1];
-            if (val instanceof Object)
-            {
-              if (key === ("event_id"))
-              {
-                itemParsed['index'] = val['@value'];
-              }
-              else
-              {
-                if (val['@type'] === 'g:Date')
-                {
-                  itemParsed[key] = new Date(val['@value']);
-                  
-                }
-                else
-                {
-                  itemParsed[key] = val['@value'];
-                  
-                }
-              }
-            }
-            else
-            {
-              itemParsed[key] = val;
-            }
-          }
-          itemsParsed[i] = (itemParsed);
-          this.data[this.from + i] = itemsParsed[i];
-          
-        }
-      }
-      
-      this.data.length = Math.min(itemsParsed.length + this.from, this.to); // limitation of the API
-      
-      if (this.data.length === this.to)
-      {
-        this.data.length++;
-      }
-      // if (this.data.length == this.to)
-      
-      this.req = null;
-      
-      this.onDataLoadedCb({from: this.from, to: this.to});
-      
-      
-    }
-    catch (e)
-    {
-      // e;
-    }
-    
-    
-  };
-  
+
   
 }
 
