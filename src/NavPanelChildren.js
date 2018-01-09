@@ -4,7 +4,7 @@ import ResizeAware from 'react-resize-aware';
 
 import GoldenLayout from 'golden-layout';
 
-import PVGrid from './PVGrid';
+import NavPanelChildrenPVGrid from './NavPanelChildrenPVGrid';
 import PVBarChartChildrenAges from './PVBarChartChildrenAges';
 import PVDoughnutChartChildrenConsent from './PVDoughnutChartChildrenConsent';
 import UserSearch from './UserSearch';
@@ -95,7 +95,7 @@ class NavPanelChildren extends Component
     
     // instance = new GoldenLayout(config, this.node);
     /* register components or bind events to your new instance here */
-    this.instance.registerComponent('data-grid', PVGrid);
+    this.instance.registerComponent('data-grid', NavPanelChildrenPVGrid);
     this.instance.registerComponent('data-search', UserSearch);
     this.instance.registerComponent('children-ages', PVBarChartChildrenAges);
     this.instance.registerComponent('children-consent', PVDoughnutChartChildrenConsent);
