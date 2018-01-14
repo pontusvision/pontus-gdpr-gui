@@ -44,11 +44,11 @@ class NavPanelInformationYouHold extends Component
               type: 'react-component',
               component: 'data-grid'
             }
-            ,{
-              title: 'Compliance Emails',
-              type: 'react-component',
-              component: 'compliance-email'
-            }
+            // ,{
+            //   title: 'Compliance Emails',
+            //   type: 'react-component',
+            //   component: 'compliance-email'
+            // }
             ,{
               title: 'Data Graph',
               type: 'react-component',
@@ -91,7 +91,7 @@ class NavPanelInformationYouHold extends Component
     // instance = new GoldenLayout(config, this.node);
     /* register components or bind events to your new instance here */
     this.instance.registerComponent('data-grid', NavPanelInformationYouHoldPVGrid);
-    this.instance.registerComponent('compliance-email', PVTimeline);
+    // this.instance.registerComponent('compliance-email', PVTimeline);
     this.instance.registerComponent('data-graph', NavPanelInformationYouHoldPVDataGraph);
     
     this.instance.on('tabCreated', function (tab)

@@ -2,23 +2,23 @@ import PVGrid from './PVGrid';
 
 //
 
-class NavPanelInformationYouHoldPVGrid extends PVGrid
+class NavPanelChildrenPVGrid extends PVGrid
 {
-  
   
   componentDidMount()
   {
-    this.setNamespace("NavPanelInformationYouHold");
+    this.setNamespace("NavPanelChildren");
     
     super.componentDidMount();
     
     let colSettings = [];
   
-    colSettings[0] = {id: "Person.Title", name: "Title", field: "Person.Title", sortable: true};
+    // colSettings[0] = {id: "Person.Title", name: "Title", field: "Person.Title", sortable: true};
+    colSettings[0] = {id: "Person.Age", name: "Age", field: "Person.Age", sortable: true};
+  
     colSettings[1] = {id: "Person.Full_Name", name: "Full Name", field: "Person.Full_Name", sortable: true};
-    colSettings[2] = {id: "Person.Age", name: "Age", field: "Person.Age", sortable: true};
-    colSettings[3] = {id: "Person.Gender", name: "Gender", field: "Person.Gender", sortable: true};
-    colSettings[4] = {id: "Person.Nationality", name: "Nationality", field: "Person.Nationality", sortable: true};
+    colSettings[2] = {id: "Person.Gender", name: "Gender", field: "Person.Gender", sortable: true};
+    colSettings[3] = {id: "Person.Nationality", name: "Nationality", field: "Person.Nationality", sortable: true};
     
     this.url = "/gateway/sandbox/pvgdpr_graph";
     
@@ -36,10 +36,14 @@ class NavPanelInformationYouHoldPVGrid extends PVGrid
   
     let sortcolId = sortcol === null ? null : sortcol.id;
   
+    if (sortcolId === 'Person.Age'){
+      sortcolId = 'Person.Date_Of_Birth';
+      sortdir = (-1)* sortdir;
+    }
   
     let selectBody =
-      "  .select('Person.Title' " +
-      "         ,'Person.Full_Name' " +
+      "  .select( " +
+      "          'Person.Full_Name' " +
       "         ,'Person.Age' " +
       "         ,'Person.Gender' " +
       "         ,'Person.Nationality' " +
@@ -48,21 +52,24 @@ class NavPanelInformationYouHoldPVGrid extends PVGrid
   
   
     return {
-      gremlin: "g.V().has('Metadata.Type','Person')\n" +
+      gremlin: "long ageThresholdMs = (long)(System.currentTimeMillis() - (3600000L * 24L *365L  * 18L)); \n" +
+      "def dateThreshold = new java.util.Date (ageThresholdMs); \n" +
+      "\n" +
+      "g.V().has('Metadata.Type','Person')\n" +
+      "\n" +
+      " .where(__.values('Person.Date_Of_Birth').is(gte(dateThreshold)))\n" +
       " .order()\n" +
       " .by(pg_orderCol == null ? 'Person.Full_Name' :pg_orderCol.toString() ,pg_orderDir == (1)? incr: decr)\n" +
       " .range(pg_from,pg_to)\n" +
       " .as('people')\n" +
       " .match(\n" +
-      "   __.as('people').values('Person.Title').as('Person.Title')\n" +
-      " , __.as('people').values('Person.Full_Name').as('Person.Full_Name')\n" +
-      " , __.as('people').values('Person.Date_Of_Birth').as('Person.Date_Of_Birth')\n" +
-      " , __.as('people').values('Person.Date_Of_Birth').map{ it.get().getTime() }.as('Person.Date_Of_Birth_Millis')\n" +
-      " , __.as('Person.Date_Of_Birth_Millis').math('(' +System.currentTimeMillis() + '- _)/(3600000*24*365)').map{  it.get().longValue()}.as('Person.Age')\n" +
+      // "   __.as('people').values('Person.Title').as('Person.Title')\n" +
+      "   __.as('people').values('Person.Full_Name').as('Person.Full_Name')\n" +
+      " , __.as('people').values('Person.Date_Of_Birth').map{ (long) (((long) System.currentTimeMillis() - (long)it.get().getTime()) /(long)(3600000L*24L*365L) ) }.as('Person.Age')\n" +
       " , __.as('people').values('Person.Gender').as('Person.Gender')\n" +
       " , __.as('people').values('Person.Nationality').as('Person.Nationality')\n" +
       " , __.as('people').id().as('event_id')\n" +
-      " )\n" +
+      " )" +
       selectBody
       , bindings: {
         pg_from: from
@@ -168,4 +175,4 @@ class NavPanelInformationYouHoldPVGrid extends PVGrid
 }
 
 
-export default NavPanelInformationYouHoldPVGrid;
+export default NavPanelChildrenPVGrid;

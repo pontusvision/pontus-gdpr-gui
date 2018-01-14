@@ -2,13 +2,13 @@ import PVGrid from './PVGrid';
 
 //
 
-class NavPanelInformationYouHoldPVGrid extends PVGrid
+class NavPanelDataProtnOfficerPVGrid extends PVGrid
 {
   
   
   componentDidMount()
   {
-    this.setNamespace("NavPanelInformationYouHold");
+    this.setNamespace("NavPanelDataProtnOfficer");
     
     super.componentDidMount();
     
@@ -23,7 +23,7 @@ class NavPanelInformationYouHoldPVGrid extends PVGrid
     this.url = "/gateway/sandbox/pvgdpr_graph";
     
     this.setColumnSettings(colSettings);
-    this.setExtraSearch({value: "Person"});
+    this.setExtraSearch({value: "Person.Employee"});
     
     
   }
@@ -48,7 +48,7 @@ class NavPanelInformationYouHoldPVGrid extends PVGrid
   
   
     return {
-      gremlin: "g.V().has('Metadata.Type','Person')\n" +
+      gremlin: "g.V().has('Metadata.Type','Person.Employee')\n" +
       " .order()\n" +
       " .by(pg_orderCol == null ? 'Person.Full_Name' :pg_orderCol.toString() ,pg_orderDir == (1)? incr: decr)\n" +
       " .range(pg_from,pg_to)\n" +
@@ -168,4 +168,4 @@ class NavPanelInformationYouHoldPVGrid extends PVGrid
 }
 
 
-export default NavPanelInformationYouHoldPVGrid;
+export default NavPanelDataProtnOfficerPVGrid;

@@ -127,7 +127,7 @@ class GremlinComboBox extends Component
       
           <Creatable
             name={this.props.name||"form-field-name"}
-            key={this.state.value.length}
+            key={this.state.value ? this.state.value.length: 0}
             value={this.state.value}
             multi={this.props.multi === null? true : this.props.multi}
             options={this.state.options}

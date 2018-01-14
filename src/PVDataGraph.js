@@ -2,6 +2,12 @@ import React, {Component} from 'react';
 import ResizeAware from 'react-resize-aware';
 import Graph from 'react-graph-vis';
 import axios from 'axios';
+import PVGridSelfDiscovery from './PVGridSelfDiscovery';
+import {Segment, Portal} from 'semantic-ui-react';
+
+
+// import {Menu, Button, Segment, Portal, Sidebar, Header, Icon, Image} from 'semantic-ui-react';
+
 // import "http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css";
 // import "http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css";
 //
@@ -19,6 +25,10 @@ class PVDataGraph extends Component
     this.subscription = (this.props.namespace ? this.props.namespace : "" ) + '-pvgrid-on-click-row';
     
     this.state = {
+      vid: -1,
+      metadataType: '',
+      open: false,
+      
       graph: {
         nodes: [
           // {id: 1, label: 'Jackson Turner', title:"asdfasfdasfd",  color: '#e04141'}
@@ -96,7 +106,7 @@ class PVDataGraph extends Component
       }
       , events: {
         // select: this.selectUser
-        doubleClick: this.doubleClick
+        // doubleClick: this.doubleClick
       }
     };
     
@@ -107,8 +117,23 @@ class PVDataGraph extends Component
   
   doubleClick = (param) =>
   {
+    try{
+    
+    
     let event = {id: param.nodes[0]};
-    this.selectData(event);
+    
+    event.id = event.id.replace(' ','.').replace(/ /g,'_');
+    
+    this.setState({
+      metadataType: event.id,
+      vid: this.eventId,
+      open: true
+    })
+    }
+    catch (e){
+      e;
+    }
+    // this.selectData(event);
   };
   // This is called from the render() ref={} area to give us a reference to the
   // value that was created by the render() function.
@@ -136,8 +161,11 @@ class PVDataGraph extends Component
   //   this.props.glEventHub.emit('user-select', this.state.users[nodes[0] - 1])
   // };
   
+  
   getQuery = (eventId) =>
   {
+    this.eventId = eventId;
+    
     return {
       bindings: {
         vid: eventId
@@ -165,6 +193,7 @@ class PVDataGraph extends Component
       "            sb.append('{ \"id\":\"').append(fromNodeLabel)\n" +
       "              .append('\",\"label\":\"').append(fromNodeLabel)\n" +
       "              .append('\",\"group\":\"').append(fromNodeLabel)\n" +
+      "              .append('\",\"shape\":\"').append('box')\n" +
       "              .append('\"}')\n" +
       "            nodesSet.add( sb.toString() )\n" +
       "            \n" +
@@ -178,6 +207,7 @@ class PVDataGraph extends Component
       "            sb.append('{ \"id\":\"').append(toNodeLabel)\n" +
       "              .append('\",\"label\":\"').append(toNodeLabel)\n" +
       "              .append('\",\"group\":\"').append(toNodeLabel)\n" +
+      "              .append('\",\"shape\":\"').append('box')\n" +
       "              .append('\"}')\n" +
       "  \n" +
       "            nodesSet.add( sb.toString() );\n" +
@@ -372,7 +402,7 @@ class PVDataGraph extends Component
           items = JSON.parse(items);
         }
         
-        let nodes = this.addMainNodeProperties(items.nodes)
+        let nodes = this.addMainNodeProperties(items.nodes);
         
         
         let graph = {nodes: nodes, edges: items.edges};
@@ -451,13 +481,19 @@ class PVDataGraph extends Component
     
     
   }
+  handleClose = () => {
+    // this.setState({ open: false });
+  
+  }
   
   
   render()
   {
     // var eventHub = this.props.glEventHub;
     //         <Graph graph={this.state.graph} options={this.state.options} events={this.state.events}/>
-    
+  
+    const { open, visible } = this.state;
+  
     return (
       <ResizeAware
         style={{height: '100%', width: '100%'}}
@@ -465,6 +501,20 @@ class PVDataGraph extends Component
       >
         <Graph style={{height: '100%', width: '100%'}} graph={this.state.graph} options={this.state.options}
                events={this.state.events} ref={this.setGraph} getNetwork={this.setNetwork}/>
+  
+        <Portal onClose={this.handleClose} open={open}>
+          <Segment
+            style={{ height:'50%' , width:'50%', overflowX: 'auto', overflowY: 'auto',  left: '30%', position: 'fixed', top: '20%', zIndex: 100000, backgroundColor: '#696969' }}>
+  
+            <PVGridSelfDiscovery
+              namespace={this.props.namespace}
+              vid={this.state.vid}
+              metadataType={this.state.metadataType}
+              glEventHub={this.props.glEventHub}
+            />
+          </Segment>
+        </Portal>
+
       </ResizeAware>
     
     );

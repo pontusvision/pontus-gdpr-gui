@@ -1,4 +1,3 @@
-import PVGrid from './PVGrid';
 import * as Slick from 'slickgrid-es6';
 import PVGridEditable from "./PVGridEditable";
 

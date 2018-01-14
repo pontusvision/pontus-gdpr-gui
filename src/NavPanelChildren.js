@@ -4,10 +4,10 @@ import ResizeAware from 'react-resize-aware';
 
 import GoldenLayout from 'golden-layout';
 
-import PVGrid from './PVGrid';
-import PVBarChartChildrenAges from './PVBarChartChildrenAges';
-import PVDoughnutChartChildrenConsent from './PVDoughnutChartChildrenConsent';
-import UserSearch from './UserSearch';
+import NavPanelChildrenPVGrid from './NavPanelChildrenPVGrid';
+import NavPanelChildrenPVBarChartChildrenAges from './NavPanelChildrenPVBarChartChildrenAges';
+import NavPanelChildrenPVDataGraph from './NavPanelChildrenPVDataGraph';
+// import UserSearch from './UserSearch';
 
 
 class NavPanelChildren extends Component
@@ -44,10 +44,6 @@ class NavPanelChildren extends Component
               title: 'Data',
               type: 'react-component',
               component: 'data-grid'
-            }, {
-              title: 'Data Search',
-              type: 'react-component',
-              component: 'data-search'
             }
             ,{
               title: 'Children Ages',
@@ -55,9 +51,9 @@ class NavPanelChildren extends Component
               component: 'children-ages'
             }
             ,{
-              title: 'Children Consent',
+              title: 'Children Data Graph',
               type: 'react-component',
-              component: 'children-consent'
+              component: 'children-data-graph'
             }
           ]
         }
@@ -80,8 +76,8 @@ class NavPanelChildren extends Component
   {
     /* you can pass config as prop, or use a predefined one */
     
-    // var savedState = null;// LPPM: TODO: re-enable this later localStorage.getItem('savedStatePontusPanel');
-    var savedState =  localStorage.getItem('savedStateNavPanelChildren');
+    
+    let savedState =  localStorage.getItem('savedStateNavPanelChildren');
     
     
     if (savedState !== null)
@@ -95,10 +91,9 @@ class NavPanelChildren extends Component
     
     // instance = new GoldenLayout(config, this.node);
     /* register components or bind events to your new instance here */
-    this.instance.registerComponent('data-grid', PVGrid);
-    this.instance.registerComponent('data-search', UserSearch);
-    this.instance.registerComponent('children-ages', PVBarChartChildrenAges);
-    this.instance.registerComponent('children-consent', PVDoughnutChartChildrenConsent);
+    this.instance.registerComponent('data-grid', NavPanelChildrenPVGrid);
+    this.instance.registerComponent('children-ages', NavPanelChildrenPVBarChartChildrenAges);
+    this.instance.registerComponent('children-data-graph', NavPanelChildrenPVDataGraph);
     this.instance.init();
     
     this.instance.on('tabCreated', function (tab)
@@ -117,9 +112,14 @@ class NavPanelChildren extends Component
   
   saveState = () =>
   {
-    var state = JSON.stringify(this.instance.toConfig());
-    localStorage.setItem('savedStateNavPanelChildren', state);
+    try{
+      let state = JSON.stringify(this.instance.toConfig());
+      localStorage.setItem('savedStateNavPanelChildren', state);
+  
+    }
+    catch(e){
     
+    }
   };
   
   setNode = (node) =>

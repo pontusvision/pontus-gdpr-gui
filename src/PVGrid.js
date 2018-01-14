@@ -28,7 +28,7 @@ class PVGrid extends React.Component
     this.state = {
       columnSettings: []
       , totalRecords: 0
-    }
+    };
     
     if (!this.props.settings)
     {
@@ -96,7 +96,7 @@ class PVGrid extends React.Component
   onNewRowAdded = (e, args) =>
   {
     let item = args.item;
-    let column = args.column;
+    // let column = args.column;
     
     
     
@@ -108,7 +108,7 @@ class PVGrid extends React.Component
   
   onCellChanged = (e, args) =>
   {
-    let item = args;
+    // let item = args;
     // let column = args.column;
     //
     //
@@ -536,7 +536,7 @@ class PVGrid extends React.Component
   setExtraSearch = (str) =>
   {
     this.extraSearch = str;
-  }
+  };
   
   setColumns = (cols) =>
   {
@@ -544,7 +544,7 @@ class PVGrid extends React.Component
     this.clear();
     this.ensureData(0, this.PAGESIZE);
     
-  }
+  };
   
   
   onClick = (e, clickInfo) =>
@@ -554,19 +554,19 @@ class PVGrid extends React.Component
     
     if (clickInfo)
     {
-      var val = this.grid.getDataItem(clickInfo.row);
+      let val = this.grid.getDataItem(clickInfo.row);
       // alert (val);
       this.props.glEventHub.emit(this.namespace + '-pvgrid-on-click-row', val);
       
     }
-  }
+  };
   
   setColumnSettings = (colSettings) =>
   {
     
     this.grid.setColumns(colSettings);
     this.setColumns(colSettings);
-  }
+  };
   
   
   componentWillUnmount()

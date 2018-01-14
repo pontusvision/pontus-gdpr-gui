@@ -31,6 +31,8 @@ class PVDoughnutChart extends React.Component
       }
     };
   
+    this.errorCounter = 0;
+    this.index = -1;
     // this.datamaps = new PVDatamaps(props);
   
     // this.url = props.url || "/gateway/sandbox/pvgdpr_graph";
@@ -67,6 +69,8 @@ class PVDoughnutChart extends React.Component
   
   onClickedPVGridAwarenessCampaign = (val) =>
   {
+    this.index = val.index;
+    
     this.ensureData(val.index)
   }
   
@@ -138,11 +142,20 @@ class PVDoughnutChart extends React.Component
   };
   onError = (err) =>
   {
-    alert("error loading data:" + err);
+    if (this.errorCounter > 5){
+      alert("error loading data:" + err);
+  
+    }
+    else{
+      this.ensureData(this.index);
+    }
+    this.errorCounter ++;
   };
   
   onSuccess = (resp) =>
   {
+  
+    this.errorCounter = 0;
     // sampleRet = {
     //   "requestId": "57b7d203-67be-4698-9382-c98640711a3a"
     //   ,"status": {"message": "", "code": 200, "attributes": {"@type": "g:Map", "@value": []}}

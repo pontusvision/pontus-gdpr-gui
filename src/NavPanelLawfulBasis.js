@@ -8,7 +8,7 @@ import NavPanelLawfulBasisPVGrid from './NavPanelLawfulBasisPVGrid';
 // import UserSearch from './UserSearch';
 import NavPanelLawfulBasisDataGraph from './NavPanelLawfulBasisDataGraph';
 // import PVEmailEditor from './PVEmailEditor';
-import NavPanelLawfulBasisPVTimeline from './NavPanelLawfulBasisPVTimeline';
+// import NavPanelLawfulBasisPVTimeline from './NavPanelLawfulBasisPVTimeline';
 
 class NavPanelLawfulBasis extends Component
 {
@@ -50,11 +50,11 @@ class NavPanelLawfulBasis extends Component
               type: 'react-component',
               component: 'data-graph'
             }
-            ,{
-              title: 'Data Timeline',
-              type: 'react-component',
-              component: 'data-timeline'
-            }
+            // ,{
+            //   title: 'Data Timeline',
+            //   type: 'react-component',
+            //   component: 'data-timeline'
+            // }
           ]
         }
       ]
@@ -93,7 +93,7 @@ class NavPanelLawfulBasis extends Component
     /* register components or bind events to your new instance here */
     this.instance.registerComponent('data-grid', NavPanelLawfulBasisPVGrid);
     this.instance.registerComponent('data-graph', NavPanelLawfulBasisDataGraph);
-    this.instance.registerComponent('data-timeline', NavPanelLawfulBasisPVTimeline);
+    // this.instance.registerComponent('data-timeline', NavPanelLawfulBasisPVTimeline);
     this.instance.init();
     
     this.instance.on('tabCreated', function (tab)
@@ -112,8 +112,14 @@ class NavPanelLawfulBasis extends Component
   
   saveState = () =>
   {
-    var state = JSON.stringify(this.instance.toConfig());
-    localStorage.setItem('savedStateNavPanelLawfulBasis', state);
+    try{
+      let state = JSON.stringify(this.instance.toConfig());
+      localStorage.setItem('savedStateNavPanelLawfulBasis', state);
+  
+    }
+    catch (e){
+    
+    }
     
   };
   
