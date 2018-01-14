@@ -27,19 +27,27 @@ class PVGridSelfDiscovery extends React.Component
     }
     
     if (props.metadataType === null){
-      throw "Must have a metadataType so we can query the graph "
+      throw "Must have a metadataType so we can query the graph ";
     }
     
     if (props.namespace === null){
-      throw "Must have a namespace so this grid can receive events from peer windows"
+      throw "Must have a namespace so this grid can receive events from peer windows";
     }
     
-    
+    if (props.edgeType === null ){
+      throw "Must have an edgeType so we can query the graph ";
+    }
+  
+    if (props.edgeDir === null){
+      throw "Must have an edgeDir so we can query the graph"
+    }
+  
+    this.edgeDir = props.edgeDir;
     this.extraSearch = props.metadataType;
-    
+    this.edgeType = props.edgeType;
     this.vid = props.vid;
     this.setNamespace(props.namespace);
-  
+    
   
     this.errCounter = 0;
     this.errCounterAddRow = 0;
@@ -54,9 +62,10 @@ class PVGridSelfDiscovery extends React.Component
     {
       this.settings = {
         multiColumnSort: true,
-        defaultColumnWidth: 125,
-        rowHeight: 26,
-        forceFitColumns: true
+        defaultColumnWidth: 200,
+        rowHeight: 26
+        // ,forceFitColumns: false
+        // ,autosizeColumns: true
       };
     }
     else
@@ -190,6 +199,8 @@ class PVGridSelfDiscovery extends React.Component
   {
     this.from = from;
     this.to = to;
+    
+    let queryDir = (this.edgeDir === '<-')? "  .inE(pg_edgeType).outV()\n" : "  .outE(pg_edgeType).inV()";
     return ({
       bindings: {
         pg_vid: this.vid
@@ -198,6 +209,7 @@ class PVGridSelfDiscovery extends React.Component
         , pg_orderCol: sortcol === null ? null : sortcol.id
         , pg_orderDir: sortdir
         , pg_type: extraSearch
+        , pg_edgeType: this.edgeType
       },
       gremlin: "HashSet headers = new HashSet<>();\n" +
       "StringBuffer sb = new StringBuffer();\n" +
@@ -206,7 +218,9 @@ class PVGridSelfDiscovery extends React.Component
       "sb.append('{ \"data\":[');\n" +
       "\n" +
       "\n" +
-      "gridData = g.V(pg_vid).out().has('Metadata.Type',pg_type)\n" +
+      "gridData = g.V(pg_vid)\n" +
+      queryDir+
+      "  .has('Metadata.Type',pg_type)\n" +
       "  .order()\n" +
       "  .by(pg_orderCol == null ? 'Metadata.Create_Date' :pg_orderCol.toString() ,pg_orderDir == (1)? incr: decr)\n" +
       "  .range(pg_from,pg_to)\n" +
@@ -715,6 +729,8 @@ class PVGridSelfDiscovery extends React.Component
     }
     this.grid.updateRowCount();
     this.grid.render();
+    this.props.glEventHub.emit(this.namespace + '-pvgrid-on-data-loaded', args);
+  
   };
   
   setTotalRecords(totalRecords)

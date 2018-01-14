@@ -14,11 +14,12 @@ class NavPanelDataProtnOfficerPVGrid extends PVGrid
     
     let colSettings = [];
   
-    colSettings[0] = {id: "Person.Title", name: "Title", field: "Person.Title", sortable: true};
-    colSettings[1] = {id: "Person.Full_Name", name: "Full Name", field: "Person.Full_Name", sortable: true};
-    colSettings[2] = {id: "Person.Age", name: "Age", field: "Person.Age", sortable: true};
-    colSettings[3] = {id: "Person.Gender", name: "Gender", field: "Person.Gender", sortable: true};
-    colSettings[4] = {id: "Person.Nationality", name: "Nationality", field: "Person.Nationality", sortable: true};
+    colSettings[0] = {id: "Person.Employee.Role", name: "Role", field: "Person.Employee.Role", sortable: true};
+    colSettings[1] = {id: "Person.Title", name: "Title", field: "Person.Title", sortable: true};
+    colSettings[2] = {id: "Person.Full_Name", name: "Full Name", field: "Person.Full_Name", sortable: true};
+    colSettings[3] = {id: "Person.Age", name: "Age", field: "Person.Age", sortable: true};
+    colSettings[4] = {id: "Person.Gender", name: "Gender", field: "Person.Gender", sortable: true};
+    colSettings[5] = {id: "Person.Nationality", name: "Nationality", field: "Person.Nationality", sortable: true};
     
     this.url = "/gateway/sandbox/pvgdpr_graph";
     
@@ -38,7 +39,10 @@ class NavPanelDataProtnOfficerPVGrid extends PVGrid
   
   
     let selectBody =
-      "  .select('Person.Title' " +
+      "  .select(" +
+      "" +
+      "          'Person.Employee.Role' " +
+      "         ,'Person.Title' " +
       "         ,'Person.Full_Name' " +
       "         ,'Person.Age' " +
       "         ,'Person.Gender' " +
@@ -61,6 +65,7 @@ class NavPanelDataProtnOfficerPVGrid extends PVGrid
       " , __.as('Person.Date_Of_Birth_Millis').math('(' +System.currentTimeMillis() + '- _)/(3600000*24*365)').map{  it.get().longValue()}.as('Person.Age')\n" +
       " , __.as('people').values('Person.Gender').as('Person.Gender')\n" +
       " , __.as('people').values('Person.Nationality').as('Person.Nationality')\n" +
+      " , __.as('people').values('Person.Employee.Role').as('Person.Employee.Role')\n" +
       " , __.as('people').id().as('event_id')\n" +
       " )\n" +
       selectBody
