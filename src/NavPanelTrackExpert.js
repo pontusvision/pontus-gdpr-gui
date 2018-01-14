@@ -118,8 +118,12 @@ class NavPanelTrackExpert extends Component
   
   saveState = () =>
   {
-    var state = JSON.stringify(this.instance.toConfig());
-    localStorage.setItem('savedStateNavPanelTrackExpert', state);
+    try
+    {
+      let state = JSON.stringify(this.instance.toConfig());
+      localStorage.setItem('savedStateNavPanelTrackExpert', state);
+  
+    }catch (e){}
     
   };
   

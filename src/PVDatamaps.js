@@ -434,7 +434,7 @@ export default class Datamap extends React.Component
           <button className="zoom-button" onClick={this.resetZoom}>0</button>
           <button className="zoom-button" onClick={this.zoomOut}>-</button>
           <button className="zoom-button" onClick={this.zoomIn}>+</button>
-          <div>{this.state.percentage}</div>
+          <div style={{overflowY: 'auto'}}>{this.state.percentage}</div>
         </div>
       </div>
     

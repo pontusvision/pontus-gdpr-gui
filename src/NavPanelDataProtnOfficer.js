@@ -1,13 +1,13 @@
-
 import React, {Component} from 'react';
 import ResizeAware from 'react-resize-aware';
+
 import GoldenLayout from 'golden-layout';
-import NavPanelDataProceduresPVGrid from './NavPanelDataProceduresPVGrid';
-import NavPanelDataProceduresPVGridNoticeTemplates from './NavPanelDataProceduresPVGridNoticeTemplates';
-import PVEmailEditor from './PVEmailEditor';
+
+import NavPanelDataProtnOfficerPVGrid from './NavPanelDataProtnOfficerPVGrid';
+import NavPanelDataProtnOfficerPVDataGraph from './NavPanelDataProtnOfficerPVDataGraph';
 
 
-class NavPanelDataProcedures extends Component
+class NavPanelDataProtnOfficer extends Component
 {
   constructor(props)
   {
@@ -38,19 +38,13 @@ class NavPanelDataProcedures extends Component
           type: 'column',
           content: [
             {
-              title: 'Data Procedures',
+              title: 'Data',
               type: 'react-component',
               component: 'data-grid'
-            }
-            ,{
-              title: 'Compliance Notices',
+            },  {
+              title: 'Data Graph',
               type: 'react-component',
-              component: 'compliance-email'
-            }
-            ,{
-              title: 'Compliance Notices Grid',
-              type: 'react-component',
-              component: 'compliance-grid'
+              component: 'data-graph'
             }
           ]
         }
@@ -60,11 +54,13 @@ class NavPanelDataProcedures extends Component
     
   }
   
-  select= ()=>{
+  select = () =>
+  {
   
   };
   
-  deselect= ()=>{
+  deselect = () =>
+  {
   
   };
   
@@ -73,23 +69,30 @@ class NavPanelDataProcedures extends Component
   {
     /* you can pass config as prop, or use a predefined one */
     
-    var savedState =  localStorage.getItem('savedStateNavPanelDataProcedures');
+    // var savedState = null;// LPPM: TODO: re-enable this later localStorage.getItem('savedStatePontusPanel');
+    let savedState = localStorage.getItem('savedStateNavPanelDataProtnOfficer');
     
     
-    if (savedState !== null)
+    try
     {
-      this.instance = new GoldenLayout(JSON.parse(savedState), this.node);
+      if (savedState !== null)
+      {
+        this.instance = new GoldenLayout(JSON.parse(savedState), this.node);
+      }
+      else
+      {
+        this.instance = new GoldenLayout(this.config, this.node);
+      }
     }
-    else
-    {
+    catch (e){
       this.instance = new GoldenLayout(this.config, this.node);
+  
     }
     
     // instance = new GoldenLayout(config, this.node);
     /* register components or bind events to your new instance here */
-    this.instance.registerComponent('data-grid', NavPanelDataProceduresPVGrid);
-    this.instance.registerComponent('compliance-email', PVEmailEditor);
-    this.instance.registerComponent('compliance-grid', NavPanelDataProceduresPVGridNoticeTemplates);
+    this.instance.registerComponent('data-grid', NavPanelDataProtnOfficerPVGrid);
+    this.instance.registerComponent('data-graph', NavPanelDataProtnOfficerPVDataGraph);
     this.instance.init();
     
     this.instance.on('tabCreated', function (tab)
@@ -108,9 +111,14 @@ class NavPanelDataProcedures extends Component
   
   saveState = () =>
   {
-    var state = JSON.stringify(this.instance.toConfig());
-    localStorage.setItem('savedStateNavPanelDataProcedures', state);
+    try{
+      let state = JSON.stringify(this.instance.toConfig());
+      localStorage.setItem('savedStateNavPanelPrivacyImpactAssessment', state);
+  
+    }
+    catch (e){
     
+    }
   };
   
   setNode = (node) =>
@@ -123,18 +131,20 @@ class NavPanelDataProcedures extends Component
     if (height > 0)
     {
       this.instance.updateSize(width, height);
-  
+      
     }
-    else{
-      this.instance.updateSize(width,window.innerHeight - 50);
-  
+    else
+    {
+      this.instance.updateSize(width, window.innerHeight - 50);
+      
     }
   };
   
   render()
   {
     
-    return (         <ResizeAware
+    return (
+      <ResizeAware
         style={{height: 'calc(100% - 20px)', width: '100%'}}
         onResize={this.handleResize}
       >
@@ -144,4 +154,5 @@ class NavPanelDataProcedures extends Component
     
   }
 }
-export default NavPanelDataProcedures;
+
+export default NavPanelDataProtnOfficer;

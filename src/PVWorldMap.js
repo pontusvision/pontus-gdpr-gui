@@ -37,6 +37,7 @@ class PVWorldMap extends React.Component
   componentDidMount()
   {
     this.props.glEventHub.on(this.namespace + '-pvgrid-on-search-changed', this.searchDataByCountry);
+    this.searchDataByCountry(null);
   
   }
   
@@ -50,12 +51,37 @@ class PVWorldMap extends React.Component
   setObj = (obj) =>
   {
     this.obj = obj;
-  }
+  };
+  
+  
+  getQuery = (searchStr) => {
+    return {
+      gremlin: "StringBuffer sb = new StringBuffer('{ \"countryData\": { \"entry\": [');\n" +
+      "int counter = 0;\n" +
+      "g.V().has('Metadata.Type', 'Person').groupCount().by('Person.Nationality').each{ it ->\n" +
+      "  // def val = it.get();\n" +
+      "  it.each{ key, val ->\n" +
+      "  \n" +
+      "  if (key.length() == 2){\n" +
+      "    if (counter > 0){\n" +
+      "      sb.append(',')\n" +
+      "    }\n" +
+      "    counter ++;\n" +
+      "    sb.append('{ \"key\": \"').append(key).append('\", \"value\": ').append(val).append('}\\n')\n" +
+      "    }\n" +
+      "  }\n" +
+      "  \n" +
+      "}\n" +
+      "sb.append('] }}')\n" +
+      "sb.toString()\n"
+      
+    };
+  };
   
   
   searchDataByCountry = (searchStr) =>{
     
-    let url = "/gateway/sandbox/pvgdpr_server/home/country_data_count";
+    let url =  "/gateway/sandbox/pvgdpr_graph"; //"/gateway/sandbox/pvgdpr_server/home/country_data_count";
   
     let self = this;
   
@@ -64,7 +90,10 @@ class PVWorldMap extends React.Component
       let CancelToken = axios.CancelToken;
       self.req = CancelToken.source();
       axios.post(url,
-        {searchStr: searchStr}
+        self.getQuery(searchStr)
+        
+        
+        
         // {
         //   searchStr: searchStr
         // }
@@ -87,17 +116,17 @@ class PVWorldMap extends React.Component
         }
       });
     }, 50);
-  }
+  };
   
   onError = (thrown) => {
     alert("Failed to get data by country" + thrown);
     
-  }
+  };
   onSuccess = (resp) =>{
   
     var  colParam = {};
 
-    var rawList = resp.data.countryData.entry;
+    var rawList = JSON.parse(resp.data.result.data['@value'][0]).countryData.entry;
     
     var max = 0;
     var min = 9999999999999999999999;
@@ -136,7 +165,7 @@ class PVWorldMap extends React.Component
   
   
   
-  }
+  };
   popupTemplate = (geography, data) =>
   {
     var val = this.popupData[geography.id];

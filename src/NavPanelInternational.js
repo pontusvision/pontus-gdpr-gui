@@ -4,9 +4,8 @@ import ResizeAware from 'react-resize-aware';
 
 import GoldenLayout from 'golden-layout';
 
-import PVGrid from './PVGrid';
-import UserSearch from './UserSearch';
-import PVDataGraph from './PVDataGraph';
+import NavPanelInternationalPVGridRegulators from './NavPanelInternationalPVGridRegulators';
+import NavPanelInternationalPVDataGraph from './NavPanelInternationalPVDataGraph';
 // import PVEmailEditor from './PVEmailEditor';
 import PVWorldMap from "./PVWorldMap";
 
@@ -45,10 +44,6 @@ class NavPanelInternational extends Component
               title: 'Data',
               type: 'react-component',
               component: 'data-grid'
-            }, {
-              title: 'Data Search',
-              type: 'react-component',
-              component: 'data-search'
             }
             ,{
               title: 'World Map',
@@ -96,10 +91,9 @@ class NavPanelInternational extends Component
     
     // instance = new GoldenLayout(config, this.node);
     /* register components or bind events to your new instance here */
-    this.instance.registerComponent('data-grid', PVGrid);
-    this.instance.registerComponent('data-search', UserSearch);
+    this.instance.registerComponent('data-grid', NavPanelInternationalPVGridRegulators);
     this.instance.registerComponent('world-map', PVWorldMap);
-    this.instance.registerComponent('data-graph', PVDataGraph);
+    this.instance.registerComponent('data-graph', NavPanelInternationalPVDataGraph);
     this.instance.init();
     
     this.instance.on('tabCreated', function (tab)

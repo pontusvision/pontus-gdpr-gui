@@ -11,6 +11,7 @@ import NavPanelChildren from "./NavPanelChildren";
 import NavPanelDataBreaches from "./NavPanelDataBreaches";
 import NavPanelDataProcedures from "./NavPanelDataProcedures";
 import NavPanelPrivacyImpactAssessment from './NavPanelPrivacyImpactAssessment';
+import NavPanelDataProtnOfficer from './NavPanelDataProtnOfficer';
 import NavPanelInternational from "./NavPanelInternational";
 import Icon from 'react-icons-kit-allreact';
 import {book_2} from 'react-icons-kit-allreact/ikons/book_2';
@@ -23,6 +24,7 @@ import {unlocked} from 'react-icons-kit-allreact/iconic/unlocked';
 import {balanceScale} from 'react-icons-kit-allreact/fa/balanceScale';
 import {globe} from 'react-icons-kit-allreact/ikons/globe';
 import {check} from 'react-icons-kit-allreact/fa/check';
+import {blackTie} from 'react-icons-kit-allreact/fa/blackTie';
 
 import {shareAlt} from 'react-icons-kit-allreact/fa/shareAlt';
 
@@ -94,13 +96,14 @@ class ComplyPanel extends Component
           {this.renderItem("Awareness", <NavPanelAwareness style={{height: '100%', width:'100%'}}/>, <Icon icon={book_2}/>)}
           {this.renderItem("Info You Hold", <NavPanelInformationYouHold style={{height: '100%', width:'100%'}}/>, <Icon icon={info}/>)}
           {this.renderItem("Privacy Notices", <NavPanelPrivacyNotices style={{height: '100%', width:'100%'}}/>, <Icon icon={eyeBlocked}/>)}
-          {this.renderItem("Data Procedures", <NavPanelDataProcedures style={{height: '100%', width:'100%'}}/>, <Icon icon={iosPricetagsOutline}/>)}
+          {this.renderItem("Individual's Rights", <NavPanelDataProcedures style={{height: '100%', width:'100%'}}/>, <Icon icon={iosPricetagsOutline}/>)}
           {this.renderItem("Subj Access Req", <NavPanelSubjectAccessRequest style={{height: '100%', width:'100%'}}/>, <Icon icon={download}/>)}
           {this.renderItem("Lawful Basis", <NavPanelLawfulBasis style={{height: '100%', width:'100%'}}/>, <Icon icon={balanceScale}/>)}
           {this.renderItem("Consent", <NavPanelConsent style={{height: '100%', width:'100%'}}/>, <Icon icon={check}/>)}
           {this.renderItem("Children", <NavPanelChildren style={{height: '100%', width:'100%'}}/>, <Icon icon={ic_child_care}/>)}
           {this.renderItem("Data Breaches", <NavPanelDataBreaches style={{height: '100%', width:'100%'}}/>, <Icon icon={unlocked}/>)}
           {this.renderItem("Priv Impact Asmnt", <NavPanelPrivacyImpactAssessment style={{height: '100%', width:'100%'}}/>, <Icon icon={shareAlt}/>)}
+          {this.renderItem("Data Prot'n Offcr", <NavPanelDataProtnOfficer style={{height: '100%', width:'100%'}}/>, <Icon icon={blackTie}/>)}
           {this.renderItem("International", <NavPanelInternational style={{height: '100%', width:'100%'}}/>, <Icon icon={globe}/>)}
         
         

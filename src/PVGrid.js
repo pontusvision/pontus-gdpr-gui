@@ -108,7 +108,7 @@ class PVGrid extends React.Component
   
   onCellChanged = (e, args) =>
   {
-    let item = args;
+    // let item = args;
     // let column = args.column;
     //
     //

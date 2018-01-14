@@ -1,6 +1,6 @@
 import React from 'react';
 import ResizeAware from 'react-resize-aware';
-import {Menu, Button, Segment, Portal, Sidebar, Header, Icon, Image} from 'semantic-ui-react';
+import {Menu, Button, Segment, Portal, Sidebar} from 'semantic-ui-react';
 import {Flex, Box} from 'reflexbox';
 import {Creatable} from 'react-select';
 import './react-select.css';
