@@ -1,6 +1,6 @@
 import React from 'react';
-
-// import brace from 'brace';
+import {Menu, Button} from 'semantic-ui-react';
+import {Flex, Box} from 'reflexbox';
 import AceEditor from 'react-ace';
 // import ResizeAware from 'react-resize-aware';
 // import ReactResizeDetector from 'react-resize-detector';
@@ -103,16 +103,41 @@ class PVAceGremlinJSONQueryResults extends React.Component
     data = data.replace(/\\n/g, '"+\n"');
     data = data.replace(/\\t/g, '\t');
     return (
-      
+  
       <div
+        // style={{
+        //   height: 'calc(100%-5px)', width: 'calc(100%)', position: 'relative',
+        // }}
+        height={this.state.height}
+        width={this.state.width}
         ref={this.setOuterDiv}
-        style={{
-          height: 'calc(100%-5px)', width: 'calc(100%)', position: 'relative',
-        }}
-
       >
+    
+    
+        <Flex column w={1} wrap={true}>
+          <Box px={2} w={1 / 4}>
         
-        <AceEditor
+            <Menu>
+          
+              <Button
+                className={'compact'}
+                onClick={() => {
+                  this.props.glEventHub.emit((this.props.namespace ? this.props.namespace : "" ) + '-pvgrid-on-click-row',
+                    {id: +(this.obj.editor.getSelectedText())} ); }}
+                // inverted={false}
+                // color={'black'}
+                style={{border:0, background:'rgb(69,69,69)'}}
+                size={'small'}
+              >
+                Graph
+              </Button>
+        
+            </Menu>
+          </Box>
+          <Box px={2} w={1 / 4}>
+      
+      
+          <AceEditor
           mode="json"
           theme="monokai"
           name="gremlin-query-results"
@@ -124,11 +149,13 @@ class PVAceGremlinJSONQueryResults extends React.Component
           value={data}
           ref={this.setObj}
           // style={{height: this.state.height + 'px', width: this.state.width + 'px'}}
-          height={this.state.height + "px"}
-          width={this.state.width +"px"}
-          style={{ overflow: 'auto'}}
+          height={this.state.height -20 + "px"}
+          width={this.state.width -20 + "px"}
+          style={{overflow: 'auto'}}
         
         />
+          </Box>
+        </Flex>
       </div>
     
     );

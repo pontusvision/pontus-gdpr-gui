@@ -4,9 +4,9 @@ import ResizeAware from 'react-resize-aware';
 
 import GoldenLayout from 'golden-layout';
 
-import PVDataGraph from './PVDataGraph';
-import PVAceGremlinEditor from "./PVAceGremlinEditor";
-import PVAceGremlinJSONQueryResults from "./PVAceGremlinJSONQueryResults";
+import NavPanelTrackExpertPVDataGraph from './NavPanelTrackExpertPVDataGraph';
+import NavPanelTrackExpertPVAceGremlinEditor from "./NavPanelTrackExpertPVAceGremlinEditor";
+import NavPanelTrackExpertPVAceGremlinJSONQueryResults from "./NavPanelTrackExpertPVAceGremlinJSONQueryResults";
 
 
 class NavPanelTrackExpert extends Component
@@ -93,9 +93,9 @@ class NavPanelTrackExpert extends Component
     
     // instance = new GoldenLayout(config, this.node);
     /* register components or bind events to your new instance here */
-    this.instance.registerComponent('gremlin-editor', PVAceGremlinEditor);
-    this.instance.registerComponent('query-results', PVAceGremlinJSONQueryResults);
-    this.instance.registerComponent('data-graph', PVDataGraph);
+    this.instance.registerComponent('gremlin-editor', NavPanelTrackExpertPVAceGremlinEditor);
+    this.instance.registerComponent('query-results', NavPanelTrackExpertPVAceGremlinJSONQueryResults);
+    this.instance.registerComponent('data-graph', NavPanelTrackExpertPVDataGraph);
     this.instance.init();
     
     // this.instance.on('resize', ({a,b})=>{

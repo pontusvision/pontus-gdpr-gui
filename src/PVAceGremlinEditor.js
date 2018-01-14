@@ -200,21 +200,10 @@ class PVAceGremlinEditor extends React.Component
                 // color={'black'}
                 style={{border:0, background:'rgb(69,69,69)'}}
                 size={'small'}
-              > 
+              >
                 Send Query
               </Button>
-              <Button
-                className={'compact'}
-                onClick={() => {
-                  this.props.glEventHub.emit((this.props.namespace ? this.props.namespace : "" ) + '-pvgrid-on-click-row',
-                    {id: +(this.obj.getSelected())} ); }}
-                // inverted={false}
-                // color={'black'}
-                style={{border:0, background:'rgb(69,69,69)'}}
-                size={'small'}
-              >
-                Graph
-              </Button>
+              
 
             </Menu>
           </Box>
