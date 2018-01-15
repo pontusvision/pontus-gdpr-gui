@@ -5,9 +5,9 @@ import ResizeAware from 'react-resize-aware';
 import GoldenLayout from 'golden-layout';
 
 import NavPanelDataBreachPVGridDataBreachEvents from './NavPanelDataBreachPVGridDataBreachEvents';
-import UserSearch from './UserSearch';
+import NavPanelDataBreachPVDataGraphDataBreached from './NavPanelDataBreachPVDataGraphDataBreached';
 import NavPanelDataBreachPVDataGraphInfrastructure from './NavPanelDataBreachPVDataGraphInfrastructure';
-import PVEmailEditor from './PVEmailEditor';
+// import PVEmailEditor from './PVEmailEditor';
 
 
 class NavPanelDataBreaches extends Component
@@ -44,15 +44,16 @@ class NavPanelDataBreaches extends Component
               title: 'Data',
               type: 'react-component',
               component: 'data-grid'
-            }, {
-              title: 'Data Search',
-              type: 'react-component',
-              component: 'data-search'
             }
+            // , {
+            //   title: 'Data Search',
+            //   type: 'react-component',
+            //   component: 'data-search'
+            // }
             ,{
-              title: 'Compliance Emails',
+              title: 'Data Breach Graph',
               type: 'react-component',
-              component: 'compliance-email'
+              component: 'data-breach-graph'
             }
             ,{
               title: 'Infrastructure Graph',
@@ -96,8 +97,7 @@ class NavPanelDataBreaches extends Component
     // instance = new GoldenLayout(config, this.node);
     /* register components or bind events to your new instance here */
     this.instance.registerComponent('data-grid', NavPanelDataBreachPVGridDataBreachEvents);
-    this.instance.registerComponent('data-search', UserSearch);
-    this.instance.registerComponent('compliance-email', PVEmailEditor);
+    this.instance.registerComponent('data-breach-graph', NavPanelDataBreachPVDataGraphDataBreached);
     this.instance.registerComponent('data-graph', NavPanelDataBreachPVDataGraphInfrastructure);
     this.instance.init();
     

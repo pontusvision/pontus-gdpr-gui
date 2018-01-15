@@ -7,7 +7,7 @@ import PVDataGraph from './PVDataGraph';
 /***************************
  * UserList Component
  ***************************/
-class NavPanelInformationYouHoldPVDataGraph extends Component
+class NavPanelDataBreachPVDataGraphDataBreached extends Component
 {
   
   
@@ -17,7 +17,7 @@ class NavPanelInformationYouHoldPVDataGraph extends Component
     //         <Graph graph={this.state.graph} options={this.state.options} events={this.state.events}/>
     
     return (
-        <PVDataGraph glEventHub={this.props.glEventHub} style={{height: '100%', width: '100%'}} namespace={"NavPanelInformationYouHold"}/>
+        <PVDataGraph glEventHub={this.props.glEventHub} style={{height: '100%', width: '100%'}} namespace={"NavPanelDataBreach"}/>
     
     );
     
@@ -25,4 +25,4 @@ class NavPanelInformationYouHoldPVDataGraph extends Component
   }
 }
 
-export default NavPanelInformationYouHoldPVDataGraph;
+export default NavPanelDataBreachPVDataGraphDataBreached;
