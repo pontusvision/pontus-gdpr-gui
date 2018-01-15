@@ -18,7 +18,7 @@ class NavPanelDataProceduresPVGrid extends PVGrid
     colSettings[1] = {id: "Object.Data_Procedures.Property", name: "Property", field: "Object.Data_Procedures.Property", sortable: true};
     colSettings[2] = {id: "Object.Data_Procedures.Delete_URL", name: "Delete Link", field: "Object.Data_Procedures.Delete_URL", sortable: true};
     colSettings[3] = {id: "Object.Data_Procedures.Delete_Mechanism", name: "Delete Mechanism", field: "Object.Data_Procedures.Delete_Mechanism", sortable: true};
-    colSettings[4] = {id: "Object.Data_Procedures.Update_URL", name: "Upadate Link", field: "Object.Data_Procedures.Update_URL", sortable: true};
+    colSettings[4] = {id: "Object.Data_Procedures.Update_URL", name: "Update Link", field: "Object.Data_Procedures.Update_URL", sortable: true};
     colSettings[5] = {id: "Object.Data_Procedures.Update_Mechanism", name: "Update Mechanism", field: "Object.Data_Procedures.Update_Mechanism", sortable: true};
 
     

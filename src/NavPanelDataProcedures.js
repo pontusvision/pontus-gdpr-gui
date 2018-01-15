@@ -3,8 +3,8 @@ import React, {Component} from 'react';
 import ResizeAware from 'react-resize-aware';
 import GoldenLayout from 'golden-layout';
 import NavPanelDataProceduresPVGrid from './NavPanelDataProceduresPVGrid';
-import NavPanelDataProceduresPVGridNoticeTemplates from './NavPanelDataProceduresPVGridNoticeTemplates';
-import PVEmailEditor from './PVEmailEditor';
+// import NavPanelDataProceduresPVGridNoticeTemplates from './NavPanelDataProceduresPVGridNoticeTemplates';
+// import PVEmailEditor from './PVEmailEditor';
 
 
 class NavPanelDataProcedures extends Component
@@ -42,16 +42,16 @@ class NavPanelDataProcedures extends Component
               type: 'react-component',
               component: 'data-grid'
             }
-            ,{
-              title: 'Compliance Notices',
-              type: 'react-component',
-              component: 'compliance-email'
-            }
-            ,{
-              title: 'Compliance Notices Grid',
-              type: 'react-component',
-              component: 'compliance-grid'
-            }
+            // ,{
+            //   title: 'Compliance Notices',
+            //   type: 'react-component',
+            //   component: 'compliance-email'
+            // }
+            // ,{
+            //   title: 'Compliance Notices Grid',
+            //   type: 'react-component',
+            //   component: 'compliance-grid'
+            // }
           ]
         }
       ]
@@ -88,8 +88,8 @@ class NavPanelDataProcedures extends Component
     // instance = new GoldenLayout(config, this.node);
     /* register components or bind events to your new instance here */
     this.instance.registerComponent('data-grid', NavPanelDataProceduresPVGrid);
-    this.instance.registerComponent('compliance-email', PVEmailEditor);
-    this.instance.registerComponent('compliance-grid', NavPanelDataProceduresPVGridNoticeTemplates);
+    // this.instance.registerComponent('compliance-email', PVEmailEditor);
+    // this.instance.registerComponent('compliance-grid', NavPanelDataProceduresPVGridNoticeTemplates);
     this.instance.init();
     
     this.instance.on('tabCreated', function (tab)
