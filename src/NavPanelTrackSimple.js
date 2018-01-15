@@ -4,10 +4,10 @@ import ResizeAware from 'react-resize-aware';
 
 import GoldenLayout from 'golden-layout';
 
-import PVGrid from './PVGrid';
-import PVWorldMap from './PVWorldMap';
-import UserSearch from './UserSearch';
-import PVDataGraph from './PVDataGraph';
+import NavPanelTrackSimplePVGrid from './NavPanelTrackSimplePVGrid';
+// import PVWorldMap from './PVWorldMap';
+import NavPanelTrackSimpleUserSearch from './NavPanelTrackSimpleUserSearch';
+import NavPanelTrackSimplePVDataGraph from './NavPanelTrackSimplePVDataGraph';
 
 
 class NavPanelTrackSimple extends Component
@@ -49,11 +49,11 @@ class NavPanelTrackSimple extends Component
               type: 'react-component',
               component: 'data-search'
             }
-            ,{
-              title: 'World Map',
-              type: 'react-component',
-              component: 'data-world-map'
-            }
+            // ,{
+            //   title: 'World Map',
+            //   type: 'react-component',
+            //   component: 'data-world-map'
+            // }
             ,{
               title: 'Data Graph',
               type: 'react-component',
@@ -97,10 +97,10 @@ class NavPanelTrackSimple extends Component
     
     // instance = new GoldenLayout(config, this.node);
     /* register components or bind events to your new instance here */
-    this.instance.registerComponent('data-grid', PVGrid);
-    this.instance.registerComponent('data-search', UserSearch);
-    this.instance.registerComponent('data-world-map', PVWorldMap);
-    this.instance.registerComponent('data-graph', PVDataGraph);
+    this.instance.registerComponent('data-grid', NavPanelTrackSimplePVGrid);
+    this.instance.registerComponent('data-search', NavPanelTrackSimpleUserSearch);
+    // this.instance.registerComponent('data-world-map', PVWorldMap);
+    this.instance.registerComponent('data-graph', NavPanelTrackSimplePVDataGraph);
     this.instance.init();
     
     this.instance.on('tabCreated', function (tab)

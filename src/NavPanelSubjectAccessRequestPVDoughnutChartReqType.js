@@ -34,7 +34,8 @@ class NavPanelSubjectAccessRequestPVDoughnutChartReqType extends Component
     
     // this.url = props.url || "/gateway/sandbox/pvgdpr_graph";
     this.url = "/gateway/sandbox/pvgdpr_graph";
-    
+    this.errorCounter = 0;
+  
   }
   
   
@@ -114,14 +115,21 @@ class NavPanelSubjectAccessRequestPVDoughnutChartReqType extends Component
   };
   onError = (err) =>
   {
-    alert("error loading data:" + err);
+    if (this.errorCounter < 5){
+      this.ensureData();
+      this.errorCounter ++;
+    }
+    else {
+      alert("error loading data:" + err);
+    }
   };
   
   onSuccess = (resp) =>
   {
-    
-    
-    
+  
+    this.errorCounter = 0;
+  
+  
     try{
       
       var data = {

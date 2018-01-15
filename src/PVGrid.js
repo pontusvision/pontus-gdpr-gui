@@ -54,7 +54,7 @@ class PVGrid extends React.Component
     this.h_request = null;
     this.req = null; // ajax request
     this.url = props.url || "/gateway/sandbox/pvgdpr_server/home/records";
-    this.namespace = "";
+    this.namespace = this.props.namespace||"";
     
     // if (!this.props.url){
     //   let err = "Must set the url property control where this component sends its requests";
@@ -68,7 +68,7 @@ class PVGrid extends React.Component
     // ];
     // this.loader = new RemoteModel(this.props);
     this.extraSearch = [];
-    this.setNamespace("");
+    this.setNamespace(this.namespace);
     
   }
   
