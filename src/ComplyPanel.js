@@ -1,18 +1,31 @@
 import React, {Component} from 'react';
 import ResizeAware from 'react-resize-aware';
+import {Popup, Grid} from 'semantic-ui-react';
+import './react-select.css';
+import PVGauge from './PVGauge';
+
+
 import {NavPane, NavPaneItem} from 'react-desktop/windows';
 import NavPanelInformationYouHold from "./NavPanelInformationYouHold";
+import NavPanelInformationYouHoldPopup from "./NavPanelInformationYouHoldPopup";
 import NavPanelAwareness from "./NavPanelAwareness";
+import NavPanelAwarenessPopup from "./NavPanelAwarenessPopup";
 import NavPanelPrivacyNotices from "./NavPanelPrivacyNotices";
+import NavPanelPrivacyNoticesPopup from "./NavPanelPrivacyNoticesPopup";
+
 import NavPanelSubjectAccessRequest from "./NavPanelSubjectAccessRequest";
 import NavPanelLawfulBasis from "./NavPanelLawfulBasis";
 import NavPanelConsent from "./NavPanelConsent";
+import NavPanelConsentPopup from "./NavPanelConsentPopup";
 import NavPanelChildren from "./NavPanelChildren";
+import NavPanelChildrenPopup from "./NavPanelChildrenPopup";
+
 import NavPanelDataBreaches from "./NavPanelDataBreaches";
 import NavPanelDataProcedures from "./NavPanelDataProcedures";
 import NavPanelPrivacyImpactAssessment from './NavPanelPrivacyImpactAssessment';
 import NavPanelDataProtnOfficer from './NavPanelDataProtnOfficer';
 import NavPanelInternational from "./NavPanelInternational";
+import NavPanelComplianceScores from "./NavPanelComplianceScores";
 import Icon from 'react-icons-kit-allreact';
 import {book_2} from 'react-icons-kit-allreact/ikons/book_2';
 import {info} from 'react-icons-kit-allreact/icomoon/info';
@@ -28,11 +41,10 @@ import {blackTie} from 'react-icons-kit-allreact/fa/blackTie';
 
 import {shareAlt} from 'react-icons-kit-allreact/fa/shareAlt';
 
+import {ic_multiline_chart} from 'react-icons-kit-allreact/md/ic_multiline_chart'
 
 class ComplyPanel extends Component
 {
-  
-  
   
   
   handleResize = ({width, height}) =>
@@ -51,7 +63,6 @@ class ComplyPanel extends Component
   };
   
   
-  
   // static defaultProps = {
   //   color: '#cc7f29',
   //   theme: 'dark'
@@ -61,7 +72,7 @@ class ComplyPanel extends Component
   {
     super(props);
     this.state = {
-      selected: 'Awareness',
+      selected: 'Compliance Scores',
       height: props.height,
       width: props.width
     }
@@ -90,21 +101,61 @@ class ComplyPanel extends Component
           color={this.props.color}
           height={this.state.height - 40}
           width={this.state.width - 20}
-
+          
           theme={this.props.theme}
         >
-          {this.renderItem("Awareness", <NavPanelAwareness style={{height: '100%', width:'100%'}}/>, <Icon icon={book_2}/>)}
-          {this.renderItem("Info You Hold", <NavPanelInformationYouHold style={{height: '100%', width:'100%'}}/>, <Icon icon={info}/>)}
-          {this.renderItem("Privacy Notices", <NavPanelPrivacyNotices style={{height: '100%', width:'100%'}}/>, <Icon icon={eyeBlocked}/>)}
-          {this.renderItem("Individual's Rights", <NavPanelDataProcedures style={{height: '100%', width:'100%'}}/>, <Icon icon={iosPricetagsOutline}/>)}
-          {this.renderItem("Subj Access Req", <NavPanelSubjectAccessRequest style={{height: '100%', width:'100%'}}/>, <Icon icon={download}/>)}
-          {this.renderItem("Lawful Basis", <NavPanelLawfulBasis style={{height: '100%', width:'100%'}}/>, <Icon icon={balanceScale}/>)}
-          {this.renderItem("Consent", <NavPanelConsent style={{height: '100%', width:'100%'}}/>, <Icon icon={check}/>)}
-          {this.renderItem("Children", <NavPanelChildren style={{height: '100%', width:'100%'}}/>, <Icon icon={ic_child_care}/>)}
-          {this.renderItem("Data Breaches", <NavPanelDataBreaches style={{height: '100%', width:'100%'}}/>, <Icon icon={unlocked}/>)}
-          {this.renderItem("Priv Impact Asmnt", <NavPanelPrivacyImpactAssessment style={{height: '100%', width:'100%'}}/>, <Icon icon={shareAlt}/>)}
-          {this.renderItem("Data Prot'n Offcr", <NavPanelDataProtnOfficer style={{height: '100%', width:'100%'}}/>, <Icon icon={blackTie}/>)}
-          {this.renderItem("International", <NavPanelInternational style={{height: '100%', width:'100%'}}/>, <Icon icon={globe}/>)}
+          {this.renderItem("Compliance Scores", <NavPanelComplianceScores style={{height: '100%', width: '100%'}}/>, <Icon icon={ic_multiline_chart}/>,
+            'GDPR Compliance Score')}
+          {this.renderItemRaw("Awareness", <NavPanelAwareness style={{height: '100%', width: '100%'}}/>, <Icon icon={book_2}/>,<NavPanelAwarenessPopup/>)}
+          {this.renderItemRaw("Info You Hold", <NavPanelInformationYouHold style={{height: '100%', width: '100%'}}/>, <Icon
+              icon={info}/>, <NavPanelInformationYouHoldPopup/>)}
+          {this.renderItemRaw("Privacy Notices", <NavPanelPrivacyNotices style={{height: '100%', width: '100%'}}/>, <Icon
+              icon={eyeBlocked}/>,<NavPanelPrivacyNoticesPopup/>)}
+          {this.renderItem("Individual's Rights", <NavPanelDataProcedures style={{height: '100%', width: '100%'}}/>,
+            <Icon icon={iosPricetagsOutline}/>,
+            'You should check your procedures to ensure they\n' +
+            'cover all the rights individuals have, including how\n' +
+            'you would delete personal data or provide data\n' +
+            'electronically and in a commonly used format.')}
+          {this.renderItem("Subj Access Req", <NavPanelSubjectAccessRequest style={{height: '100%', width: '100%'}}/>,
+            <Icon icon={download}/>,
+            'You should update your procedures and plan how you\n' +
+            'will handle requests within the new timescales and\n' +
+            'provide any additional information.')}
+          {this.renderItem("Lawful Basis", <NavPanelLawfulBasis style={{height: '100%', width: '100%'}}/>, <Icon
+              icon={balanceScale}/>,
+            'You should identify the lawful basis for your\n' +
+            'processing activity in the GDPR, document it and\n' +
+            'update your privacy notice to explain it.')}
+          {this.renderItemRaw("Consent", <NavPanelConsent style={{height: '100%', width: '100%'}}/>, <Icon icon={check}/>, <NavPanelConsentPopup/>)}
+          {this.renderItemRaw("Children", <NavPanelChildren style={{height: '100%', width: '100%'}}/>, <Icon icon={ic_child_care}/>, <NavPanelChildrenPopup/>)}
+          {this.renderItem("Data Breaches", <NavPanelDataBreaches style={{height: '100%', width: '100%'}}/>, <Icon
+              icon={unlocked}/>,
+            'You should make sure you have the right procedures\n' +
+            'in place to detect, report and investigate a personal\n' +
+            'data breach.')}
+          {this.renderItem("Priv Impact Asmnt", <NavPanelPrivacyImpactAssessment
+            style={{height: '100%', width: '100%'}}/>, <Icon
+            icon={shareAlt}/>, 'You should familiarise yourself now with the ICO’s\n' +
+            'code of practice on Privacy Impact Assessments as\n' +
+            'well as the latest guidance from the Article 29\n' +
+            'Working Party, and work out how and when to\n' +
+            'implement them in your organisation.')}
+          {this.renderItem("Data Prot'n Offcr", <NavPanelDataProtnOfficer style={{height: '100%', width: '100%'}}/>,
+            <Icon icon={blackTie}/>,
+            'You should designate someone to take responsibility\n' +
+            'for data protection compliance and assess where this\n' +
+            'role will sit within your organisation’s structure and\n' +
+            'governance arrangements. You should consider\n' +
+            'whether you are required to formally designate a\n' +
+            'Data Protection Officer.\n')}
+          {this.renderItem("International", <NavPanelInternational style={{height: '100%', width: '100%'}}/>, <Icon
+              icon={globe}/>,
+            'If your organisation operates in more than one EU\n' +
+            'member state (ie you carry out cross-border\n' +
+            'processing), you should determine your lead data\n' +
+            'protection supervisory authority. Article 29 Working\n' +
+            'Party guidelines will help you do this.')}
         
         
         </NavPane>
@@ -179,14 +230,79 @@ class ComplyPanel extends Component
   //   );
   // }
   
-  renderItem(title, content, icon)
-  {
-    
-    
+  
+  renderItem(title, content, icon, text){
+    let popupIconInsides =
+      <Grid centered divided columns={2}>
+      <Grid.Column textAlign='center'>
+        <strong>{title}</strong>
+        <p>{text}</p>
+      </Grid.Column>
+      <Grid.Column textAlign='center'>
+        <div>
+          <PVGauge   width={100} height={130}  label={title}/>
+        </div>
+      </Grid.Column>
+
+    </Grid>;
+  
+  
+    let popupIcon =
+      <Popup trigger={icon}
+             flowing={false}
+             hoverable={true}
+             wide={false}
+             inverted={false}
+      >
+        {popupIconInsides}
+      </Popup>;
+  
+  
     return (
       <NavPaneItem
         title={title}
-        icon={icon}
+        icon={popupIcon}
+        style={{height: this.state.height - 80 + 'px', width: '100%'}}
+      
+        theme="light"
+        background="#000000"
+        selected={this.state.selected === title}
+        onSelect={() => this.setState({selected: title})}
+        padding="10px 20px"
+        push
+    
+      >
+        <ResizeAware
+          style={{height: '100%', width: '100%'}}
+        
+          onResize={this.handleResize}
+        >
+          {content}
+        </ResizeAware>
+      </NavPaneItem>
+  
+  
+    );
+  }
+  
+  renderItemRaw(title, content, icon, popupIconInsides)
+  {
+  
+    let popupIcon =
+      <Popup trigger={icon}
+             flowing={false}
+             hoverable={true}
+             wide={false}
+             inverted={false}
+      >
+        {popupIconInsides}
+      </Popup>;
+  
+  
+    return (
+      <NavPaneItem
+        title={title}
+        icon={popupIcon}
         style={{height: this.state.height - 80 + 'px', width: '100%'}}
         
         theme="light"

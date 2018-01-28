@@ -243,7 +243,7 @@ class PVGridSelfDiscovery extends React.Component
       "        def rawVal = val[0];\n" +
       "        if (rawVal instanceof String || rawVal instanceof Date)\n" +
       "        {\n" +
-      "          sb.append('\"').append(rawVal).append('\"');\n" +
+      "          sb.append('\"').append(rawVal.toString().replaceAll('[\"]',\"'\")).append('\"');\n" +
       "        }\n" +
       "        else\n" +
       "        {\n" +
@@ -261,7 +261,7 @@ class PVGridSelfDiscovery extends React.Component
       "          counter ++;\n" +
       "          if (rawVal instanceof String || rawVal instanceof Date)\n" +
       "          {\n" +
-      "            sb.append('\"').append(rawVal).append('\"');\n" +
+      "            sb.append('\"').append(rawVal.toString().replaceAll('[\"]',\"'\")).append('\"');\n" +
       "          }\n" +
       "          else\n" +
       "          {\n" +
@@ -419,6 +419,9 @@ class PVGridSelfDiscovery extends React.Component
         this.from, this.to
       );
     }
+    else {
+      this.props.glEventHub.emit(this.namespace + '-pvgrid-on-data-loaded', null);
+    }
     
   };
   
@@ -553,7 +556,7 @@ class PVGridSelfDiscovery extends React.Component
     }
     catch (e)
     {
-        e;
+      this.props.glEventHub.emit(this.namespace + '-pvgrid-on-data-loaded', null);
     }
     
     
