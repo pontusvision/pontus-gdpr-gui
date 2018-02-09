@@ -1,33 +1,20 @@
-import * as Slick from 'slickgrid-es6';
-import PVGrid  from "./PVGrid";
+import PVEmailEditor from "./PVEmailEditor";
 
 //
 
-class NavPanelDataProceduresPVGridNoticeTemplates extends PVGrid
+class NavPanelDataProceduresPVTemplateEditor extends PVEmailEditor
 {
-  
   
   componentDidMount()
   {
-    this.setNamespace("NavPanelInformationYouHold");
+    this.namespace = ("NavPanelInformationYouHold");
     
     super.componentDidMount();
     
-    let colSettings = [];
+    this.lastData = null;
   
-    colSettings[0] = {id: "Object.Notification_Templates.Id", name: "Id", field: "Object.Notification_Templates.Id",  sortable: true};
-    colSettings[1] = {id: "Object.Notification_Templates.Types", name: "Types", field: "Object.Notification_Templates.Types",   sortable: true};
-    colSettings[2] = {id: "Object.Notification_Templates.Text", name: "Text", field: "Object.Notification_Templates.Text",   sortable: true};
-    colSettings[3] = {id: "Object.Notification_Templates.Label", name: "Label", field: "Object.Notification_Templates.Label",   sortable: true};
-
-    
-    this.url = "/gateway/sandbox/pvgdpr_graph";
-    
-    this.setColumnSettings(colSettings);
-    this.setExtraSearch({value: "Object.Notification_Templates"});
-    
-    
-    
+    this.props.glEventHub.on(this.namespace + '-pvgrid-on-click-row', this.onClickedRow);
+  
     /*
      property("Object.Data_Procedures.Type", typeStr.replaceAll('[_.]',' ')).
      property("Object.Data_Procedures.Property", propStr.replaceAll('[_.]',' ')).
@@ -39,8 +26,47 @@ class NavPanelDataProceduresPVGridNoticeTemplates extends PVGrid
      */
     
   }
+  componentWillUnmount(){
+    this.props.glEventHub.off(this.namespace + '-pvgrid-on-click-row', this.onClickedRow);
+  
+  }
   
   
+  
+  onClickedRow = (data) => {
+    this.setState({value: data['Object.Notification_Templates.Text']});
+    this.lastData = data;
+    
+  };
+  
+  getQuery = (newVal, lastData)=>{
+    return {
+      gremlin: "" +
+      "def trans = graph.tx()\n" +
+      "    try {\n" +
+      "        if (!trans.isOpen()) {\n" +
+      "            trans.open();\n" +
+      "        }\n" +
+      "        g.V(pg_id)\n" +
+      "                .property(\"Object.Notification_Templates.Text\", pg_newValStr)\n" +
+      "                .next();\n" +
+      "        trans.commit();\n" +
+      "    }\n" +
+      "    catch (t) {\n" +
+      "        trans.rollback();\n" +
+      "        throw t;\n" +
+      "    } finally {\n" +
+      "        trans.close();\n" +
+      "    }" +
+      "" +
+      ""
+      , bindings: {
+        pg_newValStr: newVal
+       ,pg_id: lastData.index
+      }
+      
+    };
+  };
   getSearchObj = (from, to, searchstr, searchExact, cols, extraSearch, sortcol, sortdir) =>
   {
     this.from = from;
@@ -53,7 +79,6 @@ class NavPanelDataProceduresPVGridNoticeTemplates extends PVGrid
       "  .select('Object.Notification_Templates.Id'" +
       "         ,'Object.Notification_Templates.Text'" +
       "         ,'Object.Notification_Templates.Types'" +
-      "         ,'Object.Notification_Templates.Label'" +
       "         ,'event_id'" +
       "         )";
   
@@ -67,7 +92,6 @@ class NavPanelDataProceduresPVGridNoticeTemplates extends PVGrid
       "    __.as('dataProcs').values('Object.Notification_Templates.Id')  .as('Object.Notification_Templates.Id')" +
       "  , __.as('dataProcs').values('Object.Notification_Templates.Text').as('Object.Notification_Templates.Text')" +
       "  , __.as('dataProcs').values('Object.Notification_Templates.Types').as('Object.Notification_Templates.Types')" +
-      "  , __.as('dataProcs').values('Object.Notification_Templates.Label').as('Object.Notification_Templates.Label')" +
       "  , __.as('dataProcs').id().as('event_id')" +
       "  )" +
       selectBody
@@ -92,4 +116,4 @@ class NavPanelDataProceduresPVGridNoticeTemplates extends PVGrid
 }
 
 
-export default NavPanelDataProceduresPVGridNoticeTemplates;
+export default NavPanelDataProceduresPVTemplateEditor;

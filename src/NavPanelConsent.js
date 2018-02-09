@@ -6,7 +6,6 @@ import GoldenLayout from 'golden-layout';
 
 import NavPanelConsentPVGridPrivacyNotices from './NavPanelConsentPVGridPrivacyNotices';
 import NavPanelConsentPVGridEventConsent from './NavPanelConsentPVGridEventConsent';
-// import UserSearch from './';
 import NavPanelConsentDataGraph from './NavPanelConsentDataGraph';
 import NavPanelConsentPVDoughnutChartConsentStatus from './NavPanelConsentPVDoughnutChartConsentStatus';
 

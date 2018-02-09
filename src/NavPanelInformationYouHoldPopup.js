@@ -27,7 +27,7 @@ class NavPanelInformationYouHoldPopup extends PVGDPRScores
     this.icon = info;
     
   
-    
+    this.weight = 4;
     
     
     

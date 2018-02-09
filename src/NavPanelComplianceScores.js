@@ -109,7 +109,7 @@ class NavPanelComplianceScores extends Component
   {
     try{
       let state = JSON.stringify(this.instance.toConfig());
-      localStorage.setItem('savedStateNavPanelConsent', state);
+      localStorage.setItem('savedStateNavPanelComplianceScores', state);
   
     }catch(e){
       // ignore

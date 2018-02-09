@@ -1,25 +1,16 @@
 import React from 'react';
 import ResizeAware from 'react-resize-aware';
-import {Menu, Button, Segment, Portal, Sidebar} from 'semantic-ui-react';
+import {Menu, Button, Segment, Portal} from 'semantic-ui-react';
 import {Flex, Box} from 'reflexbox';
-import {Creatable} from 'react-select';
+// import {Creatable} from 'react-select';
 import './react-select.css';
-// import axios from "axios";
+import axios from "axios";
 import Editor from 'react-quill'; // ES6
 
 import 'react-quill/dist/quill.snow.css';
-// import GremlinComboBox from "./GremlinComboBox";
-// import 'semantic-ui-css/semantic.min.css';
 
 class PVEmailEditor extends React.Component
 {
-  
-  state = {
-    maxHeight: 100
-    , open: false
-    , visible: false
-    , preview: <div></div>
-  };
   
   constructor(props)
   {
@@ -28,7 +19,14 @@ class PVEmailEditor extends React.Component
     //   {key: 'name', name: 'Name'},
     //   {key: 'street', name: 'Street'}
     // ];
-    
+    this.errorCount = 0;
+    this.state  = {
+      maxHeight: 100
+      , open: false
+      , visible: false
+      , preview: <div></div>
+      , value: ""
+    };
   }
   
   
@@ -40,6 +38,106 @@ class PVEmailEditor extends React.Component
       
     }
     this.setState({maxHeight: height});
+    
+  };
+  
+  saveData = (newVal, lastData) =>
+  {
+    // this.origNodeId = (+(this.origNodeId));
+    let url = "/gateway/sandbox/pvgdpr_graph"; // "/gateway/sandbox/pvgdpr_server/home/graph";
+    if (this.h_request !== null)
+    {
+      clearTimeout(this.h_request);
+    }
+  
+    let self = this;
+    this.h_request = setTimeout(() =>
+    {
+      let CancelToken = axios.CancelToken;
+      self.req = CancelToken.source();
+    
+      axios.post(url, this.getQuery(newVal, lastData), {
+        headers: {
+          'Content-Type': 'application/json'
+          , 'Accept': 'application/json'
+        }
+        , cancelToken: self.req.token
+      }).then(this.onSuccess).catch((thrown) =>
+      {
+        if (axios.isCancel(thrown))
+        {
+          console.log('Request canceled', thrown.message);
+        }
+        else
+        {
+          this.onError(newVal, lastData, thrown);
+        }
+      });
+    
+    
+    }, 50);
+  
+  };
+  
+  onError = (newVal, lastData, thrown) =>
+  {
+    this.errorCount++;
+    if (this.errorCount > 5)
+    {
+      alert("Failed to get graph data:" + thrown);
+      
+    }
+    
+    else
+    {
+      this.saveData(newVal,lastData);
+    }
+  };
+  
+  
+  onSuccess = (resp) =>
+  {
+    
+    this.errorCount = 0;
+    let respParsed = {};
+    
+    
+    try
+    {
+      if (typeof resp !== 'object')
+      {
+        respParsed = JSON.parse(resp);
+      }
+      else
+      {
+        respParsed = resp;
+      }
+      if (respParsed.status === 200)
+      {
+        // let items = respParsed.data.result.data['@value'][0];
+        //
+        //
+        // if (typeof items !== 'object')
+        // {
+        //   items = JSON.parse(items);
+        // }
+        //
+        // let nodes = this.addMainNodeProperties(items.nodes);
+        //
+        //
+        // let graph = {nodes: nodes, edges: items.edges};
+        //
+        // this.setState({graph: graph});
+        // localStorage.setItem(this.subscription, graph);
+        
+      }
+      
+      
+    }
+    catch (e)
+    {
+      console.log(e);
+    }
     
   };
   
@@ -68,8 +166,15 @@ class PVEmailEditor extends React.Component
   };
   
   onClickSave = () =>{
-    this.setState({ visible: !this.state.visible })
-  }
+    // this.setState({ visible: !this.state.visible });
+  
+    let newVal = this.obj.getEditorContents();
+    if (this.lastData){
+      this.saveData(newVal,this.lastData);
+      this.lastData['Object.Notification_Templates.Text'] = newVal;
+  
+    }
+  };
   
   handleClose = () => this.setState({ open: false });
   
@@ -115,56 +220,24 @@ class PVEmailEditor extends React.Component
                 Save
               </Button>
               
-              <Button
-                className={'compact'}
-                onClick={this.onClickSave}
-                style={{border: 0, background: 'rgb(69,69,69)', margin: 4}}
-                size={'small'}
-              >
-                Clear
-              </Button>
+              
             </Menu>
   
   
           </Box>
           <Box>
-            
+            <Editor
+              style={{
+                flex: 1, maxHeight: this.state.maxHeight }}
+              ref={this.setObj}
+              toolbarOnFocus
+              wrapperClassName="wrapper-class"
+              editorClassName="editor-class"
+              toolbarClassName="toolbar-class"
+              value={this.state.value}
   
-            <Sidebar.Pushable as={Segment}>
-              <Sidebar as={Menu} animation='overlay' width='thin' visible={visible} icon='labeled' vertical inverted>
-                <Menu.Item name='home'>
-                  <Creatable
-                    name={this.props.name || "form-field-name"}
-                    // key={this.state.value.length}
-                    // value={this.state.value}
-                    // multi={this.props.multi === null? true : this.props.multi}
-                    // options={this.state.options}
-                    joinValues={true}
-                    delimiter={","}
-                    onChange={this.onChange}
-                    style={{border: 0, background: 'rgb(69,69,69)', marginRight: 4, height: 20}}
-  
-                  >
-                  </Creatable>
+            />
 
-                </Menu.Item>
-
-              </Sidebar>
-              <Sidebar.Pusher>
-                <Segment basic>
-                  <Editor
-                    style={{
-                      flex: 1, maxHeight: this.state.maxHeight }}
-                    ref={this.setObj}
-                    toolbarOnFocus
-                    wrapperClassName="wrapper-class"
-                    editorClassName="editor-class"
-                    toolbarClassName="toolbar-class"
-  
-                  />
-                </Segment>
-              </Sidebar.Pusher>
-            </Sidebar.Pushable>
 
           </Box>
         </Flex>

@@ -9,7 +9,12 @@ import NavPanelConsentPopup from "./NavPanelConsentPopup";
 import NavPanelAwarenessPopup from "./NavPanelAwarenessPopup";
 import NavPanelInformationYouHoldPopup from "./NavPanelInformationYouHoldPopup";
 import NavPanelPrivacyNoticesPopup from "./NavPanelPrivacyNoticesPopup";
-
+import NavPanelSubjectAccessRequestPopup from "./NavPanelSubjectAccessRequestPopup";
+import NavPanelLawfulBasisPopup from "./NavPanelLawfulBasisPopup";
+import NavPanelPrivacyImpactAssessmentPopup from './NavPanelPrivacyImpactAssessmentPopup';
+import NavPanelDataProtnOfficerPopup from "./NavPanelDataProtnOfficerPopup";
+import NavPanelInternationalPopup from "./NavPanelInternationalPopup";
+import NavPanelDataBreachPopup from "./NavPanelDataBreachPopup";
 class NavPanelComplianceScoresDetailedScores extends Component
 {
   
@@ -69,23 +74,17 @@ class NavPanelComplianceScoresDetailedScores extends Component
         onResize={this.handleResize}
       >
       <div  style={{overflowY:"scroll" , overflowX: "hidden",height: 'calc(100% - 20px)', width: '100%'}} >
-        <NavPanelAwarenessPopup longShow={true}/>
-        <NavPanelInformationYouHoldPopup longShow={true}/>
-        <NavPanelPrivacyNoticesPopup longShow={true}/>
-        <NavPanelChildrenPopup longShow={true}/>
-        <NavPanelChildrenPopup longShow={true}/>
-        <NavPanelChildrenPopup longShow={true}/>
-        <NavPanelConsentPopup longShow={true}/>
-        <NavPanelChildrenPopup longShow={true}/>
-        <NavPanelChildrenPopup longShow={true}/>
-        <NavPanelChildrenPopup longShow={true}/>
-        <NavPanelChildrenPopup longShow={true}/>
-        <NavPanelChildrenPopup longShow={true}/>
-        <NavPanelChildrenPopup longShow={true}/>
-        <NavPanelChildrenPopup longShow={true}/>
-        <NavPanelChildrenPopup longShow={true}/>
-        <NavPanelChildrenPopup longShow={true}/>
-        <NavPanelChildrenPopup longShow={true}/>
+        <NavPanelAwarenessPopup longShow={true}  glEventHub = {this.props.glEventHub}/>
+        <NavPanelInformationYouHoldPopup longShow={true} glEventHub = {this.props.glEventHub}/>
+        <NavPanelPrivacyNoticesPopup longShow={true} glEventHub = {this.props.glEventHub}/>
+        <NavPanelSubjectAccessRequestPopup longShow={true} glEventHub = {this.props.glEventHub}/>
+        <NavPanelLawfulBasisPopup longShow={true} glEventHub = {this.props.glEventHub}/>
+        <NavPanelConsentPopup longShow={true} glEventHub = {this.props.glEventHub}/>
+        <NavPanelChildrenPopup longShow={true} glEventHub = {this.props.glEventHub}/>
+        <NavPanelDataBreachPopup longShow={true} glEventHub = {this.props.glEventHub}/>
+        <NavPanelPrivacyImpactAssessmentPopup longShow={true} glEventHub = {this.props.glEventHub}/>
+        <NavPanelDataProtnOfficerPopup longShow={true} glEventHub = {this.props.glEventHub}/>
+        <NavPanelInternationalPopup longShow={true} glEventHub = {this.props.glEventHub}/>
         
         
       

@@ -34,7 +34,7 @@ class PVGDPRScores extends Component
       scoreValue: 0
     };
   
-  
+    this.weight = 0;
   
     // this.title = "Children";
     // this.icon = ic_child_care;
@@ -143,7 +143,18 @@ class PVGDPRScores extends Component
           scoreExplanation: data.scoreExplanation,
           scoreValue: data.scoreValue
   
-        })
+        });
+  
+        if (this.props.glEventHub){
+          this.props.glEventHub.emit('on-score-changed',
+            {
+              scoreValue: data.scoreValue
+             ,title: this.title
+             ,weight: this.weight
+            }
+          );
+  
+        }
         
       }
       
@@ -179,7 +190,9 @@ class PVGDPRScores extends Component
         <Grid centered divided columns={3} style = {{padding: 15}}>
           <Grid.Column textAlign='center'>
             <div>
-              <PVGauge value={this.state.scoreValue} width={150} height={130} label={this.title}/>
+              <PVGauge value={this.state.scoreValue} width={150} height={130} label={this.title}
+                       valueLabelStyle={{ textAnchor: "middle", fill: "#ffffff", stroke: "none", fontStyle: "normal", fontVariant: "normal", fontWeight: "bold", fontStretch: "normal", lineHeight: "normal", fillOpacity: 1 }}
+            />
             </div>
           </Grid.Column>
   
@@ -205,11 +218,17 @@ class PVGDPRScores extends Component
       return (
         
         <Grid centered divided columns={2}>
-          
-          <Grid.Column textAlign='center'>
-            <strong>{this.title}</strong>
-            <p>{this.text}</p>
+          <Grid.Column textAlign='justified'>
+            <Icon
+              icon={this.scoreIcon}/>
+    
+            <p>{this.state.scoreExplanation}</p>
           </Grid.Column>
+  
+          {/*<Grid.Column textAlign='center'>*/}
+            {/*<strong>{this.title}</strong>*/}
+            {/*<p>{this.text}</p>*/}
+          {/*</Grid.Column>*/}
           <Grid.Column textAlign='center'>
             <div>
               <PVGauge value={this.state.scoreValue} width={100} height={130} label={this.title}/>

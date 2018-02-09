@@ -27,7 +27,7 @@ class NavPanelAwarenessPopup extends PVGDPRScores
       
     this.title = "Awareness";
     this.icon = book_2;
-    
+    this.weight = 1;
     
     
     

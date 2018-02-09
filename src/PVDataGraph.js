@@ -104,6 +104,15 @@ class PVDataGraph extends Component
         },
         edges: {
           color: "#FFFFFF"
+          ,font: {
+            color: '#FFFFFF',
+            size: 20, // px
+            face: 'arial',
+            background: 'none',
+            strokeWidth: 1, // px
+            strokeColor: '#ffffff',
+          
+          }
         }
         
         

@@ -62,6 +62,21 @@ class NavPanelChildren extends Component
     };
     
   }
+  customStringify = (v) => {
+  const cache = new Map();
+  return JSON.stringify(v, function (key, value) {
+    if (typeof value === 'object' && value !== null) {
+      if (cache.get(value)) {
+        // Circular reference found, discard key
+        return;
+      }
+      // Store value in our collection
+      cache.set(value, true);
+    }
+    return value;
+  });
+};
+  
   
   select= ()=>{
   
@@ -113,12 +128,13 @@ class NavPanelChildren extends Component
   saveState = () =>
   {
     try{
-      let state = JSON.stringify(this.instance.toConfig());
+      let stateObj = this.instance.toConfig();
+      let state = this.customStringify(stateObj);
       localStorage.setItem('savedStateNavPanelChildren', state);
   
     }
     catch(e){
-    
+      e;
     }
   };
   

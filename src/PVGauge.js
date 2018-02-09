@@ -82,7 +82,11 @@ class PVGauge extends Component
       >
         <div style={{height: '100%', width: '100%'}}>
         
-          <Gauge ref={this.setNode} color={colorHex} value={val} width={this.state.width} height={this.state.height} label={this.props.label?this.props.label: ""}/>
+          <Gauge ref={this.setNode} color={colorHex} value={val} width={this.state.width} height={this.state.height}
+                 label={this.props.label?this.props.label: ""}
+                 valueLabelStyle={this.props.valueLabelStyle || { textAnchor: "middle", fill: "#000000", stroke: "none", fontStyle: "normal", fontVariant: "normal", fontWeight: 'bold', fontStretch: 'normal', lineHeight: 'normal', fillOpacity: 1 }}
+                 
+        />
       
       
         </div>

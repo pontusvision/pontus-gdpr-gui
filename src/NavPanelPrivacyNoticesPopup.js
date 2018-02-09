@@ -23,6 +23,7 @@ class NavPanelPrivacyNoticesPopup extends PVGDPRScores
     this.title = "Privacy Notices";
     this.icon = eyeBlocked;
     
+    this.weight = 6;
    
     
   }

@@ -25,12 +25,13 @@ class NavPanelChildrenPopup extends PVGDPRScores
       'any data processing activity.';
     this.title = "Children";
     this.icon = ic_child_care;
-    
-    
-    
-    
-    
-    
+  
+  
+    this.weight = 2;
+  
+  
+  
+  
   }
   
   

@@ -25,11 +25,12 @@ class NavPanelConsentPopup extends PVGDPRScores
       'GDPR standard.';
     this.title = "Consent";
     this.icon = check;
-    
-    
-    
-    
-    
+  
+    this.weight = 6;
+  
+  
+  
+  
   }
   
   
