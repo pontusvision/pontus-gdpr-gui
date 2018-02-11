@@ -133,7 +133,7 @@ class PVAceGremlinEditor extends React.Component
     
     localStorage.setItem('savedStatePVAceGremlinEditor', val);
     // this.setState({value: val})
-  }
+  };
   
   setOuterDiv = (od) =>
   {
@@ -220,7 +220,7 @@ class PVAceGremlinEditor extends React.Component
               value={val}
               height={this.state.height -20 + "px"}
               width={this.state.width -20 + "px"}
-              style={{overflow: 'auto'}}
+              style={{overflow: 'auto', flexGrow: 1}}
               
               ref={this.setObj}
             />

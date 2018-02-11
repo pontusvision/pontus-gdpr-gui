@@ -7,7 +7,7 @@ import GoldenLayout from 'golden-layout';
 import NavPanelDataBreachPVGridDataBreachEvents from './NavPanelDataBreachPVGridDataBreachEvents';
 import NavPanelDataBreachPVDataGraphDataBreached from './NavPanelDataBreachPVDataGraphDataBreached';
 import NavPanelDataBreachPVDataGraphInfrastructure from './NavPanelDataBreachPVDataGraphInfrastructure';
-// import PVEmailEditor from './PVEmailEditor';
+// import PVTemplateEditor from './PVTemplateEditor';
 
 
 class NavPanelDataBreaches extends Component

@@ -52,9 +52,11 @@ class TrackPanel extends React.Component
     
     return (
       <div
-         style={{height: '100%', width:'100%'}}
+         style={{height: '100%', width:'100%', flexDirection: 'column', flexGrow: 1, flexBasis:'auto'}}
       >
         <NavPane
+          style={{flexDirection: 'column', flexGrow: 1, flexBasis:'auto'}}
+  
           openLength={200}
           push
           color={this.props.color}
@@ -144,8 +146,9 @@ class TrackPanel extends React.Component
       <NavPaneItem
         title={title}
         icon={icon}
-        style={{height: this.state.height - 80+'px', width: '100%'}}
-        
+        // style={{height: this.state.height - 80+'px', width: '100%'}}
+        style={{height: this.state.height - 80+'px', width: '100%', flexDirection: 'column', flexGrow: 1, flexBasis:'auto'}}
+
         theme="light"
         background="#000000"
         selected={this.state.selected === title}
@@ -155,7 +158,7 @@ class TrackPanel extends React.Component
       
       >
         <ResizeAware
-          style={{height: '100%', width: '100%'}}
+          style={{height: '100%', width: '100%', flexDirection: 'column', flexGrow: 1, flexBasis:'auto'}}
   
           onResize={this.handleResize}
         >

@@ -4,14 +4,8 @@ import Graph from 'react-graph-vis';
 import axios from 'axios';
 import PVGridSelfDiscovery from './PVGridSelfDiscovery';
 import {Segment, Portal} from 'semantic-ui-react';
-// import {Flex, Box} from 'reflexbox';
-
-
-// import {Menu, Button, Segment, Portal, Sidebar, Header, Icon, Image} from 'semantic-ui-react';
-
-// import "http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css";
-// import "http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css";
-//
+import {Menu} from 'semantic-ui-react';
+import PVReportButton from './PVReportButton';
 
 
 /***************************
@@ -32,7 +26,9 @@ class PVDataGraph extends Component
       edgeType: '',
       edgeDir: '<-',
       open: false,
-      
+      height: 1000,
+      width: 1000,
+      reportButtons: [],
       graph: {
         nodes: [
           // {id: 1, label: 'Jackson Turner', title:"asdfasfdasfd",  color: '#e04141'}
@@ -110,7 +106,7 @@ class PVDataGraph extends Component
             face: 'arial',
             background: 'none',
             strokeWidth: 1, // px
-            strokeColor: '#ffffff',
+            strokeColor: '#ffffff'
           
           }
         }
@@ -242,11 +238,11 @@ class PVDataGraph extends Component
       "\n" +
       "            sb.setLength(0);\n" +
       "  \n" +
-      "            sb.append('{ \\\"id\\\":\\\"').append(toNodeId)\n" +
-      "              .append('\\\",\\\"label\\\":\\\"').append(toNodeLabel)\n" +
-      "              .append('\\\",\\\"group\\\":\\\"').append(toNodeLabel)\n" +
-      "              .append('\\\",\\\"shape\\\":\\\"').append('box')\n" +
-      "              .append('\\\"}\\n')\n" +
+      "            sb.append('{ \"id\":\"').append(toNodeId)\n" +
+      "              .append('\",\"label\":\"').append(toNodeLabel)\n" +
+      "              .append('\",\"group\":\"').append(toNodeLabel)\n" +
+      "              .append('\",\"shape\":\"').append('box')\n" +
+      "              .append('\"}\\n')\n" +
       "  \n" +
       "\n" +
       "            nodesSet.add( sb.toString() );\n" +
@@ -254,11 +250,11 @@ class PVDataGraph extends Component
       "            \n" +
       "            sb.setLength(0);\n" +
       "            \n" +
-      "            sb.append('{ \\\"from\\\":\\\"')\n" +
-      "              .append(pg_vid).append('\\\",\\\"to\\\":\\\"')\n" +
-      "              .append(toNodeId).append('\\\",\\\"label\\\":\\\"')\n" +
+      "            sb.append('{ \"from\":\"')\n" +
+      "              .append(pg_vid).append('\",\"to\":\"')\n" +
+      "              .append(toNodeId).append('\",\"label\":\"')\n" +
       "              .append(edgeLabel).append(' (')\n" +
-      "              .append(val).append(')\\\",\\\"value\\\":')\n" +
+      "              .append(val).append(')\",\"value\":')\n" +
       "              .append(val).append('}\\n') \n" +
       "            \n" +
       "            edgesSet.add (sb.toString());\n" +
@@ -298,22 +294,22 @@ class PVDataGraph extends Component
       "             ' <- ('+edgeId+')';\n" +
       "            sb.setLength(0);\n" +
       "  \n" +
-      "            sb.append('{ \\\"id\\\":\\\"').append(fromNodeId)\n" +
-      "              .append('\\\",\\\"label\\\":\\\"').append(fromNodeLabel)\n" +
-      "              .append('\\\",\\\"group\\\":\\\"').append(fromNodeLabel)\n" +
-      "              .append('\\\",\\\"shape\\\":\\\"').append('box')\n" +
-      "              .append('\\\"}')\n" +
+      "            sb.append('{ \"id\":\"').append(fromNodeId)\n" +
+      "              .append('\",\"label\":\"').append(fromNodeLabel)\n" +
+      "              .append('\",\"group\":\"').append(fromNodeLabel)\n" +
+      "              .append('\",\"shape\":\"').append('box')\n" +
+      "              .append('\"}')\n" +
       "  \n" +
       "            nodesSet.add( sb.toString() );\n" +
       "\n" +
       "            \n" +
       "            sb.setLength(0);\n" +
       "            \n" +
-      "            sb.append('{ \\\"from\\\":\\\"')\n" +
-      "              .append(fromNodeId).append('\\\",\\\"to\\\":\\\"')\n" +
-      "              .append(pg_vid).append('\\\",\\\"label\\\":\\\"')\n" +
+      "            sb.append('{ \"from\":\"')\n" +
+      "              .append(fromNodeId).append('\",\"to\":\"')\n" +
+      "              .append(pg_vid).append('\",\"label\":\"')\n" +
       "              .append(edgeLabel).append(' (')\n" +
-      "              .append(val).append(')\\\",\\\"value\\\":')\n" +
+      "              .append(val).append(')\",\"value\":')\n" +
       "              .append(val).append('}') \n" +
       "            edgesSet.add (sb.toString());\n" +
       "            sb.setLength(0);\n" +
@@ -327,99 +323,123 @@ class PVDataGraph extends Component
       "        \n" +
       "  } \n" +
       "  sb.setLength(0)\n" +
-      "  sb.append('{ \\\"id\\\":\\\"').append(pg_vid)\n" +
-      "    .append('\\\",\\\"label\\\":\\\"').append(origLabel)\n" +
-      "    .append('\\\",\\\"group\\\":\\\"').append(origLabel)\n" +
-      "    .append('\\\",\\\"fixed\\\":').append(true)\n" +
-      "    .append(',\\\"shape\\\":\\\"').append('image')\n" +
-      "    .append('\\\",\\\"image\\\":\\\"').append(getPropsNonMetadataAsHTMLTableRows(g,pg_vid,origLabel).toString())\n" +
-      "    .append('\\\"}')\n" +
+      "  sb.append('{ \"id\":\"').append(pg_vid)\n" +
+      "    .append('\",\"label\":\"').append(origLabel)\n" +
+      "    .append('\",\"group\":\"').append(origLabel)\n" +
+      "    .append('\",\"fixed\":').append(true)\n" +
+      "    .append(',\"shape\":\"').append('image')\n" +
+      "    .append('\",\"image\":\"').append(getPropsNonMetadataAsHTMLTableRows(g,pg_vid,origLabel).toString())\n" +
+      "    .append('\"}')\n" +
       "    \n" +
       "  nodesSet.add( sb.toString() )  \n" +
       "  sb.setLength(0)\n" +
       "\n" +
-      "  sb.append('{ \\\"nodes\\\":' )\n" +
-      "     .append(nodesSet.toString()).append(', \\\"edges\\\":').append(edgesSet.toString())\n" +
-      "     .append('}')         \n" +
+      "  sb.append('{ \"nodes\":' )\n" +
+      "     .append(nodesSet.toString()).append(', \"edges\":').append(edgesSet.toString())\n" +
+      // "     .append('}')         \n" +
       "}\n" +
       "else{\n" +
       "  int counter = 0;\n" +
       "\n" +
-      "\ttry {\n" +
-      "\t  \n" +
-      "\tsb.append('{ \\\"nodes\\\":[' );\n" +
-      "\t  \n" +
-      "\tg.V(pg_vid)\n" +
-      "\t  .both()\n" +
-      "\t  .dedup()\n" +
-      "\t\t.each{ \n" +
-      "\t\tString groupStr = it.values('Metadata.Type').next();\n" +
-      "\t\tString labelStr = it.label().toString().replaceAll('[_.]',' ');\n" +
-      "\t\tLong vid = it.id();\n" +
-      "\t\tsb.append(counter == 0? '{':',{')\n" +
-      "\t\t  .append('\\\"id\\\":').append(vid)\n" +
-      "\t\t  .append(',\\\"group\\\":\\\"').append(groupStr)\n" +
-      "\t\t  .append('\\\",\\\"label\\\":\\\"').append(labelStr)\n" +
-      "\t\t  .append('\\\",\\\"shape\\\":\\\"').append('image')\n" +
-      "\t\t  .append('\\\",\\\"image\\\":\\\"').append(getPropsNonMetadataAsHTMLTableRows(g,vid,labelStr).toString())\n" +
-      "\t\t  .append('\\\"');\n" +
-      "\t\tif (vid.equals( pg_vid)){  \n" +
-      "\t\t  sb.append(',\\\"fixed\\\":true');\n" +
-      "\t\t} \n" +
-      "\t\tsb.append('}')\n" +
-      "\t\t  \n" +
-      "\t\tcounter++;\n" +
-      "\t\t\n" +
-      "\t  };\n" +
-      "\tg.V(pg_vid)  // Also get the original node\n" +
-      "\t .each{ \n" +
-      "\t\tString groupStr = it.values('Metadata.Type').next();\n" +
-      "\t\tString labelStr = it.label().toString().replaceAll('[_.]',' ');\n" +
-      "\t\tLong vid = it.id();\n" +
-      "\t\tsb.append(counter == 0? '{':',{')\n" +
-      "\t\t  .append('\\\"id\\\":').append(vid)\n" +
-      "\t\t  .append(',\\\"group\\\":\\\"').append(groupStr)\n" +
-      "\t\t  .append('\\\",\\\"label\\\":\\\"').append(labelStr)\n" +
-      "\t\t  .append('\\\",\\\"shape\\\":\\\"').append('image')\n" +
-      "\t\t  .append('\\\",\\\"image\\\":\\\"').append(getPropsNonMetadataAsHTMLTableRows(g,vid,labelStr).toString())\n" +
-      "\t\t  .append('\\\"');\n" +
-      "\t\tif (vid.equals( pg_vid)){  \n" +
-      "\t\t  sb.append(',\\\"fixed\\\":true');\n" +
-      "\t\t} \n" +
-      "\t\tsb.append('}')\n" +
-      "\t\t  \n" +
-      "\t\tcounter++;\n" +
-      "\t\t\n" +
-      "\t  };\n" +
-      "\tsb.append('], \\\"edges\\\":[' )\n" +
+      "  try {\n" +
+      "    \n" +
+      "  sb.append('{ \"nodes\":[' );\n" +
+      "    \n" +
+      "  g.V(pg_vid)\n" +
+      "    .both()\n" +
+      "    .dedup()\n" +
+      "    .each{ \n" +
+      "    String groupStr = it.values('Metadata.Type').next();\n" +
+      "    String labelStr = it.label().toString().replaceAll('[_.]',' ');\n" +
+      "    Long vid = it.id();\n" +
+      "    sb.append(counter == 0? '{':',{')\n" +
+      "      .append('\"id\":').append(vid)\n" +
+      "      .append(',\"group\":\"').append(groupStr)\n" +
+      "      .append('\",\"label\":\"').append(labelStr)\n" +
+      "      .append('\",\"shape\":\"').append('image')\n" +
+      "      .append('\",\"image\":\"').append(getPropsNonMetadataAsHTMLTableRows(g,vid,labelStr).toString())\n" +
+      "      .append('\"');\n" +
+      "    if (vid.equals( pg_vid)){  \n" +
+      "      sb.append(',\"fixed\":true');\n" +
+      "    } \n" +
+      "    sb.append('}')\n" +
+      "      \n" +
+      "    counter++;\n" +
+      "    \n" +
+      "    };\n" +
+      "  g.V(pg_vid)  // Also get the original node\n" +
+      "   .each{ \n" +
+      "    String groupStr = it.values('Metadata.Type').next();\n" +
+      "    String labelStr = it.label().toString().replaceAll('[_.]',' ');\n" +
+      "    Long vid = it.id();\n" +
+      "    sb.append(counter == 0? '{':',{')\n" +
+      "      .append('\"id\":').append(vid)\n" +
+      "      .append(',\"group\":\"').append(groupStr)\n" +
+      "      .append('\",\"label\":\"').append(labelStr)\n" +
+      "      .append('\",\"shape\":\"').append('image')\n" +
+      "      .append('\",\"image\":\"').append(getPropsNonMetadataAsHTMLTableRows(g,vid,labelStr).toString())\n" +
+      "      .append('\"');\n" +
+      "    if (vid.equals( pg_vid)){  \n" +
+      "      sb.append(',\"fixed\":true');\n" +
+      "    } \n" +
+      "    sb.append('}')\n" +
+      "      \n" +
+      "    counter++;\n" +
+      "    \n" +
+      "    };\n" +
+      "  sb.append('], \"edges\":[' )\n" +
       "\n" +
       "\n" +
-      "\tcounter = 0;\n" +
-      "\tg.V(pg_vid)\n" +
-      "\t  .bothE()\n" +
-      "\t  .dedup()\n" +
-      "\t  .each{ \n" +
-      "\t  sb.append(counter == 0? '{':',{')\n" +
-      "\t\t.append('\\\"from\\\": ').append(it.inVertex().id())\n" +
-      "\t\t.append(' ,\\\"to\\\": \\\"').append(it.outVertex().id())\n" +
-      "\t\t.append('\\\",\\\"label\\\": \\\"').append(it.label().toString().replaceAll('[_.]',' '))\n" +
-      "\t\t.append('\\\"}')\n" +
-      "\t\t\n" +
-      "\t  counter++;\n" +
-      "\t  \n" +
-      "\t}\n" +
+      "  counter = 0;\n" +
+      "  g.V(pg_vid)\n" +
+      "    .bothE()\n" +
+      "    .dedup()\n" +
+      "    .each{ \n" +
+      "    sb.append(counter == 0? '{':',{')\n" +
+      "    .append('\"from\": ').append(it.inVertex().id())\n" +
+      "    .append(' ,\"to\": \"').append(it.outVertex().id())\n" +
+      "    .append('\",\"label\": \"').append(it.label().toString().replaceAll('[_.]',' '))\n" +
+      "    .append('\"}')\n" +
+      "    \n" +
+      "    counter++;\n" +
+      "    \n" +
+      "  }\n" +
       "\n" +
-      "\tsb.append(']}' );\n" +
+      "  sb.append(']' );\n" +
       "\n" +
       "\n" +
-      "\t}catch (Throwable t){\n" +
-      "\t  sb.append(t.toString());\n" +
-      "\t}\n" +
-      "\t  \n" +
-      "\tsb.toString() \n" +
+      "  }catch (Throwable t){\n" +
+      "    sb.append(t.toString());\n" +
+      "  }\n" +
+      "    \n" +
+      // "  sb.toString() \n" +
       "}\n" +
-      "   \n" +
-      " sb.toString() \n"
+      "" +
+      "int counter = 0;\n" +
+      "sb.append(', \"reportButtons\": [');\n" +
+      "try{ \n" +
+      " g.V()\n" +
+      "  .has('Object.Notification_Templates.Types'\n" +
+      "     ,g.V(pg_vid).values('Metadata.Type').next())\n" +
+      "  .valueMap('Object.Notification_Templates.Label','Object.Notification_Templates.Text')\n" +
+      "  .each{\n" +
+      "    sb.append(counter > 0? ',{': '{');\n" +
+      "    counter ++;\n" +
+      "      sb.append('\"text\":\"');\n" +
+      "      if (it.get('Object.Notification_Templates.Text') != null)\n" +
+      "        sb.append(it.get('Object.Notification_Templates.Text')[0].toString());\n" +
+      "      sb.append('\",\"label\":\"');\n" +
+      "      if (it.get('Object.Notification_Templates.Label') != null)\n" +
+      "        sb.append(it.get('Object.Notification_Templates.Label')[0]);\n" +
+      "      sb.append('\"');\n" +
+      "\n" +
+      "    sb.append(\"}\")\n" +
+      "\n" +
+      " }\n" +
+      "} catch(e) {}\n" +
+  
+      "sb.append('] }');\n" +
+      "sb.toString() \n"
       
     };
   };
@@ -486,7 +506,7 @@ class PVDataGraph extends Component
   
   selectData = (event) =>
   {
-    this.origNodeId = event != null ? (+(event.id || event.index)) : -1;// the + converts to number just in case
+    this.origNodeId = event !== null ? (+(event.id || event.index)) : -1;// the + converts to number just in case
     // this.origNodeId = (+(this.origNodeId));
     let url = "/gateway/sandbox/pvgdpr_graph"; // "/gateway/sandbox/pvgdpr_server/home/graph";
     if (this.h_request !== null)
@@ -574,7 +594,7 @@ class PVDataGraph extends Component
         
         let graph = {nodes: nodes, edges: items.edges};
         
-        this.setState({graph: graph});
+        this.setState({graph: graph, reportButtons: items.reportButtons});
         localStorage.setItem(this.subscription, graph);
         
       }
@@ -626,7 +646,8 @@ class PVDataGraph extends Component
     if (this.graph)
     {
       this.graph.updateGraph();
-      
+      this.setState({height: this.state.height, width: this.state.width});
+  
     }
   };
   
@@ -678,17 +699,58 @@ class PVDataGraph extends Component
     // var eventHub = this.props.glEventHub;
     //         <Graph graph={this.state.graph} options={this.state.options} events={this.state.events}/>
     
-    const {open, visible} = this.state;
+    const {open, visible, reportButtons} = this.state;
+    
+    let buttonsList = [];
+    
+    let bttns = <div height={0}/>;
+  
+    if( reportButtons && reportButtons.length > 0){
+  
+      for (let ilen = reportButtons.length, i = 0; i < ilen; i++){
+        buttonsList.push(
+          <PVReportButton
+            className={'compact'}
+            templateText = {reportButtons[i].text}
+            contextId = {this.eventId}
+            buttonLabel = {reportButtons[i].label}
+            glEventHub = {this.props.glEventHub}
+            // inverted={false}
+            // color={'black'}
+            style={{border:0, background:'rgb(69,69,69)'}}
+            size={'small'}
+          />
+        );
+    
+      }
+      bttns =
+        <Menu style = {{flexGrow: 0}} >
+          {buttonsList}
+        </Menu> ;
+    }
+
+    
+    
+    
     
     return (
       <ResizeAware
-        style={{height: '100%', width: '100%' , flex: 1}}
+        style={{height: '100%', width: '100%' , flexDirection: 'column'}}
         onResize={this.handleResize}
       >
+  
+        {bttns}
+        <Graph
+          style={{height: '100%', width: '100%', flexGrow: 1}}
+          graph={this.state.graph}
+          options={this.state.options}
+          events={this.state.events} ref={this.setGraph} getNetwork={this.setNetwork}
+          height={this.state.height -20 }
+          width={this.state.width -20 }
+
+        />
+
         
-        
-        <Graph style={{height: '100%', width: '100%'}} graph={this.state.graph} options={this.state.options}
-               events={this.state.events} ref={this.setGraph} getNetwork={this.setNetwork}/>
         
         <Portal
           onClose={this.handleClose}
@@ -702,27 +764,6 @@ class PVDataGraph extends Component
               height: '50%', width: '50%', overflowX: 'auto', overflowY: 'auto', left: '30%', position: 'fixed',
               top: '20%', zIndex: 100000, backgroundColor: '#696969'
             }}>
-            {/*<Flex column w={1} wrap={true}>*/}
-              {/*/!*<Box px={2} w={1}>*!/*/}
-                {/*/!**!/*/}
-                {/*/!*<Menu>*!/*/}
-                  {/*/!*<Button*!/*/}
-                    {/*/!*className={'compact'}*!/*/}
-                    {/*/!*onClick={() => this.setState({ open: false })}*!/*/}
-                    {/*/!*style={{border: 0, background: 'rgb(69,69,69)', margin: 4}}*!/*/}
-                    {/*/!*size={'small'}*!/*/}
-                  {/*/!*>*!/*/}
-                    {/*/!*Close*!/*/}
-                  {/*/!*</Button>*!/*/}
-                  {/*/!*<span>{this.state.metadataType.replace(this.underscoreOrDot, ' ')}</span>*!/*/}
-                  {/*/!**!/*/}
-                  {/*/!**!/*/}
-                {/*/!*</Menu>*!/*/}
-              {/**/}
-              {/**/}
-              {/*/!*</Box>*!/*/}
-              {/*<Box px={2} w={1} style = {{height: '100%'}}>*/}
-                {/**/}
                 <PVGridSelfDiscovery
                   ref = {this.selfDiscoveryGrid}
                   style = {{height: '100%'}}
@@ -733,8 +774,6 @@ class PVDataGraph extends Component
                   metadataType={this.state.metadataType}
                   glEventHub={this.props.glEventHub}
                 />
-              {/*</Box>*/}
-            {/*</Flex>*/}
           </Segment>
         </Portal>
       

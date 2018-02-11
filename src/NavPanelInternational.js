@@ -6,7 +6,7 @@ import GoldenLayout from 'golden-layout';
 
 import NavPanelInternationalPVGridRegulators from './NavPanelInternationalPVGridRegulators';
 import NavPanelInternationalPVDataGraph from './NavPanelInternationalPVDataGraph';
-// import PVEmailEditor from './PVEmailEditor';
+// import PVTemplateEditor from './PVTemplateEditor';
 import PVWorldMap from "./PVWorldMap";
 
 

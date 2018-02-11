@@ -7,7 +7,7 @@ import GoldenLayout from 'golden-layout';
 import NavPanelLawfulBasisPVGrid from './NavPanelLawfulBasisPVGrid';
 // import UserSearch from './UserSearch';
 import NavPanelLawfulBasisDataGraph from './NavPanelLawfulBasisDataGraph';
-// import PVEmailEditor from './PVEmailEditor';
+// import PVTemplateEditor from './PVTemplateEditor';
 // import NavPanelLawfulBasisPVTimeline from './NavPanelLawfulBasisPVTimeline';
 
 class NavPanelLawfulBasis extends Component

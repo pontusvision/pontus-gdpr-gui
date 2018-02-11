@@ -164,11 +164,11 @@ class App extends React.Component
     {
       this.setState({height: window.innerHeight - 20, width: window.innerWidth -20});
 
-      console.log(this);
+      // console.log(this);
     }
     catch (e)
     {
-      console.log(e);
+      // console.log(e);
     }
 
   };
@@ -284,7 +284,7 @@ class App extends React.Component
       
       <ResizeAware
         // ref={this.setOuter}
-        // style={{height: "calc(100%)", width: '100%', overflow: 'hidden'}}
+        style={{height: '100%', width: '100%', flexDirection: 'column', flexGrow: 1}}
         height={this.state.height}
         width={this.state.width}
         onResize={this.handleResize}
@@ -302,6 +302,8 @@ class App extends React.Component
         
         <Tabs
           ref={this.setNode}
+          style={{height: '100%', width: '100%', flexDirection: 'column', flexGrow: 1}}
+
           height={this.state.height}
           width={this.state.width}
           selectedIndex={0}

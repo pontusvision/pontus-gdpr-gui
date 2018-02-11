@@ -6,7 +6,7 @@ import GoldenLayout from 'golden-layout';
 
 import PVGridPrivacyNotices from './NavPanelPrivacyNoticesPVGrid';
 import NavPanelPrivacyNoticesDataGraph from './NavPanelPrivacyNoticesDataGraph';
-// import PVEmailEditor from './PVEmailEditor';
+// import PVTemplateEditor from './PVTemplateEditor';
 
 
 class NavPanelPrivacyNotices extends Component

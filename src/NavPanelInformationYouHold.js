@@ -111,8 +111,14 @@ class NavPanelInformationYouHold extends Component
   
   saveState = () =>
   {
-    var state = JSON.stringify(this.instance.toConfig());
-    localStorage.setItem('savedStateNavPanelInformationYouHold', state);
+    try{
+      let state = JSON.stringify(this.instance.toConfig());
+      localStorage.setItem('savedStateNavPanelInformationYouHold', state);
+  
+    }
+    catch (e){
+    
+    }
     
   };
   
