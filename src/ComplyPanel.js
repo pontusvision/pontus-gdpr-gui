@@ -27,6 +27,8 @@ import NavPanelChildrenPopup from "./NavPanelChildrenPopup";
 import NavPanelDataBreaches from "./NavPanelDataBreaches";
 import NavPanelDataBreachPopup from "./NavPanelDataBreachPopup";
 import NavPanelDataProcedures from "./NavPanelDataProcedures";
+import NavPanelDataProceduresPopup from "./NavPanelDataProceduresPopup";
+
 import NavPanelPrivacyImpactAssessment from './NavPanelPrivacyImpactAssessment';
 import NavPanelPrivacyImpactAssessmentPopup from './NavPanelPrivacyImpactAssessmentPopup';
 import NavPanelDataProtnOfficer from './NavPanelDataProtnOfficer';
@@ -120,12 +122,9 @@ class ComplyPanel extends Component
               icon={info}/>, <NavPanelInformationYouHoldPopup/>)}
           {this.renderItemRaw("Privacy Notices", <NavPanelPrivacyNotices style={{height: '100%', width: '100%'}}/>, <Icon
               icon={eyeBlocked}/>,<NavPanelPrivacyNoticesPopup/>)}
-          {this.renderItem("Individual's Rights", <NavPanelDataProcedures style={{height: '100%', width: '100%'}}/>,
-            <Icon icon={iosPricetagsOutline}/>,
-            'You should check your procedures to ensure they\n' +
-            'cover all the rights individuals have, including how\n' +
-            'you would delete personal data or provide data\n' +
-            'electronically and in a commonly used format.')}
+          {this.renderItemRaw("Individual's Rights", <NavPanelDataProcedures style={{height: '100%', width: '100%'}}/>,
+            <Icon icon={iosPricetagsOutline}/>,<NavPanelDataProceduresPopup style={{height: '100%', width: '100%'}}/>
+            )}
           {this.renderItemRaw("Subj Access Req", <NavPanelSubjectAccessRequest style={{height: '100%', width: '100%'}}/>,
             <Icon icon={download}/>,<NavPanelSubjectAccessRequestPopup/>)}
           {this.renderItemRaw("Lawful Basis", <NavPanelLawfulBasis style={{height: '100%', width: '100%'}}/>, <Icon

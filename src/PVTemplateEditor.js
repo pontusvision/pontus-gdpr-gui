@@ -30,6 +30,8 @@ class PVTemplateEditor extends React.Component
       , visible: false
       , preview: <div/>
       , value: ""
+      , width: 1000
+      , height: 1000
     };
     this.val = "";
   }
@@ -42,7 +44,7 @@ class PVTemplateEditor extends React.Component
       this.obj.editingArea.childNodes[0].style.maxHeight = (height - 60) + "px";
       
     }
-    this.setState({maxHeight: height});
+    this.setState({width: width, height:height});
     
   };
   
@@ -359,12 +361,12 @@ class PVTemplateEditor extends React.Component
     
     return (
       <ResizeAware
-        style={{width: '100%', height: 'calc(100% - 20px)', flexDirection: 'column'}}
+        style={{width: '100%', height: '100%', flexDirection: 'column'}}
         onResize={this.handleResize}
       >
         
             
-            <Menu style = {{flexGrow: 0}} >
+            <Menu style = {{flexGrow: 0, margin: 0}} >
               <Button
                 className={'compact'}
                 onClick={this.onClickPreview}
@@ -398,9 +400,9 @@ class PVTemplateEditor extends React.Component
               // enableLiveAutocompletion={true}
               tabSize={2}
               value={Base64.decode(this.state.value)}
-              height={this.state.height -20 + "px"}
-              width={this.state.width -20 + "px"}
-              style={{overflow: 'auto', flexGrow: 1}}
+              height={this.state.height -50 + "px"}
+              width={this.state.width -50 + "px"}
+              style={{overflow: 'auto', flexGrow: 1, height: (this.state.height -50)+'px'}}
     
               ref={this.setObj}
             />
