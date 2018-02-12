@@ -1,7 +1,6 @@
 import React from 'react';
 import ResizeAware from 'react-resize-aware';
 import {Menu, Button, Segment, Portal} from 'semantic-ui-react';
-import {Flex, Box} from 'reflexbox';
 // import {Creatable} from 'react-select';
 import './react-select.css';
 import axios from "axios";
@@ -29,7 +28,7 @@ class PVTemplateEditor extends React.Component
       maxHeight: 100
       , open: false
       , visible: false
-      , preview: <div></div>
+      , preview: <div/>
       , value: ""
     };
     this.val = "";
@@ -338,10 +337,10 @@ class PVTemplateEditor extends React.Component
   
   handleClose = () => this.setState({ open: false });
   
-  previewDiv  = (previewDivObj) => {
-    this.previewDivObj = previewDivObj;
-    this.previewDivObj.setInnerHtml(this.previewDivObj,"hello world")
-  };
+  // previewDiv  = (previewDivObj) => {
+  //   this.previewDivObj = previewDivObj;
+  //   this.previewDivObj.setInnerHtml(this.previewDivObj,"hello world")
+  // };
   
   onChange = (val, ev) =>
   {
@@ -354,9 +353,9 @@ class PVTemplateEditor extends React.Component
   {
     // let eventHub = this.props.glEventHub;
     //
-    const { open, visible } = this.state;
+    const { open } = this.state;
   
-    let templateOptions = [{key: 'af', value: 'af', flag: 'af', text: 'Afghanistan'}];
+    // let templateOptions = [{key: 'af', value: 'af', flag: 'af', text: 'Afghanistan'}];
     
     return (
       <ResizeAware
@@ -422,7 +421,7 @@ class PVTemplateEditor extends React.Component
   
         <Portal onClose={this.handleClose} open={open}>
           <Segment
-            style={{ height:'50%' , width:'50%', overflowX: 'auto', overflowY: 'auto',  left: '30%', position: 'fixed', top: '20%', zIndex: 100000, backgroundColor: '#696969' }}>
+            style={{ height:'50%' , width:'50%', overflowX: 'auto', overflowY: 'auto',  left: '30%', position: 'fixed', top: '20%', zIndex: 100000, backgroundColor: '#696969' , padding: '10px'}}>
             <div dangerouslySetInnerHTML={{__html: this.state.preview}}/>
           </Segment>
         </Portal>

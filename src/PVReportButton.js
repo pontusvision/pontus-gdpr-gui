@@ -43,11 +43,6 @@ class PVReportButton extends React.Component
   };
   
   
-  setQuery = (queryStr) =>
-  {
-  
-  
-  };
   
   componentDidMount()
   {
@@ -209,7 +204,7 @@ class PVReportButton extends React.Component
           <Segment
             style={{
               height: '50%', width: '50%', overflowX: 'auto', overflowY: 'auto', left: '30%', position: 'fixed',
-              top: '20%', zIndex: 100000, backgroundColor: '#696969'
+              top: '20%', zIndex: 100000, backgroundColor: '#696969', padding: '10px'
             }}>
             <div dangerouslySetInnerHTML={{__html: this.state.preview}}/>
           </Segment>

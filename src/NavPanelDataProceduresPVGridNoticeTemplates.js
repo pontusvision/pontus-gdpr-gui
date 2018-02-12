@@ -1,4 +1,3 @@
-import * as Slick from 'slickgrid-es6';
 import PVGrid  from "./PVGrid";
 
 //
@@ -17,8 +16,8 @@ class NavPanelDataProceduresPVGridNoticeTemplates extends PVGrid
   
     colSettings[0] = {id: "Object.Notification_Templates.Id", name: "Id", field: "Object.Notification_Templates.Id",  sortable: true};
     colSettings[1] = {id: "Object.Notification_Templates.Types", name: "Types", field: "Object.Notification_Templates.Types",   sortable: true};
-    colSettings[2] = {id: "Object.Notification_Templates.Text", name: "Text", field: "Object.Notification_Templates.Text",   sortable: true};
-    colSettings[3] = {id: "Object.Notification_Templates.Label", name: "Label", field: "Object.Notification_Templates.Label",   sortable: true};
+    colSettings[2] = {id: "Object.Notification_Templates.Label", name: "Label", field: "Object.Notification_Templates.Label",   sortable: true};
+    // colSettings[3] = {id: "Object.Notification_Templates.Text", visible: false, name: "Text", field: "Object.Notification_Templates.Text",   sortable: true};
 
     
     this.url = "/gateway/sandbox/pvgdpr_graph";
