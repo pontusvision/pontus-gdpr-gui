@@ -20,9 +20,6 @@ class PVReportButton extends React.Component
     this.url = props.url || "/gateway/sandbox/pvgdpr_graph";
     // this.url = "/gateway/sandbox/pvgdpr_graph";
     
-    this.contextId = this.props.contextId;
-    this.templateText = this.props.templateText;
-    
     this.state = {
       open: false
      ,preview: ""
@@ -38,7 +35,7 @@ class PVReportButton extends React.Component
   
   onClick = () =>
   {
-    this.ensureData(this.contextId, this.templateText);
+    this.ensureData(this.props.contextId, this.props.templateText);
     
   };
   
@@ -129,7 +126,7 @@ class PVReportButton extends React.Component
     }
     else
     {
-      this.ensureData(this.contextId, this.templateText);
+      this.ensureData(this.props.contextId, this.props.templateText);
     }
     this.errorCounter++;
   };

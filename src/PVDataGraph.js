@@ -431,7 +431,7 @@ class PVDataGraph extends Component
       "      sb.append('\",\"label\":\"');\n" +
       "      if (it.get('Object.Notification_Templates.Label') != null)\n" +
       "        sb.append(it.get('Object.Notification_Templates.Label')[0]);\n" +
-      "      sb.append('\"');\n" +
+      "      sb.append('\", \"vid\": ').append(pg_vid);\n" +
       "\n" +
       "    sb.append(\"}\")\n" +
       "\n" +
@@ -515,7 +515,8 @@ class PVDataGraph extends Component
     }
     
     let self = this;
-    
+    this.setState({ vid: this.origNodeId});
+  
     this.h_request = setTimeout(() =>
     {
       
@@ -594,7 +595,7 @@ class PVDataGraph extends Component
         
         let graph = {nodes: nodes, edges: items.edges};
         
-        this.setState({graph: graph, reportButtons: items.reportButtons});
+        this.setState({graph: graph, reportButtons: items.reportButtons , vid: this.origNodeId});
         localStorage.setItem(this.subscription, graph);
         
       }
@@ -712,7 +713,7 @@ class PVDataGraph extends Component
           <PVReportButton
             className={'compact'}
             templateText = {reportButtons[i].text}
-            contextId = {this.eventId}
+            contextId = {reportButtons[i].vid}
             buttonLabel = {reportButtons[i].label}
             glEventHub = {this.props.glEventHub}
             // inverted={false}
