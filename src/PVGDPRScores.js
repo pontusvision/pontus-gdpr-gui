@@ -52,7 +52,7 @@ class PVGDPRScores extends Component
       maxRedirects: 0
       , validateStatus: (status) => {
     
-        self.lastestStatus = status;
+        this.lastestStatus = status;
     
         return status >= 200 &&
           status < 300;
