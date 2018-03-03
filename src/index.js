@@ -113,53 +113,48 @@ import axios from "axios";
     }
   }
   
-//   const kcConf =
-//
-//
-//
-//     {
-//       "clientId": "broker",
-//     "realm": "pontus",
-//       "url": "https://127.0.0.1:5005/auth",
-//     "auth-server-url": "https://127.0.0.1:5005/auth",
-//       "sslRequired": "external",
-//     "ssl-required": "external",
-//     "resource": "broker",
-//     "credentials": {
-//       "secret": "91fff12e-9b97-4028-8705-ffd8126fba3f"
-//     },
-//     "use-resource-role-mappings": true,
-//     "policy-enforcer": {}
-//   };
-//
-//   const kc = Keycloak(kcConf);
-//   kc.init({adapter: 'default', onLoad: 'login-required'}).success(authenticated => {
-//     if (authenticated) {
-//       // store.getState().keycloak = kc;
-//       // ReactDOM.render(app, document.getElementById("app"));
-//       window.keycloakInstance = kc;
-//       ReactDOM.render(<App keycloak={kc} />, document.getElementById('root'));
-//
-//     }
-//   });
-//
-//   axios.interceptors.request.use(config => {
-//     return refreshToken().then(() => {
-//       config.headers.Authorization = 'Bearer ' + kc.token;
-//       return Promise.resolve(config)
-//     }).catch(() => {
-//       kc.login();
-//     })
-//   });
-//
-// // need to wrap the KC "promise object" into a real Promise object
-//   const refreshToken = (minValidity = 5) => {
-//     return new Promise((resolve, reject) => {
-//       kc.updateToken(minValidity)
-//         .success(() => resolve())
-//         .error(error => reject(error))
-//     });
-//   };
+  const kcConf = {
+      "clientId": "broker",
+      "realm": "pontus",
+      "url": "/gateway/sandbox/auth",
+      "auth-server-url": "/gateway/sandbox/auth",
+      "ssl-required": "external",
+      "resource": "broker",
+      "credentials": {
+        "secret": "91fff12e-9b97-4028-8705-ffd8126fba3f"
+      },
+      "use-resource-role-mappings": true,
+      "policy-enforcer": {}
+    };
+
+  const kc = Keycloak(kcConf);
+  kc.init({adapter: 'default', onLoad: 'login-required'}).success(authenticated => {
+    if (authenticated) {
+      // store.getState().keycloak = kc;
+      // ReactDOM.render(app, document.getElementById("app"));
+      window.keycloakInstance = kc;
+      ReactDOM.render(<App keycloak={kc} />, document.getElementById('root'));
+
+    }
+  });
+
+  axios.interceptors.request.use(config => {
+    return refreshToken().then(() => {
+      config.headers.Authorization = 'Bearer ' + kc.token;
+      return Promise.resolve(config)
+    }).catch(() => {
+      kc.login();
+    })
+  });
+
+// need to wrap the KC "promise object" into a real Promise object
+  const refreshToken = (minValidity = 5) => {
+    return new Promise((resolve, reject) => {
+      kc.updateToken(minValidity)
+        .success(() => resolve())
+        .error(error => reject(error))
+    });
+  };
   
   
 })();
