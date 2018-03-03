@@ -47,26 +47,10 @@ class PVGDPRScores extends Component
     //   "23 do not have a parent or guardian configured",
     //   scoreValue: 45
     // };
-  
-    this.axiosInstance = axios.create({
-      maxRedirects: 0
-      , validateStatus: (status) => {
-    
-        this.lastestStatus = status;
-    
-        return status >= 200 &&
-          status < 300;
     
     
-      }
-      , headers: {
-        'Content-Type': 'application/json'
-        , 'Accept': 'application/json'
-      }
-    });
-  
-  
-  
+    
+    
   }
   
   
@@ -95,10 +79,19 @@ class PVGDPRScores extends Component
       
       
       // http.post(url)
-      self.axiosInstance.post(url
+      axios.post(url
         , self.getSearchQuery()
         , {
-            cancelToken: self.req.token
+            maxRedirects: 0
+          , validateStatus: (status) => {
+            self.lastestStatus = status;
+            return status >= 200 && status < 300;
+          }
+          , headers: {
+            'Content-Type': 'application/json'
+            , 'Accept': 'application/json'
+          }
+          , cancelToken: self.req.token
           
         }).then(self.onSuccessProxy).catch((thrown) =>
       {
@@ -118,17 +111,19 @@ class PVGDPRScores extends Component
   onError = (err) =>
   {
     this.errCounter++;
-    
+    // if (this.lastestStatus == 302)
     if (this.errCounter < 25)
     {
+      {
+        axios.get('/logo.svg').then((resp)=>{
+          resp.status;
+          /// TODO: finish this!!!!  GET THE HEADER, try again, but with the JWT token in the header!
+        })
+      }
+  
       this.ensureData();
     }
-    if (this.lastestStatus == 302){
-      axios.get('/logo.svg').then((resp)=>{
-        resp.status;
-        /// TODO: finish this!!!!  GET THE HEADER, try again, but with the JWT token in the header!
-      })
-    }
+    
     
   };
   
