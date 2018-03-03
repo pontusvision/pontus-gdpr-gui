@@ -47,10 +47,26 @@ class PVGDPRScores extends Component
     //   "23 do not have a parent or guardian configured",
     //   scoreValue: 45
     // };
+  
+    this.axiosInstance = axios.create({
+      maxRedirects: 0
+      , validateStatus: (status) => {
+    
+        self.lastestStatus = status;
+    
+        return status >= 200 &&
+          status < 300;
     
     
-    
-    
+      }
+      , headers: {
+        'Content-Type': 'application/json'
+        , 'Accept': 'application/json'
+      }
+    });
+  
+  
+  
   }
   
   
@@ -79,19 +95,10 @@ class PVGDPRScores extends Component
       
       
       // http.post(url)
-      axios.post(url
+      self.axiosInstance.post(url
         , self.getSearchQuery()
         , {
-            maxRedirects: 0
-          , validateStatus: (status) => {
-            self.lastestStatus = status;
-            return status >= 200 && status < 300;
-          }
-          , headers: {
-            'Content-Type': 'application/json'
-            , 'Accept': 'application/json'
-          }
-          , cancelToken: self.req.token
+            cancelToken: self.req.token
           
         }).then(self.onSuccessProxy).catch((thrown) =>
       {
