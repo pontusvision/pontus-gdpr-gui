@@ -36,6 +36,8 @@ class PVGDPRScores extends Component
   
     this.weight = 0;
   
+    this.latestStatus = 200;
+    
     // this.title = "Children";
     // this.icon = ic_child_care;
     //
@@ -80,11 +82,17 @@ class PVGDPRScores extends Component
       axios.post(url
         , self.getSearchQuery()
         , {
-          headers: {
+            maxRedirects: 0
+          , validateStatus: (status) => {
+            self.lastestStatus = status;
+            return status >= 200 && status < 300;
+          }
+          , headers: {
             'Content-Type': 'application/json'
             , 'Accept': 'application/json'
           }
           , cancelToken: self.req.token
+          
         }).then(self.onSuccessProxy).catch((thrown) =>
       {
         if (axios.isCancel(thrown))
@@ -107,6 +115,12 @@ class PVGDPRScores extends Component
     if (this.errCounter < 25)
     {
       this.ensureData();
+    }
+    if (this.lastestStatus == 302){
+      axios.get('/logo.svg').then((resp)=>{
+        resp.status;
+        /// TODO: finish this!!!!  GET THE HEADER, try again, but with the JWT token in the header!
+      })
     }
     
   };
