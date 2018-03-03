@@ -112,14 +112,15 @@ class PVGDPRScores extends Component
   {
     this.errCounter++;
     // if (this.lastestStatus == 302)
-    {
-      axios.get('/logo.svg').then((resp)=>{
-        resp.status;
-        /// TODO: finish this!!!!  GET THE HEADER, try again, but with the JWT token in the header!
-      })
-    }
     if (this.errCounter < 25)
     {
+      {
+        axios.get('/logo.svg').then((resp)=>{
+          resp.status;
+          /// TODO: finish this!!!!  GET THE HEADER, try again, but with the JWT token in the header!
+        })
+      }
+  
       this.ensureData();
     }
     
