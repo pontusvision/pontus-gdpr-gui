@@ -116,8 +116,10 @@ import axios from "axios";
   const kcConf = {
       "clientId": "broker",
       "realm": "pontus",
-      "url": "/gateway/sandbox/auth",
-      "auth-server-url": "/gateway/sandbox/auth",
+      // "url": "/gateway/sandbox/auth",
+      // "auth-server-url": "/gateway/sandbox/auth",
+      "url": "https://localhost:5005/auth/",
+      "auth-server-url": "https://localhost:5005/auth/",
       "ssl-required": "external",
       "resource": "broker",
       "credentials": {

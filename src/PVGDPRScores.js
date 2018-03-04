@@ -68,6 +68,18 @@ class PVGDPRScores extends Component
       clearTimeout(this.h_request);
     }
     
+    let reqHeaders = window.keycloakInstance ? 
+      {
+        'Content-Type': 'application/json'
+      , 'Accept': 'application/json'
+      , 'Authorization': "JWT " + window.keycloakInstance.token
+      }  
+        :
+      {
+        'Content-Type': 'application/json'
+      , 'Accept': 'application/json'
+      };
+ 
     
     let self = this;
     
@@ -87,10 +99,7 @@ class PVGDPRScores extends Component
             self.lastestStatus = status;
             return status >= 200 && status < 300;
           }
-          , headers: {
-            'Content-Type': 'application/json'
-            , 'Accept': 'application/json'
-          }
+          , headers: reqHeaders
           , cancelToken: self.req.token
           
         }).then(self.onSuccessProxy).catch((thrown) =>
