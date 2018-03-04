@@ -116,8 +116,8 @@ import axios from "axios";
   const kcConf = {
       "clientId": "broker",
       "realm": "pontus",
-      //"url": "/gateway/sandbox/auth",
-     // "auth-server-url": "/gateway/sandbox/auth",
+      "url": "/gateway/sandbox/auth",
+      "auth-server-url": "/gateway/sandbox/auth",
       "ssl-required": "external",
       "resource": "broker",
       "credentials": {
@@ -159,6 +159,6 @@ import axios from "axios";
   
 })();
 
- ReactDOM.render(<App  />, document.getElementById('root'));
+ // ReactDOM.render(<App  />, document.getElementById('root'));
 
 registerServiceWorker();
