@@ -38,25 +38,14 @@ class GremlinComboBox extends Component
     {
       this.req.cancel();
     }
-    let reqHeaders = window.keycloakInstance ?
-      {
-        'Content-Type': 'application/json'
-        , 'Accept': 'application/json'
-        , 'Authorization': "JWT " + window.keycloakInstance.token
-      }
-      :
-      {
-        'Content-Type': 'application/json'
-        , 'Accept': 'application/json'
-      };
-  
-  
+    
+    
     let CancelToken = axios.CancelToken;
     this.req = CancelToken.source();
     
     axios.post(url, jsonRequest ,
       {
-        headers: reqHeaders
+        headers: {'Content-Type': 'application/json', 'Accept': 'application/json'}
         , cancelToken: this.req.token
       }).then(
       (response) =>

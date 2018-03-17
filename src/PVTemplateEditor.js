@@ -90,21 +90,12 @@ class PVTemplateEditor extends React.Component
     {
       let CancelToken = axios.CancelToken;
       self.req = CancelToken.source();
-  
-      let reqHeaders = window.keycloakInstance ?
-        {
-          'Content-Type': 'application/json'
-          , 'Accept': 'application/json'
-          , 'Authorization': "JWT " + window.keycloakInstance.token
-        }
-        :
-        {
-          'Content-Type': 'application/json'
-          , 'Accept': 'application/json'
-        };
-  
+    
       axios.post(url, this.getQuerySaveData(newVal, lastData), {
-        headers: reqHeaders
+        headers: {
+          'Content-Type': 'application/json'
+          , 'Accept': 'application/json'
+        }
         , cancelToken: self.req.token
       }).then(this.onSuccessSaveData).catch((thrown) =>
       {
@@ -191,18 +182,7 @@ class PVTemplateEditor extends React.Component
     {
       clearTimeout(this.h_request);
     }
-    let reqHeaders = window.keycloakInstance ?
-      {
-        'Content-Type': 'application/json'
-        , 'Accept': 'application/json'
-        , 'Authorization': "JWT " + window.keycloakInstance.token
-      }
-      :
-      {
-        'Content-Type': 'application/json'
-        , 'Accept': 'application/json'
-      };
-  
+    
     let self = this;
     this.h_request = setTimeout(() =>
     {
@@ -210,7 +190,10 @@ class PVTemplateEditor extends React.Component
       self.req = CancelToken.source();
       
       axios.post(url, this.getQueryPreviewData(dataType, templateText), {
-        headers: reqHeaders
+        headers: {
+          'Content-Type': 'application/json'
+          , 'Accept': 'application/json'
+        }
         , cancelToken: self.req.token
       }).then(this.onSuccessPreviewData).catch((thrown) =>
       {

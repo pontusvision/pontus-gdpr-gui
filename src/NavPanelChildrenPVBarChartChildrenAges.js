@@ -138,24 +138,16 @@ class NavPanelChildrenPVBarChartChildrenAges extends React.Component
       
       let CancelToken = axios.CancelToken;
       self.req = CancelToken.source();
-      let reqHeaders = window.keycloakInstance ?
-        {
-          'Content-Type': 'application/json'
-          , 'Accept': 'application/json'
-          , 'Authorization': "JWT " + window.keycloakInstance.token
-        }
-        :
-        {
-          'Content-Type': 'application/json'
-          , 'Accept': 'application/json'
-        };
-  
-  
+      
+      
       // http.post(url)
       axios.post(url,
         self.getQuery(id)
         , {
-          headers: reqHeaders
+          headers: {
+            'Content-Type': 'application/json'
+            , 'Accept': 'application/json'
+          }
           , cancelToken: self.req.token
         }).then(this.onSuccess).catch((thrown) =>
       {

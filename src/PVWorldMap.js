@@ -84,17 +84,6 @@ class PVWorldMap extends React.Component
     let url =  "/gateway/sandbox/pvgdpr_graph"; //"/gateway/sandbox/pvgdpr_server/home/country_data_count";
   
     let self = this;
-    let reqHeaders = window.keycloakInstance ?
-      {
-        'Content-Type': 'application/json'
-        , 'Accept': 'application/json'
-        , 'Authorization': "JWT " + window.keycloakInstance.token
-      }
-      :
-      {
-        'Content-Type': 'application/json'
-        , 'Accept': 'application/json'
-      };
   
     this.h_request = setTimeout(() =>
     {
@@ -110,7 +99,10 @@ class PVWorldMap extends React.Component
         // }
       
       , {
-        headers: reqHeaders
+        headers: {
+          'Content-Type': 'application/json'
+          , 'Accept': 'application/json'
+        }
         , cancelToken: self.req.token
       }).then(this.onSuccess).catch((thrown) =>
       {
