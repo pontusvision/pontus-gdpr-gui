@@ -68,13 +68,13 @@ class PVGDPRScores extends Component
       clearTimeout(this.h_request);
     }
     
-    let reqHeaders = window.keycloakInstance ? 
-      {
-        'Content-Type': 'application/json'
-      , 'Accept': 'application/json'
-      , 'Authorization': "JWT " + window.keycloakInstance.token
-      }  
-        :
+    let reqHeaders = //window.keycloakInstance ?
+      // {
+      //   'Content-Type': 'application/json'
+      // , 'Accept': 'application/json'
+      // , 'Authorization': "JWT " + window.keycloakInstance.token
+      // }
+      //   :
       {
         'Content-Type': 'application/json'
       , 'Accept': 'application/json'

@@ -142,7 +142,7 @@ import axios from "axios";
 
   axios.interceptors.request.use(config => {
     return refreshToken().then(() => {
-      config.headers.Authorization = 'Bearer ' + kc.token;
+      config.headers.Authorization = 'Bearer ' + kc.idToken;
       return Promise.resolve(config)
     }).catch(() => {
       kc.login();
