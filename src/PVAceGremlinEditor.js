@@ -62,7 +62,18 @@ class PVAceGremlinEditor extends React.Component
     
     
     let self = this;
-    
+    let reqHeaders = window.keycloakInstance ?
+      {
+        'Content-Type': 'application/json'
+        , 'Accept': 'application/json'
+        , 'Authorization': "JWT " + window.keycloakInstance.token
+      }
+      :
+      {
+        'Content-Type': 'application/json'
+        , 'Accept': 'application/json'
+      };
+  
     this.h_request = setTimeout(() =>
     {
       let CancelToken = axios.CancelToken;
@@ -73,10 +84,7 @@ class PVAceGremlinEditor extends React.Component
       axios.post(url
         , self.getSearchObj(data)
         , {
-          headers: {
-            'Content-Type': 'application/json'
-            , 'Accept': 'application/json'
-          }
+          headers: reqHeaders
           , cancelToken: self.req.token
         }).then(self.onSuccess).catch((thrown) =>
       {

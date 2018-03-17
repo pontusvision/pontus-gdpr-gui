@@ -380,17 +380,25 @@ class PVGridSelfDiscovery extends React.Component
       
       let CancelToken = axios.CancelToken;
       self.req = CancelToken.source();
-      
-      
+  
+      let reqHeaders = window.keycloakInstance ?
+        {
+          'Content-Type': 'application/json'
+          , 'Accept': 'application/json'
+          , 'Authorization': "JWT " + window.keycloakInstance.token
+        }
+        :
+        {
+          'Content-Type': 'application/json'
+          , 'Accept': 'application/json'
+        };
+  
       // http.post(url)
       axios.post(url
         , self.getSearchObj(from, to, self.searchstr, self.searchExact, self.cols, self.extraSearch,
           self.sortcol, self.sortdir)
         , {
-          headers: {
-            'Content-Type': 'application/json'
-            , 'Accept': 'application/json'
-          }
+          headers: reqHeaders
           , cancelToken: self.req.token
         }).then(self.onSuccessProxy).catch((thrown) =>
       {
@@ -584,16 +592,24 @@ class PVGridSelfDiscovery extends React.Component
       
       let CancelToken = axios.CancelToken;
       self.req = CancelToken.source();
-      
-      
+  
+      let reqHeaders = window.keycloakInstance ?
+        {
+          'Content-Type': 'application/json'
+          , 'Accept': 'application/json'
+          , 'Authorization': "JWT " + window.keycloakInstance.token
+        }
+        :
+        {
+          'Content-Type': 'application/json'
+          , 'Accept': 'application/json'
+        };
+  
       // http.post(url)
       axios.post(url
         , self.getAddRowQuery(req)
         , {
-          headers: {
-            'Content-Type': 'application/json'
-            , 'Accept': 'application/json'
-          }
+          headers: reqHeaders
           , cancelToken: self.req.token
         }).then(self.onSuccessAddRowProxy).catch((thrown) =>
       {

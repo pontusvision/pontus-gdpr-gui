@@ -94,14 +94,22 @@ class PVReportButton extends React.Component
     {
       let CancelToken = axios.CancelToken;
       self.req = CancelToken.source();
-      
+      let reqHeaders = window.keycloakInstance ?
+        {
+          'Content-Type': 'application/json'
+          , 'Accept': 'application/json'
+          , 'Authorization': "JWT " + window.keycloakInstance.token
+        }
+        :
+        {
+          'Content-Type': 'application/json'
+          , 'Accept': 'application/json'
+        };
+  
       axios.post(url,
         self.getQuery(contextId, templateText)
         , {
-          headers: {
-            'Content-Type': 'application/json'
-            , 'Accept': 'application/json'
-          }
+          headers: reqHeaders
           , cancelToken: self.req.token
         }).then(this.onSuccess).catch((thrown) =>
       {

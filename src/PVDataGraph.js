@@ -522,12 +522,20 @@ class PVDataGraph extends Component
       
       let CancelToken = axios.CancelToken;
       self.req = CancelToken.source();
-      
-      axios.post(url, this.getQuery(this.origNodeId), {
-        headers: {
+  
+      let reqHeaders = window.keycloakInstance ?
+        {
           'Content-Type': 'application/json'
           , 'Accept': 'application/json'
+          , 'Authorization': "JWT " + window.keycloakInstance.token
         }
+        :
+        {
+          'Content-Type': 'application/json'
+          , 'Accept': 'application/json'
+        };
+      axios.post(url, this.getQuery(this.origNodeId), {
+        headers: reqHeaders
         , cancelToken: self.req.token
       }).then(this.onSuccess).catch((thrown) =>
       {
