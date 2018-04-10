@@ -35,6 +35,6 @@ EOF
 chmod 755 $DISTDIR/../bin/run-gui.sh
 
 cd $DIR/opt/pontus
-tar czvf pontus-gui.tar.gz pontus-gui
+tar czvf ../../pontus-gui.tar.gz pontus-gui
 
 cd $CURDIR
