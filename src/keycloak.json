@@ -1,11 +1,11 @@
 {
-  "realm": "pontus",
-  "auth-server-url": "https://127.0.0.1:5005/auth",
+  "realm": "cdp",
+  "auth-server-url": "http://10.227.101.142:19990/auth",
   "ssl-required": "external",
   "resource": "broker",
   "credentials": {
-    "secret": "91fff12e-9b97-4028-8705-ffd8126fba3f"
+    "secret": "dc9510cc-0ee4-4e45-8a3b-b585df89ac8d"
   },
   "use-resource-role-mappings": true,
-  "policy-enforcer": {}
+  "confidential-port": 0
 }
