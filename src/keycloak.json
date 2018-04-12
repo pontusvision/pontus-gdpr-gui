@@ -1,6 +1,6 @@
 {
   "realm": "cdp",
-  "auth-server-url": "http://10.227.101.142:19990/auth",
+  "auth-server-url": "https://10.227.101.142:19990/auth",
   "ssl-required": "external",
   "resource": "broker",
   "credentials": {

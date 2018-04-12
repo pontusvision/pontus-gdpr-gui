@@ -132,8 +132,8 @@ import axios from "axios";
   const kcConf = {
       "clientId": "broker",
      "realm": "cdp",
-     "url": "http://10.227.101.142:19990/auth",
-     "auth-server-url": "http://10.227.101.142:19990/auth",
+     "url": "https://10.227.101.142:19990/auth",
+     "auth-server-url": "https://10.227.101.142:19990/auth",
      "ssl-required": "external",
      "resource": "broker",
      "credentials": {
