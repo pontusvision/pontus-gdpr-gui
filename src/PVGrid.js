@@ -322,7 +322,7 @@ class PVGrid extends PontusComponent
   
   onSuccess = (resp) =>
   {
-    if (this.url === "/gateway/sandbox/pvgdpr_graph")
+    if (this.url === PontusComponent.getGraphURL(this.props))
     {
       this.onSuccessRawQuery(resp);
     }

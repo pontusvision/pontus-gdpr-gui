@@ -1,4 +1,5 @@
 import PVGrid from './PVGrid';
+import PontusComponent from "./PontusComponent";
 
 //
 
@@ -25,7 +26,7 @@ class NavPanelSubjectAccessRequestPVGrid extends PVGrid
     colSettings[4] = {id: "Person.Full_Name", name: "Requester", field: "person_full_name", sortable: true};
     colSettings[5] = {id: "Person.Employee.Full_Name", name: "Handler", field: "employee_full_name", sortable: true};
     
-    this.url = "/gateway/sandbox/pvgdpr_graph";
+    this.url = PontusComponent.getGraphURL(this.props);
     
     this.setColumnSettings(colSettings);
     this.setExtraSearch({value: "Event.Subject_Access_Request"});

@@ -509,7 +509,7 @@ class PVDataGraph extends PontusComponent
   {
     this.origNodeId = event !== null ? (+(event.id || event.index)) : -1;// the + converts to number just in case
     // this.origNodeId = (+(this.origNodeId));
-    let url = "/gateway/sandbox/pvgdpr_graph"; // "/gateway/sandbox/pvgdpr_server/home/graph";
+    let url = this.url; // "/gateway/sandbox/pvgdpr_server/home/graph";
     if (this.h_request !== null)
     {
       clearTimeout(this.h_request);

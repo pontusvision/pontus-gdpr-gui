@@ -179,7 +179,7 @@ class PVTemplateEditor extends PontusComponent
   previewData = (dataType, templateText) =>
   {
     // this.origNodeId = (+(this.origNodeId));
-    let url = "/gateway/sandbox/pvgdpr_graph"; // "/gateway/sandbox/pvgdpr_server/home/graph";
+    let url = this.url; // "/gateway/sandbox/pvgdpr_server/home/graph";
     if (this.h_request !== null)
     {
       clearTimeout(this.h_request);
