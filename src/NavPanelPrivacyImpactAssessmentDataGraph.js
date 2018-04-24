@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React from 'react';
 // import ResizeAware from 'react-resize-aware';
 import PVDataGraph from './PVDataGraph';
 // import axios from 'axios';
@@ -7,7 +7,7 @@ import PVDataGraph from './PVDataGraph';
 /***************************
  * UserList Component
  ***************************/
-class NavPanelPrivacyImpactAssessmentDataGraph extends Component
+class NavPanelPrivacyImpactAssessmentDataGraph extends PontusComponent
 {
   
   

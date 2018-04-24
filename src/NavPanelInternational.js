@@ -1,5 +1,5 @@
 
-import React, {Component} from 'react';
+import React  from 'react';
 import ResizeAware from 'react-resize-aware';
 
 import GoldenLayout from 'golden-layout';
@@ -8,9 +8,10 @@ import NavPanelInternationalPVGridRegulators from './NavPanelInternationalPVGrid
 import NavPanelInternationalPVDataGraph from './NavPanelInternationalPVDataGraph';
 // import PVTemplateEditor from './PVTemplateEditor';
 import PVWorldMap from "./PVWorldMap";
+import PontusComponent from "./PontusComponent";
 
 
-class NavPanelInternational extends Component
+class NavPanelInternational extends PontusComponent
 {
   constructor(props)
   {

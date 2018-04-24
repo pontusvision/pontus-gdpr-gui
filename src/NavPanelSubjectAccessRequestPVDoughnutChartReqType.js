@@ -2,13 +2,14 @@ import React, {Component} from 'react';
 // import ResizeAware from 'react-resize-aware';
 import axios from "axios";
 import {Doughnut} from 'react-chartjs-2';
+import PontusComponent from "./PontusComponent";
 // import axios from 'axios';
 
 
 /***************************
  * UserList Component
  ***************************/
-class NavPanelSubjectAccessRequestPVDoughnutChartReqType extends Component
+class NavPanelSubjectAccessRequestPVDoughnutChartReqType extends PontusComponent
 {
   constructor(props)
   {
@@ -33,7 +34,7 @@ class NavPanelSubjectAccessRequestPVDoughnutChartReqType extends Component
     // this.datamaps = new PVDatamaps(props);
     
     // this.url = props.url || "/gateway/sandbox/pvgdpr_graph";
-    this.url = "/gateway/sandbox/pvgdpr_graph";
+    this.url = PontusComponent.getGraphURL(props)
     this.errorCounter = 0;
   
   }

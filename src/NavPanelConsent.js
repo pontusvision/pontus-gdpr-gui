@@ -1,5 +1,5 @@
 
-import React, {Component} from 'react';
+import React  from 'react';
 import ResizeAware from 'react-resize-aware';
 
 import GoldenLayout from 'golden-layout';
@@ -8,9 +8,10 @@ import NavPanelConsentPVGridPrivacyNotices from './NavPanelConsentPVGridPrivacyN
 import NavPanelConsentPVGridEventConsent from './NavPanelConsentPVGridEventConsent';
 import NavPanelConsentDataGraph from './NavPanelConsentDataGraph';
 import NavPanelConsentPVDoughnutChartConsentStatus from './NavPanelConsentPVDoughnutChartConsentStatus';
+import PontusComponent from "./PontusComponent";
 
 
-class NavPanelConsent extends Component
+class NavPanelConsent extends PontusComponent
 {
   constructor(props)
   {

@@ -7,9 +7,10 @@ import GoldenLayout from 'golden-layout';
 import NavPanelInformationYouHoldPVGrid from './NavPanelInformationYouHoldPVGrid';
 import NavPanelInformationYouHoldPVDataGraph from './NavPanelInformationYouHoldPVDataGraph';
 import PVTimeline from './PVTimeline';
+import PontusComponent from "./PontusComponent";
 
 
-class NavPanelInformationYouHold extends Component
+class NavPanelInformationYouHold extends PontusComponent
 {
   constructor(props)
   {

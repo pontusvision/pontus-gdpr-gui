@@ -1,10 +1,11 @@
 import React, {Component} from 'react';
+import PontusComponent from "./PontusComponent";
 
 
 /***************************
  * UserDetail Component
  ***************************/
-class UserDetail extends Component
+class UserDetail extends PontusComponent
 {
   
   componentWillMount()

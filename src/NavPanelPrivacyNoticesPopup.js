@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React  from 'react';
 // import ResizeAware from 'react-resize-aware';
 import PVGDPRScores from './PVGDPRScores';
 // import axios from 'axios';

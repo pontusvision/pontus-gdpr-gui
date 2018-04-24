@@ -8,11 +8,12 @@ import 'brace/theme/monokai';
 
 
 import axios from "axios";
+import PontusComponent from "./PontusComponent";
 
 // import "slickgrid-es6/dist/slick-default-theme.less";
 
 
-class PVAceGremlinEditor extends React.Component
+class PVAceGremlinEditor extends PontusComponent
 {
   constructor(props)
   {
@@ -22,7 +23,7 @@ class PVAceGremlinEditor extends React.Component
     //   {key: 'name', name: 'Name'},
     //   {key: 'street', name: 'Street'}
     // ];
-    this.url = props.url || "/gateway/sandbox/pvgdpr_graph";
+    this.url = PontusComponent.getGraphURL(props);
     this.state = {height: 1000, width: 1000};
     this.namespace = props.namespace || "";
     

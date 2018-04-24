@@ -1,5 +1,5 @@
 
-import React, {Component} from 'react';
+import React from 'react';
 import ResizeAware from 'react-resize-aware';
 
 import GoldenLayout from 'golden-layout';
@@ -7,9 +7,10 @@ import GoldenLayout from 'golden-layout';
 import NavPanelTrackExpertPVDataGraph from './NavPanelTrackExpertPVDataGraph';
 import NavPanelTrackExpertPVAceGremlinEditor from "./NavPanelTrackExpertPVAceGremlinEditor";
 import NavPanelTrackExpertPVAceGremlinJSONQueryResults from "./NavPanelTrackExpertPVAceGremlinJSONQueryResults";
+import PontusComponent from "./PontusComponent";
 
 
-class NavPanelTrackExpert extends Component
+class NavPanelTrackExpert extends PontusComponent
 {
   constructor(props)
   {

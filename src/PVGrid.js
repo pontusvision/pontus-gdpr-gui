@@ -9,9 +9,10 @@ import ResizeAware from 'react-resize-aware';
 import axios from "axios";
 // import "slickgrid-es6/dist/slick-default-theme.less";
 import {Flex, Box} from 'reflexbox'
+import PontusComponent from "./PontusComponent";
 
 
-class PVGrid extends React.Component
+class PVGrid extends PontusComponent
 {
   constructor(props)
   {
@@ -53,7 +54,7 @@ class PVGrid extends React.Component
     this.sortdir = 1;
     this.h_request = null;
     this.req = null; // ajax request
-    this.url = props.url || "/gateway/sandbox/pvgdpr_server/home/records";
+    this.url = PontusComponent.getRestURL(props);
     this.namespace = this.props.namespace||"";
     
     // if (!this.props.url){
@@ -192,7 +193,7 @@ class PVGrid extends React.Component
       sortBy: sortcol,
       sortDir: ((sortdir > 0) ? "+asc" : "+desc")
     }
-  }
+  };
   
   ensureData = (fromReq, toReq) =>
   {

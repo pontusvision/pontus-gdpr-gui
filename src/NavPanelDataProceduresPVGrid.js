@@ -1,4 +1,5 @@
 import PVGrid from './PVGrid';
+import PontusComponent from "./PontusComponent";
 
 //
 
@@ -22,7 +23,7 @@ class NavPanelDataProceduresPVGrid extends PVGrid
     colSettings[5] = {id: "Object.Data_Procedures.Update_Mechanism", name: "Update Mechanism", field: "Object.Data_Procedures.Update_Mechanism", sortable: true};
 
     
-    this.url = "/gateway/sandbox/pvgdpr_graph";
+    this.url = PontusComponent.getGraphURL(this.props);
     
     this.setColumnSettings(colSettings);
     this.setExtraSearch({value: "Person"});

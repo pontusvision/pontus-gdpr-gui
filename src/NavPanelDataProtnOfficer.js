@@ -1,13 +1,14 @@
-import React, {Component} from 'react';
+import React from 'react';
 import ResizeAware from 'react-resize-aware';
 
 import GoldenLayout from 'golden-layout';
 
 import NavPanelDataProtnOfficerPVGrid from './NavPanelDataProtnOfficerPVGrid';
 import NavPanelDataProtnOfficerPVDataGraph from './NavPanelDataProtnOfficerPVDataGraph';
+import PontusComponent from "./PontusComponent";
 
 
-class NavPanelDataProtnOfficer extends Component
+class NavPanelDataProtnOfficer extends PontusComponent
 {
   constructor(props)
   {

@@ -1,4 +1,5 @@
 import PVGrid from './PVGrid';
+import PontusComponent from "./PontusComponent";
 
 //
 
@@ -20,7 +21,7 @@ class NavPanelInformationYouHoldPVGrid extends PVGrid
     colSettings[3] = {id: "Person.Gender", name: "Gender", field: "Person.Gender", sortable: true};
     colSettings[4] = {id: "Person.Nationality", name: "Nationality", field: "Person.Nationality", sortable: true};
     
-    this.url = "/gateway/sandbox/pvgdpr_graph";
+    this.url = PontusComponent.getGraphURL(this.props);
     
     this.setColumnSettings(colSettings);
     this.setExtraSearch({value: "Person"});

@@ -1,13 +1,14 @@
-import React, {Component} from 'react';
+import React from 'react';
 // import ResizeAware from 'react-resize-aware';
 import PVDataGraph from './PVDataGraph';
+import PontusComponent from "./PontusComponent";
 // import axios from 'axios';
 
 
 /***************************
  * UserList Component
  ***************************/
-class NavPanelInformationYouHoldPVDataGraph extends Component
+class NavPanelInformationYouHoldPVDataGraph extends PontusComponent
 {
   
   

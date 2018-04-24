@@ -10,6 +10,7 @@ import * as Vis from 'vis';
 
 
 import axios from 'axios';
+import PontusComponent from "./PontusComponent";
 
 
 /***************************
@@ -171,7 +172,8 @@ class PVTimeline extends Component
   selectData = (event) =>
   {
   
-    let url = "/gateway/sandbox/pvgdpr_graph"; // "/gateway/sandbox/pvgdpr_server/home/graph";
+    let url =  this.url = PontusComponent.getGraphURL(this.props);
+    // "/gateway/sandbox/pvgdpr_server/home/graph";
     if (this.h_request !== null)
     {
       clearTimeout(this.h_request);

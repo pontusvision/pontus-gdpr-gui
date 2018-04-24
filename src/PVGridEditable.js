@@ -9,6 +9,7 @@ import axios from "axios";
 // import "slickgrid-es6/dist/slick-default-theme.less";
 import {Flex, Box} from 'reflexbox'
 import PVGrid from "./PVGrid";
+import PontusComponent from "./PontusComponent";
 
 
 class PVGridEditable extends PVGrid
@@ -58,7 +59,7 @@ class PVGridEditable extends PVGrid
     this.sortdir = 1;
     this.h_request = null;
     this.req = null; // ajax request
-    this.url = props.url || "/gateway/sandbox/pvgdpr_server/home/records";
+    this.url = PontusComponent.getRestURL(this.props);
     this.namespace = "";
     
     // if (!this.props.url){

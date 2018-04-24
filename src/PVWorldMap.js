@@ -9,6 +9,7 @@ import * as Countries from  'i18n-iso-countries' ;
 import axios from "axios";
 // import "slickgrid-es6/dist/slick-default-theme.less";
 import {Flex, Box} from 'reflexbox'
+import PontusComponent from "./PontusComponent";
 
 
 class PVWorldMap extends React.Component
@@ -81,7 +82,8 @@ class PVWorldMap extends React.Component
   
   searchDataByCountry = (searchStr) =>{
     
-    let url =  "/gateway/sandbox/pvgdpr_graph"; //"/gateway/sandbox/pvgdpr_server/home/country_data_count";
+    let url = this.url = PontusComponent.getGraphURL(this.props);
+  
   
     let self = this;
   

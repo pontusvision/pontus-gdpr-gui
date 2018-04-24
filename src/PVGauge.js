@@ -1,19 +1,20 @@
-import React, {Component} from 'react';
+import React from 'react';
 import ResizeAware from 'react-resize-aware';
-import axios from 'axios';
+
 
 import Gauge from 'react-svg-gauge';
+import PontusComponent from "./PontusComponent";
 
 
 /***************************
  * UserList Component
  ***************************/
-class PVGauge extends Component
+class PVGauge extends PontusComponent
 {
   
   constructor(props){
     super(props);
-    this.url = "/gateway/sandbox/pvgdpr_graph";
+    // this.url = "/gateway/sandbox/pvgdpr_graph";
     let autoResize = true;
     if (props.height !== null && props.height > 0 && props.width !== null && props.width > 0){
       autoResize = false;

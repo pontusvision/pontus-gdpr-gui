@@ -1,5 +1,4 @@
 
-import React, {Component} from 'react';
 import ResizeAware from 'react-resize-aware';
 
 import GoldenLayout from 'golden-layout';
@@ -8,8 +7,9 @@ import PVGridEmployees from './PVGridEmployees';
 import PVGridAwarenessCampaign from './PVGridAwarenessCampaign';
 
 import PVDoughnutChart from './PVDoughnutChart';
+import PontusComponent from "./PontusComponent";
 
-class NavPanelAwareness extends Component
+class NavPanelAwareness extends PontusComponent
 {
   constructor(props)
   {

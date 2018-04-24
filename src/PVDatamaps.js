@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import Datamaps from 'datamaps';
+import PontusComponent from "./PontusComponent";
 
 var d3 = window.d3;
 const MAP_CLEARING_PROPS = [
@@ -14,7 +15,7 @@ const propChangeRequiresMapClear = (oldProps, newProps) =>
   );
 };
 
-export default class Datamap extends React.Component
+export default class Datamap extends PontusComponent
 {
   
   static propTypes = {

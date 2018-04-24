@@ -2,11 +2,12 @@ import React from 'react';
 import axios from "axios";
 import {Button, Segment, Portal} from 'semantic-ui-react';
 import {Base64} from 'js-base64';
+import PontusComponent from "./PontusComponent";
 
 // import PVDatamaps from './PVDatamaps';
 
 
-class PVReportButton extends React.Component
+class PVReportButton extends PontusComponent
 {
   constructor(props)
   {
@@ -16,8 +17,8 @@ class PVReportButton extends React.Component
     //   {key: 'street', name: 'Street'}
     // ];
     this.errorCounter = 0;
-    
-    this.url = props.url || "/gateway/sandbox/pvgdpr_graph";
+  
+    this.url = PontusComponent.getGraphURL(this.props);
     // this.url = "/gateway/sandbox/pvgdpr_graph";
     
     this.state = {

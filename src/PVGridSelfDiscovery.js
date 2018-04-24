@@ -9,9 +9,10 @@ import ResizeAware from 'react-resize-aware';
 import axios from "axios";
 // import "slickgrid-es6/dist/slick-default-theme.less";
 import {Flex, Box} from 'reflexbox'
+import PontusComponent from "./PontusComponent";
 
 
-class PVGridSelfDiscovery extends React.Component
+class PVGridSelfDiscovery extends PontusComponent
 {
   constructor(props)
   {
@@ -83,7 +84,7 @@ class PVGridSelfDiscovery extends React.Component
     this.sortdir = 1;
     this.h_request = null;
     this.req = null; // ajax request
-    this.url = props.url || "/gateway/sandbox/pvgdpr_graph";
+    this.url = PontusComponent.getGraphURL(this.props);
     
   }
   

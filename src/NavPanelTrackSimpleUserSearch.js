@@ -1,13 +1,14 @@
-import React, {Component} from 'react';
+import React  from 'react';
 // import ResizeAware from 'react-resize-aware';
 import UserSearch from './UserSearch';
+import PontusComponent from "./PontusComponent";
 // import axios from 'axios';
 
 
 /***************************
  * UserList Component
  ***************************/
-class NavPanelTrackSimpleUserSearch extends Component
+class NavPanelTrackSimpleUserSearch extends PontusComponent
 {
   
   
