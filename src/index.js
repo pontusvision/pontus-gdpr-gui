@@ -113,7 +113,7 @@ import $ from "jquery";
     }
   }
   
-  const kcConf =  $.getJSON('keycloak-conf.json');
+  const kcConf =  $.getJSON('pvgdpr/keycloak-conf.json');
     // {
     //   "clientId": "broker",
     //   "realm": "pontus",
