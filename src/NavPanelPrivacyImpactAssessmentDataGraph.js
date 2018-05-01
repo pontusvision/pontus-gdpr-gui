@@ -1,6 +1,7 @@
 import React from 'react';
 // import ResizeAware from 'react-resize-aware';
 import PVDataGraph from './PVDataGraph';
+import PontusComponent from './PontusComponent';
 // import axios from 'axios';
 
 

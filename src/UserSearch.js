@@ -182,7 +182,7 @@ class UserSearch extends PontusComponent
                 onChange={this.onChangeVertexLabels}
                 onError={this.onError}
                 ref={this.setObjVertexLabels}
-                url={PontusComponent.getRestVertexLabelsURL(props)}
+                url={PontusComponent.getRestVertexLabelsURL(this.props)}
               />
             </Box>
           </Flex>
@@ -201,7 +201,7 @@ class UserSearch extends PontusComponent
                 onChange={this.onChangeNodePropertyNames}
                 onError={this.onError}
                 ref={this.setObjNodePropertyNames}
-                url={PontusComponent.getRestNodePropertyNamesURL(props)}
+                url={PontusComponent.getRestNodePropertyNamesURL(this.props)}
               />
             </Box>
           </Flex>
