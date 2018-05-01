@@ -6,8 +6,6 @@ import registerServiceWorker from './registerServiceWorker';
 import Keycloak from "keycloak-js";
 import axios from "axios";
 import $ from "jquery";
-
-
 // import './index.css';
 
 (function(){
@@ -115,55 +113,66 @@ import $ from "jquery";
     }
   }
   
-  const kcConf =  $.getJSON('keycloak-conf.json');
-    // {
-    //   "clientId": "broker",
-    //   "realm": "pontus",
-    //   // "url": "/gateway/sandbox/auth",
-    //   // "auth-server-url": "/gateway/sandbox/auth",
-    //   "url": "https://localhost:5005/auth/",
-    //   "auth-server-url": "https://localhost:5005/auth/",
-    //   "ssl-required": "external",
-    //   "resource": "broker",
-    //   "credentials": {
-    //     "secret": "91fff12e-9b97-4028-8705-ffd8126fba3f"
-    //   },
-    //   "use-resource-role-mappings": true,
-    //   "policy-enforcer": {}
-    // };
+  function loadJSON(path, success, error)
+  {
+    var xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function()
+    {
+      if (xhr.readyState === XMLHttpRequest.DONE) {
+        if (xhr.status === 200) {
+          if (success)
+            success(JSON.parse(xhr.responseText));
+        } else {
+          if (error)
+            error(xhr);
+        }
+      }
+    };
+    xhr.open("GET", path, true);
+    xhr.send();
+  }
   
- 
+  
+  loadJSON('pvgdpr_gui/keycloak-conf.json',
+    function(data) {
+      const kcConf =  data; // $.getJSON('pvgdpr/keycloak-conf.json');
+      
   
   
-
-  const kc = Keycloak(kcConf);
-  kc.init({adapter: 'default', onLoad: 'login-required'}).success(authenticated => {
-    if (authenticated) {
-      // store.getState().keycloak = kc;
-      // ReactDOM.render(app, document.getElementById("app"));
-      window.keycloakInstance = kc;
-      ReactDOM.render(<App keycloak={kc} />, document.getElementById('root'));
-
-    }
-  });
-
-  axios.interceptors.request.use(config => {
-    return refreshToken().then(() => {
-      config.headers.Authorization = 'Bearer ' + kc.idToken;
-      return Promise.resolve(config)
-    }).catch(() => {
-      kc.login();
-    })
-  });
+  
+      const kc = Keycloak(kcConf);
+      kc.init({adapter: 'default', onLoad: 'login-required'}).success(authenticated => {
+        if (authenticated) {
+          // store.getState().keycloak = kc;
+          // ReactDOM.render(app, document.getElementById("app"));
+          window.keycloakInstance = kc;
+          ReactDOM.render(<App keycloak={kc} />, document.getElementById('root'));
+      
+        }
+      });
+  
+      axios.interceptors.request.use(config => {
+        return refreshToken().then(() => {
+          config.headers.Authorization = 'Bearer ' + kc.idToken;
+          return Promise.resolve(config)
+        }).catch(() => {
+          kc.login();
+        })
+      });
 
 // need to wrap the KC "promise object" into a real Promise object
-  const refreshToken = (minValidity = 5) => {
-    return new Promise((resolve, reject) => {
-      kc.updateToken(minValidity)
-        .success(() => resolve())
-        .error(error => reject(error))
-    });
-  };
+      const refreshToken = (minValidity = 5) => {
+        return new Promise((resolve, reject) => {
+          kc.updateToken(minValidity)
+            .success(() => resolve())
+            .error(error => reject(error))
+        });
+      };
+  
+  
+    },
+    function(xhr) { console.error(xhr); });
+  
   
   
 })();
