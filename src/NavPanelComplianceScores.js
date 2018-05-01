@@ -1,17 +1,16 @@
 
-import React, {Component} from 'react';
+import React from 'react';
 import ResizeAware from 'react-resize-aware';
 
 import GoldenLayout from 'golden-layout';
 
-import NavPanelConsentPVGridPrivacyNotices from './NavPanelConsentPVGridPrivacyNotices';
-import NavPanelConsentPVGridEventConsent from './NavPanelConsentPVGridEventConsent';
 // import UserSearch from './';
 import NavPanelComplianceScoresMainScore from './NavPanelComplianceScoresMainScore';
 import NavPanelComplianceScoresDetailedScores from './NavPanelComplianceScoresDetailedScores';
+import PontusComponent from "./PontusComponent";
 
 
-class NavPanelComplianceScores extends Component
+class NavPanelComplianceScores extends PontusComponent
 {
   constructor(props)
   {

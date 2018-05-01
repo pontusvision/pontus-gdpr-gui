@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React from 'react';
 // import ResizeAware from 'react-resize-aware';
 import PVGauge from './PVGauge';
 import axios from 'axios';
@@ -7,18 +7,19 @@ import {ic_multiline_chart} from 'react-icons-kit-allreact/md/ic_multiline_chart
 
 import {ic_child_care} from 'react-icons-kit-allreact/md/ic_child_care';
 import Icon from 'react-icons-kit-allreact';
+import PontusComponent from "./PontusComponent";
 
 
 /***************************
  * UserList Component
  ***************************/
-class PVGDPRScores extends Component
+class PVGDPRScores extends PontusComponent
 {
   
   constructor(props)
   {
     super(props);
-    this.url = "/gateway/sandbox/pvgdpr_graph";
+    // this.url = "/gateway/sandbox/pvgdpr_graph";
     this.text = 'You should start thinking now about whether you\n' +
       'need to put systems in place to verify individuals’\n' +
       'ages and to obtain parental or guardian consent for\n' +

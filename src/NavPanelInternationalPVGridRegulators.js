@@ -1,4 +1,5 @@
 import PVGrid from './PVGrid';
+import PontusComponent from "./PontusComponent";
 
 //
 
@@ -37,7 +38,7 @@ class NavPanelInternationalPVGridRegulators extends PVGrid
     colSettings[1] = {id: "Person.Organisation.Name", name: "Long Name", field: "Person.Organisation.Name", sortable: true};
     colSettings[2] = {id: "Person.Organisation.orgCountrySet", name: "Countries", field: "Person.Organisation.orgCountrySet", sortable: true};
     
-    this.url = "/gateway/sandbox/pvgdpr_graph";
+    this.url = PontusComponent.getGraphURL(this.props);
     
     this.setColumnSettings(colSettings);
     this.setExtraSearch({value: "Organisation"});

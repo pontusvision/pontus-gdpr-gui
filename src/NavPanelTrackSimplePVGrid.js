@@ -1,13 +1,14 @@
-import React, {Component} from 'react';
+import React  from 'react';
 // import ResizeAware from 'react-resize-aware';
 import PVGrid from './PVGrid';
+import PontusComponent from "./PontusComponent";
 // import axios from 'axios';
 
 
 /***************************
  * UserList Component
  ***************************/
-class NavPanelTrackSimplePVGrid extends Component
+class NavPanelTrackSimplePVGrid extends PontusComponent
 {
   
   

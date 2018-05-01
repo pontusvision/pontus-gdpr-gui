@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React  from 'react';
 import ResizeAware from 'react-resize-aware';
 import Graph from 'react-graph-vis';
 import axios from 'axios';
@@ -6,12 +6,13 @@ import PVGridSelfDiscovery from './PVGridSelfDiscovery';
 import {Segment, Portal} from 'semantic-ui-react';
 import {Menu} from 'semantic-ui-react';
 import PVReportButton from './PVReportButton';
+import PontusComponent from "./PontusComponent";
 
 
 /***************************
  * UserList Component
  ***************************/
-class PVDataGraph extends Component
+class PVDataGraph extends PontusComponent
 {
   constructor(props)
   {
@@ -508,7 +509,7 @@ class PVDataGraph extends Component
   {
     this.origNodeId = event !== null ? (+(event.id || event.index)) : -1;// the + converts to number just in case
     // this.origNodeId = (+(this.origNodeId));
-    let url = "/gateway/sandbox/pvgdpr_graph"; // "/gateway/sandbox/pvgdpr_server/home/graph";
+    let url = this.url; // "/gateway/sandbox/pvgdpr_server/home/graph";
     if (this.h_request !== null)
     {
       clearTimeout(this.h_request);

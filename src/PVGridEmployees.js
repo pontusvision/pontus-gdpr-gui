@@ -1,4 +1,5 @@
 import PVGrid from './PVGrid';
+import PontusComponent from "./PontusComponent";
 
 
 class PVGridEmployees extends PVGrid
@@ -138,11 +139,12 @@ class PVGridEmployees extends PVGrid
       colSettings[1] = {id: "Person.Full_Name", name: "Full Name", field: "Person.Full_Name", sortable: true};
       colSettings[2] = {id: "Person.Nationality", name: "Nationality", field: "Person.Nationality", sortable: true};
       colSettings[3] = {id: "event_status", name: "Campaign Status", field: "event_status", sortable: false};
-      
-      
-      this.url = "/gateway/sandbox/pvgdpr_graph";
-      
-      
+  
+  
+      this.url = PontusComponent.getGraphURL(this.props);
+  
+  
+  
       this.setColumnSettings(colSettings);
     }
     catch (e)

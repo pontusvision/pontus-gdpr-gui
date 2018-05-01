@@ -1,8 +1,9 @@
-import React, {Component} from 'react';
+import React from 'react';
 import PVGauge from "./PVGauge";
+import PontusComponent from "./PontusComponent";
 
 
-class NavPanelComplianceScoresMainScore extends Component
+class NavPanelComplianceScoresMainScore extends PontusComponent
 {
   
   constructor(props){

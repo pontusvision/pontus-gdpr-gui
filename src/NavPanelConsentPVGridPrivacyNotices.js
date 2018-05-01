@@ -1,4 +1,5 @@
 import PVGrid from './PVGrid';
+import PontusComponent from "./PontusComponent";
 
 //
 
@@ -29,7 +30,7 @@ class NavPanelConsentPVGridPrivacyNotices extends PVGrid
       sortable: true
     };
   
-    this.url = "/gateway/sandbox/pvgdpr_graph";
+    this.url = PontusComponent.getGraphURL(this.props);
   
     this.setColumnSettings(colSettings);
     this.setExtraSearch({value: "Object.Privacy_Notice"});
