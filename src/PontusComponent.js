@@ -62,6 +62,14 @@ class PontusComponent extends React.Component
     {
       return props.url;
     }
+    else if (window.location && window.location.pathname){
+      let pvgdprGuiIndex = window.location.pathname.indexOf(pvgdprGuiStr)
+      if (pvgdprGuiIndex > 0)
+      {
+        let retVal = window.location.pathname.substr(0, pvgdprGuiIndex);
+        return retVal.concat(defaultSuffix);
+      }
+    }
     else if (props.baseURI)
     {
       if (props.ownerDocument && props.ownerDocument.origin)
@@ -74,13 +82,13 @@ class PontusComponent extends React.Component
           
           let originLen = props.ownerDocument.origin.length();
           let retVal = uri.substr(originLen, pvgdprGuiIndex);
+  
+          return retVal.concat(defaultSuffix);
           
-          retVal.concat(defaultSuffix);
-          
-          return retVal;
         }
       }
     }
+    
     return defaultSandbox;
   }
   
