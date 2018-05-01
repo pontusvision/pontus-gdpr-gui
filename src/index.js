@@ -5,6 +5,8 @@ import App from './App';
 import registerServiceWorker from './registerServiceWorker';
 import Keycloak from "keycloak-js";
 import axios from "axios";
+import $ from "jquery";
+
 
 // import './index.css';
 
