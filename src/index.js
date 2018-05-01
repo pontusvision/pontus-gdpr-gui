@@ -113,36 +113,26 @@ import axios from "axios";
     }
   }
   
-  //const kcConf = {
-      //"clientId": "broker",
-      //"realm": "pontus",
-      //// "url": "/gateway/sandbox/auth",
-      //// "auth-server-url": "/gateway/sandbox/auth",
-      //"url": "https://localhost:5005/auth/",
-      //"auth-server-url": "https://localhost:5005/auth/",
-      //"ssl-required": "external",
-      //"resource": "broker",
-      //"credentials": {
-        //"secret": "91fff12e-9b97-4028-8705-ffd8126fba3f"
-      //},
-      //"use-resource-role-mappings": true,
-      //"policy-enforcer": {}
-    //};
-
-  const kcConf = {
-      "clientId": "broker",
-     "realm": "cdp",
-     "url": "https://10.227.101.142:19990/auth",
-     "auth-server-url": "https://10.227.101.142:19990/auth",
-     "ssl-required": "external",
-     "resource": "broker",
-     "credentials": {
-       "secret": "dc9510cc-0ee4-4e45-8a3b-b585df89ac8d"
-     },
-     "use-resource-role-mappings": true,
-     "policy-enforcer": 0
-   }
-
+  const kcConf =  $.getJSON('keycloak-conf.json');
+    // {
+    //   "clientId": "broker",
+    //   "realm": "pontus",
+    //   // "url": "/gateway/sandbox/auth",
+    //   // "auth-server-url": "/gateway/sandbox/auth",
+    //   "url": "https://localhost:5005/auth/",
+    //   "auth-server-url": "https://localhost:5005/auth/",
+    //   "ssl-required": "external",
+    //   "resource": "broker",
+    //   "credentials": {
+    //     "secret": "91fff12e-9b97-4028-8705-ffd8126fba3f"
+    //   },
+    //   "use-resource-role-mappings": true,
+    //   "policy-enforcer": {}
+    // };
+  
+ 
+  
+  
 
   const kc = Keycloak(kcConf);
   kc.init({adapter: 'default', onLoad: 'login-required'}).success(authenticated => {
