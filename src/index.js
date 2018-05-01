@@ -132,6 +132,7 @@ import $ from "jquery";
     xhr.send();
   }
   
+  
   loadJSON('pvgdpr_gui/keycloak-conf.json',
     function(data) {
       const kcConf =  data; // $.getJSON('pvgdpr/keycloak-conf.json');
