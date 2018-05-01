@@ -113,22 +113,27 @@ import axios from "axios";
     }
   }
   
-  const kcConf = {
-      "clientId": "broker",
-      "realm": "pontus",
-      // "url": "/gateway/sandbox/auth",
-      // "auth-server-url": "/gateway/sandbox/auth",
-      "url": "https://localhost:5005/auth/",
-      "auth-server-url": "https://localhost:5005/auth/",
-      "ssl-required": "external",
-      "resource": "broker",
-      "credentials": {
-        "secret": "91fff12e-9b97-4028-8705-ffd8126fba3f"
-      },
-      "use-resource-role-mappings": true,
-      "policy-enforcer": {}
-    };
-
+  const kcConf =  $.getJSON('keycloak-conf.json');
+    // {
+    //   "clientId": "broker",
+    //   "realm": "pontus",
+    //   // "url": "/gateway/sandbox/auth",
+    //   // "auth-server-url": "/gateway/sandbox/auth",
+    //   "url": "https://localhost:5005/auth/",
+    //   "auth-server-url": "https://localhost:5005/auth/",
+    //   "ssl-required": "external",
+    //   "resource": "broker",
+    //   "credentials": {
+    //     "secret": "91fff12e-9b97-4028-8705-ffd8126fba3f"
+    //   },
+    //   "use-resource-role-mappings": true,
+    //   "policy-enforcer": {}
+    // };
+  
+ 
+  
+  
+  
   const kc = Keycloak(kcConf);
   kc.init({adapter: 'default', onLoad: 'login-required'}).success(authenticated => {
     if (authenticated) {
