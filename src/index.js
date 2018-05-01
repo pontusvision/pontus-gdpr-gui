@@ -133,7 +133,7 @@ import axios from "axios";
  
   
   
-  
+
   const kc = Keycloak(kcConf);
   kc.init({adapter: 'default', onLoad: 'login-required'}).success(authenticated => {
     if (authenticated) {
