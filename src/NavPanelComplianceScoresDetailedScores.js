@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React  from 'react';
 // import ResizeAware from 'react-resize-aware';
 // import { Accordion } from 'semantic-ui-react'
 import ResizeAware from 'react-resize-aware';
@@ -16,7 +16,8 @@ import NavPanelPrivacyImpactAssessmentPopup from './NavPanelPrivacyImpactAssessm
 import NavPanelDataProtnOfficerPopup from "./NavPanelDataProtnOfficerPopup";
 import NavPanelInternationalPopup from "./NavPanelInternationalPopup";
 import NavPanelDataBreachPopup from "./NavPanelDataBreachPopup";
-class NavPanelComplianceScoresDetailedScores extends Component
+import PontusComponent from "./PontusComponent";
+class NavPanelComplianceScoresDetailedScores extends PontusComponent
 {
   
   constructor(props){

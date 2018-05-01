@@ -1,13 +1,14 @@
-import React, {Component} from 'react';
+import React  from 'react';
 // import ResizeAware from 'react-resize-aware';
 import PVAceGremlinJSONQueryResults from './PVAceGremlinJSONQueryResults';
+import PontusComponent from "./PontusComponent";
 // import axios from 'axios';
 
 
 /***************************
  * UserList Component
  ***************************/
-class NavPanelTrackExpertPVAceGremlinJSONQueryResults extends Component
+class NavPanelTrackExpertPVAceGremlinJSONQueryResults extends PontusComponent
 {
   
   

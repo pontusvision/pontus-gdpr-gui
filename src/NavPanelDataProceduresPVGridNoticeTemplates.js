@@ -1,4 +1,5 @@
 import PVGrid  from "./PVGrid";
+import PontusComponent from "./PontusComponent";
 
 //
 
@@ -20,7 +21,7 @@ class NavPanelDataProceduresPVGridNoticeTemplates extends PVGrid
     // colSettings[3] = {id: "Object.Notification_Templates.Text", visible: false, name: "Text", field: "Object.Notification_Templates.Text",   sortable: true};
 
     
-    this.url = "/gateway/sandbox/pvgdpr_graph";
+    this.url = PontusComponent.getGraphURL(this.props);
     
     this.setColumnSettings(colSettings);
     this.setExtraSearch({value: "Object.Notification_Templates"});

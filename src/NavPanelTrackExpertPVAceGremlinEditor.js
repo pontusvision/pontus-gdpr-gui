@@ -1,13 +1,14 @@
-import React, {Component} from 'react';
+import React  from 'react';
 // import ResizeAware from 'react-resize-aware';
 import PVAceGremlinEditor from './PVAceGremlinEditor';
+import PontusComponent from "./PontusComponent";
 // import axios from 'axios';
 
 
 /***************************
  * UserList Component
  ***************************/
-class NavPanelTrackExpertPVAceGremlinEditor extends Component
+class NavPanelTrackExpertPVAceGremlinEditor extends PontusComponent
 {
   
   

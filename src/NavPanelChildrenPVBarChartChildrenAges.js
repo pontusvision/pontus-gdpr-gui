@@ -5,9 +5,10 @@ import axios from "axios";
 import {Bar} from 'react-chartjs-2';
 
 import PVDatamaps from './PVDatamaps';
+import PontusComponent from "./PontusComponent";
 
 
-class NavPanelChildrenPVBarChartChildrenAges extends React.Component
+class NavPanelChildrenPVBarChartChildrenAges extends PontusComponent
 {
   constructor(props)
   {
@@ -36,7 +37,7 @@ class NavPanelChildrenPVBarChartChildrenAges extends React.Component
     
     this.datamaps = new PVDatamaps(props);
     
-    this.url = props.url || "/gateway/sandbox/pvgdpr_graph";
+    this.url = PontusComponent.getGraphURL(props);
     
   }
   

@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React from 'react';
 // import Box, {Center as BoxCenter} from 'react-layout-components';
 import GremlinComboBox from './GremlinComboBox';
 import {Flex, Box} from 'reflexbox'
@@ -10,9 +10,10 @@ import SearchBar from 'react-search-bar';
 import 'react-select/dist/react-select.css';
 
 import ResizeAware from 'react-resize-aware';
+import PontusComponent from "./PontusComponent";
 
 
-class UserSearch extends Component
+class UserSearch extends PontusComponent
 {
   constructor(props)
   {
@@ -181,7 +182,7 @@ class UserSearch extends Component
                 onChange={this.onChangeVertexLabels}
                 onError={this.onError}
                 ref={this.setObjVertexLabels}
-                url={"/gateway/sandbox/pvgdpr_server/home/vertex_labels"}
+                url={PontusComponent.getRestVertexLabelsURL(this.props)}
               />
             </Box>
           </Flex>
@@ -200,7 +201,7 @@ class UserSearch extends Component
                 onChange={this.onChangeNodePropertyNames}
                 onError={this.onError}
                 ref={this.setObjNodePropertyNames}
-                url={"/gateway/sandbox/pvgdpr_server/home/node_property_names"}
+                url={PontusComponent.getRestNodePropertyNamesURL(this.props)}
               />
             </Box>
           </Flex>

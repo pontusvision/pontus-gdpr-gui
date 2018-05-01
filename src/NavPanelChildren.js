@@ -1,5 +1,5 @@
 
-import React, {Component} from 'react';
+import React from 'react';
 import ResizeAware from 'react-resize-aware';
 
 import GoldenLayout from 'golden-layout';
@@ -7,10 +7,11 @@ import GoldenLayout from 'golden-layout';
 import NavPanelChildrenPVGrid from './NavPanelChildrenPVGrid';
 import NavPanelChildrenPVBarChartChildrenAges from './NavPanelChildrenPVBarChartChildrenAges';
 import NavPanelChildrenPVDataGraph from './NavPanelChildrenPVDataGraph';
+import PontusComponent from "./PontusComponent";
 // import UserSearch from './UserSearch';
 
 
-class NavPanelChildren extends Component
+class NavPanelChildren extends PontusComponent
 {
   constructor(props)
   {

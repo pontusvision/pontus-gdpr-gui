@@ -5,9 +5,10 @@ import GoldenLayout from 'golden-layout';
 import NavPanelDataProceduresPVGrid from './NavPanelDataProceduresPVGrid';
 import NavPanelDataProceduresPVGridNoticeTemplates from './NavPanelDataProceduresPVGridNoticeTemplates';
 import NavPanelDataProceduresPVTemplateEditor from './NavPanelDataProceduresPVTemplateEditor';
+import PontusComponent from "./PontusComponent";
 
 
-class NavPanelDataProcedures extends Component
+class NavPanelDataProcedures extends PontusComponent
 {
   constructor(props)
   {

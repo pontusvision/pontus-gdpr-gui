@@ -7,9 +7,10 @@ import NavPanelTrackExpert from "./NavPanelTrackExpert";
 import Icon from 'react-icons-kit-allreact';
 import {child} from 'react-icons-kit-allreact/fa/child';
 import {lab} from 'react-icons-kit-allreact/icomoon/lab';
+import PontusComponent from "./PontusComponent";
 
 
-class TrackPanel extends React.Component
+class TrackPanel extends PontusComponent
 {
   constructor(props)
   {

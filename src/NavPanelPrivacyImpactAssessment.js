@@ -1,13 +1,14 @@
-import React, {Component} from 'react';
+import React  from 'react';
 import ResizeAware from 'react-resize-aware';
 
 import GoldenLayout from 'golden-layout';
 
 import NavPanelPrivacyImpactAssessmentPVGrid from './NavPanelPrivacyImpactAssessmentPVGrid';
 import NavPanelPrivacyImpactAssessmentDataGraph from './NavPanelPrivacyImpactAssessmentDataGraph';
+import PontusComponent from "./PontusComponent";
 
 
-class NavPanelPrivacyImpactAssessment extends Component
+class NavPanelPrivacyImpactAssessment extends PontusComponent
 {
   constructor(props)
   {

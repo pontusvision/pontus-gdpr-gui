@@ -1,4 +1,5 @@
 import PVGrid from './PVGrid';
+import PontusComponent from "./PontusComponent";
 
 //
 
@@ -18,7 +19,7 @@ class PVGridAwarenessCampaign extends PVGrid
     colSettings[2] = {id: "Object.Awareness_Campaign.Start_Date", name: "Start Date", field:"Object.Awareness_Campaign.Start_Date", sortable:true  };
     colSettings[3] = {id: "Object.Awareness_Campaign.Stop_Date", name: "Stop Date",   field:"Object.Awareness_Campaign.Stop_Date", sortable:true  };
   
-    this.url = "/gateway/sandbox/pvgdpr_graph";
+    this.url = PontusComponent.getGraphURL(this.props);
   
     this.setColumnSettings(colSettings);
     this.setExtraSearch({value:"Object.Awareness_Campaign"});

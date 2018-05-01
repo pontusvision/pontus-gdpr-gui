@@ -3,10 +3,11 @@ import React from 'react';
 
 import axios from "axios";
 import {Doughnut} from 'react-chartjs-2';
+import PontusComponent from "./PontusComponent";
 // import PVDatamaps from './PVDatamaps';
 
 
-class PVDoughnutChart extends React.Component
+class PVDoughnutChart extends PontusComponent
 {
   constructor(props)
   {
@@ -36,7 +37,7 @@ class PVDoughnutChart extends React.Component
     // this.datamaps = new PVDatamaps(props);
   
     // this.url = props.url || "/gateway/sandbox/pvgdpr_graph";
-    this.url = "/gateway/sandbox/pvgdpr_graph";
+    this.url = PontusComponent.getGraphURL(this.props);
   
   }
   

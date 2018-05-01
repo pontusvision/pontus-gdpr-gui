@@ -7,13 +7,14 @@ import AceEditor from 'react-ace';
 
 import 'brace/mode/json';
 import 'brace/theme/monokai';
+import PontusComponent from "./PontusComponent";
 
 
 // import axios from "axios";
 // import "slickgrid-es6/dist/slick-default-theme.less";
 
 
-class PVAceGremlinJSONQueryResults extends React.Component
+class PVAceGremlinJSONQueryResults extends PontusComponent
 {
   constructor(props)
   {

@@ -1,5 +1,5 @@
 
-import React, {Component} from 'react';
+import React  from 'react';
 import ResizeAware from 'react-resize-aware';
 
 import GoldenLayout from 'golden-layout';
@@ -7,10 +7,11 @@ import GoldenLayout from 'golden-layout';
 import NavPanelLawfulBasisPVGrid from './NavPanelLawfulBasisPVGrid';
 // import UserSearch from './UserSearch';
 import NavPanelLawfulBasisDataGraph from './NavPanelLawfulBasisDataGraph';
+import PontusComponent from "./PontusComponent";
 // import PVTemplateEditor from './PVTemplateEditor';
 // import NavPanelLawfulBasisPVTimeline from './NavPanelLawfulBasisPVTimeline';
 
-class NavPanelLawfulBasis extends Component
+class NavPanelLawfulBasis extends PontusComponent
 {
   constructor(props)
   {

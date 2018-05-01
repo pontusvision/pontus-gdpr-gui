@@ -12,8 +12,9 @@ import 'brace/theme/monokai';
 
 
 import 'react-quill/dist/quill.snow.css';
+import PontusComponent from "./PontusComponent";
 
-class PVTemplateEditor extends React.Component
+class PVTemplateEditor extends PontusComponent
 {
   
   constructor(props)
@@ -79,7 +80,8 @@ class PVTemplateEditor extends React.Component
   saveData = (newVal, lastData) =>
   {
     // this.origNodeId = (+(this.origNodeId));
-    let url = "/gateway/sandbox/pvgdpr_graph"; // "/gateway/sandbox/pvgdpr_server/home/graph";
+    let url =  this.url = PontusComponent.getGraphURL(this.props);
+    // "/gateway/sandbox/pvgdpr_server/home/graph";
     if (this.h_request !== null)
     {
       clearTimeout(this.h_request);
@@ -177,7 +179,7 @@ class PVTemplateEditor extends React.Component
   previewData = (dataType, templateText) =>
   {
     // this.origNodeId = (+(this.origNodeId));
-    let url = "/gateway/sandbox/pvgdpr_graph"; // "/gateway/sandbox/pvgdpr_server/home/graph";
+    let url = this.url; // "/gateway/sandbox/pvgdpr_server/home/graph";
     if (this.h_request !== null)
     {
       clearTimeout(this.h_request);
