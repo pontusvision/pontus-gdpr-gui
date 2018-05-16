@@ -48,11 +48,11 @@ class NavPanelSubjectAccessRequestPopup extends PVGDPRScores
       "long tenDayThresholdMs = (long)(System.currentTimeMillis() - (3600000L * 24L *10L));\n" +
       "def tenDayDateThreshold = new java.util.Date (tenDayThresholdMs);\n" +
       "\n" +
-      "long numEvents = g.V().has('Metadata.Type','Event.Subject_Access_Request').count().next();\n" +
+      "long numEvents = g.V().has('Metadata.Type',eq('Event.Subject_Access_Request')).count().next();\n" +
       "\n" +
       "long numRecordsOlder30Days =\n" +
       "\n" +
-      "g.V().has('Metadata.Type','Event.Subject_Access_Request').as('sar')\n" +
+      "g.V().has('Metadata.Type',eq('Event.Subject_Access_Request')).as('sar')\n" +
       ".where(\n" +
       "  __.values('Metadata.Create_Date').is(lte(thirtyDayDateThreshold))\n" +
       ") \n" +
@@ -61,7 +61,7 @@ class NavPanelSubjectAccessRequestPopup extends PVGDPRScores
       "\n" +
       "long numRecordsOlder10Days =\n" +
       "\n" +
-      "g.V().has('Metadata.Type','Event.Subject_Access_Request').as('sar')\n" +
+      "g.V().has('Metadata.Type',eq('Event.Subject_Access_Request')).as('sar')\n" +
       ".where(\n" +
       "  __.values('Metadata.Create_Date').is(lte(tenDayDateThreshold))\n" +
       ") \n" +

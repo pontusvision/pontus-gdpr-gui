@@ -41,31 +41,31 @@ class NavPanelDataProtnOfficerPopup extends PVGDPRScores
     
     return {
       gremlin: "\n" +
-      "long numDPOs = g.V().has('Person.Employee.Role','Data Protection Officer')\n" +
+      "long numDPOs = g.V().has('Person.Employee.Role',eq('Data Protection Officer'))\n" +
       ".count().next()\n" +
       " \n" +
       " \n" +
-      "long numDPODirectReports = g.V().has('Person.Employee.Role','Data Protection Officer').inE('Reports_To')\n" +
+      "long numDPODirectReports = g.V().has('Person.Employee.Role',eq('Data Protection Officer')).inE('Reports_To')\n" +
       ".count().next()\n" +
       "\n" +
       "\n" +
-      "long numDPOsFailed  = g.V().has('Person.Employee.Role','Data Protection Officer')\n" +
-      ".in().has('Event.Training.Status','Failed')\n" +
-      ".count().next()\n" +
-      " \n" +
-      "\n" +
-      "long numDPODirectReportsFailed = g.V().has('Person.Employee.Role','Data Protection Officer').inE('Reports_To')\n" +
-      ".outV().in().has('Event.Training.Status','Failed')\n" +
-      ".count().next()\n" +
-      "\n" +
-      "\n" +
-      "long numDPOsSecondReminder  = g.V().has('Person.Employee.Role','Data Protection Officer')\n" +
-      ".in().has('Event.Training.Status','Second  Reminder')\n" +
+      "long numDPOsFailed  = g.V().has('Person.Employee.Role',eq('Data Protection Officer'))\n" +
+      ".in().has('Event.Training.Status',eq('Failed'))\n" +
       ".count().next()\n" +
       " \n" +
       "\n" +
-      "long numDPODirectReportsSecondReminder = g.V().has('Person.Employee.Role','Data Protection Officer').inE('Reports_To')\n" +
-      ".outV().in().has('Event.Training.Status','Second  Reminder')\n" +
+      "long numDPODirectReportsFailed = g.V().has('Person.Employee.Role',eq('Data Protection Officer')).inE('Reports_To')\n" +
+      ".outV().in().has('Event.Training.Status',eq('Failed'))\n" +
+      ".count().next()\n" +
+      "\n" +
+      "\n" +
+      "long numDPOsSecondReminder  = g.V().has('Person.Employee.Role',eq('Data Protection Officer'))\n" +
+      ".in().has('Event.Training.Status',eq('Second  Reminder'))\n" +
+      ".count().next()\n" +
+      " \n" +
+      "\n" +
+      "long numDPODirectReportsSecondReminder = g.V().has('Person.Employee.Role',eq('Data Protection Officer')).inE('Reports_To')\n" +
+      ".outV().in().has('Event.Training.Status',eq('Second  Reminder'))\n" +
       ".count().next()\n" +
       "\n" +
       "\n" +

@@ -60,7 +60,7 @@ class NavPanelDataProceduresPVGridNoticeTemplates extends PVGrid
   
     return {
       gremlin: "g.V()" +
-      ".has('Metadata.Type','Object.Notification_Templates')" +
+      ".has('Metadata.Type',eq('Object.Notification_Templates'))" +
       ".order().by(pg_orderCol == null ? 'Object.Notification_Templates.Id' :pg_orderCol.toString() ,pg_orderDir == (1)? incr: decr)" +
       ".range(pg_from,pg_to).as('dataProcs')" +
       ".match(" +

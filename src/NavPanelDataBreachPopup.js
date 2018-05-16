@@ -43,26 +43,26 @@ class NavPanelDataBreachPopup extends PVGDPRScores
     
     return {
       gremlin: "\n" +
-      "long numItems = g.V().has('Metadata.Type','Event.Data_Breach')\n" +
+      "long numItems = g.V().has('Metadata.Type',eq('Event.Data_Breach'))\n" +
       ".count().next()\n" +
       " \n" +
       " \n" +
       "long numOpenDataBreachDataStolen = \n" +
       "  g.V()\n" +
-      "  .has('Event.Data_Breach.Status','Open')\n" +
+      "  .has('Event.Data_Breach.Status',eq('Open'))\n" +
       "  .where( \n" +
       "    or(\n" +
-      "      __.has('Event.Data_Breach.Impact','Customer Data Stolen (External)')\n" +
-      "     ,__.has('Event.Data_Breach.Impact','Customer Data Stolen (Internal)')\n" +
+      "      __.has('Event.Data_Breach.Impact',eq('Customer Data Stolen (External)'))\n" +
+      "     ,__.has('Event.Data_Breach.Impact',eq('Customer Data Stolen (Internal)'))\n" +
       "    )\n" +
       "  )\n" +
       "  .count().next()\n" +
       "\n" +
       "long numOpenDataBreachDataLost = \n" +
       "  g.V()\n" +
-      "  .has('Event.Data_Breach.Status','Open')\n" +
+      "  .has('Event.Data_Breach.Status',eq('Open'))\n" +
       "  .where( \n" +
-      "    __.has('Event.Data_Breach.Impact','Data Lost')\n" +
+      "    __.has('Event.Data_Breach.Impact',eq('Data Lost'))\n" +
       "  )\n" +
       "  .count().next()\n" +
       "\n" +

@@ -56,7 +56,7 @@ class NavPanelSubjectAccessRequestPVDoughnutChartReqType extends PontusComponent
   {
     
     return {
-      gremlin: "g.V().has('Metadata.Type','Event.Subject_Access_Request')" +
+      gremlin: "g.V().has('Metadata.Type',eq('Event.Subject_Access_Request'))" +
       ".groupCount().by('Event.Subject_Access_Request.Request_Type')"
       , bindings: {
       }

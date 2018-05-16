@@ -59,7 +59,7 @@ class PVWorldMap extends React.Component
     return {
       gremlin: "StringBuffer sb = new StringBuffer('{ \"countryData\": { \"entry\": [');\n" +
       "int counter = 0;\n" +
-      "g.V().has('Metadata.Type', 'Person').groupCount().by('Person.Nationality').each{ it ->\n" +
+      "g.V().has('Metadata.Type', eq('Person')).groupCount().by('Person.Nationality').each{ it ->\n" +
       "  // def val = it.get();\n" +
       "  it.each{ key, val ->\n" +
       "  \n" +

@@ -64,7 +64,7 @@ class NavPanelSubjectAccessRequestPVGrid extends PVGrid
     {
       return {
         gremlin: "g.V()" +
-        ".has('Metadata.Type','Event.Subject_Access_Request')" +
+        ".has('Metadata.Type',eq('Event.Subject_Access_Request'))" +
         ".order().by(pg_orderCol == null ? 'Metadata.Create_Date' :pg_orderCol.toString() ,pg_orderDir == (1)? incr: decr)" +
         ".range(pg_from,pg_to).as('sars')" +
         ".match(" +
@@ -72,8 +72,8 @@ class NavPanelSubjectAccessRequestPVGrid extends PVGrid
         "  , __.as('sars').values('Event.Subject_Access_Request.Request_Type').as('sar_req_type')\n" +
         "  , __.as('sars').values('Metadata.Create_Date').as('sar_creation')\n" +
         "  , __.as('sars').values('Metadata.Update_Date').as('sar_update')\n" +
-        "  , __.as('sars').in().has('Metadata.Type','Person').values('Person.Full_Name').as('person_full_name')\n" +
-        "  , __.as('sars').in().has('Metadata.Type','Person.Employee').values('Person.Full_Name').as('employee_full_name')\n" +
+        "  , __.as('sars').in().has('Metadata.Type',eq('Person')).values('Person.Full_Name').as('person_full_name')\n" +
+        "  , __.as('sars').in().has('Metadata.Type',eq('Person.Employee')).values('Person.Full_Name').as('employee_full_name')\n" +
         "  , __.as('sars').id().as('event_id')\n" +
         "  )\n" +
         selectBody
@@ -89,12 +89,12 @@ class NavPanelSubjectAccessRequestPVGrid extends PVGrid
     else if (sortcolId === 'Person.Full_Name'){
       return {
         gremlin: "g.V()" +
-        ".has('Metadata.Type','Person')" +
+        ".has('Metadata.Type',eq('Person'))" +
         ".order().by('Person.Full_Name' ,pg_orderDir == (1)? incr: decr)" +
         ".as('people')" +
         ".match(" +
-        "    __.as('people').out().has('Metadata.Type','Event.Subject_Access_Request').range(pg_from,pg_to).as('sars') " +
-        "  , __.as('sars').in().has('Metadata.Type','Person.Employee').as('employees') " +
+        "    __.as('people').out().has('Metadata.Type',eq('Event.Subject_Access_Request')).range(pg_from,pg_to).as('sars') " +
+        "  , __.as('sars').in().has('Metadata.Type',eq('Person.Employee')).as('employees') " +
         "  , __.as('sars').values('Event.Subject_Access_Request.Status').as('sar_status')\n" +
         "  , __.as('sars').values('Event.Subject_Access_Request.Request_Type').as('sar_req_type')\n" +
         "  , __.as('sars').values('Metadata.Create_Date').as('sar_creation')\n" +
@@ -115,12 +115,12 @@ class NavPanelSubjectAccessRequestPVGrid extends PVGrid
     else if (sortcolId === 'Person.Employee.Full_Name'){
       return {
         gremlin: "g.V()" +
-        ".has('Metadata.Type','Person.Employee')" +
+        ".has('Metadata.Type',eq('Person.Employee'))" +
         ".order().by('Person.Full_Name' ,pg_orderDir == (1)? incr: decr)" +
         ".as('employees')" +
         ".match(" +
-        "    __.as('employees').out().has('Metadata.Type','Event.Subject_Access_Request').as('sars') " +
-        "  , __.as('sars').in().has('Metadata.Type','Person').as('people') " +
+        "    __.as('employees').out().has('Metadata.Type',eq('Event.Subject_Access_Request')).as('sars') " +
+        "  , __.as('sars').in().has('Metadata.Type',eq('Person')).as('people') " +
         "  , __.as('sars').values('Event.Subject_Access_Request.Status').as('sar_status')\n" +
         "  , __.as('sars').values('Event.Subject_Access_Request.Request_Type').as('sar_req_type')\n" +
         "  , __.as('sars').values('Metadata.Create_Date').as('sar_creation')\n" +

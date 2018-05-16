@@ -48,7 +48,7 @@ class NavPanelConsentPVGridPrivacyNotices extends PVGrid
     
     return {
       gremlin: "g.V()" +
-      ".has('Metadata.Type','Object.Privacy_Notice')" +
+      ".has('Metadata.Type',eq('Object.Privacy_Notice'))" +
       ".order().by(pg_orderCol == null ? 'Metadata.Create_Date' :pg_orderCol.toString() ,pg_orderDir == (1)? incr: decr)" +
       ".range(pg_from,pg_to).as('priv_notices')" +
       ".match(" +
