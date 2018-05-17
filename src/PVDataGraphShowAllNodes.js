@@ -130,9 +130,9 @@ class PVDataGraphShowAllNodes extends PVDataGraph
       "  \n" +
       startOfQuery +
       "  .or(\n" +
-      "    __.has('Metadata.Type','Object.AWS_VPC')\n" +
-      "  , __.has('Metadata.Type','Object.AWS_Security_Group')\n" +
-      "  , __.has('Metadata.Type','Object.AWS_Instance')\n" +
+      "    __.has('Metadata.Type',eq('Object.AWS_VPC'))\n" +
+      "  , __.has('Metadata.Type',eq('Object.AWS_Security_Group'))\n" +
+      "  , __.has('Metadata.Type',eq('Object.AWS_Instance'))\n" +
       "  )" +
       "  .dedup()\n" +
       "  .each{ \n" +
@@ -157,9 +157,9 @@ class PVDataGraphShowAllNodes extends PVDataGraph
       "counter = 0;\n" +
       startOfQuery +
       "  .or(\n" +
-      "    __.has('Metadata.Type','Object.AWS_VPC')\n" +
-      "  , __.has('Metadata.Type','Object.AWS_Security_Group')\n" +
-      "  , __.has('Metadata.Type','Object.AWS_Instance')\n" +
+      "    __.has('Metadata.Type',eq('Object.AWS_VPC'))\n" +
+      "  , __.has('Metadata.Type',eq('Object.AWS_Security_Group'))\n" +
+      "  , __.has('Metadata.Type',eq('Object.AWS_Instance'))\n" +
       "  )\n" +
       "  .bothE()\n" +
       "  .dedup()" +

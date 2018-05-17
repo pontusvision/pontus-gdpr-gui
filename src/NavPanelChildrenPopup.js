@@ -47,7 +47,7 @@ class NavPanelChildrenPopup extends PVGDPRScores
       "def dateThreshold = new java.util.Date (ageThresholdMs);\n" +
       "\n" +
       "\n" +
-      "long numChildren = g.V().has('Metadata.Type','Person')\n" +
+      "long numChildren = g.V().has('Metadata.Type',eq('Person'))\n" +
       ".where(\n" +
       "    and(\n" +
       "      __.values('Person.Date_Of_Birth').is(gte(dateThreshold))\n" +
@@ -55,7 +55,7 @@ class NavPanelChildrenPopup extends PVGDPRScores
       "  )\n" +
       ".count().next()\n" +
       "\n" +
-      "long numNoGuardian = g.V().has('Metadata.Type','Person')\n" +
+      "long numNoGuardian = g.V().has('Metadata.Type',eq('Person'))\n" +
       ".where(\n" +
       "    and(\n" +
       "      __.values('Person.Date_Of_Birth').is(gte(dateThreshold))\n" +
@@ -64,7 +64,7 @@ class NavPanelChildrenPopup extends PVGDPRScores
       "  )\n" +
       ".count().next()\n" +
       " \n" +
-      "long numWithoutAnyConsent = g.V().has('Metadata.Type','Person')\n" +
+      "long numWithoutAnyConsent = g.V().has('Metadata.Type',eq('Person'))\n" +
       ".where(\n" +
       "    and(\n" +
       "      __.values('Person.Date_Of_Birth').is(gte(dateThreshold))\n" +
@@ -76,7 +76,7 @@ class NavPanelChildrenPopup extends PVGDPRScores
       " \n" +
       "long numNegativeConsent = \n" +
       "\n" +
-      "g.V().has('Metadata.Type','Person')\n" +
+      "g.V().has('Metadata.Type',eq('Person'))\n" +
       " .where(\n" +
       "    __.values('Person.Date_Of_Birth').is(gte(dateThreshold))\n" +
       "  ).as('children')\n" +
@@ -84,7 +84,7 @@ class NavPanelChildrenPopup extends PVGDPRScores
       "     __.as('children').outE('Consent').as('consentEdges')\n" +
       "    ,__.as('consentEdges').count().as('consentEdgesCount')\n" +
       "    ,__.as('consentEdges').inV().as('consentEvents')\n" +
-      "    ,__.as('consentEvents').has('Event.Consent.Status','No Consent ').count().as('negConsentCount')\n" +
+      "    ,__.as('consentEvents').has('Event.Consent.Status',eq('No Consent ')).count().as('negConsentCount')\n" +
       "    ,__.as('children').id().as('childId')\n" +
       "\n" +
       " )\n" +
@@ -98,7 +98,7 @@ class NavPanelChildrenPopup extends PVGDPRScores
       "\n" +
       "long numPendingConsent = \n" +
       "\n" +
-      "g.V().has('Metadata.Type','Person')\n" +
+      "g.V().has('Metadata.Type',eq('Person'))\n" +
       " .where(\n" +
       "    __.values('Person.Date_Of_Birth').is(gte(dateThreshold))\n" +
       "  ).as('children')\n" +
@@ -106,7 +106,7 @@ class NavPanelChildrenPopup extends PVGDPRScores
       "     __.as('children').outE('Consent').as('consentEdges')\n" +
       "    ,__.as('consentEdges').count().as('consentEdgesCount')\n" +
       "    ,__.as('consentEdges').inV().as('consentEvents')\n" +
-      "    ,__.as('consentEvents').has('Event.Consent.Status','Consent Pending').count().as('pendingConsentCount')\n" +
+      "    ,__.as('consentEvents').has('Event.Consent.Status',eq('Consent Pending')).count().as('pendingConsentCount')\n" +
       "    ,__.as('children').id().as('childId')\n" +
       "\n" +
       " )\n" +

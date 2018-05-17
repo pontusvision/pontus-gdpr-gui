@@ -1,6 +1,6 @@
-keycloak.json{
-  "realm": "pontus",
-  "auth-server-url": "https://127.0.0.1:5005/auth",
+{
+  "realm": "cdp",
+  "auth-server-url": "https://10.227.101.142:19990/auth",
   "ssl-required": "external",
   "resource": "broker",
   "credentials": {

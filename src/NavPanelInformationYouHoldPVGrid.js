@@ -49,7 +49,7 @@ class NavPanelInformationYouHoldPVGrid extends PVGrid
   
   
     return {
-      gremlin: "g.V().has('Metadata.Type','Person')\n" +
+      gremlin: "g.V().has('Metadata.Type',eq('Person'))\n" +
       " .order()\n" +
       " .by(pg_orderCol == null ? 'Person.Full_Name' :pg_orderCol.toString() ,pg_orderDir == (1)? incr: decr)\n" +
       " .range(pg_from,pg_to)\n" +

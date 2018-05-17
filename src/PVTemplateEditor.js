@@ -165,7 +165,7 @@ class PVTemplateEditor extends PontusComponent
   getQueryPreviewData = (dataType, templateText)=>{
     return {
       gremlin: "" +
-      "long randId = g.V().has('Metadata.Type',pg_dataType).order().by(shuffle).range(0,1).id().next();\n" +
+      "long randId = g.V().has('Metadata.Type',eq(pg_dataType)).order().by(shuffle).range(0,1).id().next();\n" +
       "renderReportInBase64(randId, pg_templateText);" +
       ""
       , bindings: {

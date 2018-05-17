@@ -37,12 +37,12 @@ class NavPanelPrivacyNoticesPopup extends PVGDPRScores
     
     
     return {
-      gremlin: "long numEvents = g.V().has('Metadata.Type','Object.Privacy_Notice').count().next();\n" +
+      gremlin: "long numEvents = g.V().has('Metadata.Type',eq('Object.Privacy_Notice')).count().next();\n" +
       "\n" +
       "long numRecordsNoConsent =\n" +
-      "g.V().has('Metadata.Type','Object.Privacy_Notice').as('privNotice')\n" +
+      "g.V().has('Metadata.Type',eq('Object.Privacy_Notice')).as('privNotice')\n" +
       ".match(\n" +
-      "    __.as('privNotice').both().has('Metadata.Type','Event.Consent').count().as('consentCount')\n" +
+      "    __.as('privNotice').both().has('Metadata.Type',eq('Event.Consent')).count().as('consentCount')\n" +
       "\n" +
       ")\n" +
       ".select('consentCount')\n" +
@@ -50,9 +50,9 @@ class NavPanelPrivacyNoticesPopup extends PVGDPRScores
       ".count().next()\n" +
       "\n" +
       "long numRecordsNoPIA =\n" +
-      "g.V().has('Metadata.Type','Object.Privacy_Notice').as('privNotice')\n" +
+      "g.V().has('Metadata.Type',eq('Object.Privacy_Notice')).as('privNotice')\n" +
       ".match(\n" +
-      "    __.as('privNotice').both().has('Metadata.Type','Object.Privacy_Impact_Assessment').count().as('consentCount')\n" +
+      "    __.as('privNotice').both().has('Metadata.Type',eq('Object.Privacy_Impact_Assessment')).count().as('consentCount')\n" +
       "\n" +
       ")\n" +
       ".select('consentCount')\n" +
@@ -60,10 +60,10 @@ class NavPanelPrivacyNoticesPopup extends PVGDPRScores
       ".count().next()\n" +
       "\n" +
       "long numRecordsLessThan50PcntPositiveConsent =\n" +
-      "g.V().has('Metadata.Type','Object.Privacy_Notice').as('privNotice')\n" +
+      "g.V().has('Metadata.Type',eq('Object.Privacy_Notice')).as('privNotice')\n" +
       ".match(\n" +
-      "    __.as('privNotice').both().has('Metadata.Type','Event.Consent').count().as('consentCount')\n" +
-      "  , __.as('privNotice').both().has('Event.Consent.Status','Consent').count().math('_ * 2').as('posConsentCountDouble')\n" +
+      "    __.as('privNotice').both().has('Metadata.Type',eq('Event.Consent')).count().as('consentCount')\n" +
+      "  , __.as('privNotice').both().has('Event.Consent.Status',eq('Consent')).count().math('_ * 2').as('posConsentCountDouble')\n" +
       ")\n" +
       ".select(\n" +
       "  'consentCount'\n" +

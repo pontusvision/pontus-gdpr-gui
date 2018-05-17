@@ -39,19 +39,19 @@ class NavPanelDataProceduresPopup extends PVGDPRScores
     return {
       gremlin: "\n" +
       "long numItems = g.V()\n" +
-      " .has('Metadata.Type','Object.Data_Procedures')\n" +
+      " .has('Metadata.Type',eq('Object.Data_Procedures'))\n" +
       " .count()\n" +
       " .next()\n" +
       "\n" +
       "\n" +
       "long numDeleteURL = g.V()\n" +
-      " .has('Metadata.Type','Object.Data_Procedures')\n" +
+      " .has('Metadata.Type',eq('Object.Data_Procedures'))\n" +
       " .values('Object.Data_Procedures.Delete_URL')\n" +
       " .count()\n" +
       " .next()\n" +
       "\n" +
       "long numUpdateURL = g.V()\n" +
-      " .has('Metadata.Type','Object.Data_Procedures')\n" +
+      " .has('Metadata.Type',eq('Object.Data_Procedures'))\n" +
       " .values('Object.Data_Procedures.Delete_URL')\n" +
       " .count()\n" +
       " .next()\n" +

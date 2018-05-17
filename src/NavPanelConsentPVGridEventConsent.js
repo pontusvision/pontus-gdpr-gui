@@ -68,13 +68,13 @@ class NavPanelConsentPVGridEventConsent extends PVGrid
         , pg_orderDir: sortdir
       }
     ,  gremlin:
-      "g.V(pg_privNoticeId).in().has('Metadata.Type', 'Event.Consent')" +
+      "g.V(pg_privNoticeId).in().has('Metadata.Type', eq('Event.Consent'))" +
       ".order().by(pg_orderCol == null ? 'Metadata.Create_Date' :pg_orderCol.toString() ,pg_orderDir == (1)? incr: decr)" +
       ".range(pg_from,pg_to).as('consent_events')" +
       ".match(" +
       "  __.as('consent_events').values('Event.Consent.Date').as('Event.Consent.Date')" +
       ", __.as('consent_events').values('Event.Consent.Status').as('Event.Consent.Status')" +
-      ", __.as('consent_events').in().has('Metadata.Type','Person').as('people')" +
+      ", __.as('consent_events').in().has('Metadata.Type',eq('Person')).as('people')" +
       ", __.as('consent_events').id().as('event_id')" +
       ", __.as('people').values('Person.Full_Name').as('Person.Full_Name')" +
       ", __.as('people').values('Person.Date_Of_Birth').map{ it.get().getTime() }.as('Person.Date_Of_Birth')" +

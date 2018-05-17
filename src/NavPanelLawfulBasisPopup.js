@@ -37,11 +37,11 @@ class NavPanelLawfulBasisPopup extends PVGDPRScores
     
     
     return {
-      gremlin: "long numEvents = g.V().has('Metadata.Type','Object.Privacy_Notice')\n" +
+      gremlin: "long numEvents = g.V().has('Metadata.Type',eq('Object.Privacy_Notice'))\n" +
       ".count().next()\n" +
       "\n" +
       "\n" +
-      "long numWithoutAnyLawfulBasis = g.V().has('Metadata.Type','Object.Privacy_Notice')\n" +
+      "long numWithoutAnyLawfulBasis = g.V().has('Metadata.Type',eq('Object.Privacy_Notice'))\n" +
       ".where(\n" +
       "  __.outE('Has_Lawful_Basis_On').count().is(eq(0))\n" +
       ")\n" +

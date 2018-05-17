@@ -56,7 +56,7 @@ class NavPanelChildrenPVGrid extends PVGrid
       gremlin: "long ageThresholdMs = (long)(System.currentTimeMillis() - (3600000L * 24L *365L  * 18L)); \n" +
       "def dateThreshold = new java.util.Date (ageThresholdMs); \n" +
       "\n" +
-      "g.V().has('Metadata.Type','Person')\n" +
+      "g.V().has('Metadata.Type',eq('Person'))\n" +
       "\n" +
       " .where(__.values('Person.Date_Of_Birth').is(gte(dateThreshold)))\n" +
       " .order()\n" +

@@ -66,7 +66,7 @@ class NavPanelInternationalPVGridRegulators extends PVGrid
   
     return {
       gremlin: "" +
-      "g.V().has('Metadata.Type','Person.Organisation')\n" +
+      "g.V().has('Metadata.Type',eq('Person.Organisation'))\n" +
       "\n" +
       " .order()\n" +
       " .by(pg_orderCol == null ? 'Person.Organisation.Short_Name' :pg_orderCol.toString() ,pg_orderDir == (1)? incr: decr)\n" +
