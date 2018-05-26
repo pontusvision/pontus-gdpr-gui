@@ -160,7 +160,7 @@ class PVDataGraph extends PontusComponent
     }
     catch (e)
     {
-      e;
+      //e;
     }
     // this.selectData(event);
   };
@@ -701,7 +701,7 @@ class PVDataGraph extends PontusComponent
     // var eventHub = this.props.glEventHub;
     //         <Graph graph={this.state.graph} options={this.state.options} events={this.state.events}/>
     
-    const {open, visible, reportButtons} = this.state;
+    const {open,  reportButtons} = this.state;
     
     let buttonsList = [];
     
