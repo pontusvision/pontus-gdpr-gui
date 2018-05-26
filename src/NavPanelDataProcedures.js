@@ -1,11 +1,13 @@
 
-import React, {Component} from 'react';
+import React from 'react';
 import ResizeAware from 'react-resize-aware';
+import PontusComponent from "./PontusComponent";
+
 import GoldenLayout from 'golden-layout';
 import NavPanelDataProceduresPVGrid from './NavPanelDataProceduresPVGrid';
 import NavPanelDataProceduresPVGridNoticeTemplates from './NavPanelDataProceduresPVGridNoticeTemplates';
 import NavPanelDataProceduresPVTemplateEditor from './NavPanelDataProceduresPVTemplateEditor';
-import PontusComponent from "./PontusComponent";
+import NavPanelDataProceduresPVFormBuilder from './NavPanelDataProceduresPVFormBuilder';
 
 
 class NavPanelDataProcedures extends PontusComponent
@@ -53,6 +55,11 @@ class NavPanelDataProcedures extends PontusComponent
               type: 'react-component',
               component: 'compliance-grid'
             }
+            ,{
+              title: 'Form Builder',
+              type: 'react-component',
+              component: 'compliance-form-builder'
+            }
           ]
         }
       ]
@@ -91,6 +98,7 @@ class NavPanelDataProcedures extends PontusComponent
     this.instance.registerComponent('data-grid', NavPanelDataProceduresPVGrid);
     this.instance.registerComponent('compliance-email', NavPanelDataProceduresPVTemplateEditor);
     this.instance.registerComponent('compliance-grid', NavPanelDataProceduresPVGridNoticeTemplates);
+    this.instance.registerComponent('compliance-form-builder', NavPanelDataProceduresPVFormBuilder);
     this.instance.init();
     
     this.instance.on('tabCreated', function (tab)

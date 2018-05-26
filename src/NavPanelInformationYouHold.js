@@ -1,12 +1,11 @@
 
-import React, {Component} from 'react';
+import React from 'react';
 import ResizeAware from 'react-resize-aware';
 
 import GoldenLayout from 'golden-layout';
 
 import NavPanelInformationYouHoldPVGrid from './NavPanelInformationYouHoldPVGrid';
 import NavPanelInformationYouHoldPVDataGraph from './NavPanelInformationYouHoldPVDataGraph';
-import PVTimeline from './PVTimeline';
 import PontusComponent from "./PontusComponent";
 
 

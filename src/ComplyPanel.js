@@ -52,7 +52,6 @@ import {blackTie} from 'react-icons-kit-allreact/fa/blackTie';
 import {shareAlt} from 'react-icons-kit-allreact/fa/shareAlt';
 
 import {ic_multiline_chart} from 'react-icons-kit-allreact/md/ic_multiline_chart'
-import NavPanelComplianceScoresMainScore from "./NavPanelComplianceScoresMainScore";
 
 class ComplyPanel extends Component
 {

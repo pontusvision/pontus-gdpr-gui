@@ -135,7 +135,7 @@ class NavPanelChildren extends PontusComponent
   
     }
     catch(e){
-      e;
+      // e;
     }
   };
   

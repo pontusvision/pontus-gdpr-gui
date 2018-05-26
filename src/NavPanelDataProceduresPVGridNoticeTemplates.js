@@ -9,7 +9,7 @@ class NavPanelDataProceduresPVGridNoticeTemplates extends PVGrid
   
   componentDidMount()
   {
-    this.setNamespace("NavPanelInformationYouHold");
+    this.setNamespace("NavPanelIndividualsRights");
     
     super.componentDidMount();
     

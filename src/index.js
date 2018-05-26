@@ -5,8 +5,6 @@ import App from './App';
 import registerServiceWorker from './registerServiceWorker';
 import Keycloak from "keycloak-js";
 import axios from "axios";
-import $ from "jquery";
-// import './index.css';
 
 (function(){
   
@@ -132,47 +130,58 @@ import $ from "jquery";
     xhr.send();
   }
   
+  if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development')
+  {
+    // dev mode - skip keycloak stuff...
+  }
+  else
+  {
   
-  loadJSON('pvgdpr_gui/keycloak-conf.json',
-    function(data) {
-      const kcConf =  data; // $.getJSON('pvgdpr/keycloak-conf.json');
+    loadJSON('pvgdpr_gui/keycloak-conf.json',
+      function (kcConf)
+      {
       
-  
-  
-  
-      const kc = Keycloak(kcConf);
-      kc.init({adapter: 'default', onLoad: 'login-required'}).success(authenticated => {
-        if (authenticated) {
-          // store.getState().keycloak = kc;
-          // ReactDOM.render(app, document.getElementById("app"));
-          window.keycloakInstance = kc;
-          ReactDOM.render(<App keycloak={kc} />, document.getElementById('root'));
       
-        }
-      });
-  
-      axios.interceptors.request.use(config => {
-        return refreshToken().then(() => {
-          config.headers.Authorization = 'Bearer ' + kc.idToken;
-          return Promise.resolve(config)
-        }).catch(() => {
-          kc.login();
-        })
-      });
+        const kc = Keycloak(kcConf);
+        kc.init({adapter: 'default', onLoad: 'login-required'}).success(authenticated =>
+        {
+          if (authenticated)
+          {
+            // store.getState().keycloak = kc;
+            // ReactDOM.render(app, document.getElementById("app"));
+            window.keycloakInstance = kc;
+            ReactDOM.render(<App keycloak={kc}/>, document.getElementById('root'));
+          
+          }
+        });
+      
+        axios.interceptors.request.use(config =>
+        {
+          return refreshToken().then(() =>
+          {
+            config.headers.Authorization = 'Bearer ' + kc.idToken;
+            return Promise.resolve(config)
+          }).catch(() =>
+          {
+            kc.login();
+          })
+        });
 
 // need to wrap the KC "promise object" into a real Promise object
-      const refreshToken = (minValidity = 5) => {
-        return new Promise((resolve, reject) => {
-          kc.updateToken(minValidity)
-            .success(() => resolve())
-            .error(error => reject(error))
-        });
-      };
-  
-  
-    },
-    function(xhr) { console.error(xhr); });
-  
+        const refreshToken = (minValidity = 5) =>
+        {
+          return new Promise((resolve, reject) =>
+          {
+            kc.updateToken(minValidity)
+              .success(() => resolve())
+              .error(error => reject(error))
+          });
+        };
+      
+      
+      },
+      function (xhr) { console.error(xhr); });
+  }
   
   
 })();

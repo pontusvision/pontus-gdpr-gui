@@ -202,7 +202,7 @@ class PVGDPRScores extends PontusComponent
   getSearchQuery = () =>
   {
     
-    throw "This is a base class; getSearchQuery must be overriden "
+    throw new Error("This is a base class; getSearchQuery must be overriden ");
   };
   
 

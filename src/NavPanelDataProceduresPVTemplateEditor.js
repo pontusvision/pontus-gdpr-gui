@@ -7,7 +7,7 @@ class NavPanelDataProceduresPVTemplateEditor extends PVTemplateEditor
   
   componentDidMount()
   {
-    this.namespace = ("NavPanelInformationYouHold");
+    this.namespace = ("NavPanelIndividualsRights");
     
     super.componentDidMount();
     

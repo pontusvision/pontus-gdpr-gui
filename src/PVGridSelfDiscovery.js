@@ -24,23 +24,23 @@ class PVGridSelfDiscovery extends PontusComponent
     // ];
     
     if (props.vid === null){
-      throw "Must have a vertex id (vid) property to use this widget";
+      throw new Error("Must have a vertex id (vid) property to use this widget");
     }
     
     if (props.metadataType === null){
-      throw "Must have a metadataType so we can query the graph ";
+      throw new Error("Must have a metadataType so we can query the graph ");
     }
     
     if (props.namespace === null){
-      throw "Must have a namespace so this grid can receive events from peer windows";
+      throw new Error("Must have a namespace so this grid can receive events from peer windows");
     }
     
     if (props.edgeType === null ){
-      throw "Must have an edgeType so we can query the graph ";
+      throw new Error("Must have an edgeType so we can query the graph ");
     }
   
     if (props.edgeDir === null){
-      throw "Must have an edgeDir so we can query the graph"
+      throw new Error("Must have an edgeDir so we can query the graph");
     }
   
     this.edgeDir = props.edgeDir;
@@ -481,7 +481,6 @@ class PVGridSelfDiscovery extends PontusComponent
   {
     
     let respParsed = {};
-    let itemsParsed = [];
     
     
     try
@@ -680,7 +679,7 @@ class PVGridSelfDiscovery extends PontusComponent
   setColumnSettings = (colSettings) =>
   {
 
-    if (this.cols != colSettings){
+    if (this.cols !== colSettings){
       this.grid.setColumns(colSettings);
       this.setColumns(colSettings);
     }
