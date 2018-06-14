@@ -61,7 +61,7 @@ class NavPanelDataProceduresPVGrid extends PVGrid
   
     return {
       gremlin: "g.V()" +
-      ".has('Metadata.Type',eq('Object.Data_Procedures'))" +
+      ".has('Metadata.Type.Object.Data_Procedures',eq('Object.Data_Procedures'))" +
       ".order().by(pg_orderCol == null ? 'Object.Data_Procedures.Type' :pg_orderCol.toString() ,pg_orderDir == (1)? incr: decr)" +
       ".range(pg_from,pg_to).as('dataProcs')" +
       ".match(" +

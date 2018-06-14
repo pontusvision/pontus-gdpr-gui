@@ -40,23 +40,23 @@ class NavPanelPrivacyImpactAssessmentPopup extends PVGDPRScores
     
     return {
       gremlin: "\n" +
-      "long numItems = g.V().has('Metadata.Type',eq('Object.Privacy_Impact_Assessment'))\n" +
+      "long numItems = g.V().has('Metadata.Type.Object.Privacy_Impact_Assessment',eq('Object.Privacy_Impact_Assessment'))\n" +
       ".count().next()\n" +
       " \n" +
       " \n" +
       "long numPIAWithoutPrivNotices = \n" +
       "  g.V()\n" +
-      "  .has('Metadata.Type',eq('Object.Privacy_Impact_Assessment'))\n" +
-      "  .where( __.out().has('Metadata.Type',eq('Object.Privacy_Notice')).count().is(eq(0)))\n" +
+      "  .has('Metadata.Type.Privacy_Impact_Assessment.',eq('Object.Privacy_Impact_Assessment'))\n" +
+      "  .where( __.out().has('Metadata.Type.Object.Privacy_Notice',eq('Object.Privacy_Notice')).count().is(eq(0)))\n" +
       "  .count().next()\n" +
       "\n" +
       "\n" +
       " \n" +
       "long numPIAWithPrivNoticesAndDataWithoutConsent = \n" +
       "  g.V()\n" +
-      "  .has('Metadata.Type',eq('Object.Privacy_Impact_Assessment'))\n" +
+      "  .has('Metadata.Type.Object.Privacy_Impact_Assessment',eq('Object.Privacy_Impact_Assessment'))\n" +
       "  .where( \n" +
-      "    __.out().has('Metadata.Type',eq('Object.Privacy_Notice'))\n" +
+      "    __.out().has('Metadata.Type.Object.Privacy_Notice',eq('Object.Privacy_Notice'))\n" +
       "      .in().has('Event.Consent.Status',eq('No Consent '))\n" +
       "      .count().is(gt(0))\n" +
       "  )\n" +
@@ -65,9 +65,9 @@ class NavPanelPrivacyImpactAssessmentPopup extends PVGDPRScores
       "\n" +
       "long numPIAWithPrivNoticesAndDataWithPendingConsent = \n" +
       "  g.V()\n" +
-      "  .has('Metadata.Type',eq('Object.Privacy_Impact_Assessment'))\n" +
+      "  .has('Metadata.Type.Object.Privacy_Impact_Assessment',eq('Object.Privacy_Impact_Assessment'))\n" +
       "  .where( \n" +
-      "    __.out().has('Metadata.Type',eq('Object.Privacy_Notice'))\n" +
+      "    __.out().has('Metadata.Type.Object.Privacy_Notice',eq('Object.Privacy_Notice'))\n" +
       "      .in().has('Event.Consent.Status',eq('Consent Pending'))\n" +
       "      .count().is(gt(0))\n" +
       "  )\n" +

@@ -133,6 +133,8 @@ import axios from "axios";
   if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development')
   {
     // dev mode - skip keycloak stuff...
+    ReactDOM.render(<App keycloak={null}/>, document.getElementById('root'));
+  
   }
   else
   {

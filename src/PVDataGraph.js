@@ -421,7 +421,7 @@ class PVDataGraph extends PontusComponent
       "try{ \n" +
       " g.V()\n" +
       "  .has('Object.Notification_Templates.Types'\n" +
-      "     ,g.V(pg_vid).values('Metadata.Type').next())\n" +
+      "     ,eq(g.V(pg_vid).values('Metadata.Type').next()))\n" +
       "  .valueMap('Object.Notification_Templates.Label','Object.Notification_Templates.Text')\n" +
       "  .each{\n" +
       "    sb.append(counter > 0? ',{': '{');\n" +

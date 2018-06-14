@@ -40,14 +40,14 @@ class NavPanelInternationalPopup extends PVGDPRScores
     return {
       gremlin: "\n" +
       "\n" +
-      "long numItems = g.V().has('Metadata.Type',eq('Object.Privacy_Impact_Assessment'))\n" +
+      "long numItems = g.V().has('Metadata.Type.Object.Privacy_Impact_Assessment',eq('Object.Privacy_Impact_Assessment'))\n" +
       ".count().next()\n" +
       " \n" +
       " \n" +
       "long numPrivNoticesWithoutRegulator = \n" +
       "  g.V()\n" +
-      "  .has('Metadata.Type',eq('Object.Privacy_Impact_Assessment'))\n" +
-      "  .where( __.out().has('Metadata.Type',eq('Person.Organisation')).count().is(eq(0)))\n" +
+      "  .has('Metadata.Type.Object.Privacy_Impact_Assessment',eq('Object.Privacy_Impact_Assessment'))\n" +
+      "  .where( __.out().has('Metadata.Type.Person.Organisation',eq('Person.Organisation')).count().is(eq(0)))\n" +
       "  .count().next()\n" +
       "\n" +
       "\n" +

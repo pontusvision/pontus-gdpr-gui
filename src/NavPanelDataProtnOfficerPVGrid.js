@@ -53,19 +53,19 @@ class NavPanelDataProtnOfficerPVGrid extends PVGrid
   
   
     return {
-      gremlin: "g.V().has('Metadata.Type',eq('Person.Employee'))\n" +
+      gremlin: "g.V().has('Metadata.Type.Person.Employee',eq('Person.Employee'))\n" +
       " .order()\n" +
-      " .by(pg_orderCol == null ? 'Person.Full_Name' :pg_orderCol.toString() ,pg_orderDir == (1)? incr: decr)\n" +
+      " .by(pg_orderCol == null ? 'Person.Employee.Full_Name' :pg_orderCol.toString() ,pg_orderDir == (1)? incr: decr)\n" +
       " .range(pg_from,pg_to)\n" +
       " .as('people')\n" +
       " .match(\n" +
-      "   __.as('people').values('Person.Title').as('Person.Title')\n" +
-      " , __.as('people').values('Person.Full_Name').as('Person.Full_Name')\n" +
-      " , __.as('people').values('Person.Date_Of_Birth').as('Person.Date_Of_Birth')\n" +
-      " , __.as('people').values('Person.Date_Of_Birth').map{ it.get().getTime() }.as('Person.Date_Of_Birth_Millis')\n" +
-      " , __.as('Person.Date_Of_Birth_Millis').math('(' +System.currentTimeMillis() + '- _)/(3600000*24*365)').map{  it.get().longValue()}.as('Person.Age')\n" +
-      " , __.as('people').values('Person.Gender').as('Person.Gender')\n" +
-      " , __.as('people').values('Person.Nationality').as('Person.Nationality')\n" +
+      "   __.as('people').values('Person.Employee.Title').as('Person.Title')\n" +
+      " , __.as('people').values('Person.Employee.Full_Name').as('Person.Full_Name')\n" +
+      " , __.as('people').values('Person.Employee.Date_Of_Birth').as('Person.Date_Of_Birth')\n" +
+      " , __.as('people').values('Person.Employee.Date_Of_Birth').map{ it.get().getTime() }.as('Person.Date_Of_Birth_Millis')\n" +
+      " , __.as('Person.Employee.Date_Of_Birth_Millis').math('(' +System.currentTimeMillis() + '- _)/(3600000*24*365)').map{  it.get().longValue()}.as('Person.Age')\n" +
+      " , __.as('people').values('Person.Employee.Gender').as('Person.Gender')\n" +
+      " , __.as('people').values('Person.Employee.Nationality').as('Person.Nationality')\n" +
       " , __.as('people').values('Person.Employee.Role').as('Person.Employee.Role')\n" +
       " , __.as('people').id().as('event_id')\n" +
       " )\n" +

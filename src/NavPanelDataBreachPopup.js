@@ -43,7 +43,7 @@ class NavPanelDataBreachPopup extends PVGDPRScores
     
     return {
       gremlin: "\n" +
-      "long numItems = g.V().has('Metadata.Type',eq('Event.Data_Breach'))\n" +
+      "long numItems = g.V().has('Metadata.Type.Event.Data_Breach',eq('Event.Data_Breach'))\n" +
       ".count().next()\n" +
       " \n" +
       " \n" +

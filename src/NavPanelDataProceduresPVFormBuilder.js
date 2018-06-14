@@ -10,9 +10,9 @@ class NavPanelDataProceduresPVFormBuilder extends PontusComponent
   
   componentDidMount()
   {
-    this.namespace = ("NavPanelIndividualsRights");
+    this.namespace = ("NavPanelIndividualsRightsFormBuilder");
     
-    super.componentDidMount();
+    // super.componentDidMount();
     
     this.lastData = null;
     

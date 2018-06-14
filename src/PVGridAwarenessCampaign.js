@@ -40,7 +40,7 @@ class PVGridAwarenessCampaign extends PVGrid
     
     return {
       gremlin: "g.V()" +
-      ".has('Metadata.Type',eq('Object.Awareness_Campaign'))" +
+      ".has('Metadata.Type.Object.Awareness_Campaign',eq('Object.Awareness_Campaign'))" +
       ".order().by(pg_orderCol == null ? 'Object.Awareness_Campaign.Description' :pg_orderCol.toString() ,pg_orderDir == (1)? incr: decr)" +
       ".range(pg_from,pg_to)" +
       ".  match(\n" +

@@ -61,7 +61,7 @@ class NavPanelDataBreachPVGridDataBreachEvents extends PVGrid
     
     return {
       gremlin: "g.V()" +
-      ".has('Metadata.Type',eq('Event.Data_Breach'))" +
+      ".has('Metadata.Type.Event.Data_Breach',eq('Event.Data_Breach'))" +
       ".order().by(pg_orderCol == null ? 'Metadata.Create_Date' :pg_orderCol.toString() ,pg_orderDir == (1)? incr: decr)" +
       ".range(pg_from,pg_to).as('data_breaches')" +
       ".match(" +

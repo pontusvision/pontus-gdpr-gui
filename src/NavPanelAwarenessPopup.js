@@ -44,9 +44,9 @@ class NavPanelAwarenessPopup extends PVGDPRScores
     
     
     return {
-      gremlin: "long numEvents = g.V().has('Metadata.Type',eq('Object.Awareness_Campaign')).in().as('events').count().next();\n" +
+      gremlin: "long numEvents = g.V().has('Metadata.Type.Object.Awareness_Campaign',eq('Object.Awareness_Campaign')).in().as('events').count().next();\n" +
       "\n" +
-      "def map = g.V().has('Metadata.Type',eq('Object.Awareness_Campaign')).in().as('events').groupCount().by('Event.Training.Status').next();\n" +
+      "def map = g.V().has('Metadata.Type.Object.Awareness_Campaign',eq('Object.Awareness_Campaign')).in().as('events').groupCount().by('Event.Training.Status').next();\n" +
       "\n" +
       "long failedCount = map.get('Failed');\n" +
       "long secondReminder = map.get('Second  Reminder');\n" +

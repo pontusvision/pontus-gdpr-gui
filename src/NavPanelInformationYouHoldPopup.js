@@ -43,10 +43,10 @@ class NavPanelInformationYouHoldPopup extends PVGDPRScores
     
     return {
       gremlin: "\n" +
-      "long numEvents = g.V().has('Metadata.Type',eq('Person')).count().next();\n" +
+      "long numEvents = g.V().has('Metadata.Type.Person',eq('Person')).count().next();\n" +
       "\n" +
       "long numRecordsNoEdges =\n" +
-      "g.V().has('Metadata.Type',eq('Person')).as('adults')\n" +
+      "g.V().has('Metadata.Type.Person',eq('Person')).as('adults')\n" +
       " .match(\n" +
       "     __.as('adults').bothE().count().as('edgesCount')\n" +
       "\n" +
@@ -57,7 +57,7 @@ class NavPanelInformationYouHoldPopup extends PVGDPRScores
       "\n" +
       "\n" +
       "long numRecordsNoMetadata = \n" +
-      "g.V().has('Metadata.Type',eq('Person')).hasNot('Metadata.Lineage')\n" +
+      "g.V().has('Metadata.Type.Person',eq('Person')).hasNot('Metadata.Lineage')\n" +
       " .count().next()\n" +
       " \n" +
       "long scoreValue = 100L;\n" +
