@@ -11,6 +11,7 @@
     "datamaps": "^0.5.9",
     "draft-js": "^0.10.5",
     "fbemitter": "^2.1.1",
+    "formiojs": "^3.0.0-rc.13",
     "golden-layout": "^1.5.9",
     "i18n-iso-countries": "^3.6.3",
     "js-base64": "^2.4.5",

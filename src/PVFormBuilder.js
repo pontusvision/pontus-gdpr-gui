@@ -1,6 +1,8 @@
-import React from 'react';
-import {Form, FormBuilder} from 'react-formio';
+import React, {Component}  from 'react';
 import 'formiojs/dist/formio.full.css';
+import 'formiojs/dist/formio.builder.css';
+
+// import {Form, FormBuilder} from 'react-formio';
 import ResizeAware from 'react-resize-aware';
 import {Button, Menu, Portal, Segment} from 'semantic-ui-react';
 // import {Creatable} from 'react-select';
@@ -12,9 +14,201 @@ import {Base64} from 'js-base64';
 import 'brace/mode/markdown';
 import 'brace/theme/monokai';
 
+import PropTypes from 'prop-types';
 
 import 'react-quill/dist/quill.snow.css';
 import PontusComponent from "./PontusComponent";
+
+// import AllComponents from 'formiojs/lib/formio.full';
+// import Components from 'formiojs/dist/formio.full';
+import Form from 'formiojs/dist/formio.full';
+import FormBuilder from 'formiojs/dist/formio.full';
+//
+// Components.setComponents(AllComponents);
+
+class FormBuilderRaw extends Component {
+  static defaultProps = {
+    options: {}
+  };
+  
+  static propTypes = {
+    form: PropTypes.object,
+    options: PropTypes.object,
+    onSaveComponent: PropTypes.func,
+    onUpdateComponent: PropTypes.func,
+    onDeleteComponent: PropTypes.func,
+    onCancelComponent: PropTypes.func,
+    onEditComponent: PropTypes.func,
+  };
+  
+  componentDidMount = () => {
+    this.initializeBuilder();
+  };
+  
+  componentWillUnmount = () => {
+    if (this.builder !== undefined) {
+      this.builder.instance.destroy(true);
+    }
+  };
+  
+  initializeBuilder = () => {
+    const {options, form} = this.props;
+    
+    this.builder = new FormBuilder(this.element, form, options);
+    this.builderReady = this.builder.setDisplay(form.display);
+    
+    this.builderReady.then(() => {
+      this.builder.instance.on('saveComponent', this.emit('onSaveComponent'));
+      this.builder.instance.on('updateComponent', this.emit('onUpdateComponent'));
+      this.builder.instance.on('deleteComponent', this.emit('onDeleteComponent'));
+      this.builder.instance.on('cancelComponent', this.emit('onCancelComponent'));
+      this.builder.instance.on('editComponent', this.emit('onEditComponent'));
+      this.builder.instance.on('saveComponent', this.onChange);
+      this.builder.instance.on('updateComponent', this.onChange);
+      this.builder.instance.on('deleteComponent', this.onChange);
+    });
+  };
+  
+  componentWillReceiveProps = (nextProps) => {
+    const {options, form} = this.props;
+    
+    if (form !== nextProps.form) {
+      this.initializeBuilder();
+    }
+    
+    if (options !== nextProps.options) {
+      this.initializeBuilder();
+    }
+  };
+  
+  render = () => {
+    return <div ref={element => this.element = element} />;
+  };
+  
+  onChange = () => {
+    if (this.props.hasOwnProperty('onChange') && typeof this.props.onChange === 'function') {
+      this.props.onChange(this.builder.instance.schema);
+    }
+  };
+  
+  emit = (funcName) => {
+    return (...args) => {
+      if (this.props.hasOwnProperty(funcName) && typeof (this.props[funcName]) === 'function') {
+        this.props[funcName](...args);
+      }
+    };
+  };
+}
+
+class FormRaw extends Component {
+  static defaultProps = {
+    options: {}
+  };
+  
+  static propTypes = {
+    src: PropTypes.string,
+    form: PropTypes.object,
+    submission: PropTypes.object,
+    options: PropTypes.shape({
+      readOnly: PropTypes.boolean,
+      noAlerts: PropTypes.boolean,
+      i18n: PropTypes.object,
+      template: PropTypes.string
+    }),
+    onPrevPage: PropTypes.func,
+    onNextPage: PropTypes.func,
+    onChange: PropTypes.func,
+    onCustomEvent: PropTypes.func,
+    onSubmit: PropTypes.func,
+    onSubmitDone: PropTypes.func,
+    onFormLoad: PropTypes.func,
+    onError: PropTypes.func,
+    onRender: PropTypes.func
+  };
+  
+  componentDidMount = () => {
+    const {options, src, form} = this.props;
+    
+    if (src) {
+      this.createPromise = new Form(this.element, src, options).render().then(formio => {
+        this.formio = formio;
+        this.formio.src = src;
+      });
+    }
+    if (form) {
+      this.createPromise = new Form(this.element, form, options).render().then(formio => {
+        this.formio = formio;
+        this.formio.form = form;
+      });
+    }
+    
+    this.initializeFormio();
+  };
+  
+  componentWillUnmount = () => {
+    if (this.formio !== undefined) {
+      this.formio.destroy(true);
+    }
+  };
+  
+  initializeFormio = () => {
+    if (this.createPromise) {
+      this.createPromise.then(() => {
+        if (this.props.submission) {
+          this.formio.submission = this.props.submission;
+        }
+        //this.formio.hideComponents([]); (From Components.js)
+        this.formio.on('prevPage', this.emit('onPrevPage'));
+        this.formio.on('nextPage', this.emit('onNextPage'));
+        this.formio.on('change', this.emit('onChange'));
+        this.formio.on('customEvent', this.emit('onCustomEvent'));
+        this.formio.on('formLoad', this.emit('onFormLoad'));
+        this.formio.on('submit', this.emit('onSubmit'));
+        this.formio.on('submitDone', this.emit('onSubmitDone'));
+        this.formio.on('error', this.emit('onError'));
+        this.formio.on('render', this.emit('onRender'));
+      });
+    }
+  };
+  
+  componentWillReceiveProps = (nextProps) => {
+    const {options, src, form, submission} = this.props;
+    
+    if (src !== nextProps.src) {
+      this.createPromise = new Form(this.element, nextProps.src, options).render().then(formio => {
+        this.formio = formio;
+        this.formio.src = nextProps.src;
+      });
+      this.initializeFormio();
+    }
+    if (form !== nextProps.form) {
+      this.createPromise = new Form(this.element, nextProps.form, options).render().then(formio => {
+        this.formio = formio;
+        this.formio.form = form;
+      });
+      this.initializeFormio();
+    }
+    
+    if (submission !== nextProps.submission && this.formio) {
+      this.formio.submission = nextProps.submission;
+    }
+  };
+  
+  render = () => {
+    return <div ref={element => this.element = element} />;
+  };
+  
+  emit = (funcName) => {
+    return (...args) => {
+      if (this.props.hasOwnProperty(funcName) && typeof (this.props[funcName]) === 'function') {
+        this.props[funcName](...args);
+      }
+    };
+  };
+}
+
+
+
 
 class PVFormBuilder extends PontusComponent
 {
@@ -386,7 +580,7 @@ class PVFormBuilder extends PontusComponent
         </Menu>
         
         
-        <FormBuilder ref={this.setFormBuilderRef} form={form} onChange={this.onChange}/>
+        <FormBuilderRaw ref={this.setFormBuilderRef} form={form} onChange={this.onChange}/>
         
         
         <Portal onClose={this.handleClose} open={open}>
@@ -396,7 +590,7 @@ class PVFormBuilder extends PontusComponent
               top: '20%', zIndex: 100000, backgroundColor: '#696969', padding: '10px'
             }}>
             
-            <Form form={form} ref={this.setFormBuilderRef} onSubmit={this.onSubmit}/>
+            <FormRaw form={form} ref={this.setFormBuilderRef} onSubmit={this.onSubmit}/>
           
           </Segment>
         </Portal>
