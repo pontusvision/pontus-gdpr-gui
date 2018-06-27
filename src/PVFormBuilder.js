@@ -23,7 +23,7 @@ import PontusComponent from "./PontusComponent";
 // import Components from 'formiojs/dist/formio.full';
 // import Form from 'formiojs/dist/formio.full';
 // import FormBuilder from 'formiojs/dist/formio.full';
-import {Form, FormBuilder} from 'formiojs/lib';
+import {Form, FormBuilder} from 'formiojs';
 // import FormBuilder from 'formiojs/dist/formio.full';
 
 //
