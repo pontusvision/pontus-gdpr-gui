@@ -21,8 +21,11 @@ import PontusComponent from "./PontusComponent";
 
 // import AllComponents from 'formiojs/lib/formio.full';
 // import Components from 'formiojs/dist/formio.full';
-import Form from 'formiojs/dist/formio.full';
-import FormBuilder from 'formiojs/dist/formio.full';
+// import Form from 'formiojs/dist/formio.full';
+// import FormBuilder from 'formiojs/dist/formio.full';
+import {Form, FormBuilder} from 'formiojs/lib';
+// import FormBuilder from 'formiojs/dist/formio.full';
+
 //
 // Components.setComponents(AllComponents);
 
