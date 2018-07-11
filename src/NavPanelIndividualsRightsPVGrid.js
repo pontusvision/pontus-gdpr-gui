@@ -3,7 +3,7 @@ import PontusComponent from "./PontusComponent";
 
 //
 
-class NavPanelDataProceduresPVGrid extends PVGrid
+class NavPanelIndividualsRightsPVGrid extends PVGrid
 {
   
   
@@ -178,4 +178,4 @@ class NavPanelDataProceduresPVGrid extends PVGrid
 }
 
 
-export default NavPanelDataProceduresPVGrid;
+export default NavPanelIndividualsRightsPVGrid;

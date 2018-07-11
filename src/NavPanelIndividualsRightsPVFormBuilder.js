@@ -5,12 +5,12 @@ import PVFormBuilder from "./PVFormBuilder";
 import { Base64 } from 'js-base64';
 //
 
-class NavPanelDataProceduresPVFormBuilder extends PontusComponent
+class NavPanelIndividualsRightsPVFormBuilder extends PontusComponent
 {
   
   componentDidMount()
   {
-    this.namespace = ("NavPanelIndividualsRightsFormBuilder");
+    this.namespace = ("NavPanelIndividualsRights_forms");
     
     // super.componentDidMount();
     
@@ -30,8 +30,8 @@ class NavPanelDataProceduresPVFormBuilder extends PontusComponent
   
   onClickedRow = (data) =>
   {
-    this.val = Base64.decode(data['Object.Notification_Templates.Text']);
-    this.setState({value: data['Object.Notification_Templates.Text']});
+    this.val = Base64.decode(data['Object.Form.Text']);
+    this.setState({value: data['Object.Form.Text']});
     this.lastData = data;
     
   };
@@ -45,4 +45,4 @@ class NavPanelDataProceduresPVFormBuilder extends PontusComponent
   }
   
 }
-export default NavPanelDataProceduresPVFormBuilder;
+export default NavPanelIndividualsRightsPVFormBuilder;

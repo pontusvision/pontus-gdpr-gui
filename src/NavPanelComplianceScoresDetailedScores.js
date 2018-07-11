@@ -9,7 +9,7 @@ import NavPanelConsentPopup from "./NavPanelConsentPopup";
 import NavPanelAwarenessPopup from "./NavPanelAwarenessPopup";
 import NavPanelInformationYouHoldPopup from "./NavPanelInformationYouHoldPopup";
 import NavPanelPrivacyNoticesPopup from "./NavPanelPrivacyNoticesPopup";
-import NavPanelDataProceduresPopup from "./NavPanelDataProceduresPopup";
+import NavPanelIndividualsRightsPopup from "./NavPanelIndividualsRightsPopup";
 import NavPanelSubjectAccessRequestPopup from "./NavPanelSubjectAccessRequestPopup";
 import NavPanelLawfulBasisPopup from "./NavPanelLawfulBasisPopup";
 import NavPanelPrivacyImpactAssessmentPopup from './NavPanelPrivacyImpactAssessmentPopup';
@@ -79,7 +79,7 @@ class NavPanelComplianceScoresDetailedScores extends PontusComponent
         <NavPanelAwarenessPopup longShow={true}  glEventHub = {this.props.glEventHub}/>
         <NavPanelInformationYouHoldPopup longShow={true} glEventHub = {this.props.glEventHub}/>
         <NavPanelPrivacyNoticesPopup longShow={true} glEventHub = {this.props.glEventHub}/>
-        <NavPanelDataProceduresPopup longShow={true} glEventHub = {this.props.glEventHub}/>
+        <NavPanelIndividualsRightsPopup longShow={true} glEventHub = {this.props.glEventHub}/>
         <NavPanelSubjectAccessRequestPopup longShow={true} glEventHub = {this.props.glEventHub}/>
         <NavPanelLawfulBasisPopup longShow={true} glEventHub = {this.props.glEventHub}/>
         <NavPanelConsentPopup longShow={true} glEventHub = {this.props.glEventHub}/>

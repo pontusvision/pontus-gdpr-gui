@@ -3,13 +3,13 @@ import PontusComponent from "./PontusComponent";
 
 //
 
-class NavPanelDataProceduresPVGridNoticeTemplates extends PVGrid
+class NavPanelIndividualsRightsPVGridNoticeTemplates extends PVGrid
 {
   
   
   componentDidMount()
   {
-    this.setNamespace("NavPanelIndividualsRights");
+    this.setNamespace("NavPanelIndividualsRights_noticeTemplates");
     
     super.componentDidMount();
     
@@ -92,4 +92,4 @@ class NavPanelDataProceduresPVGridNoticeTemplates extends PVGrid
 }
 
 
-export default NavPanelDataProceduresPVGridNoticeTemplates;
+export default NavPanelIndividualsRightsPVGridNoticeTemplates;

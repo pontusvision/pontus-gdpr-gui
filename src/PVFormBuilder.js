@@ -250,7 +250,7 @@ class PVFormBuilder extends PontusComponent
     
   };
   
-  getQuerySaveData = (newVal, lastData) =>
+  getQuerySaveData = (newVal, id,urlStr,vertexLabel) =>
   {
     return {
       gremlin: "" +
@@ -259,8 +259,18 @@ class PVFormBuilder extends PontusComponent
       "        if (!trans.isOpen()) {\n" +
       "            trans.open();\n" +
       "        }\n" +
-      "        g.V(pg_id)\n" +
-      "                .property(\"Object.Notification_Templates.Text\", pg_newValStr)\n" +
+      "        def vert = null;" +
+      "        if (pg_id == null) {" +
+      "            vert = g.addV('Object.Form');" +
+      "            vert.property('Metadata.Type.Object.Form','Object.Form')" +
+      "                .property('Metadata.Type','Object.Form');" +
+      "        }" +
+      "        else {" +
+      "            vert = g.V(pg_id))" +
+      "        }\n" +
+      "        vert.property(\"Object.Form.Text\", pg_newValStr)" +
+      "            .property('Object.Form.URL', pg_urlStr)" +
+      "            .property('Object.Form.Vertex_Label', pg_vertexLabel)" +
       "                .next();\n" +
       "        trans.commit();\n" +
       "    }\n" +
@@ -274,7 +284,9 @@ class PVFormBuilder extends PontusComponent
       ""
       , bindings: {
         pg_newValStr: newVal
-        , pg_id: lastData.index
+        , pg_id: id
+        , pg_urlStr: urlStr
+        , pg_vertexLabel: vertexLabel
       }
       
     };

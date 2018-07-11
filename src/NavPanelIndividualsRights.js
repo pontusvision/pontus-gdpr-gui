@@ -4,13 +4,14 @@ import ResizeAware from 'react-resize-aware';
 import PontusComponent from "./PontusComponent";
 
 import GoldenLayout from 'golden-layout';
-import NavPanelDataProceduresPVGrid from './NavPanelDataProceduresPVGrid';
-import NavPanelDataProceduresPVGridNoticeTemplates from './NavPanelDataProceduresPVGridNoticeTemplates';
-import NavPanelDataProceduresPVTemplateEditor from './NavPanelDataProceduresPVTemplateEditor';
-import NavPanelDataProceduresPVFormBuilder from './NavPanelDataProceduresPVFormBuilder';
+import NavPanelIndividualsRightsPVGrid from './NavPanelIndividualsRightsPVGrid';
+import NavPanelIndividualsRightsPVGridNoticeTemplates from './NavPanelIndividualsRightsPVGridNoticeTemplates';
+import NavPanelIndividualsRightsPVTemplateEditor from './NavPanelIndividualsRightsPVTemplateEditor';
+import NavPanelIndividualsRightsPVFormBuilder from './NavPanelIndividualsRightsPVFormBuilder';
+import NavPanelIndividualsRightsPVGridForms from './NavPanelIndividualsRightsPVGridForms';
 
 
-class NavPanelDataProcedures extends PontusComponent
+class NavPanelIndividualsRights extends PontusComponent
 {
   constructor(props)
   {
@@ -56,7 +57,12 @@ class NavPanelDataProcedures extends PontusComponent
               component: 'compliance-grid'
             }
             ,{
-              title: 'Form Builder',
+              title: 'Form Builder Grid',
+              type: 'react-component',
+              component: 'compliance-form-builder-grid'
+            }
+            ,{
+              title: 'Form Builder Editor',
               type: 'react-component',
               component: 'compliance-form-builder'
             }
@@ -81,7 +87,7 @@ class NavPanelDataProcedures extends PontusComponent
   {
     /* you can pass config as prop, or use a predefined one */
     
-    var savedState =  localStorage.getItem('savedStateNavPanelDataProcedures');
+    var savedState =  localStorage.getItem('savedStateNavPanelIndividualsRights');
     
     
     if (savedState !== null)
@@ -95,10 +101,11 @@ class NavPanelDataProcedures extends PontusComponent
     
     // instance = new GoldenLayout(config, this.node);
     /* register components or bind events to your new instance here */
-    this.instance.registerComponent('data-grid', NavPanelDataProceduresPVGrid);
-    this.instance.registerComponent('compliance-email', NavPanelDataProceduresPVTemplateEditor);
-    this.instance.registerComponent('compliance-grid', NavPanelDataProceduresPVGridNoticeTemplates);
-    this.instance.registerComponent('compliance-form-builder', NavPanelDataProceduresPVFormBuilder);
+    this.instance.registerComponent('data-grid', NavPanelIndividualsRightsPVGrid);
+    this.instance.registerComponent('compliance-email', NavPanelIndividualsRightsPVTemplateEditor);
+    this.instance.registerComponent('compliance-grid', NavPanelIndividualsRightsPVGridNoticeTemplates);
+    this.instance.registerComponent('compliance-form-builder', NavPanelIndividualsRightsPVFormBuilder);
+    this.instance.registerComponent('compliance-form-builder', NavPanelIndividualsRightsPVGridForms);
     this.instance.init();
     
     this.instance.on('tabCreated', function (tab)
@@ -118,7 +125,7 @@ class NavPanelDataProcedures extends PontusComponent
   saveState = () =>
   {
     var state = JSON.stringify(this.instance.toConfig());
-    localStorage.setItem('savedStateNavPanelDataProcedures', state);
+    localStorage.setItem('savedStateNavPanelIndividualsRights', state);
     
   };
   
@@ -153,4 +160,4 @@ class NavPanelDataProcedures extends PontusComponent
     
   }
 }
-export default NavPanelDataProcedures;
+export default NavPanelIndividualsRights;

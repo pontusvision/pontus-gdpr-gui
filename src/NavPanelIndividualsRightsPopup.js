@@ -12,7 +12,7 @@ import {iosPricetagsOutline} from 'react-icons-kit-allreact/ionicons/iosPricetag
 /***************************
  * UserList Component
  ***************************/
-class NavPanelDataProceduresPopup extends PVGDPRScores
+class NavPanelIndividualsRightsPopup extends PVGDPRScores
 {
   
   constructor(props)
@@ -133,4 +133,4 @@ class NavPanelDataProceduresPopup extends PVGDPRScores
 
 }
 
-export default NavPanelDataProceduresPopup;
+export default NavPanelIndividualsRightsPopup;

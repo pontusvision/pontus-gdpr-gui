@@ -2,12 +2,12 @@ import PVTemplateEditor from "./PVTemplateEditor";
 import { Base64 } from 'js-base64';
 //
 
-class NavPanelDataProceduresPVTemplateEditor extends PVTemplateEditor
+class NavPanelIndividualsRightsPVTemplateEditor extends PVTemplateEditor
 {
   
   componentDidMount()
   {
-    this.namespace = ("NavPanelIndividualsRights");
+    this.namespace = ("NavPanelIndividualsRights_noticeTemplates");
     
     super.componentDidMount();
     
@@ -36,4 +36,4 @@ class NavPanelDataProceduresPVTemplateEditor extends PVTemplateEditor
 }
 
 
-export default NavPanelDataProceduresPVTemplateEditor;
+export default NavPanelIndividualsRightsPVTemplateEditor;

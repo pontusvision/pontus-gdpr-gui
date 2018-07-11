@@ -26,8 +26,8 @@ import NavPanelChildrenPopup from "./NavPanelChildrenPopup";
 
 import NavPanelDataBreaches from "./NavPanelDataBreaches";
 import NavPanelDataBreachPopup from "./NavPanelDataBreachPopup";
-import NavPanelDataProcedures from "./NavPanelDataProcedures";
-import NavPanelDataProceduresPopup from "./NavPanelDataProceduresPopup";
+import NavPanelIndividualsRights from "./NavPanelIndividualsRights";
+import NavPanelIndividualsRightsPopup from "./NavPanelIndividualsRightsPopup";
 
 import NavPanelPrivacyImpactAssessment from './NavPanelPrivacyImpactAssessment';
 import NavPanelPrivacyImpactAssessmentPopup from './NavPanelPrivacyImpactAssessmentPopup';
@@ -121,8 +121,8 @@ class ComplyPanel extends Component
               icon={info}/>, <NavPanelInformationYouHoldPopup/>)}
           {this.renderItemRaw("Privacy Notices", <NavPanelPrivacyNotices style={{height: '100%', width: '100%'}}/>, <Icon
               icon={eyeBlocked}/>,<NavPanelPrivacyNoticesPopup/>)}
-          {this.renderItemRaw("Individual's Rights", <NavPanelDataProcedures style={{height: '100%', width: '100%'}}/>,
-            <Icon icon={iosPricetagsOutline}/>,<NavPanelDataProceduresPopup style={{height: '100%', width: '100%'}}/>
+          {this.renderItemRaw("Individual's Rights", <NavPanelIndividualsRights style={{height: '100%', width: '100%'}}/>,
+            <Icon icon={iosPricetagsOutline}/>,<NavPanelIndividualsRightsPopup style={{height: '100%', width: '100%'}}/>
             )}
           {this.renderItemRaw("Subj Access Req", <NavPanelSubjectAccessRequest style={{height: '100%', width: '100%'}}/>,
             <Icon icon={download}/>,<NavPanelSubjectAccessRequestPopup/>)}
