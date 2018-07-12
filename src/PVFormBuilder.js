@@ -628,5 +628,6 @@ class PVFormBuilder extends PontusComponent
   }
 }
 
-
+export default FormRaw;
 export default PVFormBuilder;
+

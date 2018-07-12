@@ -1,6 +1,7 @@
 import React from 'react';
 import {Box} from 'reflexbox';
 import ResizeAware from 'react-resize-aware';
+
 // import darkBaseTheme from 'material-ui/styles/baseThemes/darkBaseTheme';
 // import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 // import getMuiTheme from 'material-ui/styles/getMuiTheme';
@@ -197,7 +198,7 @@ class App extends React.Component
     }
     , panelId: "trackPanel"
     , title: "Track"
-  }
+  };
   
   
   extractPanel = {

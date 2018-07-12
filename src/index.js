@@ -5,13 +5,32 @@ import App from './App';
 import registerServiceWorker from './registerServiceWorker';
 import Keycloak from "keycloak-js";
 import axios from "axios";
+import {BrowserRouter as Router, Route} from 'react-router-dom';
+import PVFormDisplay from 'PVFormDisplay';
 
-(function(){
+(function()
+{
   
-  
-  
-  
-  let attachEvent = document.attachEvent;
+  function appRender(kc)
+  {
+    const appComp = <App keycloak={kc}/>;
+    const formDisplay  =  ( { match }) => (
+      <PVFormDisplay formURL = { match.params.formURL } />
+    );
+     return <Router>
+      <Root>
+        <Route path ="/" component={appComp}/>
+        <Route path = "/forms/:formURL" component={formDisplay}/> /* the match.params.formURL are passed from here */
+        
+      </Root>
+    </Router>;
+   
+   
+  }
+    
+    
+    
+    let attachEvent = document.attachEvent;
   
   if (!attachEvent)
   {
@@ -133,7 +152,7 @@ import axios from "axios";
   if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development')
   {
     // dev mode - skip keycloak stuff...
-    ReactDOM.render(<App keycloak={null}/>, document.getElementById('root'));
+    ReactDOM.render(appRender(null), document.getElementById('root'));
   
   }
   else
@@ -152,7 +171,7 @@ import axios from "axios";
             // store.getState().keycloak = kc;
             // ReactDOM.render(app, document.getElementById("app"));
             window.keycloakInstance = kc;
-            ReactDOM.render(<App keycloak={kc}/>, document.getElementById('root'));
+            ReactDOM.render(appRender(kc), document.getElementById('root'));
           
           }
         });
