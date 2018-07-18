@@ -108,6 +108,7 @@ class NavPanelAwarenessPopup extends PVGDPRScores
       "sb.append(0L)\n" +
       "  .append(', \"scoreExplanation\":\"');\n" +
       "  sb.append('There are no awareness campaign training records in place.')\n" +
+      "sb.toString()\n" +
       "}"
       
       , bindings: {
