@@ -44,7 +44,9 @@ class NavPanelAwarenessPopup extends PVGDPRScores
     
     
     return {
-      gremlin: "long numEvents = g.V().has('Metadata.Type.Object.Awareness_Campaign',eq('Object.Awareness_Campaign')).in().as('events').count().next();\n" +
+      gremlin: "" +
+      "try {\n" +
+      "long numEvents = g.V().has('Metadata.Type.Object.Awareness_Campaign',eq('Object.Awareness_Campaign')).in().as('events').count().next();\n" +
       "\n" +
       "def map = g.V().has('Metadata.Type.Object.Awareness_Campaign',eq('Object.Awareness_Campaign')).in().as('events').groupCount().by('Event.Training.Status').next();\n" +
       "\n" +
@@ -99,7 +101,14 @@ class NavPanelAwarenessPopup extends PVGDPRScores
       "}\n" +
       "sb.append('\" }')  \n" +
       "\n" +
-      "sb.toString()\n"
+      "sb.toString()\n" +
+      "} catch (Throwable t) {\n" +
+      "StringBuffer sb = new StringBuffer ('{ \"scoreValue\": ');\n" +
+      "\n" +
+      "sb.append(0L)\n" +
+      "  .append(', \"scoreExplanation\":\"');\n" +
+      "  sb.append('There are no awareness campaign training records in place.')\n" +
+      "}"
       
       , bindings: {
         // pg_from: from
