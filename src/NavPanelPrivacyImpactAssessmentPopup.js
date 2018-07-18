@@ -46,7 +46,7 @@ class NavPanelPrivacyImpactAssessmentPopup extends PVGDPRScores
       " \n" +
       "long numPIAWithoutPrivNotices = \n" +
       "  g.V()\n" +
-      "  .has('Metadata.Type.Privacy_Impact_Assessment.',eq('Object.Privacy_Impact_Assessment'))\n" +
+      "  .has('Metadata.Type.Object.Privacy_Impact_Assessment.',eq('Object.Privacy_Impact_Assessment'))\n" +
       "  .where( __.out().has('Metadata.Type.Object.Privacy_Notice',eq('Object.Privacy_Notice')).count().is(eq(0)))\n" +
       "  .count().next()\n" +
       "\n" +
