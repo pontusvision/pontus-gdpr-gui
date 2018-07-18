@@ -8,7 +8,7 @@ import axios from "axios";
 import {Base64} from 'js-base64';
 import PontusComponent from "./PontusComponent";
 
-import {FormRaw} from 'PVFormBuilder';
+import {FormRaw} from './PVFormBuilder';
 // import FormBuilder from 'formiojs/dist/formio.full';
 
 //
@@ -57,8 +57,7 @@ class PVFormDisplay extends PontusComponent
       "renderReportInBase64(randId, pg_templateText);" +
       ""
       , bindings: {
-        pg_dataType: dataType
-        , pg_templateText: templateText
+        pg_dataType: event
       }
       
     };
@@ -122,21 +121,37 @@ class PVFormDisplay extends PontusComponent
     }
   
   };
-
+  
+  onLoadFormError = (evnt, thrown) =>
+  {
+    this.errorCount++;
+    if (this.errorCount > 5)
+    {
+      alert("Failed to get graph data:" + thrown);
+      
+    }
+    
+    else
+    {
+      this.loadFormSubmit(evnt);
+    }
+  };
+  
+  
   
   loadFormSubmit = (formURL) => {
-    console.log( "FORM URL:" + JSON.stringify(formUrl));
+    console.log( "FORM URL:" + JSON.stringify(formURL));
   
-    this.genericSubmit(event,this.getQueryLoadForm, this.onLoadFormSuccess, this.onSubmitError);
+    this.genericSubmit(formURL,this.getQueryLoadForm, this.onLoadFormSuccess, this.onLoadFormError);
   };
   
-  onSubmit = (event) => {
-    console.log( "FORM data:" + JSON.stringify(event));
+  onSubmit = (evnt) => {
+    console.log( "FORM data:" + JSON.stringify(evnt));
   
-    this.genericSubmit(event,this.getSubmitQuery, this.onSubmitSuccess, this.onSubmitError);
+    this.genericSubmit(evnt,this.getSubmitQuery, this.onSubmitSuccess, this.onSubmitError);
   };
   
-  genericSubmit = (event,getQueryFn, successFn, errFn ) => {
+  genericSubmit = (evnt,getQueryFn, successFn, errFn ) => {
   
     // this.origNodeId = (+(this.origNodeId));
     let url = this.url; // "/gateway/sandbox/pvgdpr_server/home/graph";
@@ -151,7 +166,7 @@ class PVFormDisplay extends PontusComponent
       let CancelToken = axios.CancelToken;
       self.req = CancelToken.source();
       
-      axios.post(url, getQueryFn(event), {
+      axios.post(url, getQueryFn(evnt), {
         headers: {
           'Content-Type': 'application/json'
           , 'Accept': 'application/json'
@@ -165,7 +180,7 @@ class PVFormDisplay extends PontusComponent
         }
         else
         {
-          errFn(event, thrown);
+          errFn(evnt, thrown);
         }
       });
       
@@ -222,7 +237,7 @@ class PVFormDisplay extends PontusComponent
   
   
   
-  onSubmitError = (dataType, templateText, thrown) =>
+  onSubmitError = (evnt, thrown) =>
   {
     this.errorCount++;
     if (this.errorCount > 5)
@@ -233,7 +248,7 @@ class PVFormDisplay extends PontusComponent
     
     else
     {
-      this.previewData(dataType, templateText);
+      this.onSubmit(evnt);
     }
   };
   

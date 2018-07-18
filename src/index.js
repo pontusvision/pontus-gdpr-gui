@@ -6,31 +6,33 @@ import registerServiceWorker from './registerServiceWorker';
 import Keycloak from "keycloak-js";
 import axios from "axios";
 import {BrowserRouter as Router, Route} from 'react-router-dom';
-import PVFormDisplay from 'PVFormDisplay';
+import PVFormDisplay from './PVFormDisplay';
+import NavPanelTrackExpert from './NavPanelTrackExpert';
 
-(function()
+function appRender(kc)
+{
+  const appComp =  () => (<App keycloak={kc}/>);
+  const formDisplay = ({match}) => (
+    <PVFormDisplay formURL={match.params.formURL} />
+  );
+  
+  const expertView = () =>(<NavPanelTrackExpert style={{height: '100%', width:'100%'}}/> );
+  return <Router>
+    <div>
+      <Route path="/" component={appComp}/>
+      <Route path="/forms/:formURL" component={formDisplay}/> {/* the match.params.formURL are passed from here */}
+      <Route path="/expert" component={expertView}/> {/* the match.params.formURL are passed from here */}
+    </div>
+  </Router>;
+  
+  
+}
+
+(function ()
 {
   
-  function appRender(kc)
-  {
-    const appComp = <App keycloak={kc}/>;
-    const formDisplay  =  ( { match }) => (
-      <PVFormDisplay formURL = { match.params.formURL } />
-    );
-     return <Router>
-      <Root>
-        <Route path ="/" component={appComp}/>
-        <Route path = "/forms/:formURL" component={formDisplay}/> /* the match.params.formURL are passed from here */
-        
-      </Root>
-    </Router>;
-   
-   
-  }
-    
-    
-    
-    let attachEvent = document.attachEvent;
+  
+  let attachEvent = document.attachEvent;
   
   if (!attachEvent)
   {
@@ -40,17 +42,18 @@ import PVFormDisplay from 'PVFormDisplay';
         function (fn) { return window.setTimeout(fn, 200); };
       return function (fn) { return raf(fn); };
     })();
-  
+    
     let cancelFrame = (function ()
     {
       let cancel = window.cancelAnimationFrame || window.mozCancelAnimationFrame || window.webkitCancelAnimationFrame ||
         window.clearTimeout;
       return function (id) { return cancel(id); };
     })();
-  
+    
     function resetTriggers(element)
     {
-      try {
+      try
+      {
         let triggers = element.__resizeTriggers__,
           expand = triggers.firstElementChild,
           contract = triggers.lastElementChild,
@@ -61,24 +64,28 @@ import PVFormDisplay from 'PVFormDisplay';
         expandChild.style.height = expand.offsetHeight + 1 + 'px';
         expand.scrollLeft = expand.scrollWidth;
         expand.scrollTop = expand.scrollHeight;
-  
+        
       }
-      catch (e){
+      catch (e)
+      {
       
       }
     }
-  
+    
     function checkTriggers(element)
     {
       return element.offsetWidth !== element.__resizeLast__.width ||
         element.offsetHeight !== element.__resizeLast__.height;
     }
-  
+    
     function scrollListener(e)
     {
       let element = this;
       resetTriggers(this);
-      if (this.__resizeRAF__) cancelFrame(this.__resizeRAF__);
+      if (this.__resizeRAF__)
+      {
+        cancelFrame(this.__resizeRAF__);
+      }
       this.__resizeRAF__ = requestFrame(function ()
       {
         if (checkTriggers(element))
@@ -92,16 +99,22 @@ import PVFormDisplay from 'PVFormDisplay';
         }
       });
     }
-  
-  
+    
+    
     window.addResizeListener = function (element, fn)
     {
-      if (attachEvent) element.attachEvent('resize', fn);
+      if (attachEvent)
+      {
+        element.attachEvent('resize', fn);
+      }
       else
       {
         if (!element.__resizeTriggers__)
         {
-          if (getComputedStyle(element).position === 'static') element.style.position = 'relative';
+          if (getComputedStyle(element).position === 'static')
+          {
+            element.style.position = 'relative';
+          }
           element.__resizeLast__ = {};
           element.__resizeListeners__ = [];
           (element.__resizeTriggers__ = document.createElement('div')).className = 'resize-triggers';
@@ -114,10 +127,13 @@ import PVFormDisplay from 'PVFormDisplay';
         element.__resizeListeners__.push(fn);
       }
     };
-  
+    
     window.removeResizeListener = function (element, fn)
     {
-      if (attachEvent) element.detachEvent('resize', fn);
+      if (attachEvent)
+      {
+        element.detachEvent('resize', fn);
+      }
       else
       {
         element.__resizeListeners__.splice(element.__resizeListeners__.indexOf(fn), 1);
@@ -133,15 +149,23 @@ import PVFormDisplay from 'PVFormDisplay';
   function loadJSON(path, success, error)
   {
     var xhr = new XMLHttpRequest();
-    xhr.onreadystatechange = function()
+    xhr.onreadystatechange = function ()
     {
-      if (xhr.readyState === XMLHttpRequest.DONE) {
-        if (xhr.status === 200) {
+      if (xhr.readyState === XMLHttpRequest.DONE)
+      {
+        if (xhr.status === 200)
+        {
           if (success)
+          {
             success(JSON.parse(xhr.responseText));
-        } else {
+          }
+        }
+        else
+        {
           if (error)
+          {
             error(xhr);
+          }
         }
       }
     };
@@ -153,16 +177,16 @@ import PVFormDisplay from 'PVFormDisplay';
   {
     // dev mode - skip keycloak stuff...
     ReactDOM.render(appRender(null), document.getElementById('root'));
-  
+    
   }
   else
   {
-  
+    
     loadJSON('pvgdpr_gui/keycloak-conf.json',
       function (kcConf)
       {
-      
-      
+        
+        
         const kc = Keycloak(kcConf);
         kc.init({adapter: 'default', onLoad: 'login-required'}).success(authenticated =>
         {
@@ -172,10 +196,10 @@ import PVFormDisplay from 'PVFormDisplay';
             // ReactDOM.render(app, document.getElementById("app"));
             window.keycloakInstance = kc;
             ReactDOM.render(appRender(kc), document.getElementById('root'));
-          
+            
           }
         });
-      
+        
         axios.interceptors.request.use(config =>
         {
           return refreshToken().then(() =>
@@ -198,8 +222,8 @@ import PVFormDisplay from 'PVFormDisplay';
               .error(error => reject(error))
           });
         };
-      
-      
+        
+        
       },
       function (xhr) { console.error(xhr); });
   }
@@ -207,6 +231,6 @@ import PVFormDisplay from 'PVFormDisplay';
   
 })();
 
- // ReactDOM.render(<App  />, document.getElementById('root'));
+// ReactDOM.render(<App  />, document.getElementById('root'));
 
 registerServiceWorker();
