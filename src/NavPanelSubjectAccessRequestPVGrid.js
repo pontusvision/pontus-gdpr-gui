@@ -73,7 +73,7 @@ class NavPanelSubjectAccessRequestPVGrid extends PVGrid
         "  , __.as('sars').values('Metadata.Create_Date').as('sar_creation')\n" +
         "  , __.as('sars').values('Metadata.Update_Date').as('sar_update')\n" +
         "  , __.as('sars').in().has('Metadata.Type.Person',eq('Person')).values('Person.Full_Name').as('person_full_name')\n" +
-        "  , __.as('sars').in().has('Metadata.Type.Person.Employee',eq('Person.Employee')).values('Person.Full_Name').as('employee_full_name')\n" +
+        "  , __.as('sars').in().has('Metadata.Type.Person.Employee',eq('Person.Employee')).values('Person.Employee.Full_Name').as('employee_full_name')\n" +
         "  , __.as('sars').id().as('event_id')\n" +
         "  )\n" +
         selectBody
@@ -100,7 +100,7 @@ class NavPanelSubjectAccessRequestPVGrid extends PVGrid
         "  , __.as('sars').values('Metadata.Create_Date').as('sar_creation')\n" +
         "  , __.as('sars').values('Metadata.Update_Date').as('sar_update')\n" +
         "  , __.as('people').values('Person.Full_Name').as('person_full_name')\n" +
-        "  , __.as('employees').values('Person.Full_Name').as('employee_full_name')\n" +
+        "  , __.as('employees').values('Person.Employee.Full_Name').as('employee_full_name')\n" +
         "  , __.as('sars').id().as('event_id')\n" +
         "  )\n"+
         selectBody
