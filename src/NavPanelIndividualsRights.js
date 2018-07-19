@@ -105,7 +105,7 @@ class NavPanelIndividualsRights extends PontusComponent
     this.instance.registerComponent('compliance-email', NavPanelIndividualsRightsPVTemplateEditor);
     this.instance.registerComponent('compliance-grid', NavPanelIndividualsRightsPVGridNoticeTemplates);
     this.instance.registerComponent('compliance-form-builder', NavPanelIndividualsRightsPVFormBuilder);
-    this.instance.registerComponent('compliance-form-builder', NavPanelIndividualsRightsPVGridForms);
+    this.instance.registerComponent('compliance-form-builder-grid', NavPanelIndividualsRightsPVGridForms);
     this.instance.init();
     
     this.instance.on('tabCreated', function (tab)
