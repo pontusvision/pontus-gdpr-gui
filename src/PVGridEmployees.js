@@ -22,7 +22,7 @@ class PVGridEmployees extends PVGrid
       ".in().as('events')" +
       ".out()" +
       ".has('Metadata.Type.Person.Employee',eq('Person.Employee'))" +
-      ".order().by(pg_orderCol == null ? 'Person.Full_Name' :pg_orderCol.toString() ,pg_orderDir == (1)? incr: decr)" +
+      ".order().by(pg_orderCol == null ? 'Person.Employee.Full_Name' :pg_orderCol.toString() ,pg_orderDir == (1)? incr: decr)" +
       ".range(pg_from,pg_to).as('employees')" +
       ".match(__.as('events').values('Event.Training.Status').as('event_status')" +
       ", __.as('events').id().as('event_id')" +
