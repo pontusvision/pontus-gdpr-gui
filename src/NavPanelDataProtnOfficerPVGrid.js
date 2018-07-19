@@ -63,7 +63,7 @@ class NavPanelDataProtnOfficerPVGrid extends PVGrid
       " , __.as('people').values('Person.Employee.Full_Name').as('Person.Full_Name')\n" +
       " , __.as('people').values('Person.Employee.Date_Of_Birth').as('Person.Date_Of_Birth')\n" +
       " , __.as('people').values('Person.Employee.Date_Of_Birth').map{ it.get().getTime() }.as('Person.Date_Of_Birth_Millis')\n" +
-      " , __.as('Person.Employee.Date_Of_Birth_Millis').math('(' +System.currentTimeMillis() + '- _)/(3600000*24*365)').map{  it.get().longValue()}.as('Person.Age')\n" +
+      " , __.as('Person.Date_Of_Birth_Millis').math('(' +System.currentTimeMillis() + '- _)/(3600000*24*365)').map{  it.get().longValue()}.as('Person.Age')\n" +
       " , __.as('people').values('Person.Employee.Gender').as('Person.Gender')\n" +
       " , __.as('people').values('Person.Employee.Nationality').as('Person.Nationality')\n" +
       " , __.as('people').values('Person.Employee.Role').as('Person.Employee.Role')\n" +
