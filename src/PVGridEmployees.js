@@ -26,9 +26,9 @@ class PVGridEmployees extends PVGrid
       ".range(pg_from,pg_to).as('employees')" +
       ".match(__.as('events').values('Event.Training.Status').as('event_status')" +
       ", __.as('events').id().as('event_id')" +
-      ", __.as('employees').values('Person.Full_Name').as('Person.Full_Name')" +
-      ", __.as('employees').values('Person.Title').as('Person.Title')" +
-      ", __.as('employees').values('Person.Nationality').as('Person.Nationality')" +
+      ", __.as('employees').values('Person.Employee.Full_Name').as('Person.Full_Name')" +
+      ", __.as('employees').values('Person.Employee.Title').as('Person.Title')" +
+      ", __.as('employees').values('Person.Employee.Nationality').as('Person.Nationality')" +
       ", __.as('employees').id().as('emp_id')" +
       ")" +
       ".select('Person.Title','event_status','Person.Full_Name','Person.Nationality','emp_id', 'event_id')"
