@@ -18,7 +18,7 @@ class NavPanelIndividualsRightsPVGridForms extends PVGrid
     colSettings[0] = {id: "Object.Form.URL", name: "URL", field: "Object.Form.URL",  sortable: true};
     colSettings[1] = {id: "Object.Form.Vertex_Label", name: "Types", field: "Object.Form.Vertex_Label",   sortable: true};
     colSettings[2] = {id: "Object.Form.Metadata_Owner", name: "Owner", field: "Object.Form.Metadata_Owner",   sortable: true};
-    colSettings[3] = {id: "Object.Form.Metadata_Create_Date", name: "Create Date", field: "Metadata_Create_Date",   sortable: true};
+    colSettings[3] = {id: "Object.Form.Metadata_Create_Date", name: "Create Date", field: "Object.Form.Metadata_Create_Date",   sortable: true};
     // colSettings[3] = {id: "Object.Notification_Templates.Text", visible: false, name: "Text", field: "Object.Notification_Templates.Text",   sortable: true};
 
     
