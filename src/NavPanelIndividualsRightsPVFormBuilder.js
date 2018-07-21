@@ -31,15 +31,15 @@ class NavPanelIndividualsRightsPVFormBuilder extends PontusComponent
   
   onClickedRow = (data) =>
   {
-    this.val = Base64.decode(data['Object.Form.Text']);
+    // this.val = Base64.decode(data['Object.Form.Text']);
     this.setState({
       formId: data['index']
       , formURL: data['Object.Form.URL']
       , formVertexLabel: data['Object.Form.Vertex_Label']
-      , formB64: this.val
+      , formB64: data['Object.Form.Text']
       , fullData: data
     });
-    this.lastData = data;
+    // this.lastData = data;
     
   };
   
