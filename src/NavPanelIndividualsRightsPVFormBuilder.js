@@ -47,7 +47,7 @@ class NavPanelIndividualsRightsPVFormBuilder extends PontusComponent
   {
     let st = this.state;
     
-    if (st === null){
+    if (st === null || st.formId === null ){
       return <div>PLEASE CLICK ON THE FORM GRID</div>
     }
     
