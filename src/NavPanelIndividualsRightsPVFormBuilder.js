@@ -37,6 +37,7 @@ class NavPanelIndividualsRightsPVFormBuilder extends PontusComponent
       , formURL: data['Object.Form.URL']
       , formVertexLabel: data['Object.Form.Vertex_Label']
       , formB64: this.val
+      , fullData: data
     });
     this.lastData = data;
     
