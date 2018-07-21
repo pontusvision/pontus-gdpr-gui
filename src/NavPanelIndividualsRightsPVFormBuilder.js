@@ -33,7 +33,7 @@ class NavPanelIndividualsRightsPVFormBuilder extends PontusComponent
   {
     this.val = Base64.decode(data['Object.Form.Text']);
     this.setState({
-      formId: data['event_id']
+      formId: data['index']
       , formURL: data['Object.Form.URL']
       , formVertexLabel: data['Object.Form.Vertex_Label']
       , formB64: this.val
