@@ -20,7 +20,7 @@
     "lodash": "^4.17.10",
     "prop-types": "^15.6.1",
     "react": "^15.6.2",
-    "react-ace": "^5.10.0",
+    "react-ace": "^6.1.4",
     "react-bootstrap-multiselect": "^2.4.1",
     "react-burger-menu": "^2.4.4",
     "react-chartjs-2": "^2.7.4",
