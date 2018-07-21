@@ -44,7 +44,7 @@ class NavPanelIndividualsRightsPVFormBuilder extends PontusComponent
   
   render()
   {
-    let st = this.getState();
+    let st = this.state;
     // let eventHub = this.props.glEventHub;
     return <PVFormBuilder formId={st.formId} formURL={st.formURL} formVertexLabel={st.formVertexLabel}
                           formB64={st.formB64}/>;
