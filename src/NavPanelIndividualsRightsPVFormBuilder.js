@@ -2,7 +2,8 @@ import React from 'react';
 import PontusComponent from "./PontusComponent";
 
 import PVFormBuilder from "./PVFormBuilder";
-import { Base64 } from 'js-base64';
+import {Base64} from 'js-base64';
+
 //
 
 class NavPanelIndividualsRightsPVFormBuilder extends PontusComponent
@@ -31,18 +32,26 @@ class NavPanelIndividualsRightsPVFormBuilder extends PontusComponent
   onClickedRow = (data) =>
   {
     this.val = Base64.decode(data['Object.Form.Text']);
-    this.setState({value: data['Object.Form.Text']});
+    this.setState({
+      formId: data['event_id']
+      , formURL: data['Object.Form.URL']
+      , formVertexLabel: data['Object.Form.Vertex_Label']
+      , formB64: this.val
+    });
     this.lastData = data;
     
   };
   
   render()
   {
+    let st = this.getState();
     // let eventHub = this.props.glEventHub;
-    return <PVFormBuilder/>;
+    return <PVFormBuilder formId={st.formId} formURL={st.formURL} formVertexLabel={st.formVertexLabel}
+                          formB64={st.formB64}/>;
     
     
   }
   
 }
+
 export default NavPanelIndividualsRightsPVFormBuilder;

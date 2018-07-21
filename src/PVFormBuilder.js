@@ -223,6 +223,29 @@ class PVFormBuilder extends PontusComponent
     //   {key: 'name', name: 'Name'},
     //   {key: 'street', name: 'Street'}
     // ];
+    
+    if (props.formB64){
+      this.formB64 = props.formB64;
+      this.formPlainText = Base64.decode(this.formB64);
+  
+    }
+    else if (props.formPlainText){
+      this.formPlainText = props.formPlainText;
+      this.formB64 = Base64.encode(this.formPlainText);
+   
+    }
+    else{
+      this.formPlainText = JSON.stringify({display: 'form'});
+      this.formB64 = Base64.encode(this.formPlainText);
+    }
+    
+    this.form = JSON.parse(this.formPlainText);
+    
+    this.formURL = props.formURL;
+    this.formId = props.formId;
+    this.formVertexLabel = props.formVertexLabel;
+  
+  
     this.errorCount = 0;
     this.state = {
       maxHeight: 100
@@ -232,7 +255,12 @@ class PVFormBuilder extends PontusComponent
       , value: ""
       , width: 1000
       , height: 1000
-      , form: {display: 'form'}
+      , form: this.form
+      , formB64: this.formB64
+      , formPlainText: this.formPlainText
+      , formURL: this.formURL
+      , formId: this.formId
+      , formVertexLabel: this.formVertexLabel
     };
     // this.val = "";
   }
@@ -250,7 +278,7 @@ class PVFormBuilder extends PontusComponent
     
   };
   
-  getQuerySaveData = (newVal, id,urlStr,vertexLabel) =>
+  getQuerySaveData = (formB64, formId,formURL,formVertexLabel) =>
   {
     return {
       gremlin: "" +
@@ -283,15 +311,15 @@ class PVFormBuilder extends PontusComponent
       "" +
       ""
       , bindings: {
-        pg_newValStr: newVal
-        , pg_id: id
-        , pg_urlStr: urlStr
-        , pg_vertexLabel: vertexLabel
+        pg_newValStr: formB64
+        , pg_id: formId
+        , pg_urlStr: formURL
+        , pg_vertexLabel: formVertexLabel
       }
       
     };
   };
-  saveData = (newVal, lastData) =>
+  saveData = (formB64, formId,formURL,formVertexLabel) =>
   {
     // this.origNodeId = (+(this.origNodeId));
     let url = this.url = PontusComponent.getGraphURL(this.props);
@@ -307,7 +335,7 @@ class PVFormBuilder extends PontusComponent
       let CancelToken = axios.CancelToken;
       self.req = CancelToken.source();
       
-      axios.post(url, this.getQuerySaveData(newVal, lastData), {
+      axios.post(url, this.getQuerySaveData(formB64,formId,formURL,formVertexLabel), {
         headers: {
           'Content-Type': 'application/json'
           , 'Accept': 'application/json'
@@ -321,7 +349,7 @@ class PVFormBuilder extends PontusComponent
         }
         else
         {
-          this.onErrorSaveData(newVal, lastData, thrown);
+          this.onErrorSaveData(formB64,formId,formURL,formVertexLabel, thrown);
         }
       });
       
@@ -330,7 +358,7 @@ class PVFormBuilder extends PontusComponent
     
   };
   
-  onErrorSaveData = (newVal, lastData, thrown) =>
+  onErrorSaveData = (formB64,formId,formURL,formVertexLabel, thrown) =>
   {
     this.errorCount++;
     if (this.errorCount > 5)
@@ -341,7 +369,7 @@ class PVFormBuilder extends PontusComponent
     
     else
     {
-      this.saveData(newVal, lastData);
+      this.saveData(formB64,formId,formURL,formVertexLabel);
     }
   };
   
@@ -526,13 +554,7 @@ class PVFormBuilder extends PontusComponent
   {
     // this.setState({ visible: !this.state.visible });
     
-    let newVal = Base64.encode(this.val);
-    if (this.lastData)
-    {
-      this.saveData(newVal, this.lastData);
-      this.lastData['Object.Notification_Templates.Text'] = newVal;
-      
-    }
+      this.saveData(this.formB64,this.formId,this.formURL, this.formVertexLabel);
   };
   
   handleClose = () => this.setState({open: false});
@@ -545,6 +567,8 @@ class PVFormBuilder extends PontusComponent
   onChange = (schema) =>
   {
     this.form = schema;
+    this.formPlainText = JSON.stringify(this.form);
+    this.formB64 = Base64.encode(this.formPlainText);
   };
   
   setFormBuilderRef = (formBuilder) =>
