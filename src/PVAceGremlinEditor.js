@@ -4,6 +4,7 @@ import {Flex, Box} from 'reflexbox';
 import AceEditor from 'react-ace';
 import 'brace/mode/groovy';
 import 'brace/theme/monokai';
+import 'brace/ext/searchbox';
 
 
 
