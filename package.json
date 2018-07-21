@@ -11,10 +11,10 @@
     "datamaps": "^0.5.9",
     "draft-js": "^0.10.5",
     "fbemitter": "^2.1.1",
-    "formiojs": "^3.0.0-rc.20",
+    "formiojs": "^3.0.0-rc.26",
     "golden-layout": "^1.5.9",
     "i18n-iso-countries": "3.6.3",
-    "js-base64": "^2.4.5",
+    "js-base64": "^2.4.8",
     "jspdf": "^1.4.0",
     "keycloak-js": "^3.4.3",
     "lodash": "^4.17.10",
@@ -23,7 +23,7 @@
     "react-ace": "^5.10.0",
     "react-bootstrap-multiselect": "^2.4.1",
     "react-burger-menu": "^2.4.4",
-    "react-chartjs-2": "^2.7.2",
+    "react-chartjs-2": "^2.7.4",
     "react-desktop": "^0.3.5",
     "react-dnr": "^0.4.0",
     "react-dom": "^15.6.2",
@@ -57,6 +57,6 @@
   },
   "proxy": "https://localhost:18443",
   "devDependencies": {
-    "less": "^3.7.0"
+    "less": "^3.7.1"
   }
 }

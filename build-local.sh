@@ -2,7 +2,7 @@
 git pull
 DIR="$( cd "$(dirname "$0")" ; pwd -P )"
 VERSION=PVGDPR_Sandbox-001
-NODE_VERSION=node-v8.4.0-linux-x64
+NODE_VERSION=node-v8.11.3-linux-x64
 export NODE_DIR=$DIR/../${NODE_VERSION}
 export NODE_DISTDIR=$DIR/../pontus-dist/opt/pontus/node/${NODE_VERSION}
 echo DIR is $DIR
