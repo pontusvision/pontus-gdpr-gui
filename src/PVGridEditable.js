@@ -97,7 +97,7 @@ class PVGridEditable extends PVGrid
   setNamespace = (namespace) =>
   {
     this.namespace = namespace;
-  }
+  };
   
   componentDidMount()
   {
@@ -141,7 +141,7 @@ class PVGridEditable extends PVGrid
       sortBy: sortcol,
       sortDir: ((sortdir > 0) ? "+asc" : "+desc")
     }
-  }
+  };
   
   ensureData = (fromReq, toReq) =>
   {

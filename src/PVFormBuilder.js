@@ -1,7 +1,6 @@
-import React, {Component}  from 'react';
+import React, {Component} from 'react';
 import 'formiojs/dist/formio.full.css';
 import 'formiojs/dist/formio.builder.css';
-
 // import {Form, FormBuilder} from 'react-formio';
 import ResizeAware from 'react-resize-aware';
 import {Button, Menu, Portal, Segment} from 'semantic-ui-react';
@@ -18,7 +17,6 @@ import PropTypes from 'prop-types';
 
 import 'react-quill/dist/quill.snow.css';
 import PontusComponent from "./PontusComponent";
-
 // import AllComponents from 'formiojs/lib/formio.full';
 // import Components from 'formiojs/dist/formio.full';
 // import Form from 'formiojs/dist/formio.full';
@@ -29,7 +27,8 @@ import {Form, FormBuilder} from 'formiojs';
 //
 // Components.setComponents(AllComponents);
 
-class FormBuilderRaw extends Component {
+class FormBuilderRaw extends Component
+{
   static defaultProps = {
     options: {}
   };
@@ -44,66 +43,124 @@ class FormBuilderRaw extends Component {
     onEditComponent: PropTypes.func,
   };
   
-  componentDidMount = () => {
-    this.initializeBuilder();
+  constructor(props)
+  {
+    super(props);
+    this.form = props.form;
+    
+    this.state = {
+      form: this.form
+    }
+    
+  }
+  
+  componentDidMount = () =>
+  {
+    // this.initializeBuilder();
   };
   
-  componentWillUnmount = () => {
-    if (this.builder !== undefined) {
+  componentWillUnmount = () =>
+  {
+    if (this.builder !== undefined)
+    {
       this.builder.instance.destroy(true);
     }
   };
   
-  initializeBuilder = () => {
-    const {options, form} = this.props;
+  initializeBuilder = () =>
+  {
+    // const {options, form} = this.props;
     
-    this.builder = new FormBuilder(this.element, form, options);
-    this.builderReady = this.builder.setDisplay(form.display);
+    // this.form
     
-    this.builderReady.then(() => {
-      this.builder.instance.on('saveComponent', this.emit('onSaveComponent'));
-      this.builder.instance.on('updateComponent', this.emit('onUpdateComponent'));
-      this.builder.instance.on('deleteComponent', this.emit('onDeleteComponent'));
-      this.builder.instance.on('cancelComponent', this.emit('onCancelComponent'));
-      this.builder.instance.on('editComponent', this.emit('onEditComponent'));
-      this.builder.instance.on('saveComponent', this.onChange);
-      this.builder.instance.on('updateComponent', this.onChange);
-      this.builder.instance.on('deleteComponent', this.onChange);
-    });
-  };
-  
-  componentWillReceiveProps = (nextProps) => {
-    const {options, form} = this.props;
-    
-    if (form !== nextProps.form) {
-      this.initializeBuilder();
+    if (this.builder !== undefined)
+    {
+      this.builder.instance.destroy(true);
+      this.builder = undefined;
     }
     
-    if (options !== nextProps.options) {
-      this.initializeBuilder();
+    this.form = this.props.form;
+    
+    if (this.form != null)
+    {
+      this.builder = new FormBuilder(this.element, this.form, this.props.options);
+      this.builderReady = this.builder.setDisplay(this.form.display);
+      
+      this.builderReady.then(() =>
+      {
+        this.builder.instance.on('saveComponent', this.emit('onSaveComponent'));
+        this.builder.instance.on('updateComponent', this.emit('onUpdateComponent'));
+        this.builder.instance.on('deleteComponent', this.emit('onDeleteComponent'));
+        this.builder.instance.on('cancelComponent', this.emit('onCancelComponent'));
+        this.builder.instance.on('editComponent', this.emit('onEditComponent'));
+        this.builder.instance.on('saveComponent', this.onChange);
+        this.builder.instance.on('updateComponent', this.onChange);
+        this.builder.instance.on('deleteComponent', this.onChange);
+      });
     }
   };
   
-  render = () => {
-    return <div ref={element => this.element = element} />;
+  // componentWillReceiveProps = (nextProps) =>
+  // {
+  //   const {options, form} = this.props;
+  //
+  //   if (form !== nextProps.form)
+  //   {
+  //     this.initializeBuilder();
+  //   }
+  //
+  //   if (options !== nextProps.options)
+  //   {
+  //     this.initializeBuilder();
+  //   }
+  // };
+  
+  setForm = (form) =>
+  {
+    this.setState({form: form});
   };
   
-  onChange = () => {
-    if (this.props.hasOwnProperty('onChange') && typeof this.props.onChange === 'function') {
+  setElement = (element) =>
+  {
+    
+    this.element = element;
+    this.initializeBuilder();
+    
+    
+  };
+  
+  render = () =>
+  {
+    
+    if (this.element)
+    {
+      this.setElement(this.element);
+    }
+    return <div ref={this.setElement}/>;
+  };
+  
+  onChange = () =>
+  {
+    if (this.props.hasOwnProperty('onChange') && typeof this.props.onChange === 'function')
+    {
       this.props.onChange(this.builder.instance.schema);
     }
   };
   
-  emit = (funcName) => {
-    return (...args) => {
-      if (this.props.hasOwnProperty(funcName) && typeof (this.props[funcName]) === 'function') {
+  emit = (funcName) =>
+  {
+    return (...args) =>
+    {
+      if (this.props.hasOwnProperty(funcName) && typeof (this.props[funcName]) === 'function')
+      {
         this.props[funcName](...args);
       }
     };
   };
 }
 
-class FormRaw extends Component {
+class FormRaw extends Component
+{
   static defaultProps = {
     options: {}
   };
@@ -129,35 +186,56 @@ class FormRaw extends Component {
     onRender: PropTypes.func
   };
   
-  componentDidMount = () => {
-    const {options, src, form} = this.props;
+  
+  constructor(props)
+  {
+    super(props);
+    this.form = this.props.form;
+    this.state = {form: this.form}
     
-    if (src) {
-      this.createPromise = new Form(this.element, src, options).render().then(formio => {
-        this.formio = formio;
-        this.formio.src = src;
-      });
-    }
-    if (form) {
-      this.createPromise = new Form(this.element, form, options).render().then(formio => {
-        this.formio = formio;
-        this.formio.form = form;
-      });
-    }
     
-    this.initializeFormio();
+  }
+  
+  componentDidMount = () =>
+  {
+    // const {options, src, form} = this.props;
+    //
+    // if (src)
+    // {
+    //   this.createPromise = new Form(this.element, src, options).render().then(formio =>
+    //   {
+    //     this.formio = formio;
+    //     this.formio.src = src;
+    //   });
+    // }
+    // if (form)
+    // {
+    //   this.createPromise = new Form(this.element, form, options).render().then(formio =>
+    //   {
+    //     this.formio = formio;
+    //     this.formio.form = form;
+    //   });
+    // }
+    //
+    // this.initializeFormio();
   };
   
-  componentWillUnmount = () => {
-    if (this.formio !== undefined) {
+  componentWillUnmount = () =>
+  {
+    if (this.formio !== undefined)
+    {
       this.formio.destroy(true);
     }
   };
   
-  initializeFormio = () => {
-    if (this.createPromise) {
-      this.createPromise.then(() => {
-        if (this.props.submission) {
+  initializeFormio = () =>
+  {
+    if (this.createPromise)
+    {
+      this.createPromise.then(() =>
+      {
+        if (this.props.submission)
+        {
           this.formio.submission = this.props.submission;
         }
         //this.formio.hideComponents([]); (From Components.js)
@@ -174,43 +252,91 @@ class FormRaw extends Component {
     }
   };
   
-  componentWillReceiveProps = (nextProps) => {
-    const {options, src, form, submission} = this.props;
+  // componentWillReceiveProps = (nextProps) =>
+  // {
+  //   const {options, src, form, submission} = this.props;
+  //
+  //   if (src !== nextProps.src)
+  //   {
+  //     this.createPromise = new Form(this.element, nextProps.src, options).render().then(formio =>
+  //     {
+  //       this.formio = formio;
+  //       this.formio.src = nextProps.src;
+  //     });
+  //     this.initializeFormio();
+  //   }
+  //   if (form !== nextProps.form)
+  //   {
+  //     this.setState({form: nextProps.form});
+  //   }
+  //
+  //   if (submission !== nextProps.submission && this.formio)
+  //   {
+  //     this.formio.submission = nextProps.submission;
+  //   }
+  // };
+  
+  //
+  
+  setForm = (form) =>
+  {
+    // TODO: SET THE FORM HERE?????
     
-    if (src !== nextProps.src) {
-      this.createPromise = new Form(this.element, nextProps.src, options).render().then(formio => {
-        this.formio = formio;
-        this.formio.src = nextProps.src;
-      });
-      this.initializeFormio();
-    }
-    if (form !== nextProps.form) {
-      this.createPromise = new Form(this.element, nextProps.form, options).render().then(formio => {
+    this.setState({form: form});
+    
+    
+  };
+  
+  setElement = (element) =>
+  {
+    
+    this.element = element;
+    
+    const {form} = this.state;
+    
+    this.form = form;
+    
+    if (this.form)
+    {
+      if (this.formio !== undefined)
+      {
+        this.formio.destroy(true);
+      }
+      
+      this.createPromise = new Form(this.element, this.form, this.props.options).render().then(formio =>
+      {
         this.formio = formio;
         this.formio.form = form;
       });
+      
       this.initializeFormio();
+      
     }
     
-    if (submission !== nextProps.submission && this.formio) {
-      this.formio.submission = nextProps.submission;
+    
+  };
+  
+  render = () =>
+  {
+    if (this.element != null)
+    {
+      this.setElement(this.element);
     }
+    
+    return <div ref={this.setElement}/>;
   };
   
-  render = () => {
-    return <div ref={element => this.element = element} />;
-  };
-  
-  emit = (funcName) => {
-    return (...args) => {
-      if (this.props.hasOwnProperty(funcName) && typeof (this.props[funcName]) === 'function') {
+  emit = (funcName) =>
+  {
+    return (...args) =>
+    {
+      if (this.props.hasOwnProperty(funcName) && typeof (this.props[funcName]) === 'function')
+      {
         this.props[funcName](...args);
       }
     };
   };
 }
-
-
 
 
 class PVFormBuilder extends PontusComponent
@@ -224,28 +350,39 @@ class PVFormBuilder extends PontusComponent
     //   {key: 'street', name: 'Street'}
     // ];
     
-    if (props.formB64){
+    if (props.formB64)
+    {
       this.formB64 = props.formB64;
       this.formPlainText = Base64.decode(this.formB64);
-  
+      
     }
-    else if (props.formPlainText){
+    else if (props.formPlainText)
+    {
       this.formPlainText = props.formPlainText;
       this.formB64 = Base64.encode(this.formPlainText);
-   
+      
     }
-    else{
-      this.formPlainText = JSON.stringify({display: 'form'});
+    else
+    {
+      this.formPlainText = JSON.stringify({'display': 'form'});
       this.formB64 = Base64.encode(this.formPlainText);
     }
-    
-    this.form = JSON.parse(this.formPlainText);
+    try
+    {
+      this.form = JSON.parse(this.formPlainText);
+      
+    }
+    catch (t)
+    {
+      this.form = {'display': 'form'};
+      
+    }
     
     this.formURL = props.formURL;
     this.formId = props.formId;
     this.formVertexLabel = props.formVertexLabel;
-  
-  
+    
+    
     this.errorCount = 0;
     this.state = {
       maxHeight: 100
@@ -278,7 +415,7 @@ class PVFormBuilder extends PontusComponent
     
   };
   
-  getQuerySaveData = (formB64, formId,formURL,formVertexLabel) =>
+  getQuerySaveData = (formB64, formId, formURL, formVertexLabel) =>
   {
     return {
       gremlin: "" +
@@ -287,19 +424,23 @@ class PVFormBuilder extends PontusComponent
       "        if (!trans.isOpen()) {\n" +
       "            trans.open();\n" +
       "        }\n" +
-      "        def vert = null;" +
-      "        if (pg_id == null) {" +
-      "            vert = g.addV('Object.Form');" +
-      "            vert.property('Metadata.Type.Object.Form','Object.Form')" +
-      "                .property('Metadata.Type','Object.Form');" +
+      "        def vert = null;\n" +
+      "        if (pg_id == null) {\n" +
+      "            g.addV('Object.Form')\n" +
+      "             .property('Metadata.Type.Object.Form','Object.Form')\n" +
+      "             .property('Metadata.Type','Object.Form')\n" +
+      "             .property('Object.Form.Text', pg_newValStr)\n" +
+      "             .property('Object.Form.URL', pg_urlStr)\n" +
+      "             .property('Object.Form.Vertex_Label', pg_vertexLabel)\n" +
+      "             .next();\n" +
       "        }" +
       "        else {" +
-      "            vert = g.V(pg_id))" +
+      "            g.V(pg_id)\n" +
+      "             .property('Object.Form.Text', pg_newValStr)\n" +
+      "             .property('Object.Form.URL', pg_urlStr)\n" +
+      "             .property('Object.Form.Vertex_Label', pg_vertexLabel)\n" +
+      "             .next();\n" +
       "        }\n" +
-      "        vert.property(\"Object.Form.Text\", pg_newValStr)" +
-      "            .property('Object.Form.URL', pg_urlStr)" +
-      "            .property('Object.Form.Vertex_Label', pg_vertexLabel)" +
-      "                .next();\n" +
       "        trans.commit();\n" +
       "    }\n" +
       "    catch (t) {\n" +
@@ -319,8 +460,12 @@ class PVFormBuilder extends PontusComponent
       
     };
   };
-  saveData = (formB64, formId,formURL,formVertexLabel) =>
+  saveData = (formB64, formId, formURL, formVertexLabel) =>
   {
+    this.props.glEventHub.emit(this.namespace + '-pvform-on-save-form', {
+      formB64: formB64, formId: formId, formURL: formURL, formVertexLabel: formVertexLabel
+    });
+    
     // this.origNodeId = (+(this.origNodeId));
     let url = this.url = PontusComponent.getGraphURL(this.props);
     // "/gateway/sandbox/pvgdpr_server/home/graph";
@@ -335,7 +480,7 @@ class PVFormBuilder extends PontusComponent
       let CancelToken = axios.CancelToken;
       self.req = CancelToken.source();
       
-      axios.post(url, this.getQuerySaveData(formB64,formId,formURL,formVertexLabel), {
+      axios.post(url, this.getQuerySaveData(formB64, formId, formURL, formVertexLabel), {
         headers: {
           'Content-Type': 'application/json'
           , 'Accept': 'application/json'
@@ -349,7 +494,7 @@ class PVFormBuilder extends PontusComponent
         }
         else
         {
-          this.onErrorSaveData(formB64,formId,formURL,formVertexLabel, thrown);
+          this.onErrorSaveData(formB64, formId, formURL, formVertexLabel, thrown);
         }
       });
       
@@ -358,7 +503,7 @@ class PVFormBuilder extends PontusComponent
     
   };
   
-  onErrorSaveData = (formB64,formId,formURL,formVertexLabel, thrown) =>
+  onErrorSaveData = (formB64, formId, formURL, formVertexLabel, thrown) =>
   {
     this.errorCount++;
     if (this.errorCount > 5)
@@ -369,7 +514,7 @@ class PVFormBuilder extends PontusComponent
     
     else
     {
-      this.saveData(formB64,formId,formURL,formVertexLabel);
+      this.saveData(formB64, formId, formURL, formVertexLabel);
     }
   };
   
@@ -528,8 +673,7 @@ class PVFormBuilder extends PontusComponent
   componentDidMount()
   {
     
-    this.setState({open: false});
-    this.setState({visible: false});
+    this.setState({open: false, visible: false});
     
     
   }
@@ -554,7 +698,10 @@ class PVFormBuilder extends PontusComponent
   {
     // this.setState({ visible: !this.state.visible });
     
-      this.saveData(this.formB64,this.formId,this.formURL, this.formVertexLabel);
+    this.saveData(this.formB64, this.state.formId, this.state.formURL, this.state.formVertexLabel);
+    
+    
+    // TODO: EMIT A SAVE STATE SO THE GRID CAN UPDATE ITS in_MEM VALUE!!!!!
   };
   
   handleClose = () => this.setState({open: false});
@@ -564,28 +711,70 @@ class PVFormBuilder extends PontusComponent
   //   this.previewDivObj.setInnerHtml(this.previewDivObj,"hello world")
   // };
   
-  onChange = (schema) =>
+  onChangeSchema = (schema) =>
   {
     this.form = schema;
     this.formPlainText = JSON.stringify(this.form);
     this.formB64 = Base64.encode(this.formPlainText);
+    
+    // this.setState ({form: this.form, formPlainText: this.formPlainText, formB64: this.formB64})
   };
   
   setFormBuilderRef = (formBuilder) =>
   {
     this.formBuilderRef = formBuilder;
+    // this.formBuilderRef.setState ({ form: this.form});
   };
   
-  onSubmit = (event) => {
-    console.log( "FORM data:" + JSON.stringify(event));
+  setFormViewRef = (formRef) =>
+  {
+    this.formViewRef = formRef;
   };
+  
+  
+  onSubmit = (event) =>
+  {
+    console.log("FORM data:" + JSON.stringify(event) + "\n" + JSON.stringify(this.state));
+  };
+  
+  
+  getFormFromB64 = (formB64) =>
+  {
+    
+    const formPlainText = Base64.decode(formB64);
+    
+    try
+    {
+      this.form = JSON.parse(formPlainText);
+      
+    }
+    catch (t)
+    {
+      this.form = null;
+      
+    }
+    
+    return this.form;
+    
+  };
+  
   
   render()
   {
     // let eventHub = this.props.glEventHub;
     //
-    const {open, form} = this.state;
+    const {open, formB64} = this.state;
     
+    const form = this.getFormFromB64(formB64);
+    
+    const formBuilder = (form == null) ? <div/>
+      :  <FormBuilderRaw ref={this.setFormBuilderRef} form={ form } onChange={this.onChangeSchema}/>;
+  
+  
+    if (this.formBuilderRef != null)
+    {
+      this.setFormBuilderRef(this.formBuilderRef);
+    }
     // let templateOptions = [{key: 'af', value: 'af', flag: 'af', text: 'Afghanistan'}];
     
     return (
@@ -618,9 +807,7 @@ class PVFormBuilder extends PontusComponent
         
         </Menu>
         
-        
-        <FormBuilderRaw ref={this.setFormBuilderRef} form={form} onChange={this.onChange}/>
-        
+         { formBuilder }
         
         <Portal onClose={this.handleClose} open={open}>
           <Segment
@@ -629,7 +816,7 @@ class PVFormBuilder extends PontusComponent
               top: '20%', zIndex: 100000, backgroundColor: '#696969', padding: '10px'
             }}>
             
-            <FormRaw form={form} ref={this.setFormBuilderRef} onSubmit={this.onSubmit}/>
+            <FormRaw form={form} ref={this.setFormViewRef} onSubmit={this.onSubmit}/>
           
           </Segment>
         </Portal>

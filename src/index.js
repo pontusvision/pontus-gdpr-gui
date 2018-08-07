@@ -7,21 +7,42 @@ import Keycloak from "keycloak-js";
 import axios from "axios";
 import {BrowserRouter as Router, Route} from 'react-router-dom';
 import PVFormDisplay from './PVFormDisplay';
-import NavPanelTrackExpert from './NavPanelTrackExpert';
+import TrackPanel from "./TrackPanel";
+import NavPanelIndividualsRights from "./NavPanelIndividualsRights"
 
 function appRender(kc)
 {
-  const appComp =  () => (<App keycloak={kc}/>);
+  const appComp = () => (<App keycloak={kc}/>);
+  
   const formDisplay = ({match}) => (
-    <PVFormDisplay formURL={match.params.formURL} />
+    <PVFormDisplay formURL={match.params.formURL}/>
   );
   
-  const expertView = () =>(<NavPanelTrackExpert style={{height: '100%', width:'100%'}}/> );
+  
+  const indivRights = () => (
+    
+    <NavPanelIndividualsRights/>
+  );
+  
+  
+  const expertView = () => (
+    <TrackPanel
+      style={{height: window.innerHeight - 20, width: window.innerWidth - 20, flexDirection: 'column', flexGrow: 1}}
+      height={window.innerHeight }
+      width={window.innerWidth - 20}
+    />
+  );
   return <Router>
     <div>
-      <Route path="/" component={appComp}/>
-      <Route path="/forms/:formURL" component={formDisplay}/> {/* the match.params.formURL are passed from here */}
+      <Route exact params path="/forms2"  render={(props)=>{
+        return  <PVFormDisplay queryStr={props.location.search}/>;
+      }} />
+      <Route exact path="/forms/:formURL" component={formDisplay}/> {/* the match.params.formURL are passed from here */}
       <Route path="/expert" component={expertView}/> {/* the match.params.formURL are passed from here */}
+      <Route path="/full" component={appComp}/>
+      <Route path="/indivrights" component={indivRights}/>
+
+
     </div>
   </Router>;
   
@@ -173,16 +194,17 @@ function appRender(kc)
     xhr.send();
   }
   
-  if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development')
-  {
-    // dev mode - skip keycloak stuff...
-    ReactDOM.render(appRender(null), document.getElementById('root'));
+  let isDev = (!process.env.NODE_ENV || process.env.NODE_ENV === 'development');
+  // if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development')
+  // {
+  //   // dev mode - skip keycloak stuff...
+  //   ReactDOM.render(appRender(null), document.getElementById('root'));
+  //
+  // }
+  // else
+  
     
-  }
-  else
-  {
-    
-    loadJSON('pvgdpr_gui/keycloak-conf.json',
+    loadJSON(isDev?'keycloak-conf.json': 'pvgdpr_gui/keycloak-conf.json',
       function (kcConf)
       {
         
@@ -226,7 +248,7 @@ function appRender(kc)
         
       },
       function (xhr) { console.error(xhr); });
-  }
+  
   
   
 })();

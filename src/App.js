@@ -307,7 +307,7 @@ class App extends React.Component
 
           height={this.state.height}
           width={this.state.width}
-          selectedIndex={0}
+          selectedIndex={this.props.selIndex ? this.props.selIndex: 0}
           onSelect={tabIndex => this.setState({tabIndex})}
         >
           <TabList style={{display: 'none'}}>

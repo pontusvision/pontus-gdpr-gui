@@ -1,9 +1,9 @@
-import PVGrid  from "./PVGrid";
+import PVGridEditable  from "./PVGridEditable";
 import PontusComponent from "./PontusComponent";
 
 //
 
-class NavPanelIndividualsRightsPVGridForms extends PVGrid
+class NavPanelIndividualsRightsPVGridForms extends PVGridEditable
 {
   
   
@@ -20,17 +20,31 @@ class NavPanelIndividualsRightsPVGridForms extends PVGrid
     colSettings[2] = {id: "Object.Form.Metadata_Owner", name: "Owner", field: "Object.Form.Metadata_Owner",   sortable: true};
     colSettings[3] = {id: "Object.Form.Metadata_Create_Date", name: "Create Date", field: "Object.Form.Metadata_Create_Date",   sortable: true};
     // colSettings[3] = {id: "Object.Notification_Templates.Text", visible: false, name: "Text", field: "Object.Notification_Templates.Text",   sortable: true};
-
+  
+    
+    this.props.glEventHub.on(this.namespace + '-pvform-on-save-form', this.onPVFormSaveForm);
+  
     
     this.url = PontusComponent.getGraphURL(this.props);
     
     this.setColumnSettings(colSettings);
-    // this.setExtraSearch({value: "Object.Notification_Templates"});
     
     
     
   }
   
+  componentWillUnmount()
+  {
+    super.componentWillUnmount();
+  
+    this.props.glEventHub.off(this.namespace + '-pvform-on-save-form', this.onPVFormSaveForm);
+    
+  }
+  
+  onPVFormSaveForm = (savedData) => {
+  
+    this.reloadData(this.from,this.to);
+  };
   
   getSearchObj = (from, to, searchstr, searchExact, cols, extraSearch, sortcol, sortdir) =>
   {

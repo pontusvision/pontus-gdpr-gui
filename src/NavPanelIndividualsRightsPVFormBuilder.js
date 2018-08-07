@@ -1,14 +1,16 @@
-import React from 'react';
-import PontusComponent from "./PontusComponent";
+// import React from 'react';
+// import PontusComponent from "./PontusComponent";
 
 import PVFormBuilder from "./PVFormBuilder";
-import {Base64} from 'js-base64';
 
 //
 
-class NavPanelIndividualsRightsPVFormBuilder extends PontusComponent
+class NavPanelIndividualsRightsPVFormBuilder extends PVFormBuilder
 {
   
+  // constructor(props){
+  //   super(props);
+  // }
   componentDidMount()
   {
     this.namespace = ("NavPanelIndividualsRights_forms");
@@ -32,6 +34,9 @@ class NavPanelIndividualsRightsPVFormBuilder extends PontusComponent
   onClickedRow = (data) =>
   {
     // this.val = Base64.decode(data['Object.Form.Text']);
+    
+    
+    
     this.setState({
       formId: data['index']
       , formURL: data['Object.Form.URL']
@@ -39,24 +44,41 @@ class NavPanelIndividualsRightsPVFormBuilder extends PontusComponent
       , formB64: data['Object.Form.Text']
       , fullData: data
     });
-    // this.lastData = data;
+  
+    // if (this.formBuilderRef){
+    //   const form = this.getFormFromB64(this.state.formB64);
+    //
+    //   this.formBuilderRef.setForm (form);
+    //
+    // }
+    // this.formBuilderRef.setState ({ form: this.form});
     
+    
+    
+    
+    // this.lastData = data;
+    // if (this.formBuilderRef){
+    //   this.formBuilderRef.setState({ formB64: data['Object.Form.Text']});
+    //   this.forceUpdate();
+    //
+    // }
+  
   };
   
-  render()
-  {
-    let st = this.state;
-    
-    if (st === null || st.formId === null ){
-      return <div>PLEASE CLICK ON THE FORM GRID</div>
-    }
-    
-    // let eventHub = this.props.glEventHub;
-    return <PVFormBuilder formId={st.formId} formURL={st.formURL} formVertexLabel={st.formVertexLabel}
-                          formB64={st.formB64}/>;
-    
-    
-  }
+  // render()
+  // {
+  //   let st = this.state;
+  //
+  //   if (st === null || st.formId === null ){
+  //     return <div>PLEASE CLICK ON THE FORM GRID</div>
+  //   }
+  //
+  //   // let eventHub = this.props.glEventHub;
+  //   return <PVFormBuilder formId={st.formId} formURL={st.formURL} formVertexLabel={st.formVertexLabel}
+  //                         formB64={st.formB64}/>;
+  //
+  //
+  // }
   
 }
 
