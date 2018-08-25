@@ -39,7 +39,7 @@ function appRender(kc)
       }} />
       <Route exact path="/forms/:formURL" component={formDisplay}/> {/* the match.params.formURL are passed from here */}
       <Route path="/expert" component={expertView}/> {/* the match.params.formURL are passed from here */}
-      <Route path="/full" component={appComp}/>
+      <Route path="/re" component={appComp}/>
       <Route path="/indivrights" component={indivRights}/>
 
 
@@ -255,4 +255,4 @@ function appRender(kc)
 
 // ReactDOM.render(<App  />, document.getElementById('root'));
 
-registerServiceWorker();
+// registerServiceWorker();
