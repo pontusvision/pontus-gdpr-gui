@@ -459,10 +459,32 @@ class PVDataGraph extends PontusComponent
     return retVal;
   };
   
+  getColorBasedOnLabel = (vLabel) =>
+  {
+    if (vLabel.toUpperCase().startsWith('P')){
+      return '#ff0000';
+    }
+  
+    if (vLabel.toUpperCase().startsWith('O')){
+      return '#0099cc';
+    }
+    if (vLabel.toUpperCase().startsWith('L')){
+      return '#ffbb00';
+    }
+  
+    if (vLabel.toUpperCase().startsWith('E')){
+      return '#009933';
+    }
+  
+    return '#595959';
+  
+  
+  };
+  
   
   createSVGHTMLTableWithProps = (propsInHTMLTableRows, vLabel) =>
   {
-    
+    let backgroundColor = this.getColorBasedOnLabel(vLabel);
     
     let tableBodySb =
       "<div xmlns=\"http://www.w3.org/1999/xhtml\" style=\"font-size:20px;color:#FFFFFF;height:100%;width:100%;\">"
@@ -476,7 +498,7 @@ class PVDataGraph extends PontusComponent
       // + "<h3 style=\"color: white;\">"
       // + vLabel.replace(this.underscoreOrDot, " ")
       // + "</h3>"
-      + "<table class=\"tg\" style=\" overflow: visible; background: #595959; height: auto; width: 600px; padding: 5px;\">"
+      + "<table class=\"tg\" style=\" overflow: visible; background: " + backgroundColor + "; height: auto; width: 600px; padding: 5px;\">"
       + "<colgroup> <col style=\"width: 30%\"/><col style=\"width: 70%\"/></colgroup>"
       + "<tr><th class=\"tg-ygl1\">Property</th><th class=\"tg-x9s4\">Value</th></tr>"
       + propsInHTMLTableRows
