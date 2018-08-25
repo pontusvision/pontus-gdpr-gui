@@ -32,19 +32,22 @@ function appRender(kc)
       width={window.innerWidth - 20}
     />
   );
-  return <Router>
-    <div>
-      <Route exact params path="/forms2"  render={(props)=>{
-        return  <PVFormDisplay queryStr={props.location.search}/>;
-      }} />
-      <Route exact path="/forms/:formURL" component={formDisplay}/> {/* the match.params.formURL are passed from here */}
-      <Route path="/expert" component={expertView}/> {/* the match.params.formURL are passed from here */}
-      <Route path="/re" component={appComp}/>
-      <Route path="/indivrights" component={indivRights}/>
-
-
-    </div>
-  </Router>;
+  
+  
+  return appComp();
+  // return <Router>
+  //   <div>
+  //     <Route exact params path="/forms2"  render={(props)=>{
+  //       return  <PVFormDisplay queryStr={props.location.search}/>;
+  //     }} />
+  //     <Route exact path="/forms/:formURL" component={formDisplay}/> {/* the match.params.formURL are passed from here */}
+  //     <Route path="/expert" component={expertView}/> {/* the match.params.formURL are passed from here */}
+  //     <Route path="/re" component={appComp}/>
+  //     <Route path="/indivrights" component={indivRights}/>
+  //
+  //
+  //   </div>
+  // </Router>;
   
   
 }
