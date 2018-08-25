@@ -50,7 +50,7 @@ class ExtractPanel extends Component
         style={{height: this.state.height, width: '100%'}}
         onResize={this.handleResize}
       >
-        <Iframe url="/nifi"
+        <Iframe url="/nifi/"
                 style={{height: this.state.height, width: '100%'}}
 
                 width="100%"
