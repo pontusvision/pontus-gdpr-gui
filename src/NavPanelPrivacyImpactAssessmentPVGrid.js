@@ -30,6 +30,56 @@ class NavPanelPrivacyImpactAssessmentPVGrid extends PVGrid
   }
   
   
+  getSearchObj = (from, to, searchstr, searchExact, cols, extraSearch, sortcol, sortdir) =>
+  {
+    this.from = from;
+    this.to = to;
+    
+    let sortcolId = sortcol === null ? null : sortcol.id;
+    
+    
+    let selectBody =
+      "  .select('Object.Privacy_Impact_Assessment.Description' " +
+      "         ,'Object.Privacy_Impact_Assessment.Start_Date' " +
+      "         ,'Object.Privacy_Impact_Assessment.Delivery_Date' " +
+      "         ,'Object.Privacy_Impact_Assessment.Risk_To_Individuals' " +
+      "         ,'Object.Privacy_Impact_Assessment.Intrusion_On_Privacy' " +
+      "         ,'Object.Privacy_Impact_Assessment.Risk_To_Corporation' " +
+      "         ,'Object.Privacy_Impact_Assessment.Risk_Of_Reputational_Damage' " +
+      "         ,'Object.Privacy_Impact_Assessment.Compliance_Check_Passed' " +
+      "         ,'event_id' " +
+      "         )";
+    
+    
+    return {
+      gremlin: "g.V().has('Metadata.Type.Object.Privacy_Impact_Assessment',eq('Object.Privacy_Impact_Assessment'))\n" +
+        " .order()\n" +
+        " .by(pg_orderCol == null ? 'Object.Privacy_Impact_Assessment.Description' :pg_orderCol.toString() ,pg_orderDir == (1)? incr: decr)\n" +
+        " .range(pg_from,pg_to)\n" +
+        " .as('people')\n" +
+        " .match(\n" +
+        "   __.as('people').values('Object.Privacy_Impact_Assessment.Description').as('Object.Privacy_Impact_Assessment.Description')\n" +
+        " , __.as('people').values('Object.Privacy_Impact_Assessment.Start_Date').as('Object.Privacy_Impact_Assessment.Start_Date')\n" +
+        " , __.as('people').values('Object.Privacy_Impact_Assessment.Delivery_Date').as('Object.Privacy_Impact_Assessment.Delivery_Date')\n" +
+        " , __.as('people').values('Object.Privacy_Impact_Assessment.Risk_To_Individuals').as('Object.Privacy_Impact_Assessment.Risk_To_Individuals')\n" +
+        " , __.as('people').values('Object.Privacy_Impact_Assessment.Intrusion_On_Privacy').as('Object.Privacy_Impact_Assessment.Intrusion_On_Privacy')\n" +
+        " , __.as('people').values('Object.Privacy_Impact_Assessment.Risk_To_Corporation').as('Object.Privacy_Impact_Assessment.Risk_To_Corporation')\n" +
+        " , __.as('people').values('Object.Privacy_Impact_Assessment.Risk_Of_Reputational_Damage').as('Object.Privacy_Impact_Assessment.Risk_Of_Reputational_Damage')\n" +
+        " , __.as('people').values('Object.Privacy_Impact_Assessment.Compliance_Check_Passed').as('Object.Privacy_Impact_Assessment.Compliance_Check_Passed')\n" +
+        " , __.as('people').id().as('event_id')\n" +
+        " )\n" +
+        selectBody
+      , bindings: {
+        pg_from: from
+        , pg_to: to
+        , pg_orderCol: sortcolId
+        , pg_orderDir: sortdir
+      }
+      
+      
+    };
+  };
+  
 }
 
 
