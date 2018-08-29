@@ -1,4 +1,5 @@
 import PVGrid from './PVGrid';
+import PontusComponent from "./PontusComponent";
 
 //
 
@@ -22,6 +23,7 @@ class NavPanelPrivacyImpactAssessmentPVGrid extends PVGrid
     colSettings[6] = {id: "Object.Privacy_Impact_Assessment.Risk_Of_Reputational_Damage", name: "Reputational Damage", field:"Object.Privacy_Impact_Assessment.Risk_Of_Reputational_Damage", sortable:true  };
     colSettings[7] = {id: "Object.Privacy_Impact_Assessment.Compliance_Check_Passed", name: "Checks Passed", field:"Object.Privacy_Impact_Assessment.Compliance_Check_Passed", sortable:true  };
   
+    this.url = PontusComponent.getGraphURL(this.props);
   
     this.setColumnSettings(colSettings);
     this.setExtraSearch({value:"Object.Privacy_Impact_Assessment"});
