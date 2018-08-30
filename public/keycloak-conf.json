@@ -1,8 +1,8 @@
 {
   "clientId": "broker",
   "realm": "pontus",
-  "url": "https://localhost:5005/auth/",
-  "auth-server-url": "https://localhost:5005/auth/",
+  "url": "/auth/",
+  "auth-server-url": "/auth/",
   "ssl-required": "external",
   "resource": "broker",
   "credentials": {
