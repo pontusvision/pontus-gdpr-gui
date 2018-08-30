@@ -61,7 +61,7 @@ class NavPanelPrivacyNoticesPVGrid extends PVGrid
     
     
     return {
-      gremlin: "g.V().has('Metadata.Type.Object.Privacy_Impact_Assessment',eq('Object.Privacy_Impact_Assessment'))\n" +
+      gremlin: "g.V().has('Metadata.Type.Object.Privacy_Notice',eq('Object.Privacy_Notice'))\n" +
         " .order()\n" +
         " .by(pg_orderCol == null ? 'Object.Privacy_Notice.Description' :pg_orderCol.toString() ,pg_orderDir == (1)? incr: decr)\n" +
         " .range(pg_from,pg_to)\n" +
