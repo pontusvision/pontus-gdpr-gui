@@ -223,7 +223,7 @@ class PVGridSelfDiscovery extends PontusComponent
       queryDir+
       "  .has('Metadata.Type.'+pg_type ,eq(pg_type))\n" +
       "  .order()\n" +
-      "  .by(pg_orderCol == null ? 'Metadata.Create_Date' :pg_orderCol.toString() ,pg_orderDir == (1)? incr: decr)\n" +
+      "  .by(pg_orderCol == null ? id :pg_orderCol.toString() ,pg_orderDir == (1)? incr: decr)\n" +
       "  .range(pg_from,pg_to)\n" +
       "  .match(\n" +
       "       __.as('data').id().as('id')\n" +

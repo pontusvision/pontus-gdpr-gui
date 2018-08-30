@@ -68,18 +68,18 @@ class NavPanelPrivacyNoticesPVGrid extends PVGrid
         " .as('people')\n" +
         " .match(\n" +
         "   __.as('people').values('Object.Privacy_Notice.Description').as('Object.Privacy_Notice.Description')\n" +
-        "   __.as('people').values('Object.Privacy_Notice.URL').as('Object.Privacy_Notice.URL')\n" +
-        "   __.as('people').values('Object.Privacy_Notice.Delivery_Date').as('Object.Privacy_Notice.Delivery_Date')\n" +
-        "   __.as('people').values('Object.Privacy_Notice.Expiry_Date').as('Object.Privacy_Notice.Expiry_Date')\n" +
-        "   __.as('people').values('Object.Privacy_Notice.Info_Collected').as('Object.Privacy_Notice.Info_Collected')\n" +
-        "   __.as('people').values('Object.Privacy_Notice.Who_Is_Collecting').as('Object.Privacy_Notice.Who_Is_Collecting')\n" +
-        "   __.as('people').values('Object.Privacy_Notice.How_Is_It_Collected').as('Object.Privacy_Notice.How_Is_It_Collected')\n" +
-        "   __.as('people').values('Object.Privacy_Notice.Why_Is_It_Collected').as('Object.Privacy_Notice.Why_Is_It_Collected')\n" +
-        "   __.as('people').values('Object.Privacy_Notice.How_Will_It_Be_Used').as('Object.Privacy_Notice.How_Will_It_Be_Used')\n" +
-        "   __.as('people').values('Object.Privacy_Notice.Who_Will_It_Be_Shared').as('Object.Privacy_Notice.Who_Will_It_Be_Shared')\n" +
-        "   __.as('people').values('Object.Privacy_Notice.Effect_On_Individuals').as('Object.Privacy_Notice.Effect_On_Individuals')\n" +
-        "   __.as('people').values('Object.Privacy_Notice.Likely_To_Complain').as('Object.Privacy_Notice.Likely_To_Complain')\n" +
-        " , __.as('people').id().as('event_id')\n" +
+        "  ,__.as('people').values('Object.Privacy_Notice.URL').as('Object.Privacy_Notice.URL')\n" +
+        "  ,__.as('people').values('Object.Privacy_Notice.Delivery_Date').as('Object.Privacy_Notice.Delivery_Date')\n" +
+        "  ,__.as('people').values('Object.Privacy_Notice.Expiry_Date').as('Object.Privacy_Notice.Expiry_Date')\n" +
+        "  ,__.as('people').values('Object.Privacy_Notice.Info_Collected').as('Object.Privacy_Notice.Info_Collected')\n" +
+        "  ,__.as('people').values('Object.Privacy_Notice.Who_Is_Collecting').as('Object.Privacy_Notice.Who_Is_Collecting')\n" +
+        "  ,__.as('people').values('Object.Privacy_Notice.How_Is_It_Collected').as('Object.Privacy_Notice.How_Is_It_Collected')\n" +
+        "  ,__.as('people').values('Object.Privacy_Notice.Why_Is_It_Collected').as('Object.Privacy_Notice.Why_Is_It_Collected')\n" +
+        "  ,__.as('people').values('Object.Privacy_Notice.How_Will_It_Be_Used').as('Object.Privacy_Notice.How_Will_It_Be_Used')\n" +
+        "  ,__.as('people').values('Object.Privacy_Notice.Who_Will_It_Be_Shared').as('Object.Privacy_Notice.Who_Will_It_Be_Shared')\n" +
+        "  ,__.as('people').values('Object.Privacy_Notice.Effect_On_Individuals').as('Object.Privacy_Notice.Effect_On_Individuals')\n" +
+        "  ,__.as('people').values('Object.Privacy_Notice.Likely_To_Complain').as('Object.Privacy_Notice.Likely_To_Complain')\n" +
+        "  ,__.as('people').id().as('event_id')\n" +
         " )\n" +
         selectBody
       , bindings: {
