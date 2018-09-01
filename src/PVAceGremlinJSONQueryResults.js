@@ -29,6 +29,10 @@ class PVAceGremlinJSONQueryResults extends PontusComponent
     
     this.state = {value: "", height: 1000, width: 1000};
   }
+  resetValue = (data) =>
+  {
+    this.setState({value: ""});
+  }
   
   
   setValue = (data) =>
@@ -46,6 +50,9 @@ class PVAceGremlinJSONQueryResults extends PontusComponent
     
     // super.componentDidMount();
     this.props.glEventHub.on(this.namespace + '-PVAceGremlinEditor-on-change', this.setValue);
+    this.props.glEventHub.on(this.namespace + '-PVAceGremlinEditor-on-before-run-query', this.resetValue);
+  
+    
     
   }
   
@@ -101,7 +108,7 @@ class PVAceGremlinJSONQueryResults extends PontusComponent
       data = JSON.stringify(data, null, 2);
       
     }
-    data = data.replace(/\\n/g, '"+\n"');
+    data = data.replace(/\\n/g, '\n');
     data = data.replace(/\\t/g, '\t');
     return (
   

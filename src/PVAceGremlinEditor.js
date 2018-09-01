@@ -42,7 +42,9 @@ class PVAceGremlinEditor extends PontusComponent
   runQuery = () =>
   {
     let val = localStorage.getItem('savedStatePVAceGremlinEditor') || "";
-    
+  
+    this.props.glEventHub.emit(this.namespace + '-PVAceGremlinEditor-on-before-run-query', resp);
+  
     this.sendData(val);
     
   }
