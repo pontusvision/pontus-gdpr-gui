@@ -503,7 +503,7 @@ class PVDataGraph extends PontusComponent
       + "<table class=\"tg\" style=\" overflow: visible; background: " + backgroundColor + "; height: auto; width: 600px; padding: 5px;\">"
       + "<colgroup> <col style=\"width: 30%\"/><col style=\"width: 70%\"/></colgroup>"
       + "<tr><th class=\"tg-ygl1\">Property</th><th class=\"tg-x9s4\">Value</th></tr>"
-      + btoa(propsInHTMLTableRows)
+      + atob(propsInHTMLTableRows)
       + "</table></div>";
     
     let measuredSize = this.measureElement(tableBodySb);
