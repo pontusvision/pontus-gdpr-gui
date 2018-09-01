@@ -32,13 +32,13 @@ class PVAceGremlinJSONQueryResults extends PontusComponent
   resetValue = (data) =>
   {
     this.setState({value: ""});
-  }
+  };
   
   
   setValue = (data) =>
   {
     this.setState({value: data});
-  }
+  };
   
   setObj = (obj) =>
   {
