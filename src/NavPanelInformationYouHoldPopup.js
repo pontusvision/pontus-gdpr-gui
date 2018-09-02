@@ -43,47 +43,20 @@ class NavPanelInformationYouHoldPopup extends PVGDPRScores
     
     return {
       gremlin: "\n" +
-      "long numEvents = g.V().has('Metadata.Type.Person',eq('Person')).count().next();\n" +
+      "long numEvents = g.V().has('Metadata.Type.Event.Ingestion',eq('Event.Ingestion')).count().next();\n" +
       "\n" +
       "long numRecordsNoEdges =\n" +
-      "g.V().has('Metadata.Type.Person',eq('Person')).as('adults')\n" +
-      " .match(\n" +
-      "     __.as('adults').bothE().count().as('edgesCount')\n" +
-      "\n" +
-      " )\n" +
-      " .select('edgesCount')\n" +
-      " .where(__.as('edgesCount').is(eq(0)))\n" +
-      " .count().next()\n" +
+      "g.V()\n" +
+        " .has('Metadata.Type.Event.Ingestion',eq('Event.Ingestion')) \n" +
+        " .where(bothE().count().is(eq(0)) )\n" +
+        " .properties(\"Event.Ingestion.Type\")\n" +
       "\n" +
       "\n" +
-      "long numRecordsNoMetadata = \n" +
-      "g.V().has('Metadata.Type.Person',eq('Person')).hasNot('Metadata.Lineage')\n" +
-      " .count().next()\n" +
-      " \n" +
       "long scoreValue = 100L;\n" +
       "if (numEvents > 0){\n" +
       "  \n" +
       "  long pcntNoEdges = (long) (100L*numRecordsNoEdges/numEvents);\n" +
-      "  if (pcntNoEdges > 10){\n" +
-      "    scoreValue -= 50L;\n" +
-      "  }\n" +
-      "  else if (numRecordsNoEdges > 0) {\n" +
-      "    scoreValue -= (30L + 2L* pcntNoEdges)\n" +
-      "  }\n" +
-      "  \n" +
-      "  \n" +
-      "\n" +
-      "  long pcntNoMetadata = (long) (100L*numRecordsNoMetadata/numEvents);\n" +
-      "  if (pcntNoMetadata > 10){\n" +
-      "    scoreValue -= 50L;\n" +
-      "  }\n" +
-      "  else if (numRecordsNoMetadata > 0){\n" +
-      "    scoreValue -= (30L + 2L*pcntNoMetadata)\n" +
-      "  }\n" +
-      "\n" +
-      "  // scoreValue -= (10L * firstReminder/numEvents)\n" +
-      " \n" +
-      "\n" +
+      "  scoreValue -= (pcntNoEdges)\n" +
       "  \n" +
       "   \n" +
       "}else{\n" +
@@ -94,14 +67,16 @@ class NavPanelInformationYouHoldPopup extends PVGDPRScores
       "\n" +
       "sb.append(scoreValue)\n" +
       "  .append(', \"scoreExplanation\":\"');\n" +
-      "if (numEvents > 0)  {\n" +
+      "if (numRecordsNoEdges > 0)  {\n" +
       "  sb.append('This score reflects that out of ')\n" +
-      "    .append(numEvents).append(' people records, ')\n" +
-      "    .append(numRecordsNoEdges).append(' do not have any connections to other data, and ')\n" +
-      "    .append(numRecordsNoMetadata).append(' do not have the lineage metadata to trace it.')\n" +
+      "    .append(numEvents).append(' personally identifiable information records, ')\n" +
+      "    .append(numRecordsNoEdges).append(' have not been matched to an individual.')\n" +
       "}\n" +
+     "else if (numEvents > 0) {\n" +
+     "  sb.append('All personally identifiable information records in the system have been matched against individuals.')\n" +
+     "}\n" +
       "else {\n" +
-      "  sb.append('There are no person records currently tracked place.')\n" +
+      "  sb.append('There are no personally identifiable information records in the system.')\n" +
       "}\n" +
       "sb.append('\" }')  \n" +
       "\n" +
