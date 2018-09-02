@@ -49,7 +49,7 @@ class NavPanelInformationYouHoldPopup extends PVGDPRScores
       "g.V()\n" +
         " .has('Metadata.Type.Event.Ingestion',eq('Event.Ingestion')) \n" +
         " .where(bothE().count().is(eq(0)) )\n" +
-        " .properties(\"Event.Ingestion.Type\")\n" +
+        " .count().next()\n" +
       "\n" +
       "\n" +
       "long scoreValue = 100L;\n" +
