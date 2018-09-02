@@ -73,7 +73,7 @@ class NavPanelInformationYouHoldPopup extends PVGDPRScores
       "    .append(numRecordsNoEdges).append(' have not been matched to an individual.')\n" +
       "}\n" +
      "else if (numEvents > 0) {\n" +
-     "  sb.append('All personally identifiable information records in the system have been matched against individuals.')\n" +
+     "  sb.append('All ').append(numEvents).append(' personally identifiable information records in the system have been matched against individuals.')\n" +
      "}\n" +
       "else {\n" +
       "  sb.append('There are no personally identifiable information records in the system.')\n" +
