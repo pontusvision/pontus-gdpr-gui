@@ -6,6 +6,8 @@ import GoldenLayout from 'golden-layout';
 
 import NavPanelInformationYouHoldPVGrid from './NavPanelInformationYouHoldPVGrid';
 import NavPanelInformationYouHoldPVDataGraph from './NavPanelInformationYouHoldPVDataGraph';
+import NavPanelInformationYouHoldPVDoughnutChartTypes from './NavPanelInformationYouHoldPVDoughnutChartTypes';
+import NavPanelInformationYouHoldPVGridEventIngestion from './NavPanelInformationYouHoldPVGridEventIngestion';
 import PontusComponent from "./PontusComponent";
 
 
@@ -54,6 +56,17 @@ class NavPanelInformationYouHold extends PontusComponent
               type: 'react-component',
               component: 'data-graph'
             }
+            ,{
+              title: 'Data Types',
+              type: 'react-component',
+              component: 'data-types-doughnut'
+            }
+            ,{
+              title: 'Unmatched Records',
+              type: 'react-component',
+              component: 'data-grid-unmatched'
+            }
+
           ]
         }
       ]
@@ -76,7 +89,7 @@ class NavPanelInformationYouHold extends PontusComponent
     /* you can pass config as prop, or use a predefined one */
     
     // var savedState = null;// LPPM: TODO: re-enable this later localStorage.getItem('savedStatePontusPanel');
-    var savedState =  localStorage.getItem('savedStateNavPanelInformationYouHold');
+    let savedState =  localStorage.getItem('savedStateNavPanelInformationYouHold');
     
     
     if (savedState !== null)
@@ -93,6 +106,8 @@ class NavPanelInformationYouHold extends PontusComponent
     this.instance.registerComponent('data-grid', NavPanelInformationYouHoldPVGrid);
     // this.instance.registerComponent('compliance-email', PVTimeline);
     this.instance.registerComponent('data-graph', NavPanelInformationYouHoldPVDataGraph);
+    this.instance.registerComponent('data-types-doughnut', NavPanelInformationYouHoldPVDoughnutChartTypes);
+    this.instance.registerComponent('data-grid-unmatched', NavPanelInformationYouHoldPVGridEventIngestion);
     
     this.instance.on('tabCreated', function (tab)
     {

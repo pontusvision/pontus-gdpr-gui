@@ -69,14 +69,14 @@ class NavPanelInformationYouHoldPopup extends PVGDPRScores
       "  .append(', \"scoreExplanation\":\"');\n" +
       "if (numRecordsNoEdges > 0)  {\n" +
       "  sb.append('This score reflects that out of ')\n" +
-      "    .append(numEvents).append(' personally identifiable information records, ')\n" +
+      "    .append(numEvents).append(' personally identifiable information ingestion records, ')\n" +
       "    .append(numRecordsNoEdges).append(' have not been matched to an individual.')\n" +
       "}\n" +
      "else if (numEvents > 0) {\n" +
-     "  sb.append('All ').append(numEvents).append(' personally identifiable information records in the system have been matched against individuals.')\n" +
+     "  sb.append('All ').append(numEvents).append(' personally identifiable information ingestion records in the system have been matched against individuals.')\n" +
      "}\n" +
       "else {\n" +
-      "  sb.append('There are no personally identifiable information records in the system.')\n" +
+      "  sb.append('There are no personally identifiable information ingestion records in the system.')\n" +
       "}\n" +
       "sb.append('\" }')  \n" +
       "\n" +

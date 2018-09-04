@@ -116,7 +116,7 @@ class PVTimeline extends Component
   
     return {
       bindings: {vid: event}
-      ,gremlin: "groups = g.V(vid).as('orig').both().values('Metadata.Type').dedup()\n" +
+      ,gremlin: "def groups = g.V(vid).as('orig').both().values('Metadata.Type').dedup()\n" +
       "  \n" +
       "Set groupSet = new HashSet()\n" +
       "StringBuffer sb = new StringBuffer();\n" +

@@ -91,6 +91,27 @@ class PontusComponent extends React.Component
     
     return defaultSandbox;
   }
+  getColorBasedOnLabel = (vLabel) =>
+  {
+    if (vLabel.toUpperCase().startsWith('P')){
+      return '#ff0000';
+    }
+    
+    if (vLabel.toUpperCase().startsWith('O')){
+      return '#0099cc';
+    }
+    if (vLabel.toUpperCase().startsWith('L')){
+      return '#ffbb00';
+    }
+    
+    if (vLabel.toUpperCase().startsWith('E')){
+      return '#009933';
+    }
+    
+    return '#595959';
+    
+    
+  };
   
 }
 
