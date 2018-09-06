@@ -16,7 +16,7 @@ import PontusComponent from "./PontusComponent";
 /***************************
  * UserList Component
  ***************************/
-class PVTimeline extends Component
+class PVTimeline extends PontusComponent
 {
   constructor(props)
   {
@@ -24,9 +24,10 @@ class PVTimeline extends Component
     
     this.subscription = (this.props.namespace ? this.props.namespace : "" ) + '-pvgrid-on-click-row';
   
+    this.url = PontusComponent.getGraphURL(props);
   
-
-    let now = new Date().getMilliseconds();
+  
+    // let now = new Date().getMilliseconds();
     let groupCount = 1;
     let itemCount = 1;
 
@@ -37,22 +38,26 @@ class PVTimeline extends Component
     for (let g = 0; g < groupCount; g++) {
       this.groups.add({id: g, content: names[g]});
     }
+    let start = new Date ();
 
     // create a dataset with items
     this.items = new Vis.DataSet();
     for (let i = 0; i < itemCount; i++) {
-      let start = new Date (now+ (Math.random() * 200* 3600));
       let group = 0;
       this.items.add({
         id: i,
         group: group,
-        content: 'item ' + i +
+        content: 'item ' + i + ' ' +
         '<span style="color:#97B0F8;">(' + names[group] + ')</span>',
         start: start,
         type: 'box'
       });
     }
 
+    /*
+     event="rangechanged", properties={"start":"2013-05-03T05:48:43.057Z","end":"2013-05-16T22:00:20.634Z","byUser":true,"event":{"pointers":[{"isTrusted":true,"_handled":{"pan":true,"panend":true}}],"changedPointers":[{"isTrusted":true,"_handled":{"pan":true,"panend":true}}],"pointerType":"mouse","srcEvent":{"isTrusted":true,"_handled":{"pan":true,"panend":true}},"isFirst":false,"isFinal":true,"eventType":4,"center":{"x":186,"y":144},"timeStamp":1536169382064,"deltaTime":2253,"angle":177.75974264585528,"distance":818.6256775840836,"deltaX":-818,"deltaY":32,"offsetDirection":2,"overallVelocityX":-0.36307146027518866,"overallVelocityY":0.014203284509542832,"overallVelocity":-0.36307146027518866,"scale":1,"rotation":0,"maxPointers":1,"velocity":0,"velocityX":0,"velocityY":0,"direction":1,"target":"DOM Element","type":"panend","firstTarget":"DOM Element"}}
+ 
+     */
   
     this.state = {
   
@@ -65,7 +70,8 @@ class PVTimeline extends Component
         height: '100px',
         stack: true,
         showMajorLabels: true,
-        showCurrentTime: true
+        showCurrentTime: true,
+        start: start
         // zoomMin: 1000000
         // type: 'background'
         // format: {
@@ -115,7 +121,7 @@ class PVTimeline extends Component
   {
   
     return {
-      bindings: {vid: event}
+      bindings: {vid: (event.id || event.index)}
       ,gremlin: "def groups = g.V(vid).as('orig').both().values('Metadata.Type').dedup()\n" +
       "  \n" +
       "Set groupSet = new HashSet()\n" +
@@ -172,7 +178,7 @@ class PVTimeline extends Component
   selectData = (event) =>
   {
   
-    let url =  this.url = PontusComponent.getGraphURL(this.props);
+    let url =  this.url; // = PontusComponent.getGraphURL(this.props);
     // "/gateway/sandbox/pvgdpr_server/home/graph";
     if (this.h_request !== null)
     {
@@ -187,7 +193,7 @@ class PVTimeline extends Component
       let CancelToken = axios.CancelToken;
       self.req = CancelToken.source();
       
-      axios.post(url, this.getQuery(event.id || event.index), {
+      axios.post(url, this.getQuery(event), {
         headers: {
           'Content-Type': 'application/json'
           , 'Accept': 'application/json'
@@ -289,6 +295,22 @@ class PVTimeline extends Component
     }
   };
   
+  onRangeChange = (event) => {
+    /*
+     event={"start":"2013-05-03T05:48:43.057Z","end":"2013-05-16T22:00:20.634Z","byUser":true,"event":{"pointers":[{"isTrusted":true,"_handled":{"pan":true,"panend":true}}],"changedPointers":[{"isTrusted":true,"_handled":{"pan":true,"panend":true}}],"pointerType":"mouse","srcEvent":{"isTrusted":true,"_handled":{"pan":true,"panend":true}},"isFirst":false,"isFinal":true,"eventType":4,"center":{"x":186,"y":144},"timeStamp":1536169382064,"deltaTime":2253,"angle":177.75974264585528,"distance":818.6256775840836,"deltaX":-818,"deltaY":32,"offsetDirection":2,"overallVelocityX":-0.36307146027518866,"overallVelocityY":0.014203284509542832,"overallVelocity":-0.36307146027518866,"scale":1,"rotation":0,"maxPointers":1,"velocity":0,"velocityX":0,"velocityY":0,"direction":1,"target":"DOM Element","type":"panend","firstTarget":"DOM Element"}}
+ 
+     */
+    this.selectData(event);
+    
+    
+  };
+  
+  onSelect = (event) => {
+    /*
+     {"items":[1],"event":{"pointers":[{"isTrusted":true,"_handled":{"tap":true}}],"changedPointers":[{"isTrusted":true,"_handled":{"tap":true}}],"pointerType":"mouse","srcEvent":
+     */
+  };
+  
   componentDidMount()
   {
     // let val = localStorage.getItem(this.subscription) || null;
@@ -303,16 +325,18 @@ class PVTimeline extends Component
     this.props.glEventHub.on(this.subscription, this.selectData);
   
     this.timeline = new Vis.Timeline(this.graph, this.state.items, this.state.groups, this.state.options);
-    
-    
-    
+    this.timeline.on('rangechange', this.onRangeChange);
+    this.timeline.on('select', this.onSelect);
+  
+  
   }
   
   componentWillUnmount()
   {
     this.props.glEventHub.off(this.subscription, this.selectData);
-    
-    
+  
+    this.timeline.off('rangechange', this.onRangeChange);
+  
   }
   
   

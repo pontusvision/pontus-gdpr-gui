@@ -47,7 +47,7 @@ class NavPanelPrivacyImpactAssessmentPopup extends PVGDPRScores
       "long numPIAWithoutPrivNotices = \n" +
       "  g.V()\n" +
       "  .has('Metadata.Type.Object.Privacy_Impact_Assessment',eq('Object.Privacy_Impact_Assessment'))\n" +
-      "  .where( __.out().has('Metadata.Type.Object.Privacy_Notice',eq('Object.Privacy_Notice')).count().is(eq(0)))\n" +
+      "  .where( __.both().has('Metadata.Type.Object.Privacy_Notice',eq('Object.Privacy_Notice')).count().is(eq(0)))\n" +
       "  .count().next()\n" +
       "\n" +
       "\n" +
@@ -56,8 +56,8 @@ class NavPanelPrivacyImpactAssessmentPopup extends PVGDPRScores
       "  g.V()\n" +
       "  .has('Metadata.Type.Object.Privacy_Impact_Assessment',eq('Object.Privacy_Impact_Assessment'))\n" +
       "  .where( \n" +
-      "    __.out().has('Metadata.Type.Object.Privacy_Notice',eq('Object.Privacy_Notice'))\n" +
-      "      .in().has('Event.Consent.Status',eq('No Consent '))\n" +
+      "    __.both().has('Metadata.Type.Object.Privacy_Notice',eq('Object.Privacy_Notice'))\n" +
+      "      .both().has('Event.Consent.Status',eq('No Consent '))\n" +
       "      .count().is(gt(0))\n" +
       "  )\n" +
       "  .count().next()\n" +
@@ -67,8 +67,8 @@ class NavPanelPrivacyImpactAssessmentPopup extends PVGDPRScores
       "  g.V()\n" +
       "  .has('Metadata.Type.Object.Privacy_Impact_Assessment',eq('Object.Privacy_Impact_Assessment'))\n" +
       "  .where( \n" +
-      "    __.out().has('Metadata.Type.Object.Privacy_Notice',eq('Object.Privacy_Notice'))\n" +
-      "      .in().has('Event.Consent.Status',eq('Consent Pending'))\n" +
+      "    __.both().has('Metadata.Type.Object.Privacy_Notice',eq('Object.Privacy_Notice'))\n" +
+      "      .both().has('Event.Consent.Status',eq('Consent Pending'))\n" +
       "      .count().is(gt(0))\n" +
       "  )\n" +
       "  .count().next()\n" +

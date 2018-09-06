@@ -8,6 +8,9 @@ import NavPanelInformationYouHoldPVGrid from './NavPanelInformationYouHoldPVGrid
 import NavPanelInformationYouHoldPVDataGraph from './NavPanelInformationYouHoldPVDataGraph';
 import NavPanelInformationYouHoldPVDoughnutChartTypes from './NavPanelInformationYouHoldPVDoughnutChartTypes';
 import NavPanelInformationYouHoldPVGridEventIngestion from './NavPanelInformationYouHoldPVGridEventIngestion';
+import NavPanelInformationYouHoldIngestionTimeline from './NavPanelInformationYouHoldIngestionTimeline';
+import PVTimeline from './PVTimeline';
+
 import PontusComponent from "./PontusComponent";
 
 
@@ -66,6 +69,13 @@ class NavPanelInformationYouHold extends PontusComponent
               type: 'react-component',
               component: 'data-grid-unmatched'
             }
+            ,{
+              title: 'Ingestion Events',
+              type: 'react-component',
+              component: 'data-events-timeline'
+    
+            }
+            
 
           ]
         }
@@ -108,6 +118,8 @@ class NavPanelInformationYouHold extends PontusComponent
     this.instance.registerComponent('data-graph', NavPanelInformationYouHoldPVDataGraph);
     this.instance.registerComponent('data-types-doughnut', NavPanelInformationYouHoldPVDoughnutChartTypes);
     this.instance.registerComponent('data-grid-unmatched', NavPanelInformationYouHoldPVGridEventIngestion);
+    this.instance.registerComponent('data-events-timeline', NavPanelInformationYouHoldIngestionTimeline);
+    
     
     this.instance.on('tabCreated', function (tab)
     {

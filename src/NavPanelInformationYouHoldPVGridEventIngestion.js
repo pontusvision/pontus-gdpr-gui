@@ -58,11 +58,11 @@ class NavPanelInformationYouHoldPVGridEventIngestion extends PVGrid
       gremlin: "" +
         "g.V()\n" +
         " .has('Metadata.Type.Event.Ingestion',eq('Event.Ingestion')) \n" +
-        " .where(bothE().count().is(eq(0)) )\n" +
+        " .where(__.inE().count().is(eq(1)) )\n" +
         " .order()\n" +
       " .by(pg_orderCol == null ? id :pg_orderCol.toString() ,pg_orderDir == (1)? incr: decr)\n" +
       " .range(pg_from,pg_to)\n" +
-      " .as('people')\n" +
+      " .as('ingestion')\n" +
       " .match(\n" +
       "   __.as('ingestion').values('Event.Ingestion.Metadata_Create_Date').as('Event.Ingestion.Metadata_Create_Date')\n" +
       " , __.as('ingestion').values('Event.Ingestion.Type').as('Event.Ingestion.Type')\n" +
