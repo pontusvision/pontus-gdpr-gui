@@ -29,6 +29,7 @@ class NavPanelInformationYouHoldPVDoughnutChartTypes extends PontusComponent
           }
         ]
       }
+      
     };
     
     this.namespace = 'NavPanelInformationYouHold';
@@ -41,9 +42,15 @@ class NavPanelInformationYouHoldPVDoughnutChartTypes extends PontusComponent
   }
   
   
+  
+  
   setObj = (obj) =>
   {
     this.obj = obj;
+    if (this.obj && this.obj.chartInstance && this.obj.chartInstance.canvas){
+      this.obj.chartInstance.canvas.ondblclick= this.ensureData;
+  
+    }
   };
   
   
@@ -299,6 +306,10 @@ class NavPanelInformationYouHoldPVDoughnutChartTypes extends PontusComponent
     // super.componentWillUnmount();
   }
   
+  toConfig = () => {
+  
+  };
+  
   
   render()
   {
@@ -312,7 +323,15 @@ class NavPanelInformationYouHoldPVDoughnutChartTypes extends PontusComponent
         ref={this.setObj}
         data={this.state.data}
         redraw={true}
-      
+        options={{
+          responsive: true,
+          legend: {
+          position: "right"
+        }}}
+        onDoubleClick={this.ensureData}
+        
+
+
       />
     
     

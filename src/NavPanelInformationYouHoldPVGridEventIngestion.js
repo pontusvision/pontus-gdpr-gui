@@ -68,7 +68,7 @@ class NavPanelInformationYouHoldPVGridEventIngestion extends PVGrid
       " , __.as('ingestion').values('Event.Ingestion.Type').as('Event.Ingestion.Type')\n" +
       " , __.as('ingestion').values('Event.Ingestion.Operation').as('Event.Ingestion.Operation')\n" +
       " , __.as('ingestion').values('Event.Ingestion.Domain_b64').as('Event.Ingestion.Domain_b64')\n" +
-      " , __.as('people').id().as('event_id')\n" +
+      " , __.as('ingestion').id().as('event_id')\n" +
       " )\n" +
       selectBody
       , bindings: {

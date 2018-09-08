@@ -3,10 +3,11 @@ import ResizeAware from 'react-resize-aware';
 // import Graph from 'react-graph-vis';
 // import Timeline from 'react-visjs-timeline';
 
-import '../node_modules/vis/dist/vis.css';
-import '../node_modules/vis/dist/vis-timeline-graph2d.min.css';
-import * as Vis from 'vis';
+// import '../node_modules/vis/dist/vis.css';
+// import '../node_modules/vis/dist/vis-timeline-graph2d.min.css';
+import './vis-timeline.css';
 
+import * as Vis from 'vis';
 
 
 import axios from 'axios';
@@ -38,7 +39,8 @@ class PVTimeline extends PontusComponent
     for (let g = 0; g < groupCount; g++) {
       this.groups.add({id: g, content: names[g]});
     }
-    let start = new Date ();
+    let start = new Date (Date.now() - 3600000);
+    let end = new Date(Date.now() +3600000);
 
     // create a dataset with items
     this.items = new Vis.DataSet();
@@ -50,6 +52,7 @@ class PVTimeline extends PontusComponent
         content: 'item ' + i + ' ' +
         '<span style="color:#97B0F8;">(' + names[group] + ')</span>',
         start: start,
+        end: end,
         type: 'box'
       });
     }
@@ -72,6 +75,7 @@ class PVTimeline extends PontusComponent
         showMajorLabels: true,
         showCurrentTime: true,
         start: start
+        
         // zoomMin: 1000000
         // type: 'background'
         // format: {

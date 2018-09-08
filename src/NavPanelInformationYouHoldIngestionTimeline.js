@@ -97,8 +97,8 @@ class NavPanelInformationYouHoldIngestionTimeline extends PVTimeline
         "  ,__.as('events').out().both().count().is(lte(1)).count().as(\"numOrphans\")\n" +
         "  ,__.as('events').values('Event.Ingestion.Group.Metadata_Start_Date').as('start')\n" +
         "  ,__.as('events').values('Event.Ingestion.Group.Metadata_End_Date').as('stop')\n" +
-        "  ,__.as('events').values('Event.Ingestion.Operation').as('operation')\n" +
-        "  ,__.as('events').values('Event.Ingestion.Type').as('type')\n" +
+        "  ,__.as('events').values('Event.Ingestion.Group.Operation').as('operation')\n" +
+        "  ,__.as('events').values('Event.Ingestion.Group.Type').as('type')\n" +
         "  ,__.as('events').id().as('id')\n" +
         "      \n" +
         "  )\n" +

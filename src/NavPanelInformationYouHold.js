@@ -139,7 +139,13 @@ class NavPanelInformationYouHold extends PontusComponent
   saveState = () =>
   {
     try{
-      let state = JSON.stringify(this.instance.toConfig());
+      
+      // let conf = this.pvToConfig(this.instance.root);
+      let conf = this.instance.toConfig();
+      
+      // let state = JSON.stringify(conf);
+  
+      let state = this.stringify(conf);
       localStorage.setItem('savedStateNavPanelInformationYouHold', state);
   
     }

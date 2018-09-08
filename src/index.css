@@ -10,6 +10,26 @@ body {
     height: 100%;
 }
 
+.ace-monokai .ace_marker-layer .ace_selection {
+    background: #87c2eea6;
+}
+.ace-monokai .ace_marker-layer .ace_selected-word {
+    border: 1px solid #87c2ee;
+}
+
+.vis-time-axis {
+    color: white;
+}
+
+.vis-inner {
+    color: white;
+}
+.vis-text {
+    color: white;
+}
+.ace_selected-word {
+    border: 1px solid #569ff7;
+}
 .choices__inner {
     color: #555555;
 }
