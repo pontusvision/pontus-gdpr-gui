@@ -176,8 +176,10 @@ class PVDataGraph extends PontusComponent
   {
     this.network = network;
     this.network.setOptions(this.state.options);
-    this.network.on("doubleClick", this.doubleClick);
+    this.network.on("doubleClick", this.doubleClick );
+    // this.network.on("doubleClick", this.doubleClick);
     
+  
   };
   
   // selectUser = (event) =>

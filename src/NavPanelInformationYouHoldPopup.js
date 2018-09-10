@@ -55,10 +55,10 @@ class NavPanelInformationYouHoldPopup extends PVGDPRScores
         "    scoreValue -= 40L;\n" +
         "  }\n" +
         "  else if (pcntNoEdges> 40) {\n" +
-        "    scoreValue -= (20L + 2L* pcntNoConsent)\n" +
+        "    scoreValue -= (20L + 2L* pcntNoEdges)\n" +
         "  }\n" +
         "  else  {\n" +
-        "    scoreValue -= ( pcntNoConsent)\n" +
+        "    scoreValue -= ( pcntNoEdges)\n" +
         "  }\n" +
         "  \n" +
         "  \n" +

@@ -129,7 +129,7 @@ class PontusComponent extends React.Component
     
   
     let stringifyFilter = (key, value) => {
-      if (key === 'chartInstance' || key === 'canvas' ){
+      if (key === 'chartInstance' || key === 'canvas' || key === 'chart'){
         return;
       }
       
@@ -157,69 +157,7 @@ class PontusComponent extends React.Component
   };
 
   
-  pvToConfig = function (root)
-  {
-    let config, next, i;
-    
-    if (this.isInitialised === false)
-    {
-      throw new Error('Can\'t create config, layout not yet initialised');
-    }
-    
-    if (!root )
-    {
-      throw new Error('Root must be a ContentItem');
-    }
-    
-    /*
-     * settings & labels
-     */
-    config = {
-      settings: root.config.settings,
-      dimensions: root.config.dimensions,
-      labels: root.config.labels
-    };
-    
-    /*
-     * Content
-     */
-    config.content = [];
-    next = function (configNode, item)
-    {
-      let key, i;
-      
-      for (key in item.config)
-      {
-        if (key !== 'content' && key !== '_meta')
-        {
-          configNode[key] = item.config[key];
-        }
-      }
-      
-      if (item.contentItems && item.contentItems.length)
-      {
-        configNode.content = [];
-        
-        for (i = 0; i < item.contentItems.length; i++)
-        {
-          configNode.content[i] = {};
-          next(configNode.content[i], item.contentItems[i]);
-        }
-      }
-    };
-    
-    if (root)
-    {
-      next(config, {contentItems: [root]});
-    }
-    else
-    {
-      next(config, this.root);
-    }
-    
-    
-    return config;
-  }
+
 }
 
 

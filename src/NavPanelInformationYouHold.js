@@ -132,7 +132,13 @@ class NavPanelInformationYouHold extends PontusComponent
     });
     
     this.instance.on('stateChanged', this.saveState);
-    this.instance.init();
+    try {
+      this.instance.init();
+  
+    }
+    catch (t){
+    
+    }
   
   }
   
