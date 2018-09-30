@@ -94,7 +94,7 @@ class NavPanelInformationYouHoldIngestionTimeline extends PVTimeline
         "\n" +
         ".match(\n" +
         "   __.as('events').out().count().as('numEvents')\n" +
-        "  ,__.as('events').out().both().count().is(lte(1)).count().as(\"numOrphans\")\n" +
+        "  ,__.as('events').out().in().hasNot('Metadata.Type.Event.Ingestion.Group').count().as(\"numMatches\")\n" +
         "  ,__.as('events').values('Event.Ingestion.Group.Metadata_Start_Date').as('start')\n" +
         "  ,__.as('events').values('Event.Ingestion.Group.Metadata_End_Date').as('stop')\n" +
         "  ,__.as('events').values('Event.Ingestion.Group.Operation').as('operation')\n" +
@@ -114,8 +114,9 @@ class NavPanelInformationYouHoldIngestionTimeline extends PVTimeline
         "    sb.append('\\n,')\n" +
         "\n" +
         "  }\n" +
-        "  def numOrphans = it.remove('numOrphans')\n" +
+        "  def numMatches = it.remove('numMatches')\n" +
         "  def numEvents = it.remove('numEvents')\n" +
+        "  def numOrphans = numEvents - numMatches;\n" +
         "  def type = it.remove('type')\n" +
         "  def operation = it.remove('operation')\n" +
         "  it.put('type','box')\n" +
