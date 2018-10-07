@@ -87,7 +87,7 @@ class NavPanelComplianceScores extends PontusComponent
     // instance = new GoldenLayout(config, this.node);
     /* register components or bind events to your new instance here */
     this.instance.registerComponent('main-score', NavPanelComplianceScoresMainScore);
-    this.instance.registerComponent('detailed-scores', NavPanelComplianceScoresDetailedScores);
+    this.instance.registerComponent('detailed-scores', () => { return  new NavPanelComplianceScoresDetailedScores( { complyPanel: this.props.complyPanel }); });
     this.instance.init();
     
     this.instance.on('tabCreated', function (tab)

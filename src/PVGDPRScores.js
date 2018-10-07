@@ -25,18 +25,18 @@ class PVGDPRScores extends PontusComponent
       'ages and to obtain parental or guardian consent for\n' +
       'any data processing activity.';
     this.scoreIcon = ic_multiline_chart;
-  
+    
     this.title = "BASE CLASS";
     this.icon = ic_child_care;
-  
+    
     this.errCounter = 0;
     this.state = {
       scoreExplanation: "...  LOADING DATA ...",
       scoreValue: 0
     };
-  
+    
     this.weight = 0;
-  
+    
     this.latestStatus = 200;
     
     // this.title = "Children";
@@ -50,15 +50,13 @@ class PVGDPRScores extends PontusComponent
     // };
     
     
-    
-    
   }
   
   
   componentDidMount()
   {
     this.ensureData();
-  
+    
   }
   
   ensureData = () =>
@@ -78,9 +76,9 @@ class PVGDPRScores extends PontusComponent
       //   :
       {
         'Content-Type': 'application/json'
-      , 'Accept': 'application/json'
+        , 'Accept': 'application/json'
       };
- 
+    
     
     let self = this;
     
@@ -95,8 +93,9 @@ class PVGDPRScores extends PontusComponent
       axios.post(url
         , self.getSearchQuery()
         , {
-            maxRedirects: 0
-          , validateStatus: (status) => {
+          maxRedirects: 0
+          , validateStatus: (status) =>
+          {
             self.lastestStatus = status;
             return status >= 200 && status < 300;
           }
@@ -133,7 +132,7 @@ class PVGDPRScores extends PontusComponent
       //     /// TODO: finish this!!!!  GET THE HEADER, try again, but with the JWT token in the header!
       //   })
       // }
-  
+      
       this.ensureData();
     }
     
@@ -152,7 +151,6 @@ class PVGDPRScores extends PontusComponent
   {
     
     let respParsed = {};
-
     
     
     try
@@ -171,22 +169,22 @@ class PVGDPRScores extends PontusComponent
         this.setState({
           scoreExplanation: data.scoreExplanation,
           scoreValue: data.scoreValue
-  
+          
         });
-  
-        if (this.props.glEventHub){
+        
+        if (this.props.glEventHub)
+        {
           this.props.glEventHub.emit('on-score-changed',
             {
               scoreValue: data.scoreValue
-             ,title: this.title
-             ,weight: this.weight
+              , title: this.title
+              , weight: this.weight
             }
           );
-  
+          
         }
         
       }
-      
       
       
     }
@@ -205,7 +203,15 @@ class PVGDPRScores extends PontusComponent
     throw new Error("This is a base class; getSearchQuery must be overriden ");
   };
   
-
+  
+  onClickGauge = () =>
+  {
+    if (this.props.complyPanel)
+    {
+      this.props.complyPanel.setState({selected: this.title})
+  
+    }
+  };
   
   render()
   {
@@ -216,16 +222,20 @@ class PVGDPRScores extends PontusComponent
       
       return (
         
-        <Grid centered divided columns={3} style = {{padding: 15}}>
+        <Grid centered divided columns={3} style={{padding: 15}}>
           <Grid.Column textAlign='center'>
-            <div>
+            <div   onClick={this.onClickGauge} >
               <PVGauge value={this.state.scoreValue} width={150} height={130} label={this.title}
-                       valueLabelStyle={{ textAnchor: "middle", fill: "#ffffff", stroke: "none", fontStyle: "normal", fontVariant: "normal", fontWeight: "bold", fontStretch: "normal", lineHeight: "normal", fillOpacity: 1 }}
-            />
+                       valueLabelStyle={{
+                         textAnchor: "middle", fill: "#ffffff", stroke: "none", fontStyle: "normal",
+                         fontVariant: "normal", fontWeight: "bold", fontStretch: "normal", lineHeight: "normal",
+                         fillOpacity: 1
+                       }}
+              />
             </div>
           </Grid.Column>
-  
-  
+          
+          
           <Grid.Column textAlign='justified'>
             <Icon
               icon={this.icon}/>
@@ -234,7 +244,7 @@ class PVGDPRScores extends PontusComponent
           <Grid.Column textAlign='justified'>
             <Icon
               icon={this.scoreIcon}/>
-  
+            
             <p>{this.state.scoreExplanation}</p>
           </Grid.Column>
         
@@ -250,13 +260,13 @@ class PVGDPRScores extends PontusComponent
           <Grid.Column textAlign='justified'>
             <Icon
               icon={this.scoreIcon}/>
-    
+            
             <p>{this.state.scoreExplanation}</p>
           </Grid.Column>
-  
+          
           {/*<Grid.Column textAlign='center'>*/}
-            {/*<strong>{this.title}</strong>*/}
-            {/*<p>{this.text}</p>*/}
+          {/*<strong>{this.title}</strong>*/}
+          {/*<p>{this.text}</p>*/}
           {/*</Grid.Column>*/}
           <Grid.Column textAlign='center'>
             <div>

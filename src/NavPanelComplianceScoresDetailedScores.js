@@ -27,6 +27,7 @@ class NavPanelComplianceScoresDetailedScores extends PontusComponent
       value: props.value
       ,height: 100
       ,width: 100
+      ,complyPanel: this.props.complyPanel
     }
   }
   
@@ -76,18 +77,18 @@ class NavPanelComplianceScoresDetailedScores extends PontusComponent
         onResize={this.handleResize}
       >
       <div  style={{overflowY:"scroll" , overflowX: "hidden",height: 'calc(100% - 20px)', width: '100%'}} >
-        <NavPanelAwarenessPopup longShow={true}  glEventHub = {this.props.glEventHub}/>
-        <NavPanelInformationYouHoldPopup longShow={true} glEventHub = {this.props.glEventHub}/>
-        <NavPanelPrivacyNoticesPopup longShow={true} glEventHub = {this.props.glEventHub}/>
-        <NavPanelIndividualsRightsPopup longShow={true} glEventHub = {this.props.glEventHub}/>
-        <NavPanelSubjectAccessRequestPopup longShow={true} glEventHub = {this.props.glEventHub}/>
-        <NavPanelLawfulBasisPopup longShow={true} glEventHub = {this.props.glEventHub}/>
-        <NavPanelConsentPopup longShow={true} glEventHub = {this.props.glEventHub}/>
-        <NavPanelChildrenPopup longShow={true} glEventHub = {this.props.glEventHub}/>
-        <NavPanelDataBreachPopup longShow={true} glEventHub = {this.props.glEventHub}/>
-        <NavPanelPrivacyImpactAssessmentPopup longShow={true} glEventHub = {this.props.glEventHub}/>
-        <NavPanelDataProtnOfficerPopup longShow={true} glEventHub = {this.props.glEventHub}/>
-        <NavPanelInternationalPopup longShow={true} glEventHub = {this.props.glEventHub}/>
+        <NavPanelAwarenessPopup longShow={true}  glEventHub = {this.props.glEventHub}  complyPanel={this.state.complyPanel} />
+        <NavPanelInformationYouHoldPopup longShow={true} glEventHub = {this.props.glEventHub} complyPanel={this.state.complyPanel}/>
+        <NavPanelPrivacyNoticesPopup longShow={true} glEventHub = {this.props.glEventHub} complyPanel={this.state.complyPanel}/>
+        <NavPanelIndividualsRightsPopup longShow={true} glEventHub = {this.props.glEventHub} complyPanel={this.state.complyPanel}/>
+        <NavPanelSubjectAccessRequestPopup longShow={true} glEventHub = {this.props.glEventHub} complyPanel={this.state.complyPanel}/>
+        <NavPanelLawfulBasisPopup longShow={true} glEventHub = {this.props.glEventHub} complyPanel={this.state.complyPanel}/>
+        <NavPanelConsentPopup longShow={true} glEventHub = {this.props.glEventHub} complyPanel={this.state.complyPanel}/>
+        <NavPanelChildrenPopup longShow={true} glEventHub = {this.props.glEventHub} complyPanel={this.state.complyPanel}/>
+        <NavPanelDataBreachPopup longShow={true} glEventHub = {this.props.glEventHub} complyPanel={this.state.complyPanel}/>
+        <NavPanelPrivacyImpactAssessmentPopup longShow={true} glEventHub = {this.props.glEventHub} complyPanel={this.state.complyPanel}/>
+        <NavPanelDataProtnOfficerPopup longShow={true} glEventHub = {this.props.glEventHub} complyPanel={this.state.complyPanel}/>
+        <NavPanelInternationalPopup longShow={true} glEventHub = {this.props.glEventHub} complyPanel={this.state.complyPanel}/>
         
         
       

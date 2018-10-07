@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import ResizeAware from 'react-resize-aware';
-import {Popup, Grid} from 'semantic-ui-react';
+import {Grid, Popup} from 'semantic-ui-react';
 import './react-select.css';
 import PVGauge from './PVGauge';
 
@@ -103,10 +103,10 @@ class ComplyPanel extends Component
     return (
       
       <div
-        style={{height: '100%', width: '100%', flexDirection: 'column', flexGrow: 1,flexBasis:'auto'}}
+        style={{height: '100%', width: '100%', flexDirection: 'column', flexGrow: 1, flexBasis: 'auto'}}
       >
         <NavPane
-          style={{flexDirection: 'column', flexGrow: 1, flexBasis:'auto'}}
+          style={{flexDirection: 'column', flexGrow: 1, flexBasis: 'auto'}}
           openLength={200}
           push
           color={this.props.color}
@@ -115,23 +115,33 @@ class ComplyPanel extends Component
           
           theme={this.props.theme}
         >
-          {this.renderItemRaw("Compliance Scores", <NavPanelComplianceScores style={{height: '100%', width: '100%'}}/>, <Icon icon={ic_multiline_chart}/>)}
-          {this.renderItemRaw("Awareness", <NavPanelAwareness style={{height: '100%', width: '100%'}}/>, <Icon icon={book_2}/>,<NavPanelAwarenessPopup/>)}
-          {this.renderItemRaw("Info You Hold", <NavPanelInformationYouHold style={{height: '100%', width: '100%'}}/>, <Icon
+          {this.renderItemRaw("Compliance Scores", <NavPanelComplianceScores complyPanel={this} style={{height: '100%', width: '100%'}}/>,
+            <Icon icon={ic_multiline_chart}/>)}
+          {this.renderItemRaw("Awareness", <NavPanelAwareness style={{height: '100%', width: '100%'}}/>, <Icon
+            icon={book_2}/>, <NavPanelAwarenessPopup/>)}
+          {this.renderItemRaw("Info You Hold", <NavPanelInformationYouHold style={{height: '100%', width: '100%'}}/>,
+            <Icon
               icon={info}/>, <NavPanelInformationYouHoldPopup/>)}
-          {this.renderItemRaw("Privacy Notices", <NavPanelPrivacyNotices style={{height: '100%', width: '100%'}}/>, <Icon
-              icon={eyeBlocked}/>,<NavPanelPrivacyNoticesPopup/>)}
-          {this.renderItemRaw("Individual's Rights", <NavPanelIndividualsRights isFullMode={true} style={{height: '100%', width: '100%'}}/>,
-            <Icon icon={iosPricetagsOutline}/>,<NavPanelIndividualsRightsPopup style={{height: '100%', width: '100%'}}/>
-            )}
-          {this.renderItemRaw("Subj Access Req", <NavPanelSubjectAccessRequest style={{height: '100%', width: '100%'}}/>,
-            <Icon icon={download}/>,<NavPanelSubjectAccessRequestPopup/>)}
+          {this.renderItemRaw("Privacy Notices", <NavPanelPrivacyNotices style={{height: '100%', width: '100%'}}/>,
+            <Icon
+              icon={eyeBlocked}/>, <NavPanelPrivacyNoticesPopup/>)}
+          {this.renderItemRaw("Individual's Rights", <NavPanelIndividualsRights isFullMode={true} style={{
+              height: '100%', width: '100%'
+            }}/>,
+            <Icon icon={iosPricetagsOutline}/>, <NavPanelIndividualsRightsPopup
+              style={{height: '100%', width: '100%'}}/>
+          )}
+          {this.renderItemRaw("Subj Access Req", <NavPanelSubjectAccessRequest
+              style={{height: '100%', width: '100%'}}/>,
+            <Icon icon={download}/>, <NavPanelSubjectAccessRequestPopup/>)}
           {this.renderItemRaw("Lawful Basis", <NavPanelLawfulBasis style={{height: '100%', width: '100%'}}/>, <Icon
-              icon={balanceScale}/>,<NavPanelLawfulBasisPopup/>)}
-          {this.renderItemRaw("Consent", <NavPanelConsent style={{height: '100%', width: '100%'}}/>, <Icon icon={check}/>, <NavPanelConsentPopup/>)}
-          {this.renderItemRaw("Children", <NavPanelChildren style={{height: '100%', width: '100%'}}/>, <Icon icon={ic_child_care}/>, <NavPanelChildrenPopup/>)}
+            icon={balanceScale}/>, <NavPanelLawfulBasisPopup/>)}
+          {this.renderItemRaw("Consent", <NavPanelConsent style={{height: '100%', width: '100%'}}/>, <Icon
+            icon={check}/>, <NavPanelConsentPopup/>)}
+          {this.renderItemRaw("Children", <NavPanelChildren style={{height: '100%', width: '100%'}}/>, <Icon
+            icon={ic_child_care}/>, <NavPanelChildrenPopup/>)}
           {this.renderItemRaw("Data Breaches", <NavPanelDataBreaches style={{height: '100%', width: '100%'}}/>, <Icon
-              icon={unlocked}/>,<NavPanelDataBreachPopup/>)}
+            icon={unlocked}/>, <NavPanelDataBreachPopup/>)}
           {this.renderItemRaw("Priv Impact Asmnt", <NavPanelPrivacyImpactAssessment
             style={{height: '100%', width: '100%'}}/>, <Icon
             icon={shareAlt}/>, <NavPanelPrivacyImpactAssessmentPopup/>)}
@@ -139,8 +149,8 @@ class ComplyPanel extends Component
             <Icon icon={blackTie}/>,
             <NavPanelDataProtnOfficerPopup/>)}
           {this.renderItemRaw("International", <NavPanelInternational style={{height: '100%', width: '100%'}}/>, <Icon
-              icon={globe}/>,<NavPanelInternationalPopup/>
-            )}
+            icon={globe}/>, <NavPanelInternationalPopup/>
+          )}
         
         
         </NavPane>
@@ -216,20 +226,21 @@ class ComplyPanel extends Component
   // }
   
   
-  renderItem(title, content, icon, text, gauge){
-    let popupIconInsides = (gauge === undefined)?
+  renderItem(title, content, icon, text, gauge)
+  {
+    let popupIconInsides = (gauge === undefined) ?
       <Grid centered divided columns={2}>
-      <Grid.Column textAlign='center'>
-        <strong>{title}</strong>
-        <p>{text}</p>
-      </Grid.Column>
-      <Grid.Column textAlign='center'>
-        <div>
-          <PVGauge   width={100} height={130}  label={title}/>
-        </div>
-      </Grid.Column>
-
-    </Grid>:
+        <Grid.Column textAlign='center'>
+          <strong>{title}</strong>
+          <p>{text}</p>
+        </Grid.Column>
+        <Grid.Column textAlign='center'>
+          <div>
+            <PVGauge width={100} height={130} label={title}/>
+          </div>
+        </Grid.Column>
+      
+      </Grid> :
       <Grid centered divided columns={2}>
         <Grid.Column textAlign='center'>
           <strong>{title}</strong>
@@ -240,11 +251,11 @@ class ComplyPanel extends Component
             {gauge}
           </div>
         </Grid.Column>
-  
+      
       </Grid>
     ;
-  
-  
+    
+    
     let popupIcon =
       <Popup trigger={icon}
              flowing={false}
@@ -254,63 +265,72 @@ class ComplyPanel extends Component
       >
         {popupIconInsides}
       </Popup>;
-  
-  
+    
+    
     return (
       <NavPaneItem
         title={title}
         icon={popupIcon}
-        style={{height: this.state.height - 80 + 'px', width: '100%', flexDirection: 'column', flexGrow: 1,flexBasis:'auto'}}
-      
+        style={{
+          height: this.state.height - 80 + 'px', width: '100%', flexDirection: 'column', flexGrow: 1, flexBasis: 'auto'
+        }}
+        
         theme="light"
         background="#000000"
         selected={this.state.selected === title}
         onSelect={() => this.setState({selected: title})}
         padding="10px 20px"
         push
-    
+      
       >
         <ResizeAware
-          style={{height: '100%', width: '100%', flexDirection: 'column', flexGrow: 1,flexBasis:'auto'}}
-        
+          style={{height: '100%', width: '100%', flexDirection: 'column', flexGrow: 1, flexBasis: 'auto'}}
+          
           onResize={this.handleResize}
         >
           {content}
         </ResizeAware>
       </NavPaneItem>
-  
-  
+    
+    
     );
   }
   
   renderItemRaw(title, content, icon, popupIconInsides)
   {
   
-    if (popupIconInsides === undefined){
+    // content.props.parentItem =  this;
+    // content.props.title = title ;
+    
+    if (popupIconInsides === undefined)
+    {
       return (
         <NavPaneItem
           title={title}
           icon={icon}
-          style={{height: this.state.height - 80 + 'px', width: '100%', flexDirection: 'column', flexGrow: 1,flexBasis:'auto'}}
-      
+          style={{
+            height: this.state.height - 80 + 'px', width: '100%', flexDirection: 'column', flexGrow: 1,
+            flexBasis: 'auto'
+          }}
+          
           theme="light"
           background="#000000"
           selected={this.state.selected === title}
           onSelect={() => this.setState({selected: title})}
           padding="10px 20px"
           push
-    
+        
         >
           <ResizeAware
-            style={{height: '100%', width: '100%', flexDirection: 'column', flexGrow: 1,flexBasis:'auto'}}
-        
+            style={{height: '100%', width: '100%', flexDirection: 'column', flexGrow: 1, flexBasis: 'auto'}}
+            
             onResize={this.handleResize}
           >
             {content}
           </ResizeAware>
         </NavPaneItem>
       );
-  
+      
     }
     let popupIcon =
       <Popup trigger={icon}
@@ -321,13 +341,15 @@ class ComplyPanel extends Component
       >
         {popupIconInsides}
       </Popup>;
-  
-  
+    
+    
     return (
       <NavPaneItem
         title={title}
         icon={popupIcon}
-        style={{height: this.state.height - 80 + 'px', width: '100%', flexDirection: 'column', flexGrow: 1,flexBasis:'auto'}}
+        style={{
+          height: this.state.height - 80 + 'px', width: '100%', flexDirection: 'column', flexGrow: 1, flexBasis: 'auto'
+        }}
         
         theme="light"
         background="#000000"

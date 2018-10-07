@@ -113,16 +113,13 @@ class MainPanel extends React.Component
       };
       
       return (
-        <div height={'100%'} width={'100%'}
-        >
+        <div height={'100%'} width={'100%'}>
           {/*<Flex >*/}
           
           <Box style={{display: "flex", justifyContent: "center", alignItems: "center"}} px={1} w={1}>
             <div style={{color: "white", paddingTop: window.innerHeight/20, paddingBottom: window.innerHeight/10, fontSize: '72px'}}>GDPR</div>
           
           </Box>
-          
-          
           <Box style={{display: "flex", justifyContent: "center", alignItems: "center"}} px={1} w={1}>
             <img height={200} width={200} src="pvgdpr/extract.png" alt="extract" onClick={this.clickOnExtract}/>
             <img style={styleTrack} height={200} width={200} src="pvgdpr/track.png" alt="track"
@@ -130,7 +127,6 @@ class MainPanel extends React.Component
             <img style={styleComply} height={200} width={200} src="pvgdpr/comply.png" alt="comply"
                  onClick={this.clickOnComply}/>
           </Box>
-          
           <Box style={{display: "flex", justifyContent: "center", alignItems: "center"}} px={1} w={1}>
             <div style={{color: "white", paddingTop: window.innerHeight/20, paddingBottom: window.innerHeight/20, fontSize: '26px'}}> Select a panel from the
               menu on the top right
@@ -138,7 +134,6 @@ class MainPanel extends React.Component
           
           </Box>
           {/*</Flex>*/}
-        
         </div>)
     }
   }
@@ -151,18 +146,13 @@ class App extends React.Component
   {
     super(props);
     this.headerTitle = "";
-    
     this.mainPanelSource = <MainPanel appPointer={this}  style={{height: '100%', width: '100%'}}/>;
-    
     this.state = {tabIndex: 0, height: window.innerHeight - 20, width: window.innerWidth - 20};
-    
-    
   }
   
   
   setNode = (node) =>
   {
-    
     this.node = node;
     this.node.setState({selectedIndex: 0});
   };
