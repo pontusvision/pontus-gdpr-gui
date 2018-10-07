@@ -76,6 +76,23 @@ class MainPanel extends React.Component
     );
   };
   
+  clickOnExtract = () =>
+  {
+    this.props.appPointer.extractPanel.cb()
+  
+  };
+  
+  clickOnTrack = () =>
+  {
+    this.props.appPointer.trackPanel.cb()
+  
+  };
+  
+  clickOnComply = () =>
+  {
+    this.props.appPointer.complyPanel.cb()
+  };
+  
   
   render()
   {
@@ -107,11 +124,11 @@ class MainPanel extends React.Component
           
           
           <Box style={{display: "flex", justifyContent: "center", alignItems: "center"}} px={1} w={1}>
-            <img height={200} width={200} src="pvgdpr/extract.png" alt="extract" onClick={this.myfunction}/>
+            <img height={200} width={200} src="pvgdpr/extract.png" alt="extract" onClick={this.clickOnExtract}/>
             <img style={styleTrack} height={200} width={200} src="pvgdpr/track.png" alt="track"
-                 onClick={this.myfunction}/>
+                 onClick={this.clickOnTrack}/>
             <img style={styleComply} height={200} width={200} src="pvgdpr/comply.png" alt="comply"
-                 onClick={this.myfunction}/>
+                 onClick={this.clickOnComply}/>
           </Box>
           
           <Box style={{display: "flex", justifyContent: "center", alignItems: "center"}} px={1} w={1}>
@@ -135,7 +152,7 @@ class App extends React.Component
     super(props);
     this.headerTitle = "";
     
-    this.mainPanelSource = <MainPanel style={{height: '100%', width: '100%'}}/>;
+    this.mainPanelSource = <MainPanel appPointer={this}  style={{height: '100%', width: '100%'}}/>;
     
     this.state = {tabIndex: 0, height: window.innerHeight - 20, width: window.innerWidth - 20};
     
@@ -192,7 +209,10 @@ class App extends React.Component
   trackPanel = {
     cb: (event) =>
     {
-      event.preventDefault();
+      if (event){
+        event.preventDefault();
+  
+      }
       this.node.setState({selectedIndex: 2});
       
     }
@@ -204,7 +224,10 @@ class App extends React.Component
   extractPanel = {
     cb: (event) =>
     {
-      event.preventDefault();
+      if (event){
+        event.preventDefault();
+    
+      }
       // emitter.emit('panel-select', this.extractPanel);
       // this.node.setSelected(1,true);
       this.node.setState({selectedIndex: 1});
@@ -215,12 +238,15 @@ class App extends React.Component
     , title: "Extract"
     , panelId: "extractPanel"
     
-  }
+  };
   
   complyPanel = {
     cb: (event) =>
     {
-      event.preventDefault();
+      if (event){
+        event.preventDefault();
+    
+      }
       // this.instance.selectItem(this.complyPanelInstance);
       this.node.setState({selectedIndex: 3});
       
@@ -229,12 +255,12 @@ class App extends React.Component
     , title: "Comply"
     , panelId: "comply"
     // , actionJSX: <ComplyPanel/>
-  }
+  };
   
   
   render()
   {
-    var styles = {
+    let styles = {
       bmBurgerButton: {
         position: 'fixed',
         width: '20px',

@@ -6,6 +6,7 @@ import PVGridSelfDiscovery from './PVGridSelfDiscovery';
 import {Segment, Portal} from 'semantic-ui-react';
 import {Menu} from 'semantic-ui-react';
 import PVReportButton from './PVReportButton';
+import PVDetailsButton from './PVDetailsButton';
 import PontusComponent from "./PontusComponent";
 
 
@@ -29,6 +30,7 @@ class PVDataGraph extends PontusComponent
       open: false,
       height: 1000,
       width: 1000,
+      origLabel: '',
       reportButtons: [],
       graph: {
         nodes: [
@@ -129,7 +131,6 @@ class PVDataGraph extends PontusComponent
   {
     try
     {
-      
       param.event.stopPropagation();
       this.enableClose = false;
       let event = {id: param.nodes[0]};
@@ -153,10 +154,11 @@ class PVDataGraph extends PontusComponent
       }
       else if (event.id) {
         this.selectData(event);
+  
       }
-    
-      
-      
+  
+  
+  
     }
     catch (e)
     {
@@ -205,12 +207,12 @@ class PVDataGraph extends PontusComponent
       "StringBuffer sb2 = new StringBuffer()\n" +
       "\n" +
       "Long numEdges = g.V(pg_vid).bothE().count().next();\n" +
-      "\n" +
+      "String origLabel = g.V(pg_vid).label().next().replaceAll('[_.]',' ');\n" +
+        "\n" +
       "if (numEdges > 15){\n" +
       "\n" +
-      "  String origLabel = g.V(pg_vid).label().next().replaceAll('[_.]',' ');\n" +
-      "        HashSet nodesSet = new HashSet()\n" +
-      "      HashSet edgesSet = new HashSet()\n" +
+      "  HashSet nodesSet = new HashSet()\n" +
+      "  HashSet edgesSet = new HashSet()\n" +
       "\n" +
       "  \n" +
       "  g.V(pg_vid).as('orig')\n" +
@@ -417,7 +419,7 @@ class PVDataGraph extends PontusComponent
       "    \n" +
       // "  sb.toString() \n" +
       "}\n" +
-      "" +
+      "sb.append(', \"origLabel\":\"').append(origLabel).append('\"');\n" +
       "int counter = 0;\n" +
       "sb.append(', \"reportButtons\": [');\n" +
       "try{ \n" +
@@ -601,9 +603,11 @@ class PVDataGraph extends PontusComponent
         
         let graph = {nodes: nodes, edges: items.edges};
         
-        this.setState({graph: graph, reportButtons: items.reportButtons , vid: this.origNodeId});
+        this.setState({graph: graph, reportButtons: items.reportButtons , vid: this.origNodeId , origLabel: items.origLabel} );
+        this.props.glEventHub.emit(this.props.namespace + '-pvgraph-double-click', {vid: this.origNodeId, metadataType: items.origLabel });
+  
         localStorage.setItem(this.subscription, graph);
-        
+  
       }
       
       
@@ -708,11 +712,18 @@ class PVDataGraph extends PontusComponent
     
     const {open,  reportButtons} = this.state;
     
-    let buttonsList = [];
+    let buttonsList = [<PVDetailsButton className={'compact'}
+                                        namespace={this.props.namespace}
+                                        metadataType =  {this.state.origLabel}
+                                        contextId = {this.state.vid}
+                                        glEventHub = {this.props.glEventHub}
+                                        style={{border:0, background:'rgb(69,69,69)'}}
+                                        size={'small'}
+    />];
     
     let bttns = <div height={0}/>;
   
-    if( reportButtons && reportButtons.length > 0){
+    if( buttonsList.length > 0 ||reportButtons && reportButtons.length > 0){
   
       for (let ilen = reportButtons.length, i = 0; i < ilen; i++){
         buttonsList.push(
