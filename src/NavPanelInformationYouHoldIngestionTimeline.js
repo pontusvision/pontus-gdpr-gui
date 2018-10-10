@@ -102,7 +102,7 @@ class NavPanelInformationYouHoldIngestionTimeline extends PVTimeline
         "  ,__.as('events').id().as('id')\n" +
         "      \n" +
         "  )\n" +
-        ".select('numOrphans', 'numEvents', 'start', 'stop','type','operation','id')\n" +
+        ".select('numMatches', 'numEvents', 'start', 'stop','type','operation','id')\n" +
         ".each{ it ->\n" +
         "\n" +
         "  if (firstTime)\n" +

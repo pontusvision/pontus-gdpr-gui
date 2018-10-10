@@ -17,6 +17,7 @@ import NavPanelDataProtnOfficerPopup from "./NavPanelDataProtnOfficerPopup";
 import NavPanelInternationalPopup from "./NavPanelInternationalPopup";
 import NavPanelDataBreachPopup from "./NavPanelDataBreachPopup";
 import PontusComponent from "./PontusComponent";
+
 class NavPanelComplianceScoresDetailedScores extends PontusComponent
 {
   
