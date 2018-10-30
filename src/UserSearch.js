@@ -43,7 +43,7 @@ class UserSearch extends PontusComponent
   
   onError = (err) =>
   {
-    alert("error loading pages " + err);
+    console.error("error loading pages " + err);
   };
   onChangeVertexLabels = (val) =>
   {

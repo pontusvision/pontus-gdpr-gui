@@ -9,7 +9,6 @@ import NavPanelInformationYouHoldPVDataGraph from './NavPanelInformationYouHoldP
 import NavPanelInformationYouHoldPVDoughnutChartTypes from './NavPanelInformationYouHoldPVDoughnutChartTypes';
 import NavPanelInformationYouHoldPVGridEventIngestion from './NavPanelInformationYouHoldPVGridEventIngestion';
 import NavPanelInformationYouHoldIngestionTimeline from './NavPanelInformationYouHoldIngestionTimeline';
-import PVTimeline from './PVTimeline';
 
 import PontusComponent from "./PontusComponent";
 

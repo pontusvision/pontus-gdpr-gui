@@ -144,7 +144,7 @@ class PVDoughnutChart extends PontusComponent
   onError = (err) =>
   {
     if (this.errorCounter > 5){
-      alert("error loading data:" + err);
+      console.error("error loading data:" + err);
   
     }
     else{

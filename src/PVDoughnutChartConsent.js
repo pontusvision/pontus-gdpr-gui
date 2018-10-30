@@ -85,7 +85,7 @@ class PVDoughnutChart extends PontusComponent
       
       
     };
-  }
+  };
   
   
   ensureData = (id) =>
@@ -138,7 +138,7 @@ class PVDoughnutChart extends PontusComponent
   };
   onError = (err) =>
   {
-    alert("error loading data:" + err);
+    console.error("error loading data:" + err);
   };
   
   onSuccess = (resp) =>

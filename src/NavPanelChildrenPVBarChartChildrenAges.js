@@ -168,7 +168,7 @@ class NavPanelChildrenPVBarChartChildrenAges extends PontusComponent
   {
     if (this.errorCounter > 5)
     {
-      alert("error loading data:" + err);
+      console.error("error loading data:" + err);
     }
     else
     {

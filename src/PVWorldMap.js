@@ -121,7 +121,7 @@ class PVWorldMap extends React.Component
   };
   
   onError = (thrown) => {
-    alert("Failed to get data by country" + thrown);
+    console.error("Failed to get data by country" + thrown);
     
   };
   onSuccess = (resp) =>{

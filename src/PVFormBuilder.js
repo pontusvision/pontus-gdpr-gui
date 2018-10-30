@@ -508,7 +508,7 @@ class PVFormBuilder extends PontusComponent
     this.errorCount++;
     if (this.errorCount > 5)
     {
-      alert("Failed to get graph data:" + thrown);
+      console.error("Failed to get graph data:" + thrown);
       
     }
     
@@ -607,7 +607,7 @@ class PVFormBuilder extends PontusComponent
     this.errorCount++;
     if (this.errorCount > 5)
     {
-      alert("Failed to get graph data:" + thrown);
+      console.error("Failed to get graph data:" + thrown);
       
     }
     

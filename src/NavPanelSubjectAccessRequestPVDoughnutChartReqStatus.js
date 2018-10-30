@@ -121,7 +121,7 @@ class NavPanelSubjectAccessRequestPVDoughnutChartReqStatus extends PontusCompone
       this.errorCounter ++;
     }
     else {
-      alert("error loading data:" + err);
+      console.error("error loading data:" + err);
     }
   };
   

@@ -84,7 +84,7 @@ class GremlinComboBox extends Component
       this.props.onError(err);
     }
     else{
-      alert("error loading pages " + err);
+      console.error("error loading pages " + err);
   
     }
   };
