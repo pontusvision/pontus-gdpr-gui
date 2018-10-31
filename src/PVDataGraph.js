@@ -722,7 +722,7 @@ class PVDataGraph extends PontusComponent
       {
         depth: event,
         options: {
-          "layout": { "hierarchical": (event == 1)? false:
+          "layout": { "hierarchical": (event === 1)? false:
               {
                 direction: "UD",
                 sortMethod: "hubsize",
@@ -791,7 +791,7 @@ class PVDataGraph extends PontusComponent
     
     let bttns = <div height={0}/>;
     
-    if (buttonsList != null && buttonsList.length > 0 || reportButtons != null && reportButtons.length > 0)
+    if ((buttonsList != null && buttonsList.length > 0) || (reportButtons != null && reportButtons.length > 0))
     {
       
       for (let ilen = reportButtons.length, i = 0; i < ilen; i++)

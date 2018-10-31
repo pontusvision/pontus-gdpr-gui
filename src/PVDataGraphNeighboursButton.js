@@ -32,8 +32,8 @@ class PVDataGraphNeighboursButton extends PontusComponent
     let depth = this.state.depth;
     depth ++;
     this.setState({depth: depth});
-    this.props.glEventHub.emit(this.namespace, this.state.depth);
-    this.props.glEventHub.emit(this.namespace, this.state.depth);
+    this.props.glEventHub.emit(this.namespace, depth);
+    // this.props.glEventHub.emit(this.namespace, this.state.depth);
     
   };
   onClickPlusPlus = () =>
@@ -41,8 +41,8 @@ class PVDataGraphNeighboursButton extends PontusComponent
     let depth = this.state.depth;
     depth +=10;
     this.setState({depth: depth});
-    this.props.glEventHub.emit(this.namespace, this.state.depth);
-    this.props.glEventHub.emit(this.namespace, this.state.depth);
+    this.props.glEventHub.emit(this.namespace, depth);
+    // this.props.glEventHub.emit(this.namespace, this.state.depth);
     
   };
   
@@ -54,8 +54,8 @@ class PVDataGraphNeighboursButton extends PontusComponent
       depth = 1;
     }
     this.setState({depth: depth});
-    this.props.glEventHub.emit(this.namespace, this.state.depth);
-    this.props.glEventHub.emit(this.namespace, this.state.depth);
+    this.props.glEventHub.emit(this.namespace, depth);
+    // this.props.glEventHub.emit(this.namespace, this.state.depth);
     
   };
   
@@ -68,8 +68,8 @@ class PVDataGraphNeighboursButton extends PontusComponent
       depth = 1;
     }
     this.setState({depth: depth});
-    this.props.glEventHub.emit(this.namespace, this.state.depth);
-    this.props.glEventHub.emit(this.namespace, this.state.depth);
+    this.props.glEventHub.emit(this.namespace, depth);
+    // this.props.glEventHub.emit(this.namespace, this.state.depth);
     
   };
   
