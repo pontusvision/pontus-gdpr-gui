@@ -45,73 +45,76 @@ class NavPanelAwarenessPopup extends PVGDPRScores
     
     return {
       gremlin: "def retVal = '';\n" +
-      "try {\n" +
-      "long numEvents = g.V().has('Metadata.Type.Object.Awareness_Campaign',eq('Object.Awareness_Campaign')).in().as('events').count().next();\n" +
-      "\n" +
-      "def map = g.V().has('Metadata.Type.Object.Awareness_Campaign',eq('Object.Awareness_Campaign')).in().as('events').groupCount().by('Event.Training.Status').next();\n" +
-      "\n" +
-      "long failedCount = map.get('Failed');\n" +
-      "long secondReminder = map.get('Second  Reminder');\n" +
-      "long firstReminder = map.get('Reminder Sent');\n" +
-      "\n" +
-      "\n" +
-      "long scoreValue = 100L;\n" +
-      "if (numEvents > 0){\n" +
-      "  \n" +
-      "  long pcntFailed = (long) (100L*failedCount/numEvents);\n" +
-      "  if (pcntFailed > 10){\n" +
-      "    scoreValue -= 60L;\n" +
-      "  }\n" +
-      "  else if (failedCount > 0){\n" +
-      "    scoreValue -= (40L + 2L* pcntFailed)\n" +
-      "  }\n" +
-      "  \n" +
-      "  \n" +
-      "\n" +
-      "  long pcntSecondReminder = (long) (100L*secondReminder/numEvents);\n" +
-      "  if (pcntSecondReminder > 10){\n" +
-      "    scoreValue -= 30L;\n" +
-      "  }\n" +
-      "  else if (secondReminder > 0) {\n" +
-      "    scoreValue -= (10L + 2L*pcntWithNegativeConsent)\n" +
-      "  }\n" +
-      "\n" +
-      "  scoreValue -= (10L * firstReminder/numEvents)\n" +
-      " \n" +
-      "\n" +
-      "  \n" +
-      "   \n" +
-      "}else{\n" +
-      "  scoreValue = 0L; \n" +
-      "}\n" +
-      "\n" +
-      "StringBuffer sb = new StringBuffer ('{ \"scoreValue\": ');\n" +
-      "\n" +
-      "sb.append(scoreValue)\n" +
-      "  .append(', \"scoreExplanation\":\"');\n" +
-      "if (numEvents > 0)  {\n" +
-      "  sb.append('This score reflects that out of ')\n" +
-      "    .append(numEvents).append(' GDPR training records, ')\n" +
-      "    .append(failedCount).append(' have FAILED the awareness campaign tests, ')\n" +
-      "    .append(firstReminder).append(' have been sent a FIRST reminder to take the awareness campaign training course and, ')\n" +
-      "    .append(secondReminder).append(' have been sent a SECOND reminder to take the awareness campaign training course.');\n" +
-      "}\n" +
-      "else {\n" +
-      "  sb.append('There are no awareness campaign training records in place.')\n" +
-      "}\n" +
-      "sb.append('\" }')  \n" +
-      "\n" +
-      "retVal = sb.toString()\n" +
-      "} catch (Throwable t) {\n" +
-      "StringBuffer sb = new StringBuffer ('{ \"scoreValue\": ');\n" +
-      "\n" +
-      "sb.append(0L)\n" +
-      "  .append(', \"scoreExplanation\":\"');\n" +
-      "  sb.append('There are no awareness campaign training records in place.')\n" +
-      "sb.append('\" }')  \n" +
-      "retVal = sb.toString()\n" +
-      "}\n" +
-      "retVal.toString()\n"
+        "try {\n" +
+        "  long numEvents = g.V().has('Metadata.Type.Object.Awareness_Campaign',eq('Object.Awareness_Campaign')).in().as('events').count().next();\n" +
+        "  \n" +
+        "  def map = g.V().has('Metadata.Type.Object.Awareness_Campaign',eq('Object.Awareness_Campaign')).in().as('events').groupCount().by('Event.Training.Status').next();\n" +
+        "  \n" +
+        "  \n" +
+        "  long failedCount = map.get('Failed') == null ? 0 :map.get('Failed');\n" +
+        "  long secondReminder = map.get('Second  Reminder') == null ? 0 : map.get('Second  Reminder') ;\n" +
+        "  long firstReminder = map.get('Reminder Sent') == null ? 0 :  map.get('Reminder Sent');\n" +
+        "  \n" +
+        "  \n" +
+        "  long scoreValue = 100L;\n" +
+        "  if (numEvents > 0){\n" +
+        "    \n" +
+        "    long pcntFailed = (long) (100L*failedCount/numEvents);\n" +
+        "    if (pcntFailed > 10){\n" +
+        "      scoreValue -= 60L;\n" +
+        "    }\n" +
+        "    else if (failedCount > 0){\n" +
+        "      scoreValue -= (40L + 2L* pcntFailed)\n" +
+        "    }\n" +
+        "    \n" +
+        "    \n" +
+        "  \n" +
+        "    long pcntSecondReminder = (long) (100L*secondReminder/numEvents);\n" +
+        "    if (pcntSecondReminder > 10){\n" +
+        "      scoreValue -= 30L;\n" +
+        "    }\n" +
+        "    else if (secondReminder > 0) {\n" +
+        "      scoreValue -= (10L + 2L*pcntWithNegativeConsent)\n" +
+        "    }\n" +
+        "  \n" +
+        "    scoreValue -= (10L * firstReminder/numEvents)\n" +
+        "   \n" +
+        "  \n" +
+        "    \n" +
+        "     \n" +
+        "  }else{\n" +
+        "    scoreValue = 0L; \n" +
+        "  }\n" +
+        "  \n" +
+        "  StringBuffer sb = new StringBuffer ('{ \"scoreValue\": ');\n" +
+        "  \n" +
+        "  sb.append(scoreValue)\n" +
+        "    .append(', \"scoreExplanation\":\"');\n" +
+        "  if (numEvents > 0)  {\n" +
+        "    sb.append('This score reflects that out of ')\n" +
+        "      .append(numEvents).append(' GDPR training records, ')\n" +
+        "      .append(failedCount).append(' have FAILED the awareness campaign tests, ')\n" +
+        "      .append(firstReminder).append(' have been sent a FIRST reminder to take the awareness campaign training course and, ')\n" +
+        "      .append(secondReminder).append(' have been sent a SECOND reminder to take the awareness campaign training course.');\n" +
+        "  }\n" +
+        "  else {\n" +
+        "    sb.append('There are no awareness campaign training records in place.')\n" +
+        "  }\n" +
+        "  sb.append('\" }')  \n" +
+        "  \n" +
+        "  retVal = sb.toString()\n" +
+        "} catch (Throwable t) {\n" +
+        "    \n" +
+        "  StringBuffer sb = new StringBuffer ('{ \"scoreValue\": ');\n" +
+        "  \n" +
+        "  sb.append(0L)\n" +
+        "    .append(', \"scoreExplanation\":\"');\n" +
+        "    sb.append('There are no awareness campaign training records in place.')\n" +
+        "  sb.append('\" }')  \n" +
+        "  retVal = sb.toString()\n" +
+        "}\n" +
+        "retVal.toString()\n" +
+        "\n"
       
       , bindings: {
         // pg_from: from

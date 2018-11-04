@@ -169,7 +169,7 @@ class NavPanelDataProtnOfficerPopup extends PVGDPRScores
         "\n" +
         "sb.append('\\\" }')  \n" +
         "\n" +
-        "sb.toString()\n" 
+        "sb.toString()\n"
       
       , bindings: {
         // pg_from: from
