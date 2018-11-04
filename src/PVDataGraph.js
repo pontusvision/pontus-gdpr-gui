@@ -189,6 +189,14 @@ class PVDataGraph extends PontusComponent
   {
     this.network = network;
     this.network.setOptions(this.state.options);
+    this.network.fit();
+    
+    try
+    {
+      this.network.off("doubleClick", this.doubleClick);
+    }
+    catch (t){ /*ignore*/}
+    
     this.network.on("doubleClick", this.doubleClick);
     // this.network.on("doubleClick", this.doubleClick);
     
@@ -577,6 +585,11 @@ class PVDataGraph extends PontusComponent
       
     }, 50);
     
+    this.loadingUpdateTimer = setTimeout(() =>
+    {
+    
+    
+    }, 1000)
     
   };
   
@@ -718,29 +731,122 @@ class PVDataGraph extends PontusComponent
   
   onClickNumNeighbours = (event) =>
   {
+    
+    let options = {};
+    
+    if (1 === event)
+    {
+      options = {
+        
+        nodes: {
+          font: {
+            align: 'left',
+            color: '#FFFFFF'
+          },
+          shapeProperties: {
+            useImageSize: true, interpolation: false
+          }
+        }
+        , groups: {},
+        layout: {
+          hierarchical: false
+        },
+        interaction: {dragNodes: true},
+        "physics": {
+          solver: 'barnesHut',
+          "barnesHut": {
+            "gravitationalConstant": -359500,
+            "springLength": 720,
+            "springConstant": 0.055,
+            "damping": 0.34,
+            "avoidOverlap": 1,
+            "centralGravity": 0.01
+          },
+          "minVelocity": 0.75,
+          "maxVelocity": 200.0,
+          "timestep": 0.11
+        },
+        edges: {
+          color: "#FFFFFF"
+          , font: {
+            color: '#FFFFFF',
+            size: 20, // px
+            face: 'arial',
+            background: 'none',
+            strokeWidth: 1, // px
+            strokeColor: '#ffffff'
+            
+          }
+          , smooth: false
+          
+        }
+        
+        
+      };
+    }
+    else
+    {
+      options = {
+        edges: {
+          color: "#FFFFFF"
+          , font: {
+            color: '#FFFFFF',
+            size: 20, // px
+            face: 'arial',
+            background: 'none',
+            strokeWidth: 1, // px
+            strokeColor: '#ffffff'
+      
+          }
+          , smooth: false
+    
+        },
+  
+        "layout": {
+          "hierarchical":
+            {
+              direction: "UD",
+              sortMethod: "hubsize",
+              levelSeparation: 1500,
+              nodeSpacing: 1500,
+              treeSpacing: 1500
+              
+              
+            }
+        },
+        "physics": {
+          solver: 'hierarchicalRepulsion',
+          
+          "barnesHut": {
+            "springLength": 720 * event
+          },
+          "hierarchicalRepulsion": {
+            "centralGravity": 0.0,
+            "springLength": 1500,
+            "springConstant": 0.01,
+            "nodeDistance": 1500,
+            "damping": 0.09
+          }
+        }
+      };
+    }
+    let graph =  {
+      nodes: [],
+      edges: []
+    };
+  
+    this.network.setData(graph);
+  
+  
     this.setState(
       {
         depth: event,
-        options: {
-          "layout": { "hierarchical": (event === 1)? false:
-              {
-                direction: "UD",
-                sortMethod: "hubsize",
-                levelSeparation: 1500,
-                nodeSpacing: 1500,
-                treeSpacing: 1500
-
-  
-              }
-          },
-          "physics": {
-            "barnesHut": {
-              "springLength": 720  * event
-            }
-          }
-        }
+        options: options,
+        graph: graph
       });
+  
     this.selectData({id: this.eventId});
+    
   };
   
   enableCloseCb = () =>
@@ -834,6 +940,14 @@ class PVDataGraph extends PontusComponent
           width={this.state.width - 20}
         
         />
+        <div id="loadingBar" style={{opacity: 0, display: 'none'}}>
+          <div className="outerBorder">
+            <div id="text">0%</div>
+            <div id="border">
+              <div id="bar"></div>
+            </div>
+          </div>
+        </div>
         
         
         <Portal
