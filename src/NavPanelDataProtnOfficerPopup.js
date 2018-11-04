@@ -86,10 +86,10 @@ class NavPanelDataProtnOfficerPopup extends PVGDPRScores
         "  scoreValue = 0L; \n" +
         "}\n" +
         "\n" +
-        "StringBuffer sb = new StringBuffer ('{ \\\"scoreValue\\\": ');\n" +
+        "StringBuffer sb = new StringBuffer ('{ \"scoreValue\": ');\n" +
         "\n" +
         "sb.append(scoreValue)\n" +
-        "  .append(', \\\"scoreExplanation\\\":\\\"');\n" +
+        "  .append(', \"scoreExplanation\":\"');\n" +
         "if (numDPOs > 0)  {\n" +
         "  sb.append('This score reflects that out of ');\n" +
         "  sb.append(numDPOs);\n" +
@@ -128,37 +128,37 @@ class NavPanelDataProtnOfficerPopup extends PVGDPRScores
         "}\n" +
         "\n" +
         "if (numDPODirectReports > 0){\n" +
-        "  sb.append (\\\"  Out of the \\\").append(numDPODirectReports);\n" +
+        "  sb.append (\"  Out of the \").append(numDPODirectReports);\n" +
         "  if (numDPODirectReports == 1){\n" +
-        "    sb.append(\\\" Data Protection Officers Direct Report, \\\");\n" +
+        "    sb.append(\" Data Protection Officers Direct Report, \");\n" +
         "  }\n" +
         "  else{\n" +
-        "    sb.append(\\\" Data Protection Officers Direct Reports, \\\");\n" +
+        "    sb.append(\" Data Protection Officers Direct Reports, \");\n" +
         "  }\n" +
         "  \n" +
         "  if (numDPODirectReportsFailed == 0){\n" +
-        "    sb.append (\\\"NONE have failed the test, and \\\");\n" +
+        "    sb.append (\"NONE have failed the test, and \");\n" +
         "  }\n" +
         "  else{\n" +
         "    sb.append(numDPODirectReportsFailed);\n" +
         "    if (numDPODirectReportsFailed == 1){\n" +
-        "      sb.append (\\\" has failed the test, and \\\");\n" +
+        "      sb.append (\" has failed the test, and \");\n" +
         "    }\n" +
         "    else{\n" +
-        "      sb.append (\\\" have failed the test, and \\\");\n" +
+        "      sb.append (\" have failed the test, and \");\n" +
         "    }\n" +
         "  }\n" +
         "  \n" +
         "  if (numDPODirectReportsSecondReminder == 0){\n" +
-        "    sb.append (\\\"NONE have received a second test reminder.\\\");\n" +
+        "    sb.append (\"NONE have received a second test reminder.\");\n" +
         "  }\n" +
         "  else{\n" +
         "    sb.append(numDPODirectReportsSecondReminder);\n" +
         "    if (numDPODirectReportsSecondReminder == 1){\n" +
-        "      sb.append (\\\" has received a second test reminder.\\\");\n" +
+        "      sb.append (\" has received a second test reminder.\");\n" +
         "    }\n" +
         "    else{\n" +
-        "      sb.append (\\\" have received a second test reminder.\\\");\n" +
+        "      sb.append (\" have received a second test reminder.\");\n" +
         "    }\n" +
         "  }\n" +
         "  \n" +
@@ -167,7 +167,7 @@ class NavPanelDataProtnOfficerPopup extends PVGDPRScores
         "\n" +
         "\n" +
         "\n" +
-        "sb.append('\\\" }')  \n" +
+        "sb.append('\" }')  \n" +
         "\n" +
         "sb.toString()\n"
       
@@ -177,7 +177,6 @@ class NavPanelDataProtnOfficerPopup extends PVGDPRScores
         // , pg_orderCol: sortcolId
         // , pg_orderDir: sortdir
       }
-      
       
     };
   };
