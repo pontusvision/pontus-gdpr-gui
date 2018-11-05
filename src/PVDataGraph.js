@@ -189,7 +189,7 @@ class PVDataGraph extends PontusComponent
   {
     this.network = network;
     this.network.setOptions(this.state.options);
-    this.network.fit();
+    // this.network.fit();
     
     try
     {
@@ -795,20 +795,20 @@ class PVDataGraph extends PontusComponent
     else
     {
       options = {
-        edges: {
-          color: "#FFFFFF"
-          , font: {
-            color: '#FFFFFF',
-            size: 20, // px
-            face: 'arial',
-            background: 'none',
-            strokeWidth: 1, // px
-            strokeColor: '#ffffff'
-      
-          }
-          , smooth: false
-    
-        },
+        // edges: {
+        //   color: "#FFFFFF"
+        //   , font: {
+        //     color: '#FFFFFF',
+        //     size: 20, // px
+        //     face: 'arial',
+        //     background: 'none',
+        //     strokeWidth: 1, // px
+        //     strokeColor: '#ffffff'
+        //
+        //   }
+        //   , smooth: false
+        //
+        // },
   
         "layout": {
           "hierarchical":
@@ -826,7 +826,7 @@ class PVDataGraph extends PontusComponent
           solver: 'hierarchicalRepulsion',
           
           "barnesHut": {
-            "springLength": 720 * event
+            "springLength": 720
           },
           "hierarchicalRepulsion": {
             "centralGravity": 0.0,
@@ -843,7 +843,7 @@ class PVDataGraph extends PontusComponent
       edges: []
     };
   
-    this.network.setData(graph);
+    // this.network.setData(graph);
   
   
     this.setState(
