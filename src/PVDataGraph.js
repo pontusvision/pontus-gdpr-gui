@@ -825,9 +825,9 @@ class PVDataGraph extends PontusComponent
         "physics": {
           solver: 'hierarchicalRepulsion',
           
-          "barnesHut": {
-            "springLength": 720
-          },
+          // "barnesHut": {
+          //   "springLength": 720
+          // },
           "hierarchicalRepulsion": {
             "centralGravity": 0.0,
             "springLength": 1500,
@@ -844,9 +844,12 @@ class PVDataGraph extends PontusComponent
     };
   
     // this.network.setData(graph);
-  
-  
-    this.setState(
+    if (1 === event){
+      this.network.redraw();
+    }
+    
+    
+      this.setState(
       {
         depth: event,
         options: options,
@@ -907,8 +910,9 @@ class PVDataGraph extends PontusComponent
     
     if ((buttonsList != null && buttonsList.length > 0) || (reportButtons != null && reportButtons.length > 0))
     {
+      let ilen = reportButtons? reportButtons.length: 0;
       
-      for (let ilen = reportButtons.length, i = 0; i < ilen; i++)
+      for (let  i = 0; i < ilen; i++)
       {
         buttonsList.push(
           <PVReportButton

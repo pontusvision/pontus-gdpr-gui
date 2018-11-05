@@ -31,6 +31,9 @@ class PVDataGraphNeighboursButton extends PontusComponent
   {
     let depth = this.state.depth;
     depth ++;
+    if (depth > 24){
+      depth = 24;
+    }
     this.setState({depth: depth});
     this.props.glEventHub.emit(this.namespace, depth);
     // this.props.glEventHub.emit(this.namespace, this.state.depth);
@@ -38,8 +41,7 @@ class PVDataGraphNeighboursButton extends PontusComponent
   };
   onClickPlusPlus = () =>
   {
-    let depth = this.state.depth;
-    depth +=10;
+    let depth =24;
     this.setState({depth: depth});
     this.props.glEventHub.emit(this.namespace, depth);
     // this.props.glEventHub.emit(this.namespace, this.state.depth);
@@ -62,11 +64,8 @@ class PVDataGraphNeighboursButton extends PontusComponent
   
   onClickMinusMinus = () =>
   {
-    let depth = this.state.depth;
-    depth -=10;
-    if (depth < 1){
-      depth = 1;
-    }
+    let depth = 1;
+
     this.setState({depth: depth});
     this.props.glEventHub.emit(this.namespace, depth);
     // this.props.glEventHub.emit(this.namespace, this.state.depth);
