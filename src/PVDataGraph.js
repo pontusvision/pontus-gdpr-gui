@@ -94,9 +94,9 @@ class PVDataGraph extends PontusComponent
         "physics": {
           "hierarchicalRepulsion": {
             "centralGravity": 0.0,
-            "springLength": 1500,
+            "springLength": 300,
             "springConstant": 0.01,
-            "nodeDistance": 1500,
+            "nodeDistance": 300,
             "damping": 0.09
           },
           "barnesHut": {
@@ -593,11 +593,6 @@ class PVDataGraph extends PontusComponent
       
     }, 50);
     
-    this.loadingUpdateTimer = setTimeout(() =>
-    {
-    
-    
-    }, 1000)
     
   };
   
@@ -655,7 +650,16 @@ class PVDataGraph extends PontusComponent
         // this.props.glEventHub.emit(this.props.namespace + '-pvgraph-double-click', {
         //   vid: this.origNodeId, metadataType: items.origLabel
         // });
+        let network = this.network;
+        let depth = this.state.depth;
         
+        setTimeout(() =>
+        {
+          if (network && depth > 1)
+            network.fit();
+    
+        }, 100);
+  
         localStorage.setItem(this.subscription, graph);
         
       }
@@ -795,20 +799,20 @@ class PVDataGraph extends PontusComponent
     else
     {
       options = {
-        // edges: {
-        //   color: "#FFFFFF"
-        //   , font: {
-        //     color: '#FFFFFF',
-        //     size: 20, // px
-        //     face: 'arial',
-        //     background: 'none',
-        //     strokeWidth: 1, // px
-        //     strokeColor: '#ffffff'
-        //
-        //   }
-        //   , smooth: false
-        //
-        // },
+        edges: {
+          color: "#FFFFFF"
+          , font: {
+            color: '#FFFFFF',
+            size: 20, // px
+            face: 'arial',
+            background: 'none',
+            strokeWidth: 1, // px
+            strokeColor: '#ffffff'
+
+          }
+          , smooth: false
+
+        },
   
         "layout": {
           "hierarchical":
@@ -823,11 +827,11 @@ class PVDataGraph extends PontusComponent
             }
         },
         "physics": {
-          solver: 'hierarchicalRepulsion',
+          // solver: 'hierarchicalRepulsion',
           
-          // "barnesHut": {
-          //   "springLength": 720
-          // },
+          "barnesHut": {
+            "springLength": 720
+          },
           "hierarchicalRepulsion": {
             "centralGravity": 0.0,
             "springLength": 1500,
@@ -847,7 +851,10 @@ class PVDataGraph extends PontusComponent
     if (1 === event){
       this.network.redraw();
     }
-    
+    // if (this.graph)
+    // {
+    //   this.graph.updateGraph();
+    // }
     
       this.setState(
       {
@@ -857,7 +864,8 @@ class PVDataGraph extends PontusComponent
       });
   
     this.selectData({id: this.eventId});
-    
+  
+    // this.handleResize({});
   };
   
   enableCloseCb = () =>
