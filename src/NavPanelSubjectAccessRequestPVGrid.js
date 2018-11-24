@@ -21,8 +21,8 @@ class NavPanelSubjectAccessRequestPVGrid extends PVGrid
     colSettings[1] = {
       id: "Event.Subject_Access_Request.Request_Type", name: "SAR Type", field: "sar_req_type", sortable: true
     };
-    colSettings[2] = {id: "Metadata.Create_Date", name: "Request Date", field: "sar_creation", sortable: true};
-    colSettings[3] = {id: "Metadata.Update_Date", name: "Update Date", field: "sar_update", sortable: true};
+    colSettings[2] = {id: "Event.Subject_Access_Request.Metadata.Create_Date", name: "Request Date", field: "sar_creation", sortable: true};
+    colSettings[3] = {id: "Event.Subject_Access_Request.Metadata.Update_Date", name: "Update Date", field: "sar_update", sortable: true};
     colSettings[4] = {id: "Person.Full_Name", name: "Requester", field: "person_full_name", sortable: true};
     colSettings[5] = {id: "Person.Employee.Full_Name", name: "Handler", field: "employee_full_name", sortable: true};
     
@@ -58,20 +58,20 @@ class NavPanelSubjectAccessRequestPVGrid extends PVGrid
       sortcolId === null
       || sortcolId === 'Event.Subject_Access_Request.Status'
       || sortcolId === 'Event.Subject_Access_Request.Request_Type'
-      || sortcolId === 'Metadata.Create_Date'
-      || sortcolId === 'Metadata.Update_Date'
+      || sortcolId === 'Event.Subject_Access_Request.Metadata.Create_Date'
+      || sortcolId === 'Event.Subject_Access_Request.Metadata.Update_Date'
     )
     {
       return {
         gremlin: "g.V()" +
         ".has('Metadata.Type.Event.Subject_Access_Request',eq('Event.Subject_Access_Request'))" +
-        ".order().by(pg_orderCol == null ? 'Metadata.Create_Date' :pg_orderCol.toString() ,pg_orderDir == (1)? incr: decr)" +
+        ".order().by(pg_orderCol == null ? 'Event.Subject_Access_Request.Metadata.Create_Date' :pg_orderCol.toString() ,pg_orderDir == (1)? incr: decr)" +
         ".range(pg_from,pg_to).as('sars')" +
         ".match(" +
         "    __.as('sars').values('Event.Subject_Access_Request.Status').as('sar_status')\n" +
         "  , __.as('sars').values('Event.Subject_Access_Request.Request_Type').as('sar_req_type')\n" +
-        "  , __.as('sars').values('Metadata.Create_Date').as('sar_creation')\n" +
-        "  , __.as('sars').values('Metadata.Update_Date').as('sar_update')\n" +
+        "  , __.as('sars').values('Event.Subject_Access_Request.Metadata.Create_Date').as('sar_creation')\n" +
+        "  , __.as('sars').values('Event.Subject_Access_Request.Metadata.Update_Date').as('sar_update')\n" +
         "  , __.as('sars').in().has('Metadata.Type.Person',eq('Person')).values('Person.Full_Name').as('person_full_name')\n" +
         "  , __.as('sars').in().has('Metadata.Type.Person.Employee',eq('Person.Employee')).values('Person.Employee.Full_Name').as('employee_full_name')\n" +
         "  , __.as('sars').id().as('event_id')\n" +
@@ -97,8 +97,8 @@ class NavPanelSubjectAccessRequestPVGrid extends PVGrid
         "  , __.as('sars').in().has('Metadata.Type.Person.Employee',eq('Person.Employee')).as('employees') " +
         "  , __.as('sars').values('Event.Subject_Access_Request.Status').as('sar_status')\n" +
         "  , __.as('sars').values('Event.Subject_Access_Request.Request_Type').as('sar_req_type')\n" +
-        "  , __.as('sars').values('Metadata.Create_Date').as('sar_creation')\n" +
-        "  , __.as('sars').values('Metadata.Update_Date').as('sar_update')\n" +
+        "  , __.as('sars').values('Event.Subject_Access_Request.Metadata.Create_Date').as('sar_creation')\n" +
+        "  , __.as('sars').values('Event.Subject_Access_Request.Metadata.Update_Date').as('sar_update')\n" +
         "  , __.as('people').values('Person.Full_Name').as('person_full_name')\n" +
         "  , __.as('employees').values('Person.Employee.Full_Name').as('employee_full_name')\n" +
         "  , __.as('sars').id().as('event_id')\n" +
@@ -123,8 +123,8 @@ class NavPanelSubjectAccessRequestPVGrid extends PVGrid
         "  , __.as('sars').in().has('Metadata.Type.Person',eq('Person')).as('people') " +
         "  , __.as('sars').values('Event.Subject_Access_Request.Status').as('sar_status')\n" +
         "  , __.as('sars').values('Event.Subject_Access_Request.Request_Type').as('sar_req_type')\n" +
-        "  , __.as('sars').values('Metadata.Create_Date').as('sar_creation')\n" +
-        "  , __.as('sars').values('Metadata.Update_Date').as('sar_update')\n" +
+        "  , __.as('sars').values('Event.Subject_Access_Request.Metadata.Create_Date').as('sar_creation')\n" +
+        "  , __.as('sars').values('Event.Subject_Access_Request.Metadata.Update_Date').as('sar_update')\n" +
         "  , __.as('people').values('Person.Full_Name').as('person_full_name')\n" +
         "  , __.as('employees').values('Person.Full_Name').as('employee_full_name')\n" +
         "  , __.as('sars').id().as('event_id')\n" +

@@ -53,7 +53,7 @@ class NavPanelSubjectAccessRequestPopup extends PVGDPRScores
       "\n" +
       "g.V().has('Metadata.Type.Event.Subject_Access_Request',eq('Event.Subject_Access_Request')).as('sar')\n" +
       ".where(\n" +
-      "  __.values('Metadata.Create_Date').is(lte(thirtyDayDateThreshold))\n" +
+      "  __.values('Event.Subject_Access_Request.Metadata.Create_Date').is(lte(thirtyDayDateThreshold))\n" +
       ") \n" +
       "\n" +
       ".count().next()\n" +
@@ -62,7 +62,7 @@ class NavPanelSubjectAccessRequestPopup extends PVGDPRScores
       "\n" +
       "g.V().has('Metadata.Type.Event.Subject_Access_Request',eq('Event.Subject_Access_Request')).as('sar')\n" +
       ".where(\n" +
-      "  __.values('Metadata.Create_Date').is(lte(tenDayDateThreshold))\n" +
+      "  __.values('Event.Subject_Access_Request.Metadata.Create_Date').is(lte(tenDayDateThreshold))\n" +
       ") \n" +
       "\n" +
       ".count().next()\n" +

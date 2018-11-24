@@ -35,11 +35,11 @@ class NavPanelDataBreachPVGridDataBreachEvents extends PVGrid
       sortable: true
     };
     colSettings[4] = {
-      id: "Metadata.Create_Date", name: "Start Date", field: "Metadata.Create_Date",
+      id: "Event.Data_Breach.Metadata.Create_Date", name: "Start Date", field: "Event.Data_Breach.Metadata.Create_Date",
       sortable: true
     };
     colSettings[5] = {
-      id: "Metadata.Update_Date", name: "Update Date", field: "Metadata.Update_Date",
+      id: "Event.Data_Breach.Metadata.Update_Date", name: "Update Date", field: "Event.Data_Breach.Metadata.Update_Date",
       sortable: true
     };
   
@@ -62,7 +62,7 @@ class NavPanelDataBreachPVGridDataBreachEvents extends PVGrid
     return {
       gremlin: "g.V()" +
       ".has('Metadata.Type.Event.Data_Breach',eq('Event.Data_Breach'))" +
-      ".order().by(pg_orderCol == null ? 'Metadata.Create_Date' :pg_orderCol.toString() ,pg_orderDir == (1)? incr: decr)" +
+      ".order().by(pg_orderCol == null ? 'Event.Data_Breach.Metadata.Create_Date' :pg_orderCol.toString() ,pg_orderDir == (1)? incr: decr)" +
       ".range(pg_from,pg_to).as('data_breaches')" +
       ".match(" +
       "    __.as('data_breaches').values('Event.Data_Breach.Id').as('Event.Data_Breach.Id')" +
@@ -70,8 +70,8 @@ class NavPanelDataBreachPVGridDataBreachEvents extends PVGrid
       "  , __.as('data_breaches').values('Event.Data_Breach.Status').as('Event.Data_Breach.Status')" +
       "  , __.as('data_breaches').values('Event.Data_Breach.Source').as('Event.Data_Breach.Source')" +
       "  , __.as('data_breaches').values('Event.Data_Breach.Impact').as('Event.Data_Breach.Impact')" +
-      "  , __.as('data_breaches').values('Metadata.Create_Date').as('Metadata.Create_Date')" +
-      "  , __.as('data_breaches').values('Metadata.Update_Date').as('Metadata.Update_Date')" +
+      "  , __.as('data_breaches').values('Event.Data_Breach.Metadata.Create_Date').as('Event.Data_Breach.Metadata.Create_Date')" +
+      "  , __.as('data_breaches').values('Event.Data_Breach.Metadata.Update_Date').as('Event.Data_Breach.Metadata.Update_Date')" +
       "  , __.as('data_breaches').id().as('event_id')" +
       "  )" +
       ".select (" +
@@ -80,8 +80,8 @@ class NavPanelDataBreachPVGridDataBreachEvents extends PVGrid
       " ,'Event.Data_Breach.Status'" +
       " ,'Event.Data_Breach.Source'" +
       " ,'Event.Data_Breach.Impact'" +
-      " ,'Metadata.Create_Date'" +
-      " ,'Metadata.Update_Date'" +
+      " ,'Event.Data_Breach.Metadata.Create_Date'" +
+      " ,'Event.Data_Breach.Metadata.Update_Date'" +
       " ,'event_id'" +
       ")"
       , bindings: {
