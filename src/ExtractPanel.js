@@ -2,10 +2,10 @@ import React, {Component} from 'react';
 import ResizeAware from 'react-resize-aware';
 import Iframe from 'react-iframe';
 import {NavPane, NavPaneItem} from "react-desktop/windows";
-import PVJExcel from "./PVJExcel";
 import {child} from "react-icons-kit-allreact/fa/child";
 import {lab} from "react-icons-kit-allreact/icomoon/lab";
 import Icon from 'react-icons-kit-allreact';
+import ReactDataGrid from 'react-data-grid';
 
 
 class ExtractPanel extends Component
@@ -59,22 +59,28 @@ class ExtractPanel extends Component
     // M557.9,508.3c11.1,0,21.9,5.2,28.8,14.9l86.1,120.7c2.5,3.5,6.5,5.4,10.6,5.4c2.6,0,5.2-0.8,7.5-2.4c5.8-4.2,7.2-12.2,3-18.1L672.7,599c9.6-2.4,21.3-5.4,34.2-8.5c1.8-0.4,3.6-0.6,5.3-0.6c7.2,0,14.1,3.4,18.3,9.5l17.4,24.4c2.5,3.5,6.5,5.4,10.6,5.4c2.6,0,5.2-0.8,7.5-2.4c5.8-4.2,7.2-12.2,3-18.1l-20.1-28.2c11.1-2.6,22.4-5.1,33.6-7.5c1.6-0.3,3.2-0.5,4.8-0.5c7.2,0,14.1,3.5,18.3,9.5l14.8,20.7c2.5,3.5,6.5,5.4,10.6,5.4c2.6,0,5.2-0.8,7.5-2.4c5.8-4.2,7.2-12.2,3-18.1l-16.5-23.2c3.4-0.6,6.6-1.2,9.9-1.8c4.5-0.8,8.7-1.2,12.6-1.2c26.7,0,43.1,16.9,61.4,42.5c47,65.9,34,112.3,81.3,178.7c-59.5,42.5-119.6,85.4-182.3,130.1c-98.4-73.4-183.4-96.9-210.8-106.1c-26.1-8.8-43-25.6-37.2-46.6c5.6-20.1,25.7-26.9,43.4-26.9c1.1,0,2.1,0,3.1,0.1c27.7,1.3,50.1,9.6,50.1,9.6L529.1,564.3c-11.3-15.9-7.6-38,8.3-49.4C543.6,510.5,550.8,508.3,557.9,508.3"
     // /> </svg>);
     let hght = ''+ this.state.height - 40  + 'px';
-    let nifiPanel =  <ResizeAware
-      style={{height: this.state.height, width: '100%'}}
-      onResize={this.handleResize}
-    >
-      <Iframe url="/nifi/"
-              style={{height: this.state.height, width: '100%'}}
+    let nifiPanel =       <Iframe url="/nifi/"
+              style={{height: hght, width: '100%'}}
   
               width="100%"
-              height={this.state.height}
+              height={hght}
               ref={this.setRef}
               display="initial"
               position="relative"
         // frameborder="0"
-              allowFullScreen={false}/>
-    </ResizeAware>;
-    
+              allowFullScreen={false}/>;
+  
+    const columns = [
+      { key: 'id', name: 'ID' },
+      { key: 'title', name: 'Title' },
+      { key: 'count', name: 'Count' } ];
+  
+    const rows = [{id: 0, title: 'row1', count: 20}, {id: 1, title: 'row1', count: 40}, {id: 2, title: 'row1', count: 60}];
+    let handsOnTable = <ReactDataGrid
+      columns={columns}
+      rowGetter={i => rows[i]}
+      rowsCount={3}
+      minHeight={150} />;
     
     
     return (
@@ -92,7 +98,7 @@ class ExtractPanel extends Component
           theme={this.props.theme}
         >
           {this.renderItem("NiFi", nifiPanel, <Icon icon={lab}/>)}
-          {this.renderItem("Test", <PVJExcel></PVJExcel>, <Icon icon={child}/>)}
+          {this.renderItem("Test", handsOnTable, <Icon icon={child}/>)}
         </NavPane>
       </div>
     );

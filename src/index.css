@@ -10,6 +10,14 @@ body {
     height: 100%;
 }
 
+.react-grid-Cell:not(.editing) .react-grid-Cell__value {
+    color: black;
+}
+
+.react-grid-HeaderCell {
+    color: black;
+}
+
 #loadingBar {
     position:absolute;
     top:0px;

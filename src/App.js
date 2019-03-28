@@ -292,7 +292,7 @@ class App extends React.Component
     {
       var item = items[i];
       menuItems.push(<a style={{color: 'white'}} onClick={item.cb} key={item.panelId} className="menu-item"
-                        href="">{item.title}</a>);
+                        >{item.title}</a>);
     }
     
     

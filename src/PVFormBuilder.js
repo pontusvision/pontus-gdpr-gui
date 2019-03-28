@@ -170,8 +170,8 @@ class FormRaw extends Component
     form: PropTypes.object,
     submission: PropTypes.object,
     options: PropTypes.shape({
-      readOnly: PropTypes.boolean,
-      noAlerts: PropTypes.boolean,
+      readOnly: PropTypes.bool,
+      noAlerts: PropTypes.bool,
       i18n: PropTypes.object,
       template: PropTypes.string
     }),

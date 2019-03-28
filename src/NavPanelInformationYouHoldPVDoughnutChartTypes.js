@@ -93,6 +93,7 @@ class NavPanelInformationYouHoldPVDoughnutChartTypes extends PontusComponent
         "long totalCount = 0\n" +
         "vertexLabels.reverse().each { key ->\n" +
         "\n" +
+        // eslint-disable-next-line
         "  Long size =  g.V().has(\"Metadata.Type.${key}\",key).count().next() as Long\n" +
         "  \n" +
         "  if (size > 0){\n" +

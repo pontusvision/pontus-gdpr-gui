@@ -1,5 +1,5 @@
 import React from 'react';
-import {Grid} from 'slickgrid-es6';
+// import {Grid} from 'slickgrid-es6';
 
 
 import "./slick.grid.css";
@@ -10,8 +10,11 @@ import axios from "axios";
 // import "slickgrid-es6/dist/slick-default-theme.less";
 import {Flex, Box} from 'reflexbox'
 import PontusComponent from "./PontusComponent";
+import 'jexcel/dist/css/jquery.jexcel.css'
+import  'jexcel/dist/js/jquery.jexcel';
+import  'jexcel/dist/js/jexcel-formulas';
+import jexcel from 'jexcel/dist/js/jexcel';
 import $ from 'jquery';
-import  'jexcel';
 
 
 class PVJExcel extends PontusComponent
@@ -135,8 +138,10 @@ class PVJExcel extends PontusComponent
         ['Pump',4,4000,'=B4*C4','=IF(C4 > 5000, true, false)'],
         ['Total','=SUM(B1:B4)','=(C1+C2+C3+C4)','=SUM(D1:D4)','']
       ]
+      let mgrid = $('#myGrid');
   
-      this.grid = $('#myGrid').jexcel({
+      jexcel({
+        id: 'myGrid',
         data:data,
         columns: [
           { type:'text' },
