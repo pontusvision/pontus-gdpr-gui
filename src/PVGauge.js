@@ -12,23 +12,24 @@ import PontusComponent from "./PontusComponent";
 class PVGauge extends PontusComponent
 {
   
-  constructor(props){
+  constructor(props)
+  {
     super(props);
     // this.url = "/gateway/sandbox/pvgdpr_graph";
     let autoResize = true;
-    if (props.height !== null && props.height > 0 && props.width !== null && props.width > 0){
+    if (props.height !== null && props.height > 0 && props.width !== null && props.width > 0)
+    {
       autoResize = false;
     }
-  
+    
     this.state = {
       height: props.height
-      ,width: props.width
-      ,autoResize: autoResize
-      ,value: props.value
+      , width: props.width
+      , autoResize: autoResize
+      , value: props.value
     }
-  
+    
   }
-  
   
   
   getHexColor(value)
@@ -41,6 +42,7 @@ class PVGauge extends PontusComponent
   {
     return Math.floor(Math.random() * Math.floor(max));
   }
+  
   handleResize = ({width, height}) =>
   {
     // if (height > 0)
@@ -53,26 +55,28 @@ class PVGauge extends PontusComponent
     //   this.instance.updateSize(width, window.innerHeight - 50);
     //
     // }
-    if (this.state.autoResize){
+    if (this.state.autoResize)
+    {
       this.setState({height: height, width: width});
-  
+      
     }
   };
-  setNode = (node) =>{
+  setNode = (node) =>
+  {
     this.instance = node;
   };
   
   render()
   {
-  
+    
     let val = this.props.value; // || this.getRandomInt(100);
     let r = Math.floor(255 - (val * 2.55));
-  
+    
     let g = Math.floor(val * 2.55);
     let b = 0;
     let colorHex = '#' + this.getHexColor(r) + this.getHexColor(g) + this.getHexColor(b);
-  
-  
+    
+    
     // var eventHub = this.props.glEventHub;
     //         <Graph graph={this.state.graph} options={this.state.options} events={this.state.events}/>
     
@@ -82,14 +86,41 @@ class PVGauge extends PontusComponent
         onResize={this.handleResize}
       >
         <div style={{height: '100%', width: '100%'}}>
-        
+          
           <Gauge ref={this.setNode} color={colorHex} value={val} width={this.state.width} height={this.state.height}
-                 label={this.props.label?this.props.label: ""}
-                 valueLabelStyle={this.props.valueLabelStyle || { textAnchor: "middle", fill: "#000000", stroke: "none", fontStyle: "normal", fontVariant: "normal", fontWeight: 'bold', fontStretch: 'normal', lineHeight: 'normal', fillOpacity: 1 }}
-                 
-        />
-      
-      
+                 label={this.props.label ? this.props.label : ""}
+                 backgroundColor="#fefefe"
+                 topLabelStyle={{
+                   textAnchor: "middle",
+                   fill: "#ffffff",
+                   stroke: "none",
+                   fontStyle: "normal",
+                   fontVariant: "normal",
+                   fontWeight: 'bold',
+                   fontStretch: 'normal',
+                   lineHeight: 'normal',
+                   fillOpacity: 1
+                 }}
+                 minMaxLabelStyle={{
+                   textAnchor: "middle",
+                   fill: "#ffffff",
+                   stroke: "none",
+                   fontStyle: "normal",
+                   fontVariant: "normal",
+                   fontWeight: 'normal',
+                   fontStretch: 'normal',
+                   fontSize: 20,
+                   lineHeight: 'normal',
+                   fillOpacity: 1
+                 }}
+                 valueLabelStyle={this.props.valueLabelStyle || {
+                   textAnchor: "middle", fill: "#ffffff", stroke: "none", fontStyle: "normal", fontVariant: "normal",
+                   fontWeight: 'bold', fontStretch: 'normal', lineHeight: 'normal', fillOpacity: 1
+                 }}
+          
+          />
+        
+        
         </div>
       </ResizeAware>
     );

@@ -336,6 +336,7 @@ class App extends React.Component
           <TabPanel
             height={this.state.height}
             width={this.state.width}
+            style={{backgroundColor: 'rgb(79,79,79)'}}
           >
             {this.mainPanelSource}
           </TabPanel>
