@@ -33,9 +33,6 @@ let emitter = new EventEmitter();
  ***************************/
 
 
-/***************************
- * UserDetail Component
- ***************************/
 class MainPanel extends React.Component
 {
   // constructor(props)
@@ -153,15 +150,18 @@ class App extends React.Component
   
   setNode = (node) =>
   {
-    this.node = node;
-    this.node.setState({selectedIndex: 0});
+    if (node)
+    {
+      this.node = node;
+      this.node.setState({selectedIndex: 0});
+    }
   };
   
   componentWillUnmount()
   {
     // super.componentWillUnmount();
     // this.props.glEventHub.off(this.namespace + 'pvgrid-on-data-loaded', this.onDataLoadedCb);
-    this.props.glEventHub.off(this.namespace + '-PVAceGremlinEditor-on-change', this.setValue);
+    // this.props.glEventHub.off(this.namespace + '-PVAceGremlinEditor-on-change', this.setValue);
     // window.removeResizeListener(this.od.offsetParent, this.handleResize);
     
   }
@@ -291,7 +291,7 @@ class App extends React.Component
     for (var i = 0, ilen = items.length; i < ilen; i++)
     {
       var item = items[i];
-      menuItems.push(<a style={{color: 'white'}} onClick={item.cb} key={item.panelId} className="menu-item"
+      menuItems.push(<a style={{color: 'white'}}  onClick={item.cb} key={item.panelId} className="menu-item"
                         >{item.title}</a>);
     }
     

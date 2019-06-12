@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
-import {Creatable} from 'react-select';
-
+import CreatableSelect from 'react-select/creatable';
 // Be sure to include styles at some point, probably during your bootstrapping
 import axios from "axios";
 
@@ -14,20 +13,24 @@ class GremlinComboBox extends Component
     super(props);
     
     this.req = null;
-    if (this.props.url === null){
+    if (this.props.url === null)
+    {
       let err = "must set the URL to forward requests";
       throw (err);
     }
-  
+    
     this.state = {
-      value: this.props.multi? [] : {}
+      value: this.props.multi ? [] : {}
       // ,options: [{label : "one", value: "one"}, {label: "two", value: "two"}]
-      ,options: []
+      , options: []
     };
-  
-  
-  
+    
+    
   }
+  
+  
+  
+  
   
   getOptions = (jsonRequest) =>
   {
@@ -43,7 +46,7 @@ class GremlinComboBox extends Component
     let CancelToken = axios.CancelToken;
     this.req = CancelToken.source();
     
-    axios.post(url, jsonRequest ,
+    axios.post(url, jsonRequest,
       {
         headers: {'Content-Type': 'application/json', 'Accept': 'application/json'}
         , cancelToken: this.req.token
@@ -54,7 +57,7 @@ class GremlinComboBox extends Component
         this.setState({
           options: response.data.labels
         });
-  
+        
         // callback(null, {
         //   options: response.data.labels || [],
         //   complete: true
@@ -80,15 +83,16 @@ class GremlinComboBox extends Component
   
   onError = (err) =>
   {
-    if (this.props.onError){
+    if (this.props.onError)
+    {
       this.props.onError(err);
     }
-    else{
+    else
+    {
       console.error("error loading pages " + err);
-  
+      
     }
   };
-  
   
   
   onChange = (value) =>
@@ -96,22 +100,22 @@ class GremlinComboBox extends Component
     this.setState({
       value: value
     });
-  
+    
     if (this.props.onChange)
     {
       this.props.onChange(value);
       // this.reactSelect.setFocus();
     }
-
-  }
+    
+  };
   
   
   componentDidMount()
   {
     /* you can pass config as prop, or use a predefined one */
-  
+    
     this.getOptions();
-
+    
   }
   
   componentWillUnmount()
@@ -122,21 +126,54 @@ class GremlinComboBox extends Component
   
   render()
   {
-    
+  
+    const CustomClearText = () => 'clear all';
+  
+    const ClearIndicator = props =>
+    {
+      const {
+        children = <CustomClearText/>,
+        getStyles,
+        innerProps: {ref, ...restInnerProps},
+      } = props;
+      return (
+        <div
+          {...restInnerProps}
+          ref={ref}
+          style={getStyles('clearIndicator', props)}
+        >
+          <div style={{padding: '0px 5px'}}>{children}</div>
+        </div>
+      );
+    };
+  
+  
+    const  ClearIndicatorStyles = (base, state) => ({
+      ...base,
+      cursor: 'pointer',
+      color: state.isFocused ? 'blue' : 'black',
+    });
+  
+    // multi={this.props.multi === null ? true : this.props.multi}
+  
     return (
       
-          <Creatable
-            name={this.props.name||"form-field-name"}
-            key={this.state.value ? this.state.value.length: 0}
-            value={this.state.value}
-            multi={this.props.multi === null? true : this.props.multi}
-            options={this.state.options}
-            joinValues={true}
-            delimiter={","}
-            onChange={this.onChange}
-          />
-         
-       
+      <CreatableSelect
+        name={this.props.name || "form-field-name"}
+        key={this.state.value ? this.state.value.length : 0}
+        value={this.state.value}
+        isMulti={this.props.multi === null ? true : this.props.multi}
+        isClearable
+        options={this.state.options}
+        joinValues={true}
+        delimiter={","}
+        onChange={this.onChange}
+        components={ ClearIndicator }
+
+        styles={{ clearIndicator: ClearIndicatorStyles }}
+      />
+    
+    
     );
     
     /*       return (

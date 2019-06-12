@@ -1,7 +1,6 @@
 import React from 'react';
 import axios from "axios";
-import {Button, Segment, Portal} from 'semantic-ui-react';
-import {Base64} from 'js-base64';
+import {Button, Portal, Segment} from 'semantic-ui-react';
 import PontusComponent from "./PontusComponent";
 
 // import PVDatamaps from './PVDatamaps';
@@ -17,16 +16,16 @@ class PVDetailsButton extends PontusComponent
     //   {key: 'street', name: 'Street'}
     // ];
     this.errorCounter = 0;
-  
+    
     this.doubleClickNamespace = this.props.namespace + '-pvgraph-double-click';
     
-  
+    
     this.url = PontusComponent.getGraphURL(this.props);
     // this.url = "/gateway/sandbox/pvgdpr_graph";
     
     this.state = {
       open: false
-     ,preview: ""
+      , preview: ""
     };
     
   }
@@ -46,16 +45,16 @@ class PVDetailsButton extends PontusComponent
   onDoubleClickGraph = (event) =>
   {
     this.ensureData(event.vid, event.metadataType);
-  
+    
   };
   
   componentDidMount()
   {
     // super.componentDidMount();
     this.props.glEventHub.on(this.doubleClickNamespace, this.onDoubleClickGraph);
-  
-    this.setState({ open: false });
-  
+    
+    this.setState({open: false});
+    
   }
   
   componentWillUnmount()
@@ -152,7 +151,7 @@ class PVDetailsButton extends PontusComponent
       {
         // let items = resp.data.result.data['@value'][0]['@value'];
         let items = resp.data.result.data['@value'][0];
-  
+        
         let tableBodySb =
           "<div xmlns=\"http://www.w3.org/1999/xhtml\" style=\"font-size:20px;color:#FFFFFF;height:100%;width:100%;\">"
           + "<style>"
@@ -170,8 +169,8 @@ class PVDetailsButton extends PontusComponent
           + "<tr><th class=\"tg-ygl1\">Property</th><th class=\"tg-x9s4\">Value</th></tr>"
           + atob(items)
           + "</table></div>";
-  
-  
+        
+        
         this.setState(
           {
             open: !this.state.open
@@ -205,7 +204,7 @@ class PVDetailsButton extends PontusComponent
     // this.onDataLoaded.notify({from: from, to: to});
   };
   
-  handleClose = () => this.setState({ open: false });
+  handleClose = () => this.setState({open: false});
   
   render()
   {

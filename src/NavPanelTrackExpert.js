@@ -1,20 +1,18 @@
-
 import React from 'react';
-import ResizeAware from 'react-resize-aware';
-
-import GoldenLayout from 'golden-layout';
 
 import NavPanelTrackExpertPVDataGraph from './NavPanelTrackExpertPVDataGraph';
 import NavPanelTrackExpertPVAceGremlinEditor from "./NavPanelTrackExpertPVAceGremlinEditor";
 import NavPanelTrackExpertPVAceGremlinJSONQueryResults from "./NavPanelTrackExpertPVAceGremlinJSONQueryResults";
-import PontusComponent from "./PontusComponent";
+import PVGoldenLayoutComponent from "./PVGoldenLayoutComponent";
 
 
-class NavPanelTrackExpert extends PontusComponent
+class NavPanelTrackExpert extends PVGoldenLayoutComponent
 {
   constructor(props)
   {
     super(props);
+    this.stateVar = 'savedStateNavPanelTrackExpert';
+    
     this.config = {
       settings: {
         hasHeaders: true,
@@ -56,147 +54,39 @@ class NavPanelTrackExpert extends PontusComponent
               type: 'react-component',
               component: 'data-graph'
             }
-            
+          
           ]
         }
       ]
       
     };
     
-    this.state = {height: props.height , width: props.width};
+    this.state = {height: props.height, width: props.width};
     
   }
   
-  shouldComponentUpdate(){
+  shouldComponentUpdate()
+  {
     return false;
   }
   
-  deselect= ()=>{
+  deselect = () =>
+  {
   
   };
   
-  componentDidMount()
+  
+  registerComponents = (instance) =>
   {
-    /* you can pass config as prop, or use a predefined one */
+    this.registerComponentsPreamble(instance);
     
-    // var savedState = null;// LPPM: TODO: re-enable this later localStorage.getItem('savedStatePontusPanel');
-    var savedState =  localStorage.getItem('savedStateNavPanelTrackExpert');
-    
-    
-    if (savedState !== null)
-    {
-      this.instance = new GoldenLayout(JSON.parse(savedState), this.node);
-    }
-    else
-    {
-      this.instance = new GoldenLayout(this.config, this.node);
-    }
-    
-    // instance = new GoldenLayout(config, this.node);
-    /* register components or bind events to your new instance here */
     this.instance.registerComponent('gremlin-editor', NavPanelTrackExpertPVAceGremlinEditor);
     this.instance.registerComponent('query-results', NavPanelTrackExpertPVAceGremlinJSONQueryResults);
     this.instance.registerComponent('data-graph', NavPanelTrackExpertPVDataGraph);
-    this.instance.init();
-    
-    // this.instance.on('resize', ({a,b})=>{
-    //   this.handleResize({width:a, height: b });
-    // });
-    
-    this.instance.on('tabCreated', function (tab)
-    {
-      tab.closeElement.off('click').click(function ()
-      {
-        // if( confirm( 'You have unsaved changes, are you sure you want to close this tab' ) ) {
-        //     tab.contentItem.remove();
-        // }
-      })
-    });
-    
-    this.instance.on('stateChanged', this.saveState);
-    
-  }
-  
-  saveState = () =>
-  {
-    try
-    {
-      let state = JSON.stringify(this.instance.toConfig());
-      localStorage.setItem('savedStateNavPanelTrackExpert', state);
-  
-    }catch (e){}
     
   };
   
-  setNode = (node) =>
-  {
-    this.node = node;
-  };
   
-  // handleResize = ({width, height}) =>
-  // {
-  //   if (height > 0){
-  //     this.instance.updateSize(width, height);
-  //
-  //   }
-  //   else{
-  //     this.instance.updateSize(width,window.innerHeight - 50);
-  //   }
-  // };
-  
-  
-  handleResize = () =>
-  {
-    try
-    {
-      
-      let width = this.node.offsetParent.offsetWidth;
-      let height = this.node.offsetParent.offsetHeight;
-      // this.setState({height: height, width: width});
-      if (this.instance){
-        this.instance.updateSize(width, height);
-  
-      }
-  
-      console.log(this);
-    }
-    catch (e)
-    {
-      console.log(e);
-    }
-    
-  };
-  
- 
-  
-  
-  
-  
-  /*
- 
-   <div
-   // style={{height: this.state.height+'px', width: this.state.width+'px'}}
-   height={this.state.height}
-   width={this.state.width }
- 
-   ref={this.setOuterDiv}/>
-   */
-  
-  render()
-  {
-    
-    return (
-      <ResizeAware
-         style={{height: '100%', width: '100%'}}
-      >
-        <div
-         style={{height: '100%', width: '100%'}}
-          ref={this.setNode}
-        />
-      </ResizeAware>
-  
-    )
-    
-  }
 }
+
 export default NavPanelTrackExpert;

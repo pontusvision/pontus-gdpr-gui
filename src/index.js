@@ -2,10 +2,8 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
-import registerServiceWorker from './registerServiceWorker';
 import Keycloak from "keycloak-js";
 import axios from "axios";
-import {BrowserRouter as Router, Route} from 'react-router-dom';
 import PVFormDisplay from './PVFormDisplay';
 import TrackPanel from "./TrackPanel";
 import NavPanelIndividualsRights from "./NavPanelIndividualsRights"
@@ -28,7 +26,7 @@ function appRender(kc)
   const expertView = () => (
     <TrackPanel
       style={{height: window.innerHeight - 20, width: window.innerWidth - 20, flexDirection: 'column', flexGrow: 1}}
-      height={window.innerHeight }
+      height={window.innerHeight}
       width={window.innerWidth - 20}
     />
   );
@@ -40,14 +38,9 @@ function appRender(kc)
   //     <Route exact params path="/forms2"  render={(props)=>{
   //       return  <PVFormDisplay queryStr={props.location.search}/>;
   //     }} />
-  //     <Route exact path="/forms/:formURL" component={formDisplay}/> {/* the match.params.formURL are passed from here */}
-  //     <Route path="/expert" component={expertView}/> {/* the match.params.formURL are passed from here */}
-  //     <Route path="/re" component={appComp}/>
-  //     <Route path="/indivrights" component={indivRights}/>
-  //
-  //
-  //   </div>
-  // </Router>;
+  //     <Route exact path="/forms/:formURL" component={formDisplay}/> {/* the match.params.formURL are passed from
+  // here */} <Route path="/expert" component={expertView}/> {/* the match.params.formURL are passed from here */}
+  // <Route path="/re" component={appComp}/> <Route path="/indivrights" component={indivRights}/>   </div> </Router>;
   
   
 }
@@ -206,52 +199,51 @@ function appRender(kc)
   // }
   // else
   
-    
-    loadJSON(isDev?'keycloak-conf.json': 'pvgdpr_gui/keycloak-conf.json',
-      function (kcConf)
+  
+  loadJSON(isDev ? 'keycloak-conf.json' : 'pvgdpr_gui/keycloak-conf.json',
+    function (kcConf)
+    {
+      
+      
+      const kc = Keycloak(kcConf);
+      kc.init({adapter: 'default', onLoad: 'login-required'}).success(authenticated =>
       {
-        
-        
-        const kc = Keycloak(kcConf);
-        kc.init({adapter: 'default', onLoad: 'login-required'}).success(authenticated =>
+        if (authenticated)
         {
-          if (authenticated)
-          {
-            // store.getState().keycloak = kc;
-            // ReactDOM.render(app, document.getElementById("app"));
-            window.keycloakInstance = kc;
-            ReactDOM.render(appRender(kc), document.getElementById('root'));
-            
-          }
-        });
-        
-        axios.interceptors.request.use(config =>
+          // store.getState().keycloak = kc;
+          // ReactDOM.render(app, document.getElementById("app"));
+          window.keycloakInstance = kc;
+          ReactDOM.render(appRender(kc), document.getElementById('root'));
+          
+        }
+      });
+      
+      axios.interceptors.request.use(config =>
+      {
+        return refreshToken().then(() =>
         {
-          return refreshToken().then(() =>
-          {
-            config.headers.Authorization = 'Bearer ' + kc.idToken;
-            return Promise.resolve(config)
-          }).catch(() =>
-          {
-            kc.login();
-          })
-        });
+          config.headers.Authorization = 'Bearer ' + kc.idToken;
+          return Promise.resolve(config)
+        }).catch(() =>
+        {
+          kc.login();
+        })
+      });
 
 // need to wrap the KC "promise object" into a real Promise object
-        const refreshToken = (minValidity = 5) =>
+      const refreshToken = (minValidity = 5) =>
+      {
+        return new Promise((resolve, reject) =>
         {
-          return new Promise((resolve, reject) =>
-          {
-            kc.updateToken(minValidity)
-              .success(() => resolve())
-              .error(error => reject(error))
-          });
-        };
-        
-        
-      },
-      function (xhr) { console.error(xhr); });
-  
+          kc.updateToken(minValidity)
+            .success(() => resolve())
+            .error(error => reject(error))
+        });
+      };
+      
+      
+    },
+    function (xhr) { console.error(xhr); });
   
   
 })();

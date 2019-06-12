@@ -1,8 +1,5 @@
-import React, {Component} from 'react';
+import React from 'react';
 import ResizeAware from 'react-resize-aware';
-// import Graph from 'react-graph-vis';
-// import Timeline from 'react-visjs-timeline';
-
 // import '../node_modules/vis/dist/vis.css';
 // import '../node_modules/vis/dist/vis-timeline-graph2d.min.css';
 import './vis-timeline.css';
@@ -12,6 +9,8 @@ import * as Vis from 'vis';
 
 import axios from 'axios';
 import PontusComponent from "./PontusComponent";
+// import Graph from 'react-graph-vis';
+// import Timeline from 'react-visjs-timeline';
 
 
 /***************************

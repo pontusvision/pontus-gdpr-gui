@@ -144,7 +144,7 @@ class PVDataGraph extends PontusComponent
       param.event.stopPropagation();
       this.enableClose = false;
       let event = {id: param.nodes[0]};
-      let isString = typeof(event.id) === 'string' || event.id instanceof String;
+      let isString = typeof (event.id) === 'string' || event.id instanceof String;
       
       if (isString)
       {
@@ -195,7 +195,8 @@ class PVDataGraph extends PontusComponent
     {
       this.network.off("doubleClick", this.doubleClick);
     }
-    catch (t){ /*ignore*/}
+    catch (t)
+    { /*ignore*/}
     
     this.network.on("doubleClick", this.doubleClick);
     // this.network.on("doubleClick", this.doubleClick);
@@ -461,12 +462,9 @@ class PVDataGraph extends PontusComponent
       "\n" +
       " }\n" +
       "} catch(e) {}\n" +
-  
-      "sb.append('] }');\n" +
-      "sb.toString() \n" ;
       
-     
-    
+      "sb.append('] }');\n" +
+      "sb.toString() \n";
     
     
     return {
@@ -475,7 +473,7 @@ class PVDataGraph extends PontusComponent
         pg_depth: this.state.depth
       }
       , gremlin: query
-
+      
     };
   };
   
@@ -656,10 +654,12 @@ class PVDataGraph extends PontusComponent
         setTimeout(() =>
         {
           if (network && depth > 1)
+          {
             network.fit();
-    
+          }
+          
         }, 100);
-  
+        
         localStorage.setItem(this.subscription, graph);
         
       }
@@ -808,12 +808,12 @@ class PVDataGraph extends PontusComponent
             background: 'none',
             strokeWidth: 1, // px
             strokeColor: '#ffffff'
-
+            
           }
           , smooth: false
-
+          
         },
-  
+        
         "layout": {
           "hierarchical":
             {
@@ -842,13 +842,14 @@ class PVDataGraph extends PontusComponent
         }
       };
     }
-    let graph =  {
+    let graph = {
       nodes: [],
       edges: []
     };
-  
+    
     // this.network.setData(graph);
-    if (1 === event){
+    if (1 === event)
+    {
       this.network.redraw();
     }
     // if (this.graph)
@@ -856,15 +857,15 @@ class PVDataGraph extends PontusComponent
     //   this.graph.updateGraph();
     // }
     
-      this.setState(
+    this.setState(
       {
         depth: event,
         options: options,
         graph: graph
       });
-  
+    
     this.selectData({id: this.eventId});
-  
+    
     // this.handleResize({});
   };
   
@@ -902,28 +903,32 @@ class PVDataGraph extends PontusComponent
     
     let buttonsList = [
       <PVDataGraphNeighboursButton
+        key={100}
         glEventHub={this.props.glEventHub}
         namespace={this.props.namespace}
       />,
-      <PVDetailsButton className={'compact'}
-                       namespace={this.props.namespace}
-                       metadataType={this.state.origLabel}
-                       contextId={this.state.vid}
-                       glEventHub={this.props.glEventHub}
-                       style={{border: 0, background: 'rgb(69,69,69)'}}
-                       size={'small'}/>
+      <PVDetailsButton
+        key={200}
+        className={'compact'}
+        namespace={this.props.namespace}
+        metadataType={this.state.origLabel}
+        contextId={this.state.vid}
+        glEventHub={this.props.glEventHub}
+        style={{border: 0, background: 'rgb(69,69,69)'}}
+        size={'small'}/>
     ];
     
     let bttns = <div height={0}/>;
     
     if ((buttonsList != null && buttonsList.length > 0) || (reportButtons != null && reportButtons.length > 0))
     {
-      let ilen = reportButtons? reportButtons.length: 0;
+      let ilen = reportButtons ? reportButtons.length : 0;
       
-      for (let  i = 0; i < ilen; i++)
+      for (let i = 0; i < ilen; i++)
       {
         buttonsList.push(
           <PVReportButton
+            key = {i}
             className={'compact'}
             templateText={reportButtons[i].text}
             contextId={reportButtons[i].vid}

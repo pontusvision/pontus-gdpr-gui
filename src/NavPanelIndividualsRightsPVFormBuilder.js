@@ -35,15 +35,17 @@ class NavPanelIndividualsRightsPVFormBuilder extends PVFormBuilder
   {
     // this.val = Base64.decode(data['Object.Form.Text']);
     
+    if (data){
+      this.setState({
+        formId: data['index']
+        , formURL: data['Object.Form.URL']
+        , formVertexLabel: data['Object.Form.Vertex_Label']
+        , formB64: data['Object.Form.Text']
+        , fullData: data
+      });
+  
+    }
     
-    
-    this.setState({
-      formId: data['index']
-      , formURL: data['Object.Form.URL']
-      , formVertexLabel: data['Object.Form.Vertex_Label']
-      , formB64: data['Object.Form.Text']
-      , fullData: data
-    });
   
     // if (this.formBuilderRef){
     //   const form = this.getFormFromB64(this.state.formB64);

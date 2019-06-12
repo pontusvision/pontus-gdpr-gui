@@ -7,7 +7,7 @@ import SearchBar from 'react-search-bar';
 // import GremlinComboBoxReactBSMultiSelect from './GremlinComboBoxReactBSMultiSelect';
 
 // Be sure to include styles at some point, probably during your bootstrapping
-import 'react-select/dist/react-select.css';
+// import 'react-select/dist/react-select.css';
 
 import ResizeAware from 'react-resize-aware';
 import PontusComponent from "./PontusComponent";
@@ -126,42 +126,6 @@ class UserSearch extends PontusComponent
   
   render()
   {
-    /*
-     <Flex p={1}  w={1} align='center' mr ={1}>
- 
-     <Box px={2} w={1 / 8}>
-     <div className="userdetails">Relationships</div>
-     </Box>
- 
-     <Box px={2} w={1 / 4}>
-     <GremlinComboBox
-     name="edgge-types"
-     multi={true}
-     onChange={this.onChangeEdgeLabels}
-     onError={this.onError}
-     ref={this.setObjEdgeLabels}
-     url={"/gateway/sandbox/pvgdpr_server/home/edge_labels"}
-     />
-     </Box>
-     </Flex>
-     
-     <GremlinComboBox
-     name="node-types"
-     multi={true}
-     onChange={this.onChange}
-     onError={this.onError}
-     ref={this.setObj}
-     url={"/gateway/sandbox/pvgdpr_server/home/vertex_labels"}
-     />
-     
-     <GremlinComboBoxReactBSMultiSelect
-     multi={true}
-     onChange={this.onChange}
-     onError={this.onError}
-     ref={this.setObj}
-     url={"/gateway/sandbox/pvgdpr_server/home/vertex_labels"}
-     />
-     */
     return (
       <ResizeAware
         style={{width: '100%', height: '100%'}}
@@ -208,20 +172,13 @@ class UserSearch extends PontusComponent
   
           <Flex p={1} w={1} align='center' mr ={1}>
             <Box px={2} w={1 / 4}>
-              <div className="userdetails">Full Name (Sounds Like)</div>
-              {/*<label>*/}
-                {/*<input type="checkbox"*/}
-                       {/*name="SoundsLike"*/}
-                       {/*checked={this.state.checkedFuzzy}*/}
-                       {/*onClick={this.onCheckedFuzzy} />*/}
-                {/*Sounds Like*/}
-              {/*</label>*/}
+              <div className="userdetails">Search</div>
             </Box>
     
             <Box px={2} w={1 / 2}>
               <SearchBar
                 autoFocus
-                // renderClearButton
+                renderClearButton
 
                 renderSearchButton
                 placeholder="Search Properties..."

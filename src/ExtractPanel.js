@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React from 'react';
 import ResizeAware from 'react-resize-aware';
 import Iframe from 'react-iframe';
 import {NavPane, NavPaneItem} from "react-desktop/windows";
@@ -11,6 +11,7 @@ import {telescope} from 'react-icons-kit-allreact/oct/telescope';
 
 import Icon from 'react-icons-kit-allreact';
 import PontusComponent from "./PontusComponent";
+
 // import ReactDataGrid from 'react-data-grid';
 
 
@@ -36,19 +37,21 @@ class ExtractPanel extends PontusComponent
   
   handleResize = ({width, height}) =>
   {
-    if (height > 0){
+    if (height > 0)
+    {
       // this.ref.updateSize(width, height);
     }
-    else{
+    else
+    {
       // this.ref.updateSize(width,window.innerHeight - 50);
     }
     
     this.setState({height: window.innerHeight - 50});
-  
+    
     
   };
   
-  setRef=(ref)=>
+  setRef = (ref) =>
   {
     this.ref = ref;
   };
@@ -63,52 +66,49 @@ class ExtractPanel extends PontusComponent
     // M529.2,442.3c26.1,0,51.1,16.6,59.4,44.2c-10.6-8.1-22.9-12.1-35.4-12.1c-12.6,0-25.4,4.1-36.5,12c-22.1,15.8-31.8,42.6-23.3,68c-34.3-24.6-34.5-75.9,0.1-100.6C504.6,445.9,517,442.3,529.2,442.3
     // M557.9,508.3c11.1,0,21.9,5.2,28.8,14.9l86.1,120.7c2.5,3.5,6.5,5.4,10.6,5.4c2.6,0,5.2-0.8,7.5-2.4c5.8-4.2,7.2-12.2,3-18.1L672.7,599c9.6-2.4,21.3-5.4,34.2-8.5c1.8-0.4,3.6-0.6,5.3-0.6c7.2,0,14.1,3.4,18.3,9.5l17.4,24.4c2.5,3.5,6.5,5.4,10.6,5.4c2.6,0,5.2-0.8,7.5-2.4c5.8-4.2,7.2-12.2,3-18.1l-20.1-28.2c11.1-2.6,22.4-5.1,33.6-7.5c1.6-0.3,3.2-0.5,4.8-0.5c7.2,0,14.1,3.5,18.3,9.5l14.8,20.7c2.5,3.5,6.5,5.4,10.6,5.4c2.6,0,5.2-0.8,7.5-2.4c5.8-4.2,7.2-12.2,3-18.1l-16.5-23.2c3.4-0.6,6.6-1.2,9.9-1.8c4.5-0.8,8.7-1.2,12.6-1.2c26.7,0,43.1,16.9,61.4,42.5c47,65.9,34,112.3,81.3,178.7c-59.5,42.5-119.6,85.4-182.3,130.1c-98.4-73.4-183.4-96.9-210.8-106.1c-26.1-8.8-43-25.6-37.2-46.6c5.6-20.1,25.7-26.9,43.4-26.9c1.1,0,2.1,0,3.1,0.1c27.7,1.3,50.1,9.6,50.1,9.6L529.1,564.3c-11.3-15.9-7.6-38,8.3-49.4C543.6,510.5,550.8,508.3,557.9,508.3"
     // /> </svg>);
-    let hght = ''+ this.state.height - 5   + 'px';
-    let panelHght = ''+ this.state.height - 40  + 'px';
-  
-    let nifiPanel =       <Iframe url= "/nifi/"
-              style={{height: panelHght, width: '100%'}}
-              width="100%"
-              height={panelHght}
-              display="initial"
-              position="relative"
-              allowFullScreen={false}/>;
-    let formioPanel =       <Iframe url="/formio/"
-                                  style={{height: panelHght, width: '100%'}}
-  
-                                  width="100%"
-                                  height={panelHght}
-                                  display="initial"
-                                  position="relative"
-                                  allowFullScreen={false}/>;
+    let hght = '' + this.state.height - 5 + 'px';
+    let panelHght = '' + this.state.height - 40 + 'px';
     
-    let discoveryPanel =       <Iframe url="/pontus-extract-discovery-gui/"
-                                    style={{height: panelHght, width: '100%'}}
-                                    width="100%"
-                                    height={panelHght}
-                                    display="initial"
-                                    position="relative"
-                                    allowFullScreen={false}/>;
-  
+    let nifiPanel = <Iframe url="/nifi/"
+                            style={{height: panelHght, width: '100%'}}
+                            width="100%"
+                            height={panelHght}
+                            display="initial"
+                            position="relative"
+                            allowFullScreen={false}/>;
+    let formioPanel = <Iframe url="/formio/"
+                              style={{height: panelHght, width: '100%'}}
+    
+                              width="100%"
+                              height={panelHght}
+                              display="initial"
+                              position="relative"
+                              allowFullScreen={false}/>;
+    
+    let discoveryPanel = <Iframe url="/pontus-extract-discovery-gui/"
+                                 style={{height: panelHght, width: '100%'}}
+                                 width="100%"
+                                 height={panelHght}
+                                 display="initial"
+                                 position="relative"
+                                 allowFullScreen={false}/>;
+    
     // const columns = [
     //   { key: 'id', name: 'ID' },
     //   { key: 'title', name: 'Title' },
     //   { key: 'count', name: 'Count' } ];
     //
-    // const rows = [{id: 0, title: 'row1', count: 20}, {id: 1, title: 'row1', count: 40}, {id: 2, title: 'row1', count: 60}];
-    // let handsOnTable = <ReactDataGrid
-    //   columns={columns}
-    //   rowGetter={i => rows[i]}
-    //   rowsCount={3}
-    //   minHeight={150} />;
+    // const rows = [{id: 0, title: 'row1', count: 20}, {id: 1, title: 'row1', count: 40}, {id: 2, title: 'row1',
+    // count: 60}]; let handsOnTable = <ReactDataGrid columns={columns} rowGetter={i => rows[i]} rowsCount={3}
+    // minHeight={150} />;
     
     
     return (
       <div
-        style={{height: hght, width:'100%', flexDirection: 'column', flexGrow: 1, flexBasis:'auto'}}
+        style={{height: hght, width: '100%', flexDirection: 'column', flexGrow: 1, flexBasis: 'auto'}}
       >
         <NavPane
-          style={{flexDirection: 'column', flexGrow: 1, flexBasis:'auto'}}
+          style={{flexDirection: 'column', flexGrow: 1, flexBasis: 'auto'}}
           
           openLength={200}
           push
@@ -119,9 +119,9 @@ class ExtractPanel extends PontusComponent
         >
           {this.renderItem("FormIO", formioPanel, <Icon icon={wpforms}/>)}
           {this.renderItem("Discovery", discoveryPanel, <Icon icon={telescope}/>)}
-  
+          
           {this.renderItem("NiFi", nifiPanel, <Icon icon={flowMerge}/>)}
-
+        
         </NavPane>
       </div>
     );
@@ -136,7 +136,9 @@ class ExtractPanel extends PontusComponent
         title={title}
         icon={icon}
         // style={{height: this.state.height - 80+'px', width: '100%'}}
-        style={{height: this.state.height -40+'px', width: '100%', flexDirection: 'column', flexGrow: 1, flexBasis:'auto'}}
+        style={{
+          height: this.state.height - 40 + 'px', width: '100%', flexDirection: 'column', flexGrow: 1, flexBasis: 'auto'
+        }}
         
         theme="light"
         background="#000000"
@@ -147,7 +149,7 @@ class ExtractPanel extends PontusComponent
       
       >
         <ResizeAware
-          style={{height: '100%', width: '100%', flexDirection: 'column', flexGrow: 1, flexBasis:'auto'}}
+          style={{height: '100%', width: '100%', flexDirection: 'column', flexGrow: 1, flexBasis: 'auto'}}
           
           onResize={this.handleResize}
         >
@@ -156,6 +158,7 @@ class ExtractPanel extends PontusComponent
       </NavPaneItem>
     );
   }
+  
   //
   // render()
   // {

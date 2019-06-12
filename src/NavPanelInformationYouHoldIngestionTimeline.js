@@ -1,10 +1,6 @@
-import React from 'react';
-import PVTimeline from  './PVTimeline';
+// import React from 'react';
+import PVTimeline from './PVTimeline';
 
-import * as Vis from 'vis';
-
-
-import axios from 'axios';
 // import PontusComponent from "./PontusComponent";
 
 
@@ -25,15 +21,15 @@ class NavPanelInformationYouHoldIngestionTimeline extends PVTimeline
   }
   
   
-  onSelect = (event) => {
+  onSelect = (event) =>
+  {
     /*
      {"items":[1],"event":{"pointers":[{"isTrusted":true,"_handled":{"tap":true}}],"changedPointers":[{"isTrusted":true,"_handled":{"tap":true}}],"pointerType":"mouse","srcEvent":
      */
     let val = {id: event.items[0]};
     this.props.glEventHub.emit(this.namespace + '-pvgrid-on-click-row', val);
-  
+    
   };
-  
   
   
   doubleClick = (param) =>
@@ -70,8 +66,8 @@ class NavPanelInformationYouHoldIngestionTimeline extends PVTimeline
   {
     
     return {
-      bindings: { pg_start: event.start, pg_end: event.end}
-     ,gremlin: "import groovy.json.JsonOutput;\n" +
+      bindings: {pg_start: event.start, pg_end: event.end}
+      , gremlin: "import groovy.json.JsonOutput;\n" +
         "\n" +
         "def startDate = pg_start as java.util.Date;\n" +
         "def stopDate = pg_end as java.util.Date;\n" +
@@ -134,9 +130,7 @@ class NavPanelInformationYouHoldIngestionTimeline extends PVTimeline
     };
   };
   
- 
   
-
 }
 
 export default NavPanelInformationYouHoldIngestionTimeline;
