@@ -14,17 +14,17 @@ class NavPanelChildrenPVGrid extends PVGrid
     
     let colSettings = [];
   
-    // colSettings[0] = {id: "Person.Title", name: "Title", field: "Person.Title", sortable: true};
-    colSettings[0] = {id: "Person.Age", name: "Age", field: "Person.Age", sortable: true};
+    // colSettings[0] = {id: "Person.Natural.Title", name: "Title", field: "Person.Natural.Title", sortable: true};
+    colSettings[0] = {id: "Person.Natural.Age", name: "Age", field: "Person.Natural.Age", sortable: true};
   
-    colSettings[1] = {id: "Person.Full_Name", name: "Full Name", field: "Person.Full_Name", sortable: true};
-    colSettings[2] = {id: "Person.Gender", name: "Gender", field: "Person.Gender", sortable: true};
-    colSettings[3] = {id: "Person.Nationality", name: "Nationality", field: "Person.Nationality", sortable: true};
+    colSettings[1] = {id: "Person.Natural.Full_Name", name: "Full Name", field: "Person.Natural.Full_Name", sortable: true};
+    colSettings[2] = {id: "Person.Natural.Gender", name: "Gender", field: "Person.Natural.Gender", sortable: true};
+    colSettings[3] = {id: "Person.Natural.Nationality", name: "Nationality", field: "Person.Natural.Nationality", sortable: true};
     
     this.url = PontusComponent.getGraphURL(this.props);
     
     this.setColumnSettings(colSettings);
-    this.setExtraSearch({value: "Person"});
+    this.setExtraSearch({value: "Person.Natural"});
     
     
   }
@@ -37,17 +37,17 @@ class NavPanelChildrenPVGrid extends PVGrid
   
     let sortcolId = sortcol === null ? null : sortcol.id;
   
-    if (sortcolId === 'Person.Age'){
-      sortcolId = 'Person.Date_Of_Birth';
+    if (sortcolId === 'Person.Natural.Age'){
+      sortcolId = 'Person.Natural.Date_Of_Birth';
       sortdir = (-1)* sortdir;
     }
   
     let selectBody =
       "  .select( " +
-      "          'Person.Full_Name' " +
-      "         ,'Person.Age' " +
-      "         ,'Person.Gender' " +
-      "         ,'Person.Nationality' " +
+      "          'Person.Natural.Full_Name' " +
+      "         ,'Person.Natural.Age' " +
+      "         ,'Person.Natural.Gender' " +
+      "         ,'Person.Natural.Nationality' " +
       "         ,'event_id' " +
       "         )";
   
@@ -56,19 +56,19 @@ class NavPanelChildrenPVGrid extends PVGrid
       gremlin: "long ageThresholdMs = (long)(System.currentTimeMillis() - (3600000L * 24L *365L  * 18L)); \n" +
       "def dateThreshold = new java.util.Date (ageThresholdMs); \n" +
       "\n" +
-      "g.V().has('Metadata.Type.Person',eq('Person'))\n" +
+      "g.V().has('Metadata.Type.Person.Natural',eq('Person.Natural'))\n" +
       "\n" +
-      " .where(__.values('Person.Date_Of_Birth').is(gte(dateThreshold)))\n" +
+      " .where(__.values('Person.Natural.Date_Of_Birth').is(gte(dateThreshold)))\n" +
       " .order()\n" +
-      " .by(pg_orderCol == null ? 'Person.Full_Name' :pg_orderCol.toString() ,pg_orderDir == (1)? incr: decr)\n" +
+      " .by(pg_orderCol == null ? 'Person.Natural.Full_Name' :pg_orderCol.toString() ,pg_orderDir == (1)? incr: decr)\n" +
       " .range(pg_from,pg_to)\n" +
       " .as('people')\n" +
       " .match(\n" +
-      // "   __.as('people').values('Person.Title').as('Person.Title')\n" +
-      "   __.as('people').values('Person.Full_Name').as('Person.Full_Name')\n" +
-      " , __.as('people').values('Person.Date_Of_Birth').map{ (long) (((long) System.currentTimeMillis() - (long)it.get().getTime()) /(long)(3600000L*24L*365L) ) }.as('Person.Age')\n" +
-      " , __.as('people').values('Person.Gender').as('Person.Gender')\n" +
-      " , __.as('people').values('Person.Nationality').as('Person.Nationality')\n" +
+      // "   __.as('people').values('Person.Natural.Title').as('Person.Natural.Title')\n" +
+      "   __.as('people').values('Person.Natural.Full_Name').as('Person.Natural.Full_Name')\n" +
+      " , __.as('people').values('Person.Natural.Date_Of_Birth').map{ (long) (((long) System.currentTimeMillis() - (long)it.get().getTime()) /(long)(3600000L*24L*365L) ) }.as('Person.Natural.Age')\n" +
+      " , __.as('people').values('Person.Natural.Gender').as('Person.Natural.Gender')\n" +
+      " , __.as('people').values('Person.Natural.Nationality').as('Person.Natural.Nationality')\n" +
       " , __.as('people').id().as('event_id')\n" +
       " )" +
       selectBody

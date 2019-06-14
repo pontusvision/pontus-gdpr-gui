@@ -26,7 +26,7 @@ class NavPanelIndividualsRightsPVGrid extends PVGrid
     this.url = PontusComponent.getGraphURL(this.props);
     
     this.setColumnSettings(colSettings);
-    this.setExtraSearch({value: "Person"});
+    this.setExtraSearch({value: "Person.Natural"});
     /*
      property("Object.Data_Procedures.Type", typeStr.replaceAll('[_.]',' ')).
      property("Object.Data_Procedures.Property", propStr.replaceAll('[_.]',' ')).

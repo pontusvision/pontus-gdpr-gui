@@ -190,7 +190,7 @@ class PVGrid extends PontusComponent
       },
       from: from,
       to: to,
-      sortBy: sortcol,
+      sortCol: sortcol?sortcol.id: '',
       sortDir: ((sortdir > 0) ? "+asc" : "+desc")
     }
   };
@@ -520,6 +520,8 @@ class PVGrid extends PontusComponent
     this.sortcol = column;
     this.sortdir = dir;
     this.clear();
+    this.ensureData(0, this.PAGESIZE);
+  
   };
   setSearch = (str) =>
   {

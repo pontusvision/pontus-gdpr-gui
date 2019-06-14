@@ -5,6 +5,7 @@
   "private": true,
   "dependencies": {
     "@handsontable/react": "^3.0.0",
+    "@opuscapita/react-searchbar": "^2.0.0",
     "acorn": "^6.1.1",
     "ajv": "^6.10.0",
     "axios": "^0.19.0",
@@ -47,7 +48,6 @@
     "react-router": "^5.0.1",
     "react-router-dom": "^5.0.1",
     "react-scripts": "^3.0.1",
-    "react-search-bar": "^2.2.0",
     "react-search-bar-allreact": "^2.2.2",
     "react-select": "^3.0.4",
     "react-svg-gauge": "^1.0.10",

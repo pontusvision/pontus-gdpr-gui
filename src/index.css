@@ -263,6 +263,24 @@ div.outerBorder {
     padding: 0;
     width: 25px;
 }
+.react-search-bar__clear {
+    background-color: #ffffff;
+    background-image: url(./images/clear.svg);
+    background-size: 35%;
+    border: 1px solid #ddd;
+    padding: 0 20px;
+    /*opacity: .8;*/
+    width: 40px;
+    /*background: transparent;*/
+    background-position: 50%;
+    background-repeat: no-repeat;
+    border: 0;
+    cursor: pointer;
+    font-size: 0;
+    outline: 0;
+    padding: 0;
+    width: 25px;
+}
 .clear-button,
 .submit-button {
     background: transparent;

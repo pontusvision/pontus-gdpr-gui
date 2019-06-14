@@ -28,7 +28,7 @@ class NavPanelSubjectAccessRequestPVGrid extends PVGrid
     colSettings[3] = {
       id: "Event.Subject_Access_Request.Metadata.Update_Date", name: "Update Date", field: "sar_update", sortable: true
     };
-    // colSettings[4] = {id: "Person.Full_Name", name: "Requester", field: "person_full_name", sortable: true};
+    // colSettings[4] = {id: "Person.Natural.Full_Name", name: "Requester", field: "person_full_name", sortable: true};
     // colSettings[5] = {id: "Person.Employee.Full_Name", name: "Handler", field: "employee_full_name", sortable: true};
     
     this.url = PontusComponent.getGraphURL(this.props);
@@ -78,7 +78,7 @@ class NavPanelSubjectAccessRequestPVGrid extends PVGrid
         "  , __.as('sars').values('Event.Subject_Access_Request.Metadata.Create_Date').as('sar_creation')\n" +
         "  , __.as('sars').values('Event.Subject_Access_Request.Metadata.Update_Date').as('sar_update')\n" +
         // "  ,
-        // __.as('sars').in().has('Metadata.Type.Person',eq('Person')).values('Person.Full_Name').as('person_full_name')\n"
+        // __.as('sars').in().has('Metadata.Type.Person.Natural',eq('Person.Natural')).values('Person.Natural.Full_Name').as('person_full_name')\n"
         // + "  ,
         // __.as('sars').in().has('Metadata.Type.Person.Employee',eq('Person.Employee')).values('Person.Employee.Full_Name').as('employee_full_name')\n"
         // +
@@ -94,11 +94,11 @@ class NavPanelSubjectAccessRequestPVGrid extends PVGrid
       
     };
     // }
-    // else if (sortcolId === 'Person.Full_Name'){
+    // else if (sortcolId === 'Person.Natural.Full_Name'){
     //   return {
     //     gremlin: "g.V()" +
-    //     ".has('Metadata.Type.Person',eq('Person'))" +
-    //     ".order().by('Person.Full_Name' ,pg_orderDir == (1)? incr: decr)" +
+    //     ".has('Metadata.Type.Person.Natural',eq('Person.Natural'))" +
+    //     ".order().by('Person.Natural.Full_Name' ,pg_orderDir == (1)? incr: decr)" +
     //     ".as('people')" +
     //     ".match(" +
     //     "
@@ -108,10 +108,10 @@ class NavPanelSubjectAccessRequestPVGrid extends PVGrid
     // __.as('sars').values('Event.Subject_Access_Request.Request_Type').as('sar_req_type')\n" + "  ,
     // __.as('sars').values('Event.Subject_Access_Request.Metadata.Create_Date').as('sar_creation')\n" + "  ,
     // __.as('sars').values('Event.Subject_Access_Request.Metadata.Update_Date').as('sar_update')\n" + "  ,
-    // __.as('people').values('Person.Full_Name').as('person_full_name')\n" + "  ,
+    // __.as('people').values('Person.Natural.Full_Name').as('person_full_name')\n" + "  ,
     // __.as('employees').values('Person.Employee.Full_Name').as('employee_full_name')\n" + "  ,
     // __.as('sars').id().as('event_id')\n" + "  )\n"+ selectBody , bindings: { pg_from: from , pg_to: to ,
-    // pg_orderDir: sortdir }  }; } else if (sortcolId === 'Person.Employee.Full_Name'){ return { gremlin: "g.V()" + ".has('Metadata.Type.Person.Employee',eq('Person.Employee'))" + ".order().by('Person.Full_Name' ,pg_orderDir == (1)? incr: decr)" + ".as('employees')" + ".match(" + "    __.as('employees').out().has('Metadata.Type.Event.Subject_Access_Request',eq('Event.Subject_Access_Request')).as('sars') " + "  , __.as('sars').in().has('Metadata.Type.Person',eq('Person')).as('people') " + "  , __.as('sars').values('Event.Subject_Access_Request.Status').as('sar_status')\n" + "  , __.as('sars').values('Event.Subject_Access_Request.Request_Type').as('sar_req_type')\n" + "  , __.as('sars').values('Event.Subject_Access_Request.Metadata.Create_Date').as('sar_creation')\n" + "  , __.as('sars').values('Event.Subject_Access_Request.Metadata.Update_Date').as('sar_update')\n" + "  , __.as('people').values('Person.Full_Name').as('person_full_name')\n" + "  , __.as('employees').values('Person.Full_Name').as('employee_full_name')\n" + "  , __.as('sars').id().as('event_id')\n" + "  )\n"+ selectBody , bindings: { pg_from: from , pg_to: to , pg_orderDir: sortdir }  }; }
+    // pg_orderDir: sortdir }  }; } else if (sortcolId === 'Person.Employee.Full_Name'){ return { gremlin: "g.V()" + ".has('Metadata.Type.Person.Employee',eq('Person.Employee'))" + ".order().by('Person.Natural.Full_Name' ,pg_orderDir == (1)? incr: decr)" + ".as('employees')" + ".match(" + "    __.as('employees').out().has('Metadata.Type.Event.Subject_Access_Request',eq('Event.Subject_Access_Request')).as('sars') " + "  , __.as('sars').in().has('Metadata.Type.Person.Natural',eq('Person.Natural')).as('people') " + "  , __.as('sars').values('Event.Subject_Access_Request.Status').as('sar_status')\n" + "  , __.as('sars').values('Event.Subject_Access_Request.Request_Type').as('sar_req_type')\n" + "  , __.as('sars').values('Event.Subject_Access_Request.Metadata.Create_Date').as('sar_creation')\n" + "  , __.as('sars').values('Event.Subject_Access_Request.Metadata.Update_Date').as('sar_update')\n" + "  , __.as('people').values('Person.Natural.Full_Name').as('person_full_name')\n" + "  , __.as('employees').values('Person.Natural.Full_Name').as('employee_full_name')\n" + "  , __.as('sars').id().as('event_id')\n" + "  )\n"+ selectBody , bindings: { pg_from: from , pg_to: to , pg_orderDir: sortdir }  }; }
     
     
   };

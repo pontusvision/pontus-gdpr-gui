@@ -9,6 +9,10 @@
 
 }
 
+.react-search-bar__clear {
+    color: black;
+}
+
 .ace_selected-word {
     border: 1px solid #569ff7;
 }

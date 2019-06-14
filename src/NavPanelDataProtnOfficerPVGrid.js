@@ -16,11 +16,11 @@ class NavPanelDataProtnOfficerPVGrid extends PVGrid
     let colSettings = [];
   
     colSettings[0] = {id: "Person.Employee.Role", name: "Role", field: "Person.Employee.Role", sortable: true};
-    colSettings[1] = {id: "Person.Title", name: "Title", field: "Person.Title", sortable: true};
-    colSettings[2] = {id: "Person.Full_Name", name: "Full Name", field: "Person.Full_Name", sortable: true};
-    colSettings[3] = {id: "Person.Age", name: "Age", field: "Person.Age", sortable: true};
-    colSettings[4] = {id: "Person.Gender", name: "Gender", field: "Person.Gender", sortable: true};
-    colSettings[5] = {id: "Person.Nationality", name: "Nationality", field: "Person.Nationality", sortable: true};
+    colSettings[1] = {id: "Person.Natural.Title", name: "Title", field: "Person.Natural.Title", sortable: true};
+    colSettings[2] = {id: "Person.Natural.Full_Name", name: "Full Name", field: "Person.Natural.Full_Name", sortable: true};
+    colSettings[3] = {id: "Person.Natural.Age", name: "Age", field: "Person.Natural.Age", sortable: true};
+    colSettings[4] = {id: "Person.Natural.Gender", name: "Gender", field: "Person.Natural.Gender", sortable: true};
+    colSettings[5] = {id: "Person.Natural.Nationality", name: "Nationality", field: "Person.Natural.Nationality", sortable: true};
     
     this.url = PontusComponent.getGraphURL(this.props);
     
@@ -43,11 +43,11 @@ class NavPanelDataProtnOfficerPVGrid extends PVGrid
       "  .select(" +
       "" +
       "          'Person.Employee.Role' " +
-      "         ,'Person.Title' " +
-      "         ,'Person.Full_Name' " +
-      "         ,'Person.Age' " +
-      "         ,'Person.Gender' " +
-      "         ,'Person.Nationality' " +
+      "         ,'Person.Natural.Title' " +
+      "         ,'Person.Natural.Full_Name' " +
+      "         ,'Person.Natural.Age' " +
+      "         ,'Person.Natural.Gender' " +
+      "         ,'Person.Natural.Nationality' " +
       "         ,'event_id' " +
       "         )";
   
@@ -59,13 +59,13 @@ class NavPanelDataProtnOfficerPVGrid extends PVGrid
       " .range(pg_from,pg_to)\n" +
       " .as('people')\n" +
       " .match(\n" +
-      "   __.as('people').values('Person.Employee.Title').as('Person.Title')\n" +
-      " , __.as('people').values('Person.Employee.Full_Name').as('Person.Full_Name')\n" +
-      " , __.as('people').values('Person.Employee.Date_Of_Birth').as('Person.Date_Of_Birth')\n" +
-      " , __.as('people').values('Person.Employee.Date_Of_Birth').map{ it.get().getTime() }.as('Person.Date_Of_Birth_Millis')\n" +
-      " , __.as('Person.Date_Of_Birth_Millis').math('(' +System.currentTimeMillis() + '- _)/(3600000*24*365)').map{  it.get().longValue()}.as('Person.Age')\n" +
-      " , __.as('people').values('Person.Employee.Gender').as('Person.Gender')\n" +
-      " , __.as('people').values('Person.Employee.Nationality').as('Person.Nationality')\n" +
+      "   __.as('people').values('Person.Employee.Title').as('Person.Natural.Title')\n" +
+      " , __.as('people').values('Person.Employee.Full_Name').as('Person.Natural.Full_Name')\n" +
+      " , __.as('people').values('Person.Employee.Date_Of_Birth').as('Person.Natural.Date_Of_Birth')\n" +
+      " , __.as('people').values('Person.Employee.Date_Of_Birth').map{ it.get().getTime() }.as('Person.Natural.Date_Of_Birth_Millis')\n" +
+      " , __.as('Person.Natural.Date_Of_Birth_Millis').math('(' +System.currentTimeMillis() + '- _)/(3600000*24*365)').map{  it.get().longValue()}.as('Person.Natural.Age')\n" +
+      " , __.as('people').values('Person.Employee.Gender').as('Person.Natural.Gender')\n" +
+      " , __.as('people').values('Person.Employee.Nationality').as('Person.Natural.Nationality')\n" +
       " , __.as('people').values('Person.Employee.Role').as('Person.Employee.Role')\n" +
       " , __.as('people').id().as('event_id')\n" +
       " )\n" +

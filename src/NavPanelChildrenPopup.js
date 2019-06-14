@@ -47,27 +47,27 @@ class NavPanelChildrenPopup extends PVGDPRScores
       "def dateThreshold = new java.util.Date (ageThresholdMs);\n" +
       "\n" +
       "\n" +
-      "long numChildren = g.V().has('Metadata.Type.Person',eq('Person'))\n" +
+      "long numChildren = g.V().has('Metadata.Type.Person.Natural',eq('Person.Natural'))\n" +
       ".where(\n" +
       "    and(\n" +
-      "      __.values('Person.Date_Of_Birth').is(gte(dateThreshold))\n" +
+      "      __.values('Person.Natural.Date_Of_Birth').is(gte(dateThreshold))\n" +
       "    )\n" +
       "  )\n" +
       ".count().next()\n" +
       "\n" +
-      "long numNoGuardian = g.V().has('Metadata.Type.Person',eq('Person'))\n" +
+      "long numNoGuardian = g.V().has('Metadata.Type.Person.Natural',eq('Person.Natural'))\n" +
       ".where(\n" +
       "    and(\n" +
-      "      __.values('Person.Date_Of_Birth').is(gte(dateThreshold))\n" +
+      "      __.values('Person.Natural.Date_Of_Birth').is(gte(dateThreshold))\n" +
       "    ,__.outE('Has_Parent_Or_Guardian').count().is(eq(0))\n" +
       "    )\n" +
       "  )\n" +
       ".count().next()\n" +
       " \n" +
-      "long numWithoutAnyConsent = g.V().has('Metadata.Type.Person',eq('Person'))\n" +
+      "long numWithoutAnyConsent = g.V().has('Metadata.Type.Person.Natural',eq('Person.Natural'))\n" +
       ".where(\n" +
       "    and(\n" +
-      "      __.values('Person.Date_Of_Birth').is(gte(dateThreshold))\n" +
+      "      __.values('Person.Natural.Date_Of_Birth').is(gte(dateThreshold))\n" +
       "    ,__.outE('Consent').count().is(eq(0))\n" +
       "    )\n" +
       "  )\n" +
@@ -76,9 +76,9 @@ class NavPanelChildrenPopup extends PVGDPRScores
       " \n" +
       "long numNegativeConsent = \n" +
       "\n" +
-      "g.V().has('Metadata.Type.Person',eq('Person'))\n" +
+      "g.V().has('Metadata.Type.Person.Natural',eq('Person.Natural'))\n" +
       " .where(\n" +
-      "    __.values('Person.Date_Of_Birth').is(gte(dateThreshold))\n" +
+      "    __.values('Person.Natural.Date_Of_Birth').is(gte(dateThreshold))\n" +
       "  ).as('children')\n" +
       " .match(\n" +
       "     __.as('children').outE('Consent').as('consentEdges')\n" +
@@ -98,9 +98,9 @@ class NavPanelChildrenPopup extends PVGDPRScores
       "\n" +
       "long numPendingConsent = \n" +
       "\n" +
-      "g.V().has('Metadata.Type.Person',eq('Person'))\n" +
+      "g.V().has('Metadata.Type.Person.Natural',eq('Person.Natural'))\n" +
       " .where(\n" +
-      "    __.values('Person.Date_Of_Birth').is(gte(dateThreshold))\n" +
+      "    __.values('Person.Natural.Date_Of_Birth').is(gte(dateThreshold))\n" +
       "  ).as('children')\n" +
       " .match(\n" +
       "     __.as('children').outE('Consent').as('consentEdges')\n" +

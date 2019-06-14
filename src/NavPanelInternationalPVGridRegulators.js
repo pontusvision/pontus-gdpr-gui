@@ -32,7 +32,7 @@ class NavPanelInternationalPVGridRegulators extends PVGrid
  
      */
     
-    // colSettings[0] = {id: "Person.Title", name: "Title", field: "Person.Title", sortable: true};
+    // colSettings[0] = {id: "Person.Natural.Title", name: "Title", field: "Person.Natural.Title", sortable: true};
     colSettings[0] = {id: "Person.Organisation.Short_Name", name: "Short Name", field: "Person.Organisation.Short_Name", sortable: true};
   
     colSettings[1] = {id: "Person.Organisation.Name", name: "Long Name", field: "Person.Organisation.Name", sortable: true};

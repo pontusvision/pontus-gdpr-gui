@@ -78,11 +78,11 @@ class NavPanelChildrenPVBarChartChildrenAges extends PontusComponent
       "StringBuffer sbDataSets = new StringBuffer();\n" +
       "long ageThresholdMs = (long)(System.currentTimeMillis() - (3600000L * 24L *365L  * 18L));\n" +
       "  def dateThreshold = new java.util.Date (ageThresholdMs);\n" +
-      "  g.V().has('Metadata.Type.Person',eq('Person'))\n" +
-      "   .where(__.values('Person.Date_Of_Birth').is(gte(dateThreshold)))\n" +
+      "  g.V().has('Metadata.Type.Person.Natural',eq('Person.Natural'))\n" +
+      "   .where(__.values('Person.Natural.Date_Of_Birth').is(gte(dateThreshold)))\n" +
       "   .match(\n" +
-      "     __.as('people').values('Person.Date_Of_Birth').map{ (long) (((long) System.currentTimeMillis() - (long)it.get().getTime()) /(long)(3600000L*24L*365L) ) }.as('Person.Age')\n" +
-      "   ).select('Person.Age').groupCount().each{  it ->\n" +
+      "     __.as('people').values('Person.Natural.Date_Of_Birth').map{ (long) (((long) System.currentTimeMillis() - (long)it.get().getTime()) /(long)(3600000L*24L*365L) ) }.as('Person.Natural.Age')\n" +
+      "   ).select('Person.Natural.Age').groupCount().each{  it ->\n" +
       "      it.each{ key, val -> \n" +
       "        if (counter > 0L){\n" +
       "          sbLabels.append(',');\n" +

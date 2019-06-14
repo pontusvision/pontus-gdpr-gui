@@ -22,11 +22,11 @@ class NavPanelConsentPVGridEventConsent extends PVGrid
       sortable: true
     };
     colSettings[2] = {
-      id: "Person.Full_Name", name: "Person Name", field: "Person.Full_Name",
+      id: "Person.Natural.Full_Name", name: "Person Name", field: "Person.Natural.Full_Name",
       sortable: false
     };
     colSettings[3] = {
-      id: "Person.Age", name: "Person Age", field: "Person.Age",
+      id: "Person.Natural.Age", name: "Person Age", field: "Person.Natural.Age",
       sortable: false
     };
   
@@ -74,17 +74,17 @@ class NavPanelConsentPVGridEventConsent extends PVGrid
       ".match(" +
       "  __.as('consent_events').values('Event.Consent.Date').as('Event.Consent.Date')" +
       ", __.as('consent_events').values('Event.Consent.Status').as('Event.Consent.Status')" +
-      ", __.as('consent_events').in().has('Metadata.Type.Person',eq('Person')).as('people')" +
+      ", __.as('consent_events').in().has('Metadata.Type.Person.Natural',eq('Person.Natural')).as('people')" +
       ", __.as('consent_events').id().as('event_id')" +
-      ", __.as('people').values('Person.Full_Name').as('Person.Full_Name')" +
-      ", __.as('people').values('Person.Date_Of_Birth').map{ it.get().getTime() }.as('Person.Date_Of_Birth')" +
-      ", __.as('Person.Date_Of_Birth').math('(' +System.currentTimeMillis() + '- _)/(3600000*24*365)').as('Person.Age')" +
+      ", __.as('people').values('Person.Natural.Full_Name').as('Person.Natural.Full_Name')" +
+      ", __.as('people').values('Person.Natural.Date_Of_Birth').map{ it.get().getTime() }.as('Person.Natural.Date_Of_Birth')" +
+      ", __.as('Person.Natural.Date_Of_Birth').math('(' +System.currentTimeMillis() + '- _)/(3600000*24*365)').as('Person.Natural.Age')" +
       ")" +
       ".select(" +
       "  'Event.Consent.Date'" +
       ", 'Event.Consent.Status'" +
-      ", 'Person.Full_Name'" +
-      ", 'Person.Age'" +
+      ", 'Person.Natural.Full_Name'" +
+      ", 'Person.Natural.Age'" +
       ", 'event_id'" +
       
       "  )"

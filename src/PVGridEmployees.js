@@ -26,12 +26,12 @@ class PVGridEmployees extends PVGrid
       ".range(pg_from,pg_to).as('employees')" +
       ".match(__.as('events').values('Event.Training.Status').as('event_status')" +
       ", __.as('events').id().as('event_id')" +
-      ", __.as('employees').values('Person.Employee.Full_Name').as('Person.Full_Name')" +
-      ", __.as('employees').values('Person.Employee.Title').as('Person.Title')" +
-      ", __.as('employees').values('Person.Employee.Nationality').as('Person.Nationality')" +
+      ", __.as('employees').values('Person.Employee.Full_Name').as('Person.Natural.Full_Name')" +
+      ", __.as('employees').values('Person.Employee.Title').as('Person.Natural.Title')" +
+      ", __.as('employees').values('Person.Employee.Nationality').as('Person.Natural.Nationality')" +
       ", __.as('employees').id().as('emp_id')" +
       ")" +
-      ".select('Person.Title','event_status','Person.Full_Name','Person.Nationality','emp_id', 'event_id')"
+      ".select('Person.Natural.Title','event_status','Person.Natural.Full_Name','Person.Natural.Nationality','emp_id', 'event_id')"
       
       
     });
@@ -135,9 +135,9 @@ class PVGridEmployees extends PVGrid
       this.awarenessCampaignId = val.index;
       let colSettings = [];
       
-      colSettings[0] = {id: "Person.Title", name: "Title", field: "Person.Title", sortable: true};
-      colSettings[1] = {id: "Person.Full_Name", name: "Full Name", field: "Person.Full_Name", sortable: true};
-      colSettings[2] = {id: "Person.Nationality", name: "Nationality", field: "Person.Nationality", sortable: true};
+      colSettings[0] = {id: "Person.Natural.Title", name: "Title", field: "Person.Natural.Title", sortable: true};
+      colSettings[1] = {id: "Person.Natural.Full_Name", name: "Full Name", field: "Person.Natural.Full_Name", sortable: true};
+      colSettings[2] = {id: "Person.Natural.Nationality", name: "Nationality", field: "Person.Natural.Nationality", sortable: true};
       colSettings[3] = {id: "event_status", name: "Campaign Status", field: "event_status", sortable: false};
   
   

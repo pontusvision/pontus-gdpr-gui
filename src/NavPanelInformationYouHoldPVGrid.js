@@ -15,16 +15,16 @@ class NavPanelInformationYouHoldPVGrid extends PVGrid
     
     let colSettings = [];
   
-    colSettings[0] = {id: "Person.Title", name: "Title", field: "Person.Title", sortable: true};
-    colSettings[1] = {id: "Person.Full_Name", name: "Full Name", field: "Person.Full_Name", sortable: true};
-    colSettings[2] = {id: "Person.Age", name: "Age", field: "Person.Age", sortable: true};
-    colSettings[3] = {id: "Person.Gender", name: "Gender", field: "Person.Gender", sortable: true};
-    colSettings[4] = {id: "Person.Nationality", name: "Nationality", field: "Person.Nationality", sortable: true};
+    colSettings[0] = {id: "Person.Natural.Title", name: "Title", field: "Person.Natural.Title", sortable: true};
+    colSettings[1] = {id: "Person.Natural.Full_Name", name: "Full Name", field: "Person.Natural.Full_Name", sortable: true};
+    colSettings[2] = {id: "Person.Natural.Age", name: "Age", field: "Person.Natural.Age", sortable: true};
+    colSettings[3] = {id: "Person.Natural.Gender", name: "Gender", field: "Person.Natural.Gender", sortable: true};
+    colSettings[4] = {id: "Person.Natural.Nationality", name: "Nationality", field: "Person.Natural.Nationality", sortable: true};
     
     this.url = PontusComponent.getGraphURL(this.props);
     
     this.setColumnSettings(colSettings);
-    this.setExtraSearch({value: "Person"});
+    this.setExtraSearch({value: "Person.Natural"});
     
     
   }
@@ -39,29 +39,29 @@ class NavPanelInformationYouHoldPVGrid extends PVGrid
   
   
     let selectBody =
-      "  .select('Person.Title' " +
-      "         ,'Person.Full_Name' " +
-      "         ,'Person.Age' " +
-      "         ,'Person.Gender' " +
-      "         ,'Person.Nationality' " +
+      "  .select('Person.Natural.Title' " +
+      "         ,'Person.Natural.Full_Name' " +
+      "         ,'Person.Natural.Age' " +
+      "         ,'Person.Natural.Gender' " +
+      "         ,'Person.Natural.Nationality' " +
       "         ,'event_id' " +
       "         )";
   
   
     return {
-      gremlin: "g.V().has('Metadata.Type.Person',eq('Person'))\n" +
+      gremlin: "g.V().has('Metadata.Type.Person.Natural',eq('Person.Natural'))\n" +
       " .order()\n" +
-      " .by(pg_orderCol == null ? 'Person.Full_Name' :pg_orderCol.toString() ,pg_orderDir == (1)? incr: decr)\n" +
+      " .by(pg_orderCol == null ? 'Person.Natural.Full_Name' :pg_orderCol.toString() ,pg_orderDir == (1)? incr: decr)\n" +
       " .range(pg_from,pg_to)\n" +
       " .as('people')\n" +
       " .match(\n" +
-      "   __.as('people').values('Person.Title').as('Person.Title')\n" +
-      " , __.as('people').values('Person.Full_Name').as('Person.Full_Name')\n" +
-      " , __.as('people').values('Person.Date_Of_Birth').as('Person.Date_Of_Birth')\n" +
-      " , __.as('people').values('Person.Date_Of_Birth').map{ it.get().getTime() }.as('Person.Date_Of_Birth_Millis')\n" +
-      " , __.as('Person.Date_Of_Birth_Millis').math('(' +System.currentTimeMillis() + '- _)/(3600000*24*365)').map{  it.get().longValue()}.as('Person.Age')\n" +
-      " , __.as('people').values('Person.Gender').as('Person.Gender')\n" +
-      " , __.as('people').values('Person.Nationality').as('Person.Nationality')\n" +
+      "   __.as('people').values('Person.Natural.Title').as('Person.Natural.Title')\n" +
+      " , __.as('people').values('Person.Natural.Full_Name').as('Person.Natural.Full_Name')\n" +
+      " , __.as('people').values('Person.Natural.Date_Of_Birth').as('Person.Natural.Date_Of_Birth')\n" +
+      " , __.as('people').values('Person.Natural.Date_Of_Birth').map{ it.get().getTime() }.as('Person.Natural.Date_Of_Birth_Millis')\n" +
+      " , __.as('Person.Natural.Date_Of_Birth_Millis').math('(' +System.currentTimeMillis() + '- _)/(3600000*24*365)').map{  it.get().longValue()}.as('Person.Natural.Age')\n" +
+      " , __.as('people').values('Person.Natural.Gender').as('Person.Natural.Gender')\n" +
+      " , __.as('people').values('Person.Natural.Nationality').as('Person.Natural.Nationality')\n" +
       " , __.as('people').id().as('event_id')\n" +
       " )\n" +
       selectBody
