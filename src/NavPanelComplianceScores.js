@@ -1,4 +1,4 @@
-import React from 'react';
+// import React from 'react';
 import NavPanelComplianceScoresMainScore from './NavPanelComplianceScoresMainScore';
 import NavPanelComplianceScoresDetailedScores from './NavPanelComplianceScoresDetailedScores';
 import PVGoldenLayoutComponent from "./PVGoldenLayoutComponent";

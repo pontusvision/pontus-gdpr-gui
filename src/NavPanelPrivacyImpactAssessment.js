@@ -1,4 +1,4 @@
-import React from 'react';
+// import React from 'react';
 
 import NavPanelPrivacyImpactAssessmentPVGrid from './NavPanelPrivacyImpactAssessmentPVGrid';
 import NavPanelPrivacyImpactAssessmentDataGraph from './NavPanelPrivacyImpactAssessmentDataGraph';

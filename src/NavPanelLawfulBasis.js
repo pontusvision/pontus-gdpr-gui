@@ -1,13 +1,8 @@
-
-import React  from 'react';
-import ResizeAware from 'react-resize-aware';
-
-import GoldenLayout from 'golden-layout';
+// import React from 'react';
 
 import NavPanelLawfulBasisPVGrid from './NavPanelLawfulBasisPVGrid';
 // import UserSearch from './UserSearch';
 import NavPanelLawfulBasisDataGraph from './NavPanelLawfulBasisDataGraph';
-import PontusComponent from "./PontusComponent";
 import PVGoldenLayoutComponent from "./PVGoldenLayoutComponent";
 // import PVTemplateEditor from './PVTemplateEditor';
 // import NavPanelLawfulBasisPVTimeline from './NavPanelLawfulBasisPVTimeline';
@@ -18,7 +13,7 @@ class NavPanelLawfulBasis extends PVGoldenLayoutComponent
   {
     super(props);
     this.stateVar = 'savedStateNavPanelLawfulBasis';
-  
+    
     this.config = {
       settings: {
         hasHeaders: true,
@@ -49,7 +44,7 @@ class NavPanelLawfulBasis extends PVGoldenLayoutComponent
               type: 'react-component',
               component: 'data-grid'
             }
-            ,{
+            , {
               title: 'Data Graph',
               type: 'react-component',
               component: 'data-graph'
@@ -67,7 +62,6 @@ class NavPanelLawfulBasis extends PVGoldenLayoutComponent
     
   }
   
-
   
   registerComponents = (instance) =>
   {
@@ -79,6 +73,7 @@ class NavPanelLawfulBasis extends PVGoldenLayoutComponent
     this.instance.registerComponent('data-graph', NavPanelLawfulBasisDataGraph);
     
   };
- 
+  
 }
+
 export default NavPanelLawfulBasis;

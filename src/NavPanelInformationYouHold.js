@@ -1,4 +1,4 @@
-import React from 'react';
+// import React from 'react';
 import NavPanelInformationYouHoldPVDataGraph from './NavPanelInformationYouHoldPVDataGraph';
 import NavPanelInformationYouHoldPVDoughnutChartTypes from './NavPanelInformationYouHoldPVDoughnutChartTypes';
 import NavPanelInformationYouHoldPVGridEventIngestion from './NavPanelInformationYouHoldPVGridEventIngestion';

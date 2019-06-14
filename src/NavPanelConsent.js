@@ -1,23 +1,19 @@
-
-import React  from 'react';
-import ResizeAware from 'react-resize-aware';
-
-import GoldenLayout from 'golden-layout';
+// import React from 'react';
 
 import NavPanelConsentPVGridPrivacyNotices from './NavPanelConsentPVGridPrivacyNotices';
 import NavPanelConsentPVGridEventConsent from './NavPanelConsentPVGridEventConsent';
 import NavPanelConsentDataGraph from './NavPanelConsentDataGraph';
 import NavPanelConsentPVDoughnutChartConsentStatus from './NavPanelConsentPVDoughnutChartConsentStatus';
-import PontusComponent from "./PontusComponent";
+import PVGoldenLayoutComponent from "./PVGoldenLayoutComponent";
 
 
-class NavPanelConsent extends PontusComponent
+class NavPanelConsent extends PVGoldenLayoutComponent
 {
   constructor(props)
   {
     super(props);
     this.stateVar = 'savedStateNavPanelConsent';
-  
+    
     this.config = {
       settings: {
         hasHeaders: true,
@@ -48,17 +44,17 @@ class NavPanelConsent extends PontusComponent
               type: 'react-component',
               component: 'data-grid-privacy-notices'
             }
-            ,{
+            , {
               title: 'Consent Events',
               type: 'react-component',
               component: 'data-grid-consent-events'
             }
-            ,{
+            , {
               title: 'Consent Chart (Privacy Notice)',
               type: 'react-component',
               component: 'consent-chart'
             }
-            ,{
+            , {
               title: 'Data Graph',
               type: 'react-component',
               component: 'data-graph'
@@ -70,7 +66,6 @@ class NavPanelConsent extends PontusComponent
     };
     
   }
-  
   
   
   registerComponents = (instance) =>
@@ -86,4 +81,5 @@ class NavPanelConsent extends PontusComponent
   
   
 }
+
 export default NavPanelConsent;

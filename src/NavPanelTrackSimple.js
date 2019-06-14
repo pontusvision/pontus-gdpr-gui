@@ -1,4 +1,4 @@
-import React from 'react';
+// import React from 'react';
 
 import NavPanelTrackSimplePVGrid from './NavPanelTrackSimplePVGrid';
 // import PVWorldMap from './PVWorldMap';
@@ -13,7 +13,7 @@ class NavPanelTrackSimple extends PVGoldenLayoutComponent
   {
     super(props);
     this.stateVar = 'savedStateNavPanelTrackSimple';
-  
+    
     this.config = {
       settings: {
         hasHeaders: true,
@@ -85,14 +85,14 @@ class NavPanelTrackSimple extends PVGoldenLayoutComponent
   registerComponents = (instance) =>
   {
     this.registerComponentsPreamble(instance);
-  
+    
     this.instance.registerComponent('data-grid', NavPanelTrackSimplePVGrid);
     this.instance.registerComponent('data-search', NavPanelTrackSimpleUserSearch);
     this.instance.registerComponent('data-graph', NavPanelTrackSimplePVDataGraph);
     
   };
   
-
+  
 }
 
 export default NavPanelTrackSimple;

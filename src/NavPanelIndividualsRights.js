@@ -1,4 +1,4 @@
-import React from 'react';
+// import React from 'react';
 import NavPanelIndividualsRightsPVGrid from './NavPanelIndividualsRightsPVGrid';
 import NavPanelIndividualsRightsPVGridNoticeTemplates from './NavPanelIndividualsRightsPVGridNoticeTemplates';
 import NavPanelIndividualsRightsPVTemplateEditor from './NavPanelIndividualsRightsPVTemplateEditor';
