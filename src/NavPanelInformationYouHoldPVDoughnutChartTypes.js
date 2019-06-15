@@ -82,7 +82,7 @@ class NavPanelInformationYouHoldPVDoughnutChartTypes extends PontusComponent
         ",\"Object.Notification_Templates\"\n" +
         ",\"Object.Privacy_Impact_Assessment\"\n" +
         ",\"Object.Privacy_Notice\"\n" +
-        ",\"Person\"\n" +
+        ",\"Person.Natural\"\n" +
         ",\"Person.Employee\"\n" +
         ",\"Person.Organisation\"\n" +
         "\n" +
