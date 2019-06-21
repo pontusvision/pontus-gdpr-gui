@@ -81,20 +81,20 @@ class NavPanelInformationYouHoldIngestionTimeline extends PVTimeline
         "boolean firstTime = true;\n" +
         "\n" +
         "g.V()\n" +
-        " .has('Metadata.Type.Event.Ingestion_Group',eq('Event.Ingestion_Group'))\n" +
-        ".has('Event.Ingestion_Group.Metadata_Start_Date', gt(startTime))\n" +
-        ".has('Event.Ingestion_Group.Metadata_End_Date', lt (stopTime))\n" +
+        " .has('Metadata.Type.Event.Group_Ingestion',eq('Event.Group_Ingestion'))\n" +
+        ".has('Event.Group_Ingestion.Metadata_Start_Date', gt(startTime))\n" +
+        ".has('Event.Group_Ingestion.Metadata_End_Date', lt (stopTime))\n" +
         ".as('events')\n" +
         ".order().by(__.as('events').out().count(),decr)\n" +
         ".range(0,50)\n" +
         "\n" +
         ".match(\n" +
         "   __.as('events').out().count().as('numEvents')\n" +
-        "  ,__.as('events').out().in().hasNot('Metadata.Type.Event.Ingestion_Group').count().as(\"numMatches\")\n" +
-        "  ,__.as('events').values('Event.Ingestion_Group.Metadata_Start_Date').as('start')\n" +
-        "  ,__.as('events').values('Event.Ingestion_Group.Metadata_End_Date').as('stop')\n" +
-        "  ,__.as('events').values('Event.Ingestion_Group.Operation').as('operation')\n" +
-        "  ,__.as('events').values('Event.Ingestion_Group.Type').as('type')\n" +
+        "  ,__.as('events').out().in().hasNot('Metadata.Type.Event.Group_Ingestion').count().as(\"numMatches\")\n" +
+        "  ,__.as('events').values('Event.Group_Ingestion.Metadata_Start_Date').as('start')\n" +
+        "  ,__.as('events').values('Event.Group_Ingestion.Metadata_End_Date').as('stop')\n" +
+        "  ,__.as('events').values('Event.Group_Ingestion.Operation').as('operation')\n" +
+        "  ,__.as('events').values('Event.Group_Ingestion.Type').as('type')\n" +
         "  ,__.as('events').id().as('id')\n" +
         "      \n" +
         "  )\n" +
