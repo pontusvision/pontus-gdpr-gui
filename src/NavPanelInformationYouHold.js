@@ -43,7 +43,7 @@ class NavPanelInformationYouHold extends PVGoldenLayoutComponent
               title: 'Data',
               type: 'react-component',
               component: 'data-grid'
-            }
+            },
             // ,{
             //   title: 'Compliance Emails',
             //   type: 'react-component',

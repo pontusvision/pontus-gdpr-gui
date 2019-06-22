@@ -309,9 +309,7 @@ class PVDoughnutChart extends PontusComponent
   
         }}
       />
-        
-      />
-    
+      
     
     );
     

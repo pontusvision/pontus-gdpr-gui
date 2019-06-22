@@ -306,7 +306,17 @@ class PVDoughnutChart extends PontusComponent
         ref={this.setObj}
         data={data}
         redraw={true}
-      
+        options={{
+  
+          responsive: true,
+          legend: {
+            position: "right",
+            labels: {
+              fontColor: 'white'
+            }
+          }
+  
+        }}
       />
     
     
