@@ -4,6 +4,7 @@ import NavPanelInformationYouHoldPVDoughnutChartTypes from './NavPanelInformatio
 import NavPanelInformationYouHoldPVGridEventIngestion from './NavPanelInformationYouHoldPVGridEventIngestion';
 import NavPanelInformationYouHoldIngestionTimeline from './NavPanelInformationYouHoldIngestionTimeline';
 import PVGoldenLayoutComponent from "./PVGoldenLayoutComponent";
+import NavPanelInformationYouHoldPVGrid from "./NavPanelInformationYouHoldPVGrid";
 
 
 class NavPanelInformationYouHold extends PVGoldenLayoutComponent
@@ -38,11 +39,11 @@ class NavPanelInformationYouHold extends PVGoldenLayoutComponent
         {
           type: 'column',
           content: [
-            // {
-            //   title: 'Data',
-            //   type: 'react-component',
-            //   component: 'data-grid'
-            // }
+            {
+              title: 'Data',
+              type: 'react-component',
+              component: 'data-grid'
+            }
             // ,{
             //   title: 'Compliance Emails',
             //   type: 'react-component',
@@ -85,7 +86,7 @@ class NavPanelInformationYouHold extends PVGoldenLayoutComponent
   {
     this.registerComponentsPreamble(instance);
     
-    // this.instance.registerComponent('data-grid', NavPanelInformationYouHoldPVGrid);
+    this.instance.registerComponent('data-grid', NavPanelInformationYouHoldPVGrid);
     // this.instance.registerComponent('compliance-email', PVTimeline);
     this.instance.registerComponent('data-graph', NavPanelInformationYouHoldPVDataGraph);
     this.instance.registerComponent('data-types-doughnut', NavPanelInformationYouHoldPVDoughnutChartTypes);
