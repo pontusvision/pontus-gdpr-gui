@@ -249,7 +249,17 @@ class NavPanelSubjectAccessRequestPVDoughnutChartReqType extends PontusComponent
         ref={this.setObj}
         data={this.state.data}
         redraw={true}
-      
+        options={{
+  
+          responsive: true,
+          legend: {
+            position: "right",
+            labels: {
+              fontColor: 'white'
+            }
+          }
+  
+        }}
       />
     
     

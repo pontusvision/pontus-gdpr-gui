@@ -325,10 +325,17 @@ class NavPanelInformationYouHoldPVDoughnutChartTypes extends PontusComponent
         data={this.state.data}
         redraw={true}
         options={{
+  
           responsive: true,
           legend: {
-          position: "right"
-        }}}
+            position: "right",
+            labels: {
+              fontColor: 'white'
+            }
+          }
+  
+        }}
+        
         onDoubleClick={this.ensureData}
         
 
