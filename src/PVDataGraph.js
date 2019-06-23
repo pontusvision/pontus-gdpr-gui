@@ -8,7 +8,7 @@ import PVReportButton from './PVReportButton';
 import PVDetailsButton from './PVDetailsButton';
 import PVDataGraphNeighboursButton from './PVDataGraphNeighboursButton';
 import PontusComponent from "./PontusComponent";
-
+import i18next from "./i18n";
 
 /***************************
  * UserList Component
@@ -506,9 +506,43 @@ class PVDataGraph extends PontusComponent
   // if(r>191&&r<224){c2=e.charCodeAt(n+1);t+=String.fromCharCode((r&31)<<6|c2&63);n+=2}else{c2=e.charCodeAt(n+1);c3=e.charCodeAt(n+2);t+=String.fromCharCode((r&15)<<12|(c2&63)<<6|c3&63);n+=3}}return
   // t}}
   
+  
+  static replaceAll(searchString, replaceString, str)
+  {
+    return str.split(searchString).join(replaceString);
+  }
+  
   createSVGHTMLTableWithProps = (propsInHTMLTableRows, vLabel) =>
   {
     let backgroundColor = this.getColorBasedOnLabel(vLabel);
+    
+    let data = JSON.parse(atob(propsInHTMLTableRows));
+    
+    let tableData = "";
+    for (let key in data)
+    {
+      
+      if (data.hasOwnProperty(key))
+      {
+        let val = data[key];
+        tableData += "<tr><td class='tg-yw4l'>";
+        let cleanKey = PVDataGraph.replaceAll('.', ' ',key);
+        cleanKey = PVDataGraph.replaceAll('_', ' ',cleanKey)
+        tableData += i18next.t(cleanKey);
+        val = data[key];
+        val = val.replace('[', '').replace(']', '');
+        if (key.endsWith("b64"))
+        {
+          val = atob(val);
+          tableData += ' (' + i18next.t('Decoded') + ')';
+        }
+        tableData += "</td><td class='tg-yw4l'>";
+        tableData += val;
+        tableData += "</td></tr>";
+        
+      }
+    }
+    
     
     let tableBodySb =
       "<div xmlns=\"http://www.w3.org/1999/xhtml\" style=\"font-size:20px;color:#FFFFFF;height:100%;width:100%;\">"
@@ -524,8 +558,8 @@ class PVDataGraph extends PontusComponent
       // + "</h3>"
       + "<table class=\"tg\" style=\" overflow: visible; background: " + backgroundColor + "; height: auto; width: 600px; padding: 5px;\">"
       + "<colgroup> <col style=\"width: 30%\"/><col style=\"width: 70%\"/></colgroup>"
-      + "<tr><th class=\"tg-ygl1\">Property</th><th class=\"tg-x9s4\">Value</th></tr>"
-      + atob(propsInHTMLTableRows)
+      + "<tr><th class=\"tg-ygl1\">" + i18next.t('Property') + "</th><th class=\"tg-x9s4\">" + i18next.t('Value') + "</th></tr>"
+      + tableData
       + "</table></div>";
     
     let measuredSize = this.measureElement(tableBodySb);
@@ -639,8 +673,9 @@ class PVDataGraph extends PontusComponent
         
         let nodes = this.addMainNodeProperties(items.nodes);
         
+        let edges = this.translateEdges (items.edges);
         
-        let graph = {nodes: nodes, edges: items.edges};
+        let graph = {nodes: nodes, edges: edges};
         
         this.setState({
           graph: graph, reportButtons: items.reportButtons, vid: this.origNodeId, origLabel: items.origLabel
@@ -672,12 +707,36 @@ class PVDataGraph extends PontusComponent
     }
     
   };
+  translateEdges = (edges) =>
+  {
+    for (let i = 0, ilen = edges.length; i < ilen; i++)
+    {
+      let node = edges[i];
+      if (node.label)
+      {
+        node.label = i18next.t(node.label);
+      }
+      if (node.image)
+      {
+        // node.shape='box';
+        node.image = this.createSVGHTMLTableWithProps(node.image, node.label);
+        
+      }
+    }
+    return edges;
+  };
+  
+  
   
   addMainNodeProperties = (nodes) =>
   {
     for (let i = 0, ilen = nodes.length; i < ilen; i++)
     {
       let node = nodes[i];
+      if (node.label)
+      {
+        node.label = i18next.t(node.label);
+      }
       if (node.image)
       {
         // node.shape='box';
@@ -928,7 +987,7 @@ class PVDataGraph extends PontusComponent
       {
         buttonsList.push(
           <PVReportButton
-            key = {i}
+            key={i}
             className={'compact'}
             templateText={reportButtons[i].text}
             contextId={reportButtons[i].vid}

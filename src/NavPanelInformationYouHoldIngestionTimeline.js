@@ -1,5 +1,6 @@
 // import React from 'react';
 import PVTimeline from './PVTimeline';
+import i18next from './i18n';
 
 // import PontusComponent from "./PontusComponent";
 
@@ -74,7 +75,8 @@ class NavPanelInformationYouHoldIngestionTimeline extends PVTimeline
         "Long startTime = startDate.getTime();\n" +
         "Long stopTime = stopDate.getTime();\n" +
         "\n" +
-        "StringBuffer sb = new StringBuffer('{ \"groups\": [{ \"id\":1, \"content\": \"Structured Data Insertion\" },{ \"id\":2, \"content\":\"Unstructured Data Insertion\"} ]');\n" +
+        "StringBuffer sb = new StringBuffer('{ \"groups\": [{ \"id\":1, \"content\": \"" + i18next.t("Structured Data Insertion") + "\" },{ \"id\":2, \"content\":\"" +  i18next.t("Untructured Data Insertion") +
+        "\"} ]');\n" +
         "\n" +
         "sb.append(',\"items\": [')\n" +
         "JsonOutput jo = new JsonOutput();\n" +

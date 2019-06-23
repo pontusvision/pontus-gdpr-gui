@@ -5,6 +5,7 @@ import {Doughnut} from 'react-chartjs-2';
 import PontusComponent from "./PontusComponent";
 // import axios from 'axios';
 
+import i18next  from './i18n';
 
 /***************************
  * UserList Component
@@ -14,7 +15,7 @@ class NavPanelInformationYouHoldPVDoughnutChartTypes extends PontusComponent
   constructor(props)
   {
     super(props);
-
+    
     this.state = {
       maxHeight: 500
       , width: 500
@@ -49,7 +50,7 @@ class NavPanelInformationYouHoldPVDoughnutChartTypes extends PontusComponent
     this.obj = obj;
     if (this.obj && this.obj.chartInstance && this.obj.chartInstance.canvas){
       this.obj.chartInstance.canvas.ondblclick= this.ensureData;
-  
+      
     }
   };
   
@@ -188,24 +189,24 @@ class NavPanelInformationYouHoldPVDoughnutChartTypes extends PontusComponent
         if (typeof items === "string"){
           items = JSON.parse(items);
         }
-  
+        
         let counter = 0;
         
         for (let prop in items) {
           
-          data.labels[counter] = prop;
+          data.labels[counter] = i18next.t(prop);
           data.datasets[0].data[counter] = items[prop];
-        
+          
           data.datasets[0].backgroundColor[counter] = this.getColorBasedOnLabel(prop);
           data.datasets[0].hoverBackgroundColor[counter] = data.datasets[0].backgroundColor[counter];
-  
+          
           counter ++;
-  
-  
+          
+          
         }
-  
-  
-  
+        
+        
+        
         // var counter = 0;
         // for (var i = 0, ilen = items.length; i < ilen; i+=2){
         //   let label = items[i];
@@ -325,7 +326,7 @@ class NavPanelInformationYouHoldPVDoughnutChartTypes extends PontusComponent
         data={this.state.data}
         redraw={true}
         options={{
-  
+          
           responsive: true,
           legend: {
             position: "right",
@@ -333,13 +334,14 @@ class NavPanelInformationYouHoldPVDoughnutChartTypes extends PontusComponent
               fontColor: 'white'
             }
           }
-  
+          
         }}
-        
         onDoubleClick={this.ensureData}
-        
-
-
+        fontColor={'white'}
+        labels={{fontColor:'white', defaultFontColor:'white'}}
+        defaultFontColor={'white'}
+      
+      
       />
     
     

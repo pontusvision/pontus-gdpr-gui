@@ -8,6 +8,10 @@ import PVFormDisplay from './PVFormDisplay';
 import TrackPanel from "./TrackPanel";
 import NavPanelIndividualsRights from "./NavPanelIndividualsRights"
 
+// import i18n (needs to be bundled ;))
+import './i18n';
+
+
 function appRender(kc)
 {
   const appComp = () => (<App keycloak={kc}/>);
