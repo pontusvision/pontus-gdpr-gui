@@ -159,13 +159,13 @@ class PVDetailsButton extends PontusComponent
           
           if (data.hasOwnProperty(key))
           {
-            let val = data[key];
+            let val = data[key][0];
             tableData += "<tr><td class='tg-yw4l'>";
             let cleanKey = PontusComponent.replaceAll('.', ' ', key);
             cleanKey = PontusComponent.replaceAll('_', ' ', cleanKey)
             tableData += PontusComponent.t(cleanKey);
-            val = data[key];
-            val = val.replace('[', '').replace(']', '');
+            // val = data[key];
+            // val = val.replace('[', '').replace(']', '');
             if (key.endsWith("b64"))
             {
               val = atob(val);
