@@ -1,11 +1,10 @@
 import React from 'react';
-import {Menu, Button} from 'semantic-ui-react';
-import {Flex, Box} from 'reflexbox';
+import {Button, Menu} from 'semantic-ui-react';
+import {Box, Flex} from 'reflexbox';
 import AceEditor from 'react-ace';
 import 'brace/mode/groovy';
 import 'brace/theme/monokai';
 import 'brace/ext/searchbox';
-
 
 
 import axios from "axios";
@@ -41,10 +40,10 @@ class PVAceGremlinEditor extends PontusComponent
   
   runQuery = () =>
   {
-    let val = localStorage.getItem('savedStatePVAceGremlinEditor') || "";
-  
+    let val = localStorage.getItem('LGPD-savedStatePVAceGremlinEditor') || "";
+    
     this.props.glEventHub.emit(this.namespace + '-PVAceGremlinEditor-on-before-run-query', val);
-  
+    
     this.sendData(val);
     
   }
@@ -135,7 +134,7 @@ class PVAceGremlinEditor extends PontusComponent
   onChange = (val, ev) =>
   {
     
-    localStorage.setItem('savedStatePVAceGremlinEditor', val);
+    localStorage.setItem('LGPD-savedStatePVAceGremlinEditor', val);
     // this.setState({value: val})
   };
   
@@ -164,7 +163,7 @@ class PVAceGremlinEditor extends PontusComponent
   {
     // let eventHub = this.props.glEventHub;
     //
-    let val = localStorage.getItem('savedStatePVAceGremlinEditor') || "";
+    let val = localStorage.getItem('LGPD-savedStatePVAceGremlinEditor') || "";
     //
     // <ResizeAware
     //   style={{width: '100%', height: 'calc(100% - 20px)', flex: 1 }}
@@ -202,13 +201,13 @@ class PVAceGremlinEditor extends PontusComponent
                 onClick={this.runQuery}
                 // inverted={false}
                 // color={'black'}
-                style={{border:0, background:'rgb(69,69,69)'}}
+                style={{border: 0, background: 'rgb(69,69,69)'}}
                 size={'small'}
               >
-                Send Query
+                { PontusComponent.t('Send Query') }
               </Button>
-              
-
+            
+            
             </Menu>
           </Box>
           <Box px={2} w={1 / 4}>
@@ -222,8 +221,8 @@ class PVAceGremlinEditor extends PontusComponent
               // enableLiveAutocompletion={true}
               tabSize={2}
               value={val}
-              height={this.state.height -20 + "px"}
-              width={this.state.width -20 + "px"}
+              height={this.state.height - 20 + "px"}
+              width={this.state.width - 20 + "px"}
               style={{overflow: 'auto', flexGrow: 1}}
               
               ref={this.setObj}

@@ -149,9 +149,52 @@ class PVDetailsButton extends PontusComponent
       let backgroundColor = this.getColorBasedOnLabel(this.props.metadataType);
       if (resp.status === 200)
       {
-        // let items = resp.data.result.data['@value'][0]['@value'];
-        let items = resp.data.result.data['@value'][0];
+        // let backgroundColor = this.getColorBasedOnLabel(vLabel);
         
+        let data = JSON.parse(atob(resp.data.result.data['@value'][0]));
+        
+        let tableData = "";
+        for (let key in data)
+        {
+          
+          if (data.hasOwnProperty(key))
+          {
+            let val = data[key];
+            tableData += "<tr><td class='tg-yw4l'>";
+            let cleanKey = PontusComponent.replaceAll('.', ' ', key);
+            cleanKey = PontusComponent.replaceAll('_', ' ', cleanKey)
+            tableData += PontusComponent.t(cleanKey);
+            val = data[key];
+            val = val.replace('[', '').replace(']', '');
+            if (key.endsWith("b64"))
+            {
+              val = atob(val);
+              tableData += ' (' + PontusComponent.t('Decoded') + ')';
+            }
+            tableData += "</td><td class='tg-yw4l'>";
+            tableData += PontusComponent.escapeHTML(val);
+            tableData += "</td></tr>";
+            
+          }
+        }
+        
+        
+        // let tableBodySb =
+        //   "<div xmlns=\"http://www.w3.org/1999/xhtml\"
+        // style=\"font-size:20px;color:#FFFFFF;height:100%;width:100%;\">" + "<style>" + ".tg td{font-family:Arial,
+        // sans-serif;font-size:14px;padding:10px
+        // 5px;border-style:solid;border-width:1px;overflow:visible;word-break:normal;}" + ".tg th{font-family:Arial,
+        // sans-serif;font-size:14px;font-weight:normal;padding:10px
+        // 5px;border-style:solid;border-width:1px;overflow:visible;word-break:normal;color:#ffffff;}" + ".tg
+        // .tg-ygl1{font-weight:bold;background-color:#9b9b9b}" + ".tg
+        // .tg-x9s4{font-weight:bold;background-color:#9b9b9b;vertical-align:top}" + ".tg .tg-yw4l{vertical-align:top;
+        // color:#ffffff;}" + "</style>" // + "<h3 style=\"color: white;\">" // + vLabel.replace(this.underscoreOrDot,
+        // " ") // + "</h3>" + "<table class=\"tg\" style=\" overflow: visible; background: " + backgroundColor + ";
+        // height: auto; width: 600px; padding: 5px;\">" + "<colgroup> <col style=\"width: 30%\"/><col style=\"width:
+        // 70%\"/></colgroup>" + "<tr><th class=\"tg-ygl1\">" + PontusComponent.t('Property') + "</th><th
+        // class=\"tg-x9s4\">" + PontusComponent.t('Value') + "</th></tr>" + tableData + "</table></div>";
+        
+        // let items = resp.data.result.data['@value'][0];
         let tableBodySb =
           "<div xmlns=\"http://www.w3.org/1999/xhtml\" style=\"font-size:20px;color:#FFFFFF;height:100%;width:100%;\">"
           + "<style>"
@@ -166,8 +209,12 @@ class PVDetailsButton extends PontusComponent
           // + "</h3>"
           + "<table class=\"tg\" style=\" overflow: visible; background: " + backgroundColor + "; height: 100%; width: 100%; padding: 5px;\">"
           + "<colgroup> <col style=\"width: 30%\"/><col style=\"width: 70%\"/></colgroup>"
-          + "<tr><th class=\"tg-ygl1\">Property</th><th class=\"tg-x9s4\">Value</th></tr>"
-          + atob(items)
+          + "<tr><th class=\"tg-ygl1\">"
+          + PontusComponent.t('Property')
+          + "</th><th class=\"tg-x9s4\">"
+          + PontusComponent.t('Value')
+          + "</th></tr>"
+          + tableData
           + "</table></div>";
         
         

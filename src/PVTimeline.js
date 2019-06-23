@@ -22,52 +22,54 @@ class PVTimeline extends PontusComponent
   {
     super(props);
     
-    this.subscription = (this.props.namespace ? this.props.namespace : "" ) + '-pvgrid-on-click-row';
-  
+    this.subscription = (this.props.namespace ? this.props.namespace : "") + '-pvgrid-on-click-row';
+    
     this.url = PontusComponent.getGraphURL(props);
-  
-  
+    
+    
     // let now = new Date().getMilliseconds();
     let groupCount = 1;
     let itemCount = 1;
-
+    
     // create a data set with groups
     let names = ['CLICK ON THE GRID TO GET THE RELATED ITEMS TIME SERIES'];
     this.groups = new Vis.DataSet();
-
-    for (let g = 0; g < groupCount; g++) {
-      this.groups.add({id: g, content: names[g]});
+    
+    for (let g = 0; g < groupCount; g++)
+    {
+      this.groups.add({id: g, content: PontusComponent.t(names[g])});
     }
-    let start = new Date (Date.now() - 3600000);
-    let end = new Date(Date.now() +3600000);
-
+    let start = new Date(Date.now() - 3600000);
+    let end = new Date(Date.now() + 3600000);
+    
     // create a dataset with items
     this.items = new Vis.DataSet();
-    for (let i = 0; i < itemCount; i++) {
+    for (let i = 0; i < itemCount; i++)
+    {
       let group = 0;
       this.items.add({
         id: i,
         group: group,
         content: 'item ' + i + ' ' +
-        '<span style="color:#97B0F8;">(' + names[group] + ')</span>',
+          '<span style="color:#97B0F8;">(' + PontusComponent.t(names[group]) + ')</span>',
         start: start,
         end: end,
         type: 'box'
       });
     }
-
+    
     /*
      event="rangechanged", properties={"start":"2013-05-03T05:48:43.057Z","end":"2013-05-16T22:00:20.634Z","byUser":true,"event":{"pointers":[{"isTrusted":true,"_handled":{"pan":true,"panend":true}}],"changedPointers":[{"isTrusted":true,"_handled":{"pan":true,"panend":true}}],"pointerType":"mouse","srcEvent":{"isTrusted":true,"_handled":{"pan":true,"panend":true}},"isFirst":false,"isFinal":true,"eventType":4,"center":{"x":186,"y":144},"timeStamp":1536169382064,"deltaTime":2253,"angle":177.75974264585528,"distance":818.6256775840836,"deltaX":-818,"deltaY":32,"offsetDirection":2,"overallVelocityX":-0.36307146027518866,"overallVelocityY":0.014203284509542832,"overallVelocity":-0.36307146027518866,"scale":1,"rotation":0,"maxPointers":1,"velocity":0,"velocityX":0,"velocityY":0,"direction":1,"target":"DOM Element","type":"panend","firstTarget":"DOM Element"}}
- 
+     
      */
-  
+    
     this.state = {
-  
-      groups : this.groups
-  
-      ,items: this.items
       
-      ,options :{
+      groups: this.groups
+      
+      , items: this.items
+      
+      , options: {
         width: '100%',
         height: '100px',
         stack: true,
@@ -86,8 +88,8 @@ class PVTimeline extends PontusComponent
       }
     };
     this.errorCount = 0;
-  
-  
+    
+    
   }
   
   doubleClick = (param) =>
@@ -122,66 +124,66 @@ class PVTimeline extends PontusComponent
   // };
   getQuery = (event) =>
   {
-  
+    
     return {
       bindings: {vid: (event.id || event.index)}
-      ,gremlin: "def groups = g.V(vid).as('orig').both().values('Metadata.Type').dedup()\n" +
-      "  \n" +
-      "Set groupSet = new HashSet()\n" +
-      "StringBuffer sb = new StringBuffer();\n" +
-      "\n" +
-      "groups.each{ item -> \n" +
-      "  sb.setLength(0)\n" +
-      "  sb.append('{\"id\": \"').append(item)\n" +
-      "    .append('\", \"content\":\"').append(item.replaceAll('[_.]',' '))\n" +
-      "    .append('\"}')\n" +
-      "  groupSet.add(sb.toString()) \n" +
-      "}\n" +
-      "\n" +
-      "groupSet.toString()\n" +
-      "\n" +
-      "\n" +
-      "items = g.V(vid).both()\n" +
-      "\n" +
-      "Set itemSet = new HashSet()\n" +
-      "\n" +
-      "sb.setLength(0)\n" +
-      "items.each{\n" +
-      "  \n" +
-      "  vals -> \n" +
-      "    vals.each{\n" +
-      "      item -> \n" +
-      "        sb.setLength(0)\n" +
-      "        sb.append('{\"id\":').append(item.id())\n" +
-      "          .append(',\"group\":\"').append(item.values('Metadata.Type').next())\n" +
-      "          .append('\",\"start\":')\n" +
-      "          .append(item.values('Metadata.Update_Date').next().getTime() )\n" +
-      "          .append(',\"content\":\"').append(item.values('Metadata.Type').next()).append('(').append(item.id()).append(')').append('\"')\n" +
-      "          .append(',\"type\":\"box\"')\n" +
-      "          .append('}')\n" +
-      "        itemSet.add(sb.toString())\n" +
-      "    }\n" +
-      "    \n" +
-      "  // it.get().each{\n" +
-      "  //   key, val -> sb.length\n" +
-      "  // }\n" +
-      "}\n" +
-      "\n" +
-      "\n" +
-      "sb.setLength(0)\n" +
-      "sb.append('{ \"groups\":')\n" +
-      "  .append(groupSet.toString())\n" +
-      "  .append(',\"items\":')\n" +
-      "  .append(itemSet.toString())\n" +
-      "  .append('}')\n" +
-      "sb.toString()"
+      , gremlin: "def groups = g.V(vid).as('orig').both().values('Metadata.Type').dedup()\n" +
+        "  \n" +
+        "Set groupSet = new HashSet()\n" +
+        "StringBuffer sb = new StringBuffer();\n" +
+        "\n" +
+        "groups.each{ item -> \n" +
+        "  sb.setLength(0)\n" +
+        "  sb.append('{\"id\": \"').append(item)\n" +
+        "    .append('\", \"content\":\"').append(item.replaceAll('[_.]',' '))\n" +
+        "    .append('\"}')\n" +
+        "  groupSet.add(sb.toString()) \n" +
+        "}\n" +
+        "\n" +
+        "groupSet.toString()\n" +
+        "\n" +
+        "\n" +
+        "items = g.V(vid).both()\n" +
+        "\n" +
+        "Set itemSet = new HashSet()\n" +
+        "\n" +
+        "sb.setLength(0)\n" +
+        "items.each{\n" +
+        "  \n" +
+        "  vals -> \n" +
+        "    vals.each{\n" +
+        "      item -> \n" +
+        "        sb.setLength(0)\n" +
+        "        sb.append('{\"id\":').append(item.id())\n" +
+        "          .append(',\"group\":\"').append(item.values('Metadata.Type').next())\n" +
+        "          .append('\",\"start\":')\n" +
+        "          .append(item.values('Metadata.Update_Date').next().getTime() )\n" +
+        "          .append(',\"content\":\"').append(item.values('Metadata.Type').next()).append('(').append(item.id()).append(')').append('\"')\n" +
+        "          .append(',\"type\":\"box\"')\n" +
+        "          .append('}')\n" +
+        "        itemSet.add(sb.toString())\n" +
+        "    }\n" +
+        "    \n" +
+        "  // it.get().each{\n" +
+        "  //   key, val -> sb.length\n" +
+        "  // }\n" +
+        "}\n" +
+        "\n" +
+        "\n" +
+        "sb.setLength(0)\n" +
+        "sb.append('{ \"groups\":')\n" +
+        "  .append(groupSet.toString())\n" +
+        "  .append(',\"items\":')\n" +
+        "  .append(itemSet.toString())\n" +
+        "  .append('}')\n" +
+        "sb.toString()"
     };
   };
   
   selectData = (event) =>
   {
-  
-    let url =  this.url; // = PontusComponent.getGraphURL(this.props);
+    
+    let url = this.url; // = PontusComponent.getGraphURL(this.props);
     // "/gateway/sandbox/pvgdpr_server/home/graph";
     if (this.h_request !== null)
     {
@@ -210,7 +212,7 @@ class PVTimeline extends PontusComponent
         }
         else
         {
-          this.onError(event,thrown);
+          this.onError(event, thrown);
         }
       });
       
@@ -223,12 +225,14 @@ class PVTimeline extends PontusComponent
   onError = (event, thrown) =>
   {
     this.errorCount++;
-    if (this.errorCount > 5){
+    if (this.errorCount > 5)
+    {
       console.error("Failed to get graph data:" + thrown);
-    
+      
     }
-  
-    else{
+    
+    else
+    {
       this.selectData(event);
     }
   };
@@ -265,6 +269,31 @@ class PVTimeline extends PontusComponent
         // this.setState({graph: graph});
         // localStorage.setItem(this.subscription, graph);
         
+        let itemCount = items.groups.length;
+        for (let i = 0; i < itemCount; i++)
+        {
+          items.groups[i].content = PontusComponent.t(items.groups[i].content);
+        }
+        
+        
+        itemCount = items.items.length;
+        for (let i = 0; i < itemCount; i++)
+        {
+          let splitItems = items.items[i].content.split('-');
+          for (let j = 0; j < splitItems.length; j++)
+          {
+            let subSplitItems = splitItems[j].split(':');
+            for (let k = 0; k < subSplitItems.length; k++)
+            {
+              subSplitItems[k] = PontusComponent.t(subSplitItems[k]);
+            }
+            splitItems[j] = subSplitItems.join(':');
+          }
+          
+          items.items[i].content = splitItems.join('-');
+        }
+        
+        
         this.items.clear();
         this.items.add(items.items)
         this.groups.clear();
@@ -273,7 +302,7 @@ class PVTimeline extends PontusComponent
         this.timeline.setGroups(this.groups);
         this.timeline.setItems(this.items);
         this.timeline.fit();
-  
+        
         this.setState({groups: this.groups, items: this.items});
         
       }
@@ -291,24 +320,26 @@ class PVTimeline extends PontusComponent
   {
     if (this.timeline)
     {
-      this.setState({width:width - 30, height:height -30});
-      this.timeline.setOptions({width:width - 30, height:height -30});
+      this.setState({width: width - 30, height: height - 30});
+      this.timeline.setOptions({width: width - 30, height: height - 30});
       // this.timeline.redraw();
-
+      
     }
   };
   
-  onRangeChange = (event) => {
+  onRangeChange = (event) =>
+  {
     /*
      event={"start":"2013-05-03T05:48:43.057Z","end":"2013-05-16T22:00:20.634Z","byUser":true,"event":{"pointers":[{"isTrusted":true,"_handled":{"pan":true,"panend":true}}],"changedPointers":[{"isTrusted":true,"_handled":{"pan":true,"panend":true}}],"pointerType":"mouse","srcEvent":{"isTrusted":true,"_handled":{"pan":true,"panend":true}},"isFirst":false,"isFinal":true,"eventType":4,"center":{"x":186,"y":144},"timeStamp":1536169382064,"deltaTime":2253,"angle":177.75974264585528,"distance":818.6256775840836,"deltaX":-818,"deltaY":32,"offsetDirection":2,"overallVelocityX":-0.36307146027518866,"overallVelocityY":0.014203284509542832,"overallVelocity":-0.36307146027518866,"scale":1,"rotation":0,"maxPointers":1,"velocity":0,"velocityX":0,"velocityY":0,"direction":1,"target":"DOM Element","type":"panend","firstTarget":"DOM Element"}}
- 
+     
      */
     this.selectData(event);
     
     
   };
   
-  onSelect = (event) => {
+  onSelect = (event) =>
+  {
     /*
      {"items":[1],"event":{"pointers":[{"isTrusted":true,"_handled":{"tap":true}}],"changedPointers":[{"isTrusted":true,"_handled":{"tap":true}}],"pointerType":"mouse","srcEvent":
      */
@@ -326,20 +357,21 @@ class PVTimeline extends PontusComponent
     //   }
     // }
     this.props.glEventHub.on(this.subscription, this.selectData);
-  
+    
     this.timeline = new Vis.Timeline(this.graph, this.state.items, this.state.groups, this.state.options);
     this.timeline.on('rangechange', this.onRangeChange);
     this.timeline.on('select', this.onSelect);
-  
-  
+    
+    
   }
   
   componentWillUnmount()
   {
     this.props.glEventHub.off(this.subscription, this.selectData);
-  
+    
     this.timeline.off('rangechange', this.onRangeChange);
-  
+    this.timeline.off('select', this.onSelect);
+    
   }
   
   
@@ -356,8 +388,8 @@ class PVTimeline extends PontusComponent
         onResize={this.handleResize}
       >
         <div
-           style={{padding: "15px"}}
-          ref={this.setGraph} />
+          style={{padding: "15px"}}
+          ref={this.setGraph}/>
       </ResizeAware>
     
     );

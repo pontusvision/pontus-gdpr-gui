@@ -8,7 +8,6 @@ import PVReportButton from './PVReportButton';
 import PVDetailsButton from './PVDetailsButton';
 import PVDataGraphNeighboursButton from './PVDataGraphNeighboursButton';
 import PontusComponent from "./PontusComponent";
-import i18next from "./i18n";
 
 /***************************
  * UserList Component
@@ -507,11 +506,6 @@ class PVDataGraph extends PontusComponent
   // t}}
   
   
-  static replaceAll(searchString, replaceString, str)
-  {
-    return str.split(searchString).join(replaceString);
-  }
-  
   createSVGHTMLTableWithProps = (propsInHTMLTableRows, vLabel) =>
   {
     let backgroundColor = this.getColorBasedOnLabel(vLabel);
@@ -526,18 +520,18 @@ class PVDataGraph extends PontusComponent
       {
         let val = data[key];
         tableData += "<tr><td class='tg-yw4l'>";
-        let cleanKey = PVDataGraph.replaceAll('.', ' ',key);
-        cleanKey = PVDataGraph.replaceAll('_', ' ',cleanKey)
-        tableData += i18next.t(cleanKey);
+        let cleanKey = PontusComponent.replaceAll('.', ' ', key);
+        cleanKey = PontusComponent.replaceAll('_', ' ', cleanKey)
+        tableData += PontusComponent.t(cleanKey);
         val = data[key];
         val = val.replace('[', '').replace(']', '');
         if (key.endsWith("b64"))
         {
           val = atob(val);
-          tableData += ' (' + i18next.t('Decoded') + ')';
+          tableData += ' (' + PontusComponent.t('Decoded') + ')';
         }
         tableData += "</td><td class='tg-yw4l'>";
-        tableData += val;
+        tableData += PontusComponent.escapeHTML(val);
         tableData += "</td></tr>";
         
       }
@@ -558,7 +552,7 @@ class PVDataGraph extends PontusComponent
       // + "</h3>"
       + "<table class=\"tg\" style=\" overflow: visible; background: " + backgroundColor + "; height: auto; width: 600px; padding: 5px;\">"
       + "<colgroup> <col style=\"width: 30%\"/><col style=\"width: 70%\"/></colgroup>"
-      + "<tr><th class=\"tg-ygl1\">" + i18next.t('Property') + "</th><th class=\"tg-x9s4\">" + i18next.t('Value') + "</th></tr>"
+      + "<tr><th class=\"tg-ygl1\">" + PontusComponent.t('Property') + "</th><th class=\"tg-x9s4\">" + PontusComponent.t('Value') + "</th></tr>"
       + tableData
       + "</table></div>";
     
@@ -673,7 +667,7 @@ class PVDataGraph extends PontusComponent
         
         let nodes = this.addMainNodeProperties(items.nodes);
         
-        let edges = this.translateEdges (items.edges);
+        let edges = this.translateEdges(items.edges);
         
         let graph = {nodes: nodes, edges: edges};
         
@@ -711,21 +705,14 @@ class PVDataGraph extends PontusComponent
   {
     for (let i = 0, ilen = edges.length; i < ilen; i++)
     {
-      let node = edges[i];
-      if (node.label)
+      let edge = edges[i];
+      if (edge.label)
       {
-        node.label = i18next.t(node.label);
-      }
-      if (node.image)
-      {
-        // node.shape='box';
-        node.image = this.createSVGHTMLTableWithProps(node.image, node.label);
-        
+        edge.label = PontusComponent.t(edge.label, [' (', ')']);
       }
     }
     return edges;
   };
-  
   
   
   addMainNodeProperties = (nodes) =>
@@ -735,7 +722,7 @@ class PVDataGraph extends PontusComponent
       let node = nodes[i];
       if (node.label)
       {
-        node.label = i18next.t(node.label);
+        node.label = PontusComponent.t(node.label, [' -> (', ')']);
       }
       if (node.image)
       {

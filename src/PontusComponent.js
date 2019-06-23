@@ -1,7 +1,9 @@
 import React from 'react';
-import { useTranslation } from 'react-i18next';
+// import i18next from 'i18next';
+// import { useTranslation } from 'react-i18next';
+import i18next from './i18n';
 
-const { t, i18n } = useTranslation();
+// const { t, i18n } = useTranslation();
 
 class PontusComponent extends React.Component
 {
@@ -10,10 +12,63 @@ class PontusComponent extends React.Component
   {
     super(props);
     this.url = PontusComponent.getGraphURL(props);
-    this.t = t;
   }
-
-
+  
+  static recursiveSplitTranslateJoin(itemToSplit, splitArrayPattern)
+  {
+    let localSplitArrayPattern = Array.from(splitArrayPattern);
+    let splitPattern = localSplitArrayPattern.shift();
+    if (!splitPattern)
+    {
+      return i18next.t(itemToSplit);
+    }
+    
+    
+    let splitItem = itemToSplit.split(splitPattern);
+    for (let i = 0; i < splitItem.length; i++)
+    {
+      
+      splitItem[i] = PontusComponent.recursiveSplitTranslateJoin(splitItem[i], localSplitArrayPattern);
+    }
+    
+    let rejoined = splitItem.join(splitPattern);
+    
+    return PontusComponent.recursiveSplitTranslateJoin(rejoined, localSplitArrayPattern);
+    
+  }
+  
+  static t(str, conf)
+  {
+    if (!conf)
+    {
+      return i18next.t(str);
+    }
+    if (conf)
+    {
+      return PontusComponent.recursiveSplitTranslateJoin(str,conf)
+      
+    }
+  }
+  
+  static escapeHTML(unsafeText)
+  {
+    let div = document.createElement('div');
+    div.innerText = unsafeText;
+    let retVal = PontusComponent.replaceAll("<br>", "<br/>", div.innerHTML);
+    retVal = PontusComponent.replaceAll('\\"', "'", retVal);
+    retVal = PontusComponent.replaceAll('\\r\\n', "<br/>", retVal);
+    retVal = PontusComponent.replaceAll('\\n', "<br/>", retVal);
+    retVal = PontusComponent.replaceAll('\\t', "  ", retVal);
+    retVal = PontusComponent.replaceAll('"[', "[", retVal);
+    retVal = PontusComponent.replaceAll(']"', "]", retVal);
+    
+    return retVal;
+  }
+  
+  static replaceAll(searchString, replaceString, str)
+  {
+    return str.split(searchString).join(replaceString);
+  }
   
   static getGraphURL(props)
   {
@@ -129,23 +184,31 @@ class PontusComponent extends React.Component
   };
   
   
-  stringify = (obj) =>{
-  
+  stringify = (obj) =>
+  {
+    
     let cache = [];
     
-  
-    let stringifyFilter = (key, value) => {
-      if (key === 'chartInstance' || key === 'canvas' || key === 'chart'){
+    
+    let stringifyFilter = (key, value) =>
+    {
+      if (key === 'chartInstance' || key === 'canvas' || key === 'chart')
+      {
         return;
       }
       
-      if (typeof value === 'object' && value !== null) {
-        if (cache.indexOf(value) !== -1) {
+      if (typeof value === 'object' && value !== null)
+      {
+        if (cache.indexOf(value) !== -1)
+        {
           // Duplicate reference found
-          try {
+          try
+          {
             // If this value does not reference a parent it can be deduped
-            return JSON.parse(JSON.stringify(value ));
-          } catch (error) {
+            return JSON.parse(JSON.stringify(value));
+          }
+          catch (error)
+          {
             // discard key if value cannot be deduped
             return;
           }
@@ -155,15 +218,14 @@ class PontusComponent extends React.Component
       }
       return value;
     };
-  
-    let state = JSON.stringify(obj,stringifyFilter );
+    
+    let state = JSON.stringify(obj, stringifyFilter);
     cache = null;
-  
+    
     return state;
   };
-
   
-
+  
 }
 
 

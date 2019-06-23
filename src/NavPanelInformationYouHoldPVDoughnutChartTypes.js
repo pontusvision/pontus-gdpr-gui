@@ -3,9 +3,8 @@ import React from 'react';
 import axios from "axios";
 import {Doughnut} from 'react-chartjs-2';
 import PontusComponent from "./PontusComponent";
-// import axios from 'axios';
 
-import i18next  from './i18n';
+// import axios from 'axios';
 
 /***************************
  * UserList Component
@@ -22,7 +21,7 @@ class NavPanelInformationYouHoldPVDoughnutChartTypes extends PontusComponent
       , height: 500
       , data: {
         labels: []
-        ,datasets: [
+        , datasets: [
           {
             data: []
             // ,backgroundColor: []
@@ -43,17 +42,15 @@ class NavPanelInformationYouHoldPVDoughnutChartTypes extends PontusComponent
   }
   
   
-  
-  
   setObj = (obj) =>
   {
     this.obj = obj;
-    if (this.obj && this.obj.chartInstance && this.obj.chartInstance.canvas){
-      this.obj.chartInstance.canvas.ondblclick= this.ensureData;
+    if (this.obj && this.obj.chartInstance && this.obj.chartInstance.canvas)
+    {
+      this.obj.chartInstance.canvas.ondblclick = this.ensureData;
       
     }
   };
-  
   
   
   getQuery = () =>
@@ -168,16 +165,16 @@ class NavPanelInformationYouHoldPVDoughnutChartTypes extends PontusComponent
   {
     
     
-    
-    try{
+    try
+    {
       
       let data = {
         labels: []
-        ,datasets: [
+        , datasets: [
           {
             data: []
-            ,backgroundColor: []
-            ,hoverBackgroundColor: []
+            , backgroundColor: []
+            , hoverBackgroundColor: []
           }
         ]
       };
@@ -186,25 +183,26 @@ class NavPanelInformationYouHoldPVDoughnutChartTypes extends PontusComponent
       {
         let items = resp.data.result.data['@value'][0];
         
-        if (typeof items === "string"){
+        if (typeof items === "string")
+        {
           items = JSON.parse(items);
         }
         
         let counter = 0;
         
-        for (let prop in items) {
+        for (let prop in items)
+        {
           
-          data.labels[counter] = i18next.t(prop);
+          data.labels[counter] = PontusComponent.t(prop);
           data.datasets[0].data[counter] = items[prop];
           
           data.datasets[0].backgroundColor[counter] = this.getColorBasedOnLabel(prop);
           data.datasets[0].hoverBackgroundColor[counter] = data.datasets[0].backgroundColor[counter];
           
-          counter ++;
+          counter++;
           
           
         }
-        
         
         
         // var counter = 0;
@@ -264,12 +262,12 @@ class NavPanelInformationYouHoldPVDoughnutChartTypes extends PontusComponent
       }
       
       
-      
       this.setState({data: data})
       
       
     }
-    catch (e){
+    catch (e)
+    {
       // e;
     }
     
@@ -301,6 +299,7 @@ class NavPanelInformationYouHoldPVDoughnutChartTypes extends PontusComponent
     this.ensureData();
     
   }
+  
   componentWillUnmount()
   {
     // this.props.glEventHub.off(this.namespace + '-pvgrid-on-click-row', this.onClickedPVGrid);
@@ -308,7 +307,8 @@ class NavPanelInformationYouHoldPVDoughnutChartTypes extends PontusComponent
     // super.componentWillUnmount();
   }
   
-  toConfig = () => {
+  toConfig = () =>
+  {
   
   };
   
@@ -338,7 +338,7 @@ class NavPanelInformationYouHoldPVDoughnutChartTypes extends PontusComponent
         }}
         onDoubleClick={this.ensureData}
         fontColor={'white'}
-        labels={{fontColor:'white', defaultFontColor:'white'}}
+        labels={{fontColor: 'white', defaultFontColor: 'white'}}
         defaultFontColor={'white'}
       
       

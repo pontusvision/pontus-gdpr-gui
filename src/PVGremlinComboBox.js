@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import CreatableSelect from 'react-select/creatable';
 // Be sure to include styles at some point, probably during your bootstrapping
 import axios from "axios";
+import PontusComponent from "./PontusComponent";
 
 // import ResizeAware from 'react-resize-aware';
 
@@ -29,9 +30,6 @@ class PVGremlinComboBox extends Component
   }
   
   
-  
-  
-  
   getOptions = (jsonRequest) =>
   {
     
@@ -54,9 +52,19 @@ class PVGremlinComboBox extends Component
       (response) =>
       {
         // this.reactSelect.options = response.data.labels || [];
-        this.setState({
-          options: response.data.labels
-        });
+        if (response.data && response.data.labels)
+        {
+          for (let i = 0; i < response.data.labels.length; i++)
+          {
+            let lbl = response.data.labels[i];
+            lbl.label = PontusComponent.t(lbl.label);
+          }
+          this.setState({
+            options: response.data.labels
+          });
+          
+          
+        }
         
         // callback(null, {
         //   options: response.data.labels || [],
@@ -132,15 +140,16 @@ class PVGremlinComboBox extends Component
         color: 'black',
         padding: 2,
       }),
-      singleValue: (provided, state) => {
+      singleValue: (provided, state) =>
+      {
         const opacity = state.isDisabled ? 0.5 : 1;
         const transition = 'opacity 300ms';
-        return { ...provided, opacity, transition };
+        return {...provided, opacity, transition};
       }
     };
-  
+    
     // multi={this.props.multi === null ? true : this.props.multi}
-  
+    
     return (
       
       <CreatableSelect
@@ -153,7 +162,7 @@ class PVGremlinComboBox extends Component
         joinValues={true}
         delimiter={","}
         onChange={this.onChange}
-
+        
         styles={customStyles}
       />
     
