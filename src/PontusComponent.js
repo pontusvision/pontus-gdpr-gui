@@ -45,9 +45,17 @@ class PontusComponent extends React.Component
     }
     if (conf)
     {
-      return PontusComponent.recursiveSplitTranslateJoin(str,conf)
+      return PontusComponent.recursiveSplitTranslateJoin(str, conf)
       
     }
+  }
+  
+  static b64DecodeUnicode(str)
+  {
+    return decodeURIComponent(Array.prototype.map.call(atob(str), function (c)
+    {
+      return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2)
+    }).join(''))
   }
   
   static escapeHTML(unsafeText)
@@ -61,6 +69,11 @@ class PontusComponent extends React.Component
     retVal = PontusComponent.replaceAll('\\t', "  ", retVal);
     retVal = PontusComponent.replaceAll('"[', "[", retVal);
     retVal = PontusComponent.replaceAll(']"', "]", retVal);
+    retVal = PontusComponent.replaceAll('&nbsp;', " ", retVal);
+    // retVal = retVal.replace(/(&#(\d+);)/g, function (match, capture, charCode)
+    // {
+    //   return String.fromCharCode(charCode);
+    // });
     
     return retVal;
   }

@@ -168,7 +168,9 @@ class PVDetailsButton extends PontusComponent
             // val = val.replace('[', '').replace(']', '');
             if (key.endsWith("b64"))
             {
-              val = atob(val);
+              val = PontusComponent.b64DecodeUnicode(val);
+  
+              // val = atob(val);
               tableData += ' (' + PontusComponent.t('Decoded') + ')';
             }
             tableData += "</td><td class='tg-yw4l'>";
