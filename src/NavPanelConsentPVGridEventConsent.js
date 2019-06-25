@@ -69,7 +69,7 @@ class NavPanelConsentPVGridEventConsent extends PVGrid
       }
     ,  gremlin:
       "g.V(pg_privNoticeId).in().has('Metadata.Type.Event.Consent', eq('Event.Consent'))" +
-      ".order().by(pg_orderCol == null ? 'Event.Consent.Metadata.Create_Date' :pg_orderCol.toString() ,pg_orderDir == (1)? incr: decr)" +
+      ".order().by(pg_orderCol == null ? 'Event.Consent.Date' :pg_orderCol.toString() ,pg_orderDir == (1)? incr: decr)" +
       ".range(pg_from,pg_to).as('consent_events')" +
       ".match(" +
       "  __.as('consent_events').values('Event.Consent.Date').as('Event.Consent.Date')" +
