@@ -113,22 +113,23 @@ class PontusComponent extends React.Component
     
   }
   
+  static getRestEdgeLabelsURL(props)
+  {
+    return PontusComponent.getURLGeneric(props, 'pvgdpr_gui', 'pvgdpr_server/home/edge_labels', "/gateway/sandbox/pvgdpr_server/home/vertex_labels");
+  }
   
   static getRestVertexLabelsURL(props)
   {
-    
     return PontusComponent.getURLGeneric(props, 'pvgdpr_gui', 'pvgdpr_server/home/vertex_labels', "/gateway/sandbox/pvgdpr_server/home/vertex_labels");
   }
   
   static getRestNodePropertyNamesURL(props)
   {
-    
     return PontusComponent.getURLGeneric(props, 'pvgdpr_gui', 'pvgdpr_server/home/node_property_names', "/gateway/sandbox/pvgdpr_server/home/node_property_names");
   }
   
   static getRestURL(props)
   {
-    
     return PontusComponent.getURLGeneric(props, 'pvgdpr_gui', 'pvgdpr_server/home/records', "/gateway/sandbox/pvgdpr_server/home/records");
   }
   

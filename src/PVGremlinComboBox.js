@@ -23,7 +23,7 @@ class PVGremlinComboBox extends Component
     this.state = {
       value: this.props.multi ? [] : {}
       // ,options: [{label : "one", value: "one"}, {label: "two", value: "two"}]
-      , options: []
+      , options: this.props.options === null ? [] : this.props.options
     };
     
     

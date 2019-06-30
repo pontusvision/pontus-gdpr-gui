@@ -124,7 +124,7 @@ class PVGDPRScores extends PontusComponent
     if (this.errCounter < 25)
     {
       // {
-      //   axios.get('/gateway/sandbox/pvgdpr_gui/bootstrap.min.css', {maxRedirects: 10, validateStatus: (status) => {
+      //   axios.get('/gateway/sandbox/pvgdpr_gui/bootstrap-toast.css', {maxRedirects: 10, validateStatus: (status) => {
       //     this.lastestStatus = status;
       //     return status >= 200 && status < 400;
       //   }}).then((resp)=>{

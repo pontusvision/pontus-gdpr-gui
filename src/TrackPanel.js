@@ -7,7 +7,9 @@ import NavPanelTrackExpert from "./NavPanelTrackExpert";
 import Icon from 'react-icons-kit-allreact';
 import {child} from 'react-icons-kit-allreact/fa/child';
 import {lab} from 'react-icons-kit-allreact/icomoon/lab';
+import {pencil} from 'react-icons-kit-allreact/fa/pencil';
 import PontusComponent from "./PontusComponent";
+import NavPanelTrackEditor from "./NavPanelTrackEditor";
 
 
 class TrackPanel extends PontusComponent
@@ -67,6 +69,7 @@ class TrackPanel extends PontusComponent
         >
           {this.renderItem("Simple", <NavPanelTrackSimple style={{height: '100%', width:'100%'}}/>, <Icon icon={child}/>)}
           {this.renderItem("Expert", <NavPanelTrackExpert style={{height: '100%', width:'100%'}}/>, <Icon icon={lab}/>)}
+          {/*{this.renderItem("Edit", <NavPanelTrackEditor style={{height: '100%', width:'100%'}}/>, <Icon icon={pencil}/>)}*/}
         </NavPane>
       </div>
     );
