@@ -422,7 +422,7 @@ class PVDataGraph extends PontusComponent
       "    .append('\"from\": ').append(it.inVertex().id())\n" +
       "    .append(' ,\"to\": \"').append(it.outVertex().id())\n" +
       "    .append('\",\"label\": \"').append(it.label().toString().replaceAll('[_.]',' '))\n" +
-      "    .append(', prob:')\n" +
+      "    .append(' - prob - ')\n" +
       "    .append(\n" +
       "      Math.round(\n" +
       "      Math.min(\n" +
