@@ -360,7 +360,6 @@ class PVDataGraph extends PontusComponent
       "\n" +
       "  sb.append('{ \"nodes\":' )\n" +
       "     .append(nodesSet.toString()).append(', \"edges\":').append(edgesSet.toString())\n" +
-      // "     .append('}')         \n" +
       "}\n" +
       "else{\n" +
       "  int counter = 0;\n" +
@@ -423,7 +422,14 @@ class PVDataGraph extends PontusComponent
       "    .append('\"from\": ').append(it.inVertex().id())\n" +
       "    .append(' ,\"to\": \"').append(it.outVertex().id())\n" +
       "    .append('\",\"label\": \"').append(it.label().toString().replaceAll('[_.]',' '))\n" +
-      "    .append('\"}')\n" +
+      "    .append(',\\n prob:')\n" +
+      "    .append(\n" +
+      "      Math.round(\n" +
+      "      Math.min(\n" +
+      "      it.values('toScorePercent').next(),\n" +
+      "      it.values('fromScorePercent').next() \n" +
+      "    ) * 100) / 100 )\n" +
+      "    .append('%\"}')\n" +
       "    \n" +
       "    counter++;\n" +
       "    \n" +
@@ -436,7 +442,6 @@ class PVDataGraph extends PontusComponent
       "    sb.append(t.toString());\n" +
       "  }\n" +
       "    \n" +
-      // "  sb.toString() \n" +
       "}\n" +
       "sb.append(', \"origLabel\":\"').append(origLabel).append('\"');\n" +
       "int counter = 0;\n" +
@@ -461,9 +466,8 @@ class PVDataGraph extends PontusComponent
       "\n" +
       " }\n" +
       "} catch(e) {}\n" +
-      
       "sb.append('] }');\n" +
-      "sb.toString() \n";
+      "sb.toString()";
     
     
     return {

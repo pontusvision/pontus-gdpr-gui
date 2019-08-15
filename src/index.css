@@ -10,6 +10,9 @@ body {
     height: 100%;
 }
 
+
+
+
 .react-grid-Cell:not(.editing) .react-grid-Cell__value {
     color: black;
 }

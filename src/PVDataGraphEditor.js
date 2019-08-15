@@ -1,17 +1,12 @@
 import React from 'react';
-import ResizeAware from 'react-resize-aware';
-import Graph from 'react-graph-vis';
 import axios from 'axios';
-import PVGridSelfDiscovery from './PVGridSelfDiscovery';
-import {Menu, Portal, Segment} from 'semantic-ui-react';
-import PVReportButton from './PVReportButton';
-import PVDetailsButton from './PVDetailsButton';
-import PVDataGraphNeighboursButton from './PVDataGraphNeighboursButton';
+import {Menu} from 'semantic-ui-react';
 import PontusComponent from "./PontusComponent";
 import './vis-network.css'
-import Toast from "react-bootstrap/Toast";
-import PVGremlinComboBox from "./PVGremlinComboBox";
 import './bootstrap-toast.css';
+import ResizeAware from 'react-resize-aware';
+import Graph from 'react-graph-vis';
+import PVDataGraphEditorAddEdgesButton from "./PVDataGraphEditorAddEdgesButton";
 
 class PVDataGraphEditor extends PontusComponent
 {
@@ -19,7 +14,7 @@ class PVDataGraphEditor extends PontusComponent
   {
     super(props);
     this.enableClose = false;
-    this.numNeighboursNamespace = (this.props.namespace ? this.props.namespace : "") + '-pvgraph-neighbours-click';
+    this.edgesNamespace = (this.props.namespace ? this.props.namespace : "") + '-pvgraph-edit-edges-click';
     this.subscription = (this.props.namespace ? this.props.namespace : "") + '-pvgrid-on-click-row';
     this.selfDiscoveryGridLoadedSubscription = (this.props.namespace ? this.props.namespace : "") + '-pvgrid-on-data-loaded';
     this.state = {
@@ -52,7 +47,7 @@ class PVDataGraphEditor extends PontusComponent
       , options: {
         // locale: document.getElementById('locale').value,
         manipulation: {
-          enabled: true,
+          enabled: false,
           
           addNode: this.addNode,
           editNode: this.editNode,
@@ -150,25 +145,27 @@ class PVDataGraphEditor extends PontusComponent
   }
   
   
-  
-  addNode =  (data, callback) => {
+  addNode = (data, callback) =>
+  {
     // filling in the popup DOM elements
     // document.getElementById('node-operation').innerHTML = "Add Node";
     // editNode(data, clearNodePopUp, callback);
-    console.info( "addNode");
-  
+    console.info("addNode");
+    
   };
   
-  editNode = (data, callback) => {
+  editNode = (data, callback) =>
+  {
     // filling in the popup DOM elements
     // document.getElementById('node-operation').innerHTML = "Edit Node";
     // editNode(data, cancelNodeEdit, callback);
-    console.info( "editNode");
-  
+    console.info("editNode");
+    
   };
   
   
-  addEdge = (data, callback) => {
+  addEdge = (data, callback) =>
+  {
     // if (data.from == data.to) {
     //   var r = confirm("Do you want to connect the node to itself?");
     //   if (r != true) {
@@ -177,19 +174,25 @@ class PVDataGraphEditor extends PontusComponent
     //   }
     // }
   
-    this.setState({showAddEdge:true});
-    console.info( "addEdge");
+    this.state.graph.edges.push({from: data.from, to: data.to, label: this.addEdgeButton.getEdgeLabel()});
   
+    this.network.setData(this.state.graph);
+  
+    this.setState({showAddEdge: true});
+    
+    
+    
+    console.info("addEdge");
+    
     // document.getElementById('edge-operation').innerHTML = "Add Edge";
     // editEdgeWithoutDrag(data, callback);
   };
   
-  editWithoutDrag = (data, callback) => {
-    console.info( "editWithoutDrag");
+  editWithoutDrag = (data, callback) =>
+  {
+    console.info("editWithoutDrag");
     // editEdgeWithoutDrag(data,callback);
   };
-  
-  
   
   
   doubleClick = (param) =>
@@ -831,143 +834,35 @@ class PVDataGraphEditor extends PontusComponent
     }
     this.props.glEventHub.on(this.subscription, this.selectData);
     this.props.glEventHub.on(this.selfDiscoveryGridLoadedSubscription, this.enableCloseCb);
-    this.props.glEventHub.on(this.numNeighboursNamespace, this.onClickNumNeighbours);
+    this.props.glEventHub.on(this.edgesNamespace, this.onClickEditEdges);
     
   }
   
   componentWillUnmount()
   {
     this.props.glEventHub.off(this.subscription, this.selectData);
-    this.props.glEventHub.off(this.numNeighboursNamespace, this.onClickNumNeighbours);
+    this.props.glEventHub.off(this.edgesNamespace, this.onClickEditEdges);
     
     
   }
   
-  onClickNumNeighbours = (event) =>
+  onClickEditEdges = (event) =>
   {
     
-    let options = {};
-    
-    if (1 === event)
+  
+    // this.network.setData(graph);
+    if (event.operation === 'editEdge')
     {
-      options = {
-       
-        nodes: {
-          font: {
-            align: 'left',
-            color: '#FFFFFF'
-          },
-          shapeProperties: {
-            useImageSize: true, interpolation: false
-          }
-        }
-        , groups: {},
-        layout: {
-          hierarchical: false
-        },
-        interaction: {dragNodes: true, navigationButtons: true},
-        "physics": {
-          solver: 'barnesHut',
-          "barnesHut": {
-            "gravitationalConstant": -359500,
-            "springLength": 720,
-            "springConstant": 0.055,
-            "damping": 0.34,
-            "avoidOverlap": 1,
-            "centralGravity": 0.01
-          },
-          "minVelocity": 0.75,
-          "maxVelocity": 200.0,
-          "timestep": 0.11
-        },
-        edges: {
-          color: "#FFFFFF"
-          , font: {
-            color: '#FFFFFF',
-            size: 20, // px
-            face: 'arial',
-            background: 'none',
-            strokeWidth: 1, // px
-            strokeColor: '#ffffff'
-            
-          }
-          , smooth: false
-          
-        }
-        
-        
-      };
+      this.network.stopSimulation();
+      this.network.enableEditMode();
+      this.network.addEdgeMode();
     }
     else
     {
-      options = {
-        edges: {
-          color: "#FFFFFF"
-          , font: {
-            color: '#FFFFFF',
-            size: 20, // px
-            face: 'arial',
-            background: 'none',
-            strokeWidth: 1, // px
-            strokeColor: '#ffffff'
-            
-          }
-          , smooth: false
-          
-        },
-        
-        "layout": {
-          "hierarchical":
-            {
-              direction: "UD",
-              sortMethod: "hubsize",
-              levelSeparation: 1500,
-              nodeSpacing: 1500,
-              treeSpacing: 1500
-              
-              
-            }
-        },
-        "physics": {
-          // solver: 'hierarchicalRepulsion',
-          
-          "barnesHut": {
-            "springLength": 720
-          },
-          "hierarchicalRepulsion": {
-            "centralGravity": 0.0,
-            "springLength": 1500,
-            "springConstant": 0.01,
-            "nodeDistance": 1500,
-            "damping": 0.09
-          }
-        }
-      };
+      this.network.disableEditMode();
+  
     }
-    let graph = {
-      nodes: [],
-      edges: []
-    };
-    
-    // this.network.setData(graph);
-    if (1 === event)
-    {
-      this.network.redraw();
-    }
-    // if (this.graph)
-    // {
-    //   this.graph.updateGraph();
-    // }
-    
-    this.setState(
-      {
-        depth: event,
-        options: options,
-        graph: graph
-      });
-    
-    this.selectData({id: this.eventId});
-    
+  
     // this.handleResize({});
   };
   
@@ -1001,133 +896,47 @@ class PVDataGraphEditor extends PontusComponent
     // var eventHub = this.props.glEventHub;
     //         <Graph graph={this.state.graph} options={this.state.options} events={this.state.events}/>
     
-    const {open, reportButtons} = this.state;
     
-    let addEdgeToast =      ( <Toast show={true}>
-      <Toast.Header>
+    let bttns =
+      <Menu style={{flexGrow: 0}}>
+  
+        <PVDataGraphEditorAddEdgesButton
+          key={101}
+          glEventHub={this.props.glEventHub}
+          namespace={this.props.namespace}
+          ref={(button) => this.addEdgeButton = button}
         
-        <strong className="mr-auto">Bootstrap</strong>
-        <small>11 mins ago</small>
-      </Toast.Header>
-      <Toast.Body>
-      {/*  <label>Edge Label</label><PVGremlinComboBox*/}
-      {/*  namespace={this.namespace}*/}
-      {/*  name="node-types"*/}
-      {/*  multi={false}*/}
-      {/*  onChange={this.onChangeVertexLabels}*/}
-      {/*  onError={this.onError}*/}
-      {/*  ref={this.setObjVertexLabels}*/}
-      {/*  url={PontusComponent.getRestEdgeLabelsURL(this.props)}*/}
-      {/*/>*/}
-          HELLO
-      </Toast.Body>
-    </Toast>);
-  
-  
-  
-    let buttonsList = [
-      <PVDataGraphNeighboursButton
-        key={100}
-        glEventHub={this.props.glEventHub}
-        namespace={this.props.namespace}
-      />,
-      <PVDetailsButton
-        key={200}
-        className={'compact'}
-        namespace={this.props.namespace}
-        metadataType={this.state.origLabel}
-        contextId={this.state.vid}
-        glEventHub={this.props.glEventHub}
-        style={{border: 0, background: 'rgb(69,69,69)'}}
-        size={'small'}/>
-    ];
-    
-    let bttns = <div height={0}/>;
-    
-    if ((buttonsList != null && buttonsList.length > 0) || (reportButtons != null && reportButtons.length > 0))
-    {
-      let ilen = reportButtons ? reportButtons.length : 0;
-      
-      for (let i = 0; i < ilen; i++)
-      {
-        buttonsList.push(
-          <PVReportButton
-            key={i}
-            className={'compact'}
-            templateText={reportButtons[i].text}
-            contextId={reportButtons[i].vid}
-            buttonLabel={reportButtons[i].label}
-            glEventHub={this.props.glEventHub}
-            // inverted={false}
-            // color={'black'}
-            style={{border: 0, background: 'rgb(69,69,69)'}}
-            size={'small'}
-          />
-        );
-        
-      }
-      bttns =
-        <Menu style={{flexGrow: 0}}>
-          {buttonsList}
-        </Menu>;
-    }
+        />
+      </Menu>;
     
     
     return (
+      
       <ResizeAware
         style={{height: '100%', width: '100%', flexDirection: 'column'}}
         onResize={this.handleResize}
       >
+        {bttns}
+        <Graph
+          style={{height: '100%', width: '100%', flexGrow: 1}}
+          graph={this.state.graph}
+          options={this.state.options}
+          events={this.state.events} ref={this.setGraph} getNetwork={this.setNetwork}
+          height={this.state.height - 20}
+          width={this.state.width - 20}
         
-        {/*<Graph*/}
-        {/*  style={{height: '100%', width: '100%', flexGrow: 1}}*/}
-        {/*  graph={this.state.graph}*/}
-        {/*  options={this.state.options}*/}
-        {/*  events={this.state.events} ref={this.setGraph} getNetwork={this.setNetwork}*/}
-        {/*  height={this.state.height - 20}*/}
-        {/*  width={this.state.width - 20}*/}
-        
-        {/*/>*/}
-        {/*<div id="loadingBar" style={{opacity: 0, display: 'none'}}>*/}
-        {/*  <div className="outerBorder">*/}
-        {/*    <div id="text">0%</div>*/}
-        {/*    <div id="border">*/}
-        {/*      <div id="bar"></div>*/}
-        {/*    </div>*/}
-        {/*  </div>*/}
-        {/*</div>*/}
-        {addEdgeToast}
-        {/*<Portal*/}
-        {/*  onClose={this.handleClose}*/}
-        {/*  open={open}*/}
-        {/*  transition={{*/}
-        {/*    animation: 'scale',*/}
-        {/*    duration: 1400,*/}
-        {/*  }}>*/}
-        {/*  <Segment*/}
-        {/*    style={{*/}
-        {/*      height: '50%', width: '50%', overflowX: 'auto', overflowY: 'auto', left: '30%', position: 'fixed',*/}
-        {/*      top: '20%', zIndex: 100000, backgroundColor: '#696969'*/}
-        {/*    }}>*/}
-        {/*    <PVGridSelfDiscovery*/}
-        {/*      ref={this.selfDiscoveryGrid}*/}
-        {/*      style={{height: '100%'}}*/}
-        {/*      namespace={this.props.namespace}*/}
-        {/*      vid={this.state.vid}*/}
-        {/*      edgeType={this.state.edgeType}*/}
-        {/*      edgeDir={this.state.edgeDir}*/}
-        {/*      metadataType={this.state.metadataType}*/}
-        {/*      glEventHub={this.props.glEventHub}*/}
-        {/*    />*/}
-        {/*  </Segment>*/}
-        {/*</Portal>*/}
+        />
       
       </ResizeAware>
     
-    );
+    )
+      ;
     
     
   }
+  
+  
 }
 
 export default PVDataGraphEditor;
+

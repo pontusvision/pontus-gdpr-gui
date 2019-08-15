@@ -79,6 +79,12 @@ class NavPanelAwarenessPopup extends PVGDPRScores
         "  \n" +
         "    scoreValue -= (10L * firstReminder/numEvents)\n" +
         "   \n" +
+        "    // add a bit of a score, after all there was at least some training.\n" +
+        "    if (scoreValue == 0)\n" +
+        "    {\n" +
+        "      scoreValue = 10L\n" +
+        "    }\n" +
+        "  \n" +
         "  \n" +
         "    \n" +
         "     \n" +

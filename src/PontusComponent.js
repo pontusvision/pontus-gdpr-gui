@@ -115,7 +115,7 @@ class PontusComponent extends React.Component
   
   static getRestEdgeLabelsURL(props)
   {
-    return PontusComponent.getURLGeneric(props, 'pvgdpr_gui', 'pvgdpr_server/home/edge_labels', "/gateway/sandbox/pvgdpr_server/home/vertex_labels");
+    return PontusComponent.getURLGeneric(props, 'pvgdpr_gui', 'pvgdpr_server/home/edge_labels', "/gateway/sandbox/pvgdpr_server/home/edge_labels");
   }
   
   static getRestVertexLabelsURL(props)
