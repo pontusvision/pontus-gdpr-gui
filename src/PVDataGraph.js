@@ -142,31 +142,36 @@ class PVDataGraph extends PontusComponent
     {
       param.event.stopPropagation();
       this.enableClose = false;
-      let event = {id: param.nodes[0]};
-      let isString = typeof (event.id) === 'string' || event.id instanceof String;
+
+      if (param.edges.length > 0){
       
-      if (isString)
-      {
-        let edgeDir = event.id.indexOf('<-') !== -1 ? '<-' : '->';
-        
-        let metadataType = event.id.replace(/ ->.*/g, '').replace(/ <-.*/g, '').replace(' ', '.').replace(/ /g, '_');
-        let edgeType = event.id.replace(/.*-> /g, '').replace(/.*<- /g, '').replace(/ /g, '_').replace(/[()]/g, '');
-        
-        this.setState({
-          metadataType: metadataType,
-          vid: this.eventId,
-          edgeType: edgeType,
-          edgeDir: edgeDir,
-          open: true
-        })
-        
-        
       }
-      else if (event.id)
-      {
-        this.selectData(event);
-        
+      else if (param.nodes.length > 0){
+        let event = {id: param.nodes[0]};
+        let isString = typeof (event.id) === 'string' || event.id instanceof String;
+        if (isString)
+        {
+          let edgeDir = event.id.indexOf('<-') !== -1 ? '<-' : '->';
+    
+          let metadataType = event.id.replace(/ ->.*/g, '').replace(/ <-.*/g, '').replace(' ', '.').replace(/ /g, '_');
+          let edgeType = event.id.replace(/.*-> /g, '').replace(/.*<- /g, '').replace(/ /g, '_').replace(/[()]/g, '');
+    
+          this.setState({
+            metadataType: metadataType,
+            vid: this.eventId,
+            edgeType: edgeType,
+            edgeDir: edgeDir,
+            open: true
+          })
+  
+        }
+        else if (event.id)
+        {
+          this.selectData(event);
+        }
+
       }
+      
       
       
     }
@@ -219,255 +224,8 @@ class PVDataGraph extends PontusComponent
     this.eventId = eventId;
     
     let query = this.state.depth !== 1 ?
-      
-      "getVisJsGraph(pg_vid,pg_depth as int);"
-      :
-      "StringBuffer sb = new StringBuffer()\n" +
-      "StringBuffer sb2 = new StringBuffer()\n" +
-      "\n" +
-      "Long numEdges = g.V(pg_vid).bothE().count().next();\n" +
-      "String origLabel = g.V(pg_vid).label().next().replaceAll('[_.]',' ');\n" +
-      "\n" +
-      "if (numEdges > 15){\n" +
-      "\n" +
-      "  HashSet nodesSet = new HashSet()\n" +
-      "  HashSet edgesSet = new HashSet()\n" +
-      "\n" +
-      "  \n" +
-      "  g.V(pg_vid).as('orig')\n" +
-      "    .outE().match(\n" +
-      "       __.as('e').inV().label().as('vLabel')\n" +
-      "    // ,  __.as('e').outV().label().as('inVLabel')\n" +
-      "    ,  __.as('e').label().as('edgeLabel')\n" +
-      "    )\n" +
-      "    .select( 'edgeLabel','vLabel')\n" +
-      "    .groupCount().each{\n" +
-      "      def entry = it;\n" +
-      "      \n" +
-      "      \n" +
-      "      \n" +
-      "      entry.each{\n" +
-      "        key,val ->\n" +
-      "        \n" +
-      "\n" +
-      "          if (key instanceof Map){\n" +
-      "            \n" +
-      "            String edgeLabel = key.get('edgeLabel').replaceAll('[_.]',' ');\n" +
-      "            String toNodeLabel = key.get('vLabel').replaceAll('[_.]',' ') +\n" +
-      "              ' -> (' + edgeLabel +')';\n" +
-      "\n" +
-      "            String edgeId = key.get('edgeLabel');\n" +
-      "            String toNodeId = key.get('vLabel') +\n" +
-      "              ' -> (' + edgeId +')';\n" +
-      "\n" +
-      "            sb.setLength(0);\n" +
-      "  \n" +
-      "            sb.append('{ \"id\":\"').append(toNodeId)\n" +
-      "              .append('\",\"label\":\"').append(toNodeLabel)\n" +
-      "              .append('\",\"group\":\"').append(toNodeLabel)\n" +
-      "              .append('\",\"shape\":\"').append('box')\n" +
-      "              .append('\"}\\n')\n" +
-      "  \n" +
-      "\n" +
-      "            nodesSet.add( sb.toString() );\n" +
-      "\n" +
-      "            \n" +
-      "            sb.setLength(0);\n" +
-      "            \n" +
-      "            sb.append('{ \"from\":\"')\n" +
-      "              .append(pg_vid).append('\",\"to\":\"')\n" +
-      "              .append(toNodeId).append('\",\"label\":\"')\n" +
-      "              .append(edgeLabel).append(' (')\n" +
-      "              .append(val).append(')\",\"value\":')\n" +
-      "              .append(val).append('}\\n') \n" +
-      "            \n" +
-      "            edgesSet.add (sb.toString());\n" +
-      "            sb.setLength(0);\n" +
-      "  \n" +
-      "          }         \n" +
-      "          \n" +
-      "                     \n" +
-      "      \n" +
-      "    }\n" +
-      "      \n" +
-      "      \n" +
-      "        \n" +
-      "  } \n" +
-      "  \n" +
-      "  \n" +
-      "    \n" +
-      "  g.V(pg_vid).as('orig')\n" +
-      "    .inE().match(\n" +
-      "       __.as('e').outV().label().as('vLabel')\n" +
-      "    // ,  __.as('e').outV().label().as('inVLabel')\n" +
-      "    ,  __.as('e').label().as('edgeLabel')\n" +
-      "    )\n" +
-      "    .select( 'edgeLabel','vLabel')\n" +
-      "    .groupCount().each{\n" +
-      "      it.each{\n" +
-      "        key,val -> \n" +
-      "          if (key instanceof Map){\n" +
-      "            \n" +
-      "            String edgeLabel = key.get('edgeLabel').replaceAll('[_.]',' ');\n" +
-      "\n" +
-      "            String fromNodeLabel = key.get('vLabel').replaceAll('[_.]',' ') +\n" +
-      "             ' <- ('+edgeLabel+')';\n" +
-      "            String edgeId = key.get('edgeLabel');\n" +
-      "\n" +
-      "            String fromNodeId = key.get('vLabel')+\n" +
-      "             ' <- ('+edgeId+')';\n" +
-      "            sb.setLength(0);\n" +
-      "  \n" +
-      "            sb.append('{ \"id\":\"').append(fromNodeId)\n" +
-      "              .append('\",\"label\":\"').append(fromNodeLabel)\n" +
-      "              .append('\",\"group\":\"').append(fromNodeLabel)\n" +
-      "              .append('\",\"shape\":\"').append('box')\n" +
-      "              .append('\"}')\n" +
-      "  \n" +
-      "            nodesSet.add( sb.toString() );\n" +
-      "\n" +
-      "            \n" +
-      "            sb.setLength(0);\n" +
-      "            \n" +
-      "            sb.append('{ \"from\":\"')\n" +
-      "              .append(fromNodeId).append('\",\"to\":\"')\n" +
-      "              .append(pg_vid).append('\",\"label\":\"')\n" +
-      "              .append(edgeLabel).append(' (')\n" +
-      "              .append(val).append(')\",\"value\":')\n" +
-      "              .append(val).append('}') \n" +
-      "            edgesSet.add (sb.toString());\n" +
-      "            sb.setLength(0);\n" +
-      "          }         \n" +
-      "          \n" +
-      "         \n" +
-      "      \n" +
-      "    }\n" +
-      "      \n" +
-      "      \n" +
-      "        \n" +
-      "  } \n" +
-      "  sb.setLength(0)\n" +
-      "  sb.append('{ \"id\":\"').append(pg_vid)\n" +
-      "    .append('\",\"label\":\"').append(origLabel)\n" +
-      "    .append('\",\"group\":\"').append(origLabel)\n" +
-      "    .append('\",\"fixed\":').append(true)\n" +
-      "    .append(',\"shape\":\"').append('image')\n" +
-      "    .append('\",\"image\":\"').append(getPropsNonMetadataAsHTMLTableRows(g,pg_vid,origLabel).toString())\n" +
-      "    .append('\"}')\n" +
-      "    \n" +
-      "  nodesSet.add( sb.toString() )  \n" +
-      "  sb.setLength(0)\n" +
-      "\n" +
-      "  sb.append('{ \"nodes\":' )\n" +
-      "     .append(nodesSet.toString()).append(', \"edges\":').append(edgesSet.toString())\n" +
-      "}\n" +
-      "else{\n" +
-      "  int counter = 0;\n" +
-      "\n" +
-      "  try {\n" +
-      "    \n" +
-      "  sb.append('{ \"nodes\":[' );\n" +
-      "    \n" +
-      "  g.V(pg_vid)\n" +
-      "    .both()\n" +
-      "    .dedup()\n" +
-      "    .each{ \n" +
-      "    String groupStr = it.values('Metadata.Type').next();\n" +
-      "    String labelStr = it.label().toString().replaceAll('[_.]',' ');\n" +
-      "    Long vid = it.id();\n" +
-      "    sb.append(counter == 0? '{':',{')\n" +
-      "      .append('\"id\":').append(vid)\n" +
-      "      .append(',\"group\":\"').append(groupStr)\n" +
-      "      .append('\",\"label\":\"').append(labelStr)\n" +
-      "      .append('\",\"shape\":\"').append('image')\n" +
-      "      .append('\",\"image\":\"').append(getPropsNonMetadataAsHTMLTableRows(g,vid,labelStr).toString())\n" +
-      "      .append('\"');\n" +
-      "    if (vid.equals( pg_vid)){  \n" +
-      "      sb.append(',\"fixed\":true');\n" +
-      "    } \n" +
-      "    sb.append('}')\n" +
-      "      \n" +
-      "    counter++;\n" +
-      "    \n" +
-      "    };\n" +
-      "  g.V(pg_vid)  // Also get the original node\n" +
-      "   .each{ \n" +
-      "    String groupStr = it.values('Metadata.Type').next();\n" +
-      "    String labelStr = it.label().toString().replaceAll('[_.]',' ');\n" +
-      "    Long vid = it.id();\n" +
-      "    sb.append(counter == 0? '{':',{')\n" +
-      "      .append('\"id\":').append(vid)\n" +
-      "      .append(',\"group\":\"').append(groupStr)\n" +
-      "      .append('\",\"label\":\"').append(labelStr)\n" +
-      "      .append('\",\"shape\":\"').append('image')\n" +
-      "      .append('\",\"image\":\"').append(getPropsNonMetadataAsHTMLTableRows(g,vid,labelStr).toString())\n" +
-      "      .append('\"');\n" +
-      "    if (vid.equals( pg_vid)){  \n" +
-      "      sb.append(',\"fixed\":true');\n" +
-      "    } \n" +
-      "    sb.append('}')\n" +
-      "      \n" +
-      "    counter++;\n" +
-      "    \n" +
-      "    };\n" +
-      "  sb.append('], \"edges\":[' )\n" +
-      "\n" +
-      "\n" +
-      "  counter = 0;\n" +
-      "  g.V(pg_vid)\n" +
-      "    .bothE()\n" +
-      "    .dedup()\n" +
-      "    .each{ \n" +
-      "    sb.append(counter == 0? '{':',{')\n" +
-      "    .append('\"from\": ').append(it.inVertex().id())\n" +
-      "    .append(' ,\"to\": \"').append(it.outVertex().id())\n" +
-      "    .append('\",\"label\": \"').append(it.label().toString().replaceAll('[_.]',' '))\n" +
-      "    .append(' - prob - ')\n" +
-      "    .append(\n" +
-      "      Math.round(\n" +
-      "      Math.min(\n" +
-      "      it.values('toScorePercent').next(),\n" +
-      "      it.values('fromScorePercent').next() \n" +
-      "    ) * 100) / 100 )\n" +
-      "    .append('%\"}')\n" +
-      "    \n" +
-      "    counter++;\n" +
-      "    \n" +
-      "  }\n" +
-      "\n" +
-      "  sb.append(']' );\n" +
-      "\n" +
-      "\n" +
-      "  }catch (Throwable t){\n" +
-      "    sb.append(t.toString());\n" +
-      "  }\n" +
-      "    \n" +
-      "}\n" +
-      "sb.append(', \"origLabel\":\"').append(origLabel).append('\"');\n" +
-      "int counter = 0;\n" +
-      "sb.append(', \"reportButtons\": [');\n" +
-      "try{ \n" +
-      " g.V()\n" +
-      "  .has('Object.Notification_Templates.Types'\n" +
-      "     ,eq(g.V(pg_vid).values('Metadata.Type').next()))\n" +
-      "  .valueMap('Object.Notification_Templates.Label','Object.Notification_Templates.Text')\n" +
-      "  .each{\n" +
-      "    sb.append(counter > 0? ',{': '{');\n" +
-      "    counter ++;\n" +
-      "      sb.append('\"text\":\"');\n" +
-      "      if (it.get('Object.Notification_Templates.Text') != null)\n" +
-      "        sb.append(it.get('Object.Notification_Templates.Text')[0].toString());\n" +
-      "      sb.append('\",\"label\":\"');\n" +
-      "      if (it.get('Object.Notification_Templates.Label') != null)\n" +
-      "        sb.append(it.get('Object.Notification_Templates.Label')[0]);\n" +
-      "      sb.append('\", \"vid\": ').append(pg_vid);\n" +
-      "\n" +
-      "    sb.append(\"}\")\n" +
-      "\n" +
-      " }\n" +
-      "} catch(e) {}\n" +
-      "sb.append('] }');\n" +
-      "sb.toString()";
+      "getVisJsGraph(pg_vid,pg_depth as int);" :
+      "getVisJsGraph(pg_vid);";
     
     
     return {
