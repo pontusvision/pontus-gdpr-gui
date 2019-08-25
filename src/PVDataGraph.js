@@ -146,7 +146,7 @@ class PVDataGraph extends PontusComponent
       if (param.edges.length > 0){
       
       }
-      else if (param.nodes.length > 0){
+      if (param.nodes.length > 0){
         let event = {id: param.nodes[0]};
         let isString = typeof (event.id) === 'string' || event.id instanceof String;
         if (isString)
