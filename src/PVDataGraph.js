@@ -3,7 +3,7 @@ import ResizeAware from 'react-resize-aware';
 import Graph from 'react-graph-vis';
 import axios from 'axios';
 import PVGridSelfDiscovery from './PVGridSelfDiscovery';
-import {Menu, Portal, Segment} from 'semantic-ui-react';
+import {Button, Menu, Portal, Segment} from 'semantic-ui-react';
 import PVReportButton from './PVReportButton';
 import PVDetailsButton from './PVDetailsButton';
 import PVDataGraphNeighboursButton from './PVDataGraphNeighboursButton';
@@ -22,6 +22,7 @@ class PVDataGraph extends PontusComponent
     this.subscription = (this.props.namespace ? this.props.namespace : "") + '-pvgrid-on-click-row';
     this.selfDiscoveryGridLoadedSubscription = (this.props.namespace ? this.props.namespace : "") + '-pvgrid-on-data-loaded';
     this.state = {
+      summary: false,
       vid: -1,
       depth: 1,
       metadataType: '',
@@ -135,6 +136,13 @@ class PVDataGraph extends PontusComponent
     this.underscoreOrDot = new RegExp("[_.]", 'g');
     
   }
+  onClickSummary = (event, props) => {
+    
+    // this.handleResize({});
+    this.selectData({id: this.origNodeId});
+    this.setState( {summary: !this.state.summary});
+  
+  };
   
   doubleClick = (param) =>
   {
@@ -268,7 +276,7 @@ class PVDataGraph extends PontusComponent
   // t}}
   
   
-  createSVGHTMLTableWithProps = (propsInHTMLTableRows, vLabel) =>
+  createSVGHTMLTableWithProps = (propsInHTMLTableRows, vLabel, summary = false) =>
   {
     let backgroundColor = this.getColorBasedOnLabel(vLabel);
     
@@ -283,7 +291,7 @@ class PVDataGraph extends PontusComponent
         let val = data[key][0];
         tableData += "<tr><td class='tg-yw4l'>";
         let cleanKey = PontusComponent.replaceAll('.', ' ', key);
-        cleanKey = PontusComponent.replaceAll('_', ' ', cleanKey)
+        cleanKey = PontusComponent.replaceAll('_', ' ', cleanKey);
         tableData += PontusComponent.t(cleanKey);
         // val = data[key];
         // val = val.replace('[', '').replace(']', '');
@@ -293,7 +301,7 @@ class PVDataGraph extends PontusComponent
           tableData += ' (' + PontusComponent.t('Decoded') + ')';
         }
         tableData += "</td><td class='tg-yw4l'>";
-        tableData += PontusComponent.escapeHTML(val);
+        tableData += PontusComponent.escapeHTML((summary && val.length > 30)? val.substring(0,30) + "..." : val);
         tableData += "</td></tr>";
         
       }
@@ -489,7 +497,7 @@ class PVDataGraph extends PontusComponent
       if (node.image)
       {
         // node.shape='box';
-        node.image = this.createSVGHTMLTableWithProps(node.image, node.label);
+        node.image = this.createSVGHTMLTableWithProps(node.image, node.label, this.state.summary);
         
       }
     }
@@ -519,7 +527,7 @@ class PVDataGraph extends PontusComponent
     if (this.graph)
     {
       this.graph.updateGraph();
-      this.setState({height: this.state.height, width: this.state.width});
+      this.setState({height: this.state.height, width: this.state.width, summary: this.state.summary});
       
     }
   };
@@ -707,7 +715,7 @@ class PVDataGraph extends PontusComponent
     // var eventHub = this.props.glEventHub;
     //         <Graph graph={this.state.graph} options={this.state.options} events={this.state.events}/>
     
-    const {open, reportButtons} = this.state;
+    const {open, reportButtons, summary} = this.state;
     
     let buttonsList = [
       <PVDataGraphNeighboursButton
@@ -715,6 +723,14 @@ class PVDataGraph extends PontusComponent
         glEventHub={this.props.glEventHub}
         namespace={this.props.namespace}
       />,
+      <Button
+        className={'compact'}
+        style={summary?{border: 0, background: 'rgb(00,00,00)', marginRight: '3px'}:{border: 0, background: 'rgb(69,69,69)', marginRight: '3px'}}
+        size={'small'}
+        onClick={this.onClickSummary}
+        toggle={ true }
+  
+      >...</Button>,
       <PVDetailsButton
         key={200}
         className={'compact'}
