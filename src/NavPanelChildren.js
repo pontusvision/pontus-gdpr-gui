@@ -4,6 +4,7 @@ import NavPanelChildrenPVGrid from './NavPanelChildrenPVGrid';
 import NavPanelChildrenPVBarChartChildrenAges from './NavPanelChildrenPVBarChartChildrenAges';
 import NavPanelChildrenPVDataGraph from './NavPanelChildrenPVDataGraph';
 import PVGoldenLayoutComponent from "./PVGoldenLayoutComponent";
+import PontusComponent from "./PontusComponent";
 
 // import UserSearch from './UserSearch';
 
@@ -40,17 +41,17 @@ class NavPanelChildren extends PVGoldenLayoutComponent
           type: 'column',
           content: [
             {
-              title: 'Data',
+              title: PontusComponent.t('Data'),
               type: 'react-component',
               component: 'data-grid'
             }
             , {
-              title: 'Children Ages',
+              title: PontusComponent.t('Children Ages'),
               type: 'react-component',
               component: 'children-ages'
             }
             , {
-              title: 'Children Data Graph',
+              title: PontusComponent.t ('Children Data Graph'),
               type: 'react-component',
               component: 'children-data-graph'
             }

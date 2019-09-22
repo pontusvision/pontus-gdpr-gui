@@ -79,7 +79,7 @@ class NavPanelComplianceScoresMainScore extends PontusComponent
   
   
     return (
-      <PVGauge label={"Main Score"} value={weightedAverage}
+      <PVGauge label={PontusComponent.t("Main Score")} value={weightedAverage}
                valueLabelStyle={{ textAnchor: "middle", fill: "#ffffff", stroke: "none", fontStyle: "normal", fontVariant: "normal", fontWeight: "bold", fontStretch: "normal", lineHeight: "normal", fillOpacity: 1 }}
       />
     );

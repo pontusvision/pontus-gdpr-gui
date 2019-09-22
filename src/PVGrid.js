@@ -1,15 +1,13 @@
 import React from 'react';
-import {Grid} from 'slickgrid-es6';
-
-
-import "./slick.grid.css";
-import "./slick-default-theme.css";
+import {AgGridReact} from "ag-grid-react";
+import 'ag-grid-community/dist/styles/ag-grid.css';
+import 'ag-grid-community/dist/styles/ag-theme-balham-dark.css';
 import ResizeAware from 'react-resize-aware';
-
 import axios from "axios";
-// import "slickgrid-es6/dist/slick-default-theme.less";
-import {Flex, Box} from 'reflexbox'
+import {Box, Flex} from 'reflexbox'
 import PontusComponent from "./PontusComponent";
+import {scaleDown2 as Menu} from './PVBurgerMenu';
+import PVGridColSelector from "./PVGridColSelector";
 
 
 class PVGrid extends PontusComponent
@@ -18,6 +16,11 @@ class PVGrid extends PontusComponent
   {
     
     super(props);
+    this.namespace = this.props.namespace || "";
+    this.subNamespace = this.props.subNamespace || "";
+    this.mountedSuccess = false;
+    
+  
     // this.columns = [
     //   {key: 'name', name: 'Name'},
     //   {key: 'street', name: 'Street'}
@@ -25,52 +28,115 @@ class PVGrid extends PontusComponent
     this.errCounter = 0;
     this.errCounterAddRow = 0;
     this.errCounterChangeCell = 0;
-    
-    this.state = {
-      columnSettings: []
-      , totalRecords: 0
-    };
-    
-    if (!this.props.settings)
-    {
-      this.settings = {
-        multiColumnSort: true,
-        defaultColumnWidth: 125,
-        rowHeight: 26,
-        forceFitColumns: true
-      };
-    }
-    else
-    {
-      this.settings = this.props.settings;
-      
-    }
-    
     this.PAGESIZE = 300;
     this.data = [];
     this.searchstr = "";
     this.searchExact = true;
     this.sortcol = null;
-    this.sortdir = 1;
+    this.sortdir = "+desc";
     this.h_request = null;
     this.req = null; // ajax request
-    this.url = PontusComponent.getRestURL(props);
-    this.namespace = this.props.namespace||"";
+    this.url = PontusComponent.getRestUrlAg(props);
     
-    // if (!this.props.url){
-    //   let err = "Must set the url property control where this component sends its requests";
-    //   throw (err);
-    // }
-    
-    // this.props.columnSettings = [
-    //   {id: "name", name: "Name", field: "name", sortable: true},
-    //
-    //   {id: "street", name: "Street", field: "street", sortable: true}
-    // ];
-    // this.loader = new RemoteModel(this.props);
     this.extraSearch = [];
-    this.setNamespace(this.namespace);
     
+    
+    this.dataType = this.getDataType(props);
+    
+    this.settings = {...this.props.settings};
+    this.colFieldTranslation = {};
+    
+    
+    // this.setColumnSettings(this.getColSettings(props));
+    
+    this.state = {
+      ...this.props,
+      totalRecords: 0,
+      columnDefs: this.getColSettings(props),
+      defaultColDef: {
+        editable: false,
+        enableRowGroup: false,
+        enablePivot: false,
+        // enableValue: false,
+        sortable: false,
+        resizable: true,
+        filter: false
+      },
+      // components: {
+      //   loadingRenderer: function(params) {
+      //     if (params.value !== undefined) {
+      //       return params.value;
+      //     } else {
+      //       return '<img src="/images/loading.gif">';
+      //     }
+      //   }
+      // },
+      rowBuffer: 100,
+      rowModelType: "infinite",
+      paginationPageSize: 100,
+      cacheOverflowSize: 2,
+      maxConcurrentDatasourceRequests: 1,
+      infiniteInitialRowCount: 1000,
+      maxBlocksInCache: 10,
+      rowSelection: "single",
+      // rowGroupPanelShow: "always",
+      // pivotPanelShow: "always",
+      
+      paginationNumberFormatter: function (params)
+      {
+        return "[" + params.value.toLocaleString() + "]";
+      },
+      
+      localeTextFunc: function (key, defaultValue)
+      {
+        
+        // to avoid key clash with external keys, we add 'grid' to the start of each key.
+        let gridKey = 'grid_' + key;
+        
+        // look the value up. here we use the AngularJS 1.x $filter service, however you
+        // can use whatever service you want, AngularJS 1.x or otherwise.
+        let value = PontusComponent.t(gridKey);
+        return value === gridKey ? defaultValue : value;
+      }
+      
+      
+    };
+    
+    
+  }
+  
+  getColSettings = (props) =>
+  {
+    let colSettings = localStorage.getItem(`${this.namespace}${this.subNamespace?this.subNamespace:""}.PVGrid.colSettings`);
+    
+    if (colSettings)
+    {
+      if (typeof colSettings === "string")
+      {
+        colSettings = JSON.parse(colSettings);
+      }
+    }
+    else
+    {
+      colSettings = (props.colSettings?props.colSettings:[]);
+    }
+    this.setColumnSettings(colSettings);
+    
+    return colSettings;
+  }
+  
+  
+  getDataType =  (props) =>
+  {
+    let dataType = localStorage.getItem(`${this.namespace}${this.subNamespace?this.subNamespace:""}.PVGrid.dataType`);
+    // let dataType = JSON.parse();
+    if (!dataType)
+    {
+      dataType = (props.dataType ? props.dataType : "");
+    }
+    this.setDataType(dataType);
+  
+    return dataType;
   }
   
   
@@ -94,105 +160,95 @@ class PVGrid extends PontusComponent
     this.namespace = namespace;
   };
   
-  onNewRowAdded = (e, args) =>
-  {
-    let item = args.item;
-    // let column = args.column;
-    
-    
-    
-    this.grid.invalidateRow(this.data.length);
-    this.data.push(item);
-    this.grid.updateRowCount();
-    this.grid.render();
-  };
   
-  onCellChanged = (e, args) =>
+  componentDidMount= () =>
   {
-    // let item = args;
-    // let column = args.column;
-    //
-    //
-    //
-    // this.grid.invalidateRow(this.data.length);
-    // this.data.push(item);
-    // this.grid.updateRowCount();
-    // this.grid.render();
-  };
-  
-  
-  componentDidMount()
-  {
-    /* you can pass config as prop, or use a predefined one */
-    if (this.gridDiv && this.state)
-    {
-      this.grid = new Grid(this.gridDiv, this.data, this.state.columnSettings, this.settings);
-      
-      
-      // this.props.glEventHub.on(this.namespace + 'pvgrid-on-data-loaded', this.onDataLoadedCb);
-      this.props.glEventHub.on(this.namespace + '-pvgrid-on-search-changed', this.setSearch);
-      this.props.glEventHub.on(this.namespace + '-pvgrid-on-search-exact-changed', this.setSearchExact);
-      this.props.glEventHub.on(this.namespace + '-pvgrid-on-col-settings-changed', this.setColumnSettings);
-      this.props.glEventHub.on(this.namespace + '-pvgrid-on-extra-search-changed', this.setExtraSearch);
-      
-      // this.loader.onDataLoaded.subscribe(this.onDataLoadedCb);
-      this.grid.onClick.subscribe(this.onClick); //({ row: number, cell: number })
-      this.grid.onViewportChanged.subscribe(this.onViewportChanged);
-      this.grid.onSort.subscribe(this.onSort);
-      this.grid.onAddNewRow.subscribe(this.onNewRowAdded);
-      this.grid.onCellChange.subscribe(this.onCellChanged);
-      
-      
-      
-      // if (this.props.colSettings !== null){
-      //   this.setColumnSettings(this.props.colSettings)
-      // }
-      this.grid.resizeCanvas();
-      
-      this.onViewportChanged();
-      
-      
-    }
+    this.mountedSuccess = true;
+    this.props.glEventHub.on(`${this.namespace}${this.subNamespace?this.subNamespace:""}-pvgrid-on-search-changed`, this.setSearch);
+    this.props.glEventHub.on(`${this.namespace}${this.subNamespace?this.subNamespace:""}-pvgrid-on-search-exact-changed`, this.setSearchExact);
+    this.props.glEventHub.on(`${this.namespace}${this.subNamespace?this.subNamespace:""}-pvgrid-on-col-settings-changed`, this.setColumnSettings);
+    this.props.glEventHub.on(`${this.namespace}${this.subNamespace?this.subNamespace:""}-pvgrid-on-extra-search-changed`, this.setExtraSearch);
     
     
   }
   
   
-  isDataLoaded = (from, to) =>
-  {
-    for (let i = from; i <= to; i++)
-    {
-      if (this.data[i] === undefined || this.data[i] === null)
-      {
-        return false;
-      }
-    }
-    
-    return true;
-  };
-  
-  
-  clear = () =>
-  {
-    for (let key in this.data)
-    {
-      delete this.data[key];
-    }
-    this.data.length = 0;
-  };
-  
-  getSearchObj = (from, to, searchstr, searchExact, cols, extraSearch, sortcol, sortdir) =>
+  getSearchObj = (from, to, searchstr, searchExact, cols, dataType, sortcol, sortdir, filters) =>
   {
     return {
-      
       search: {
-        searchStr: searchstr, searchExact: searchExact, cols: cols, extraSearch: extraSearch
+        searchStr: searchstr, searchExact: searchExact, cols: cols, extraSearch: {label: dataType, value: dataType}
       },
+      
+      cols: cols,
+      filters: filters,
+      dataType: dataType,
       from: from,
       to: to,
-      sortCol: sortcol?sortcol.id: '',
-      sortDir: ((sortdir > 0) ? "+asc" : "+desc")
+      sortCol: sortcol,
+      sortDir: sortdir // ((sortdir > 0) ? "+asc" : "+desc")
     }
+  };
+  getColsFromDataType = () =>
+  {
+    if (this.req2)
+    {
+      this.req2.cancel();
+      
+    }
+    
+    let url = PontusComponent.getRestNodePropertyNamesURL(this.props);
+    if (this.h_request2 !== null)
+    {
+      clearTimeout(this.h_request2);
+    }
+    
+    let self = this;
+    let jsonRequest = {labels: this.dataType};
+    
+    this.h_request2 = setTimeout(() =>
+    {
+      self.req2 = axios.CancelToken.source();
+      axios.post(url, jsonRequest,
+        {
+          headers: {'Content-Type': 'application/json', 'Accept': 'application/json'}
+          , cancelToken: self.req2.token
+        }).then(
+        (response) =>
+        {
+          // this.reactSelect.options = response.data.labels || [];
+          if (response.data && response.data.labels)
+          {
+            for (let i = 0; i < response.data.labels.length; i++)
+            {
+              let lbl = response.data.labels[i];
+              lbl.label = PontusComponent.t(lbl.label);
+            }
+            this.setState({
+              options: response.data.labels
+            });
+            
+            
+          }
+          
+          // callback(null, {
+          //   options: response.data.labels || [],
+          //   complete: true
+          //
+          // });
+        }
+      ).catch((thrown) =>
+      {
+        if (axios.isCancel(thrown))
+        {
+          console.log('Request canceled', thrown.message);
+        }
+        else
+        {
+          this.onError(thrown);
+        }
+      });
+    }, 50);
   };
   
   ensureData = (fromReq, toReq) =>
@@ -212,45 +268,8 @@ class PVGrid extends PontusComponent
     {
       fromReq = 0;
     }
-    
-    if (this.data.length > 0)
-    {
-      toReq = Math.min(toReq, this.data.length - 1);
-    }
-    
     let fromPage = Math.floor(fromReq / this.PAGESIZE);
     let toPage = Math.floor(toReq / this.PAGESIZE);
-    
-    while (this.data[fromPage * this.PAGESIZE] !== undefined && fromPage < toPage)
-      fromPage++;
-    
-    while (this.data[toPage * this.PAGESIZE] !== undefined && fromPage < toPage)
-      toPage--;
-    
-    let from = (fromPage * this.PAGESIZE);
-    let to = from + (((toPage - fromPage) * this.PAGESIZE) + this.PAGESIZE);
-    
-    
-    if (fromPage > toPage || ((fromPage === toPage) && this.data[fromPage * this.PAGESIZE] !== undefined && this.data[fromPage * this.PAGESIZE] !== null))
-    {
-      // TODO:  look-ahead
-      
-      
-      this.onDataLoadedCb({from: from, to: to});
-      // this.props.glEventHub.emit(this.namespace + 'pvgrid-on-data-loaded', {from: from, to: to});
-      //  this.onDataLoaded.notify({from: from, to: to});
-      
-      
-      // let delta = (to - from );
-      // if ( to + 2 * delta < this.data.length){
-      //   return;
-      //
-      // }
-      //
-      // to += delta;
-      // from += delta;
-      return;
-    }
     
     let url = this.url;
     if (this.h_request !== null)
@@ -263,20 +282,10 @@ class PVGrid extends PontusComponent
     
     this.h_request = setTimeout(() =>
     {
-      for (let i = fromPage; i <= toPage; i++)
-        self.data[i * self.PAGESIZE] = null; // null indicates a 'requested but not available yet'
-      
-      // this.onDataLoading.notify({from: from, to: to});
-      
-      
-      let CancelToken = axios.CancelToken;
-      self.req = CancelToken.source();
-      
-      
-      // http.post(url)
+      self.req = axios.CancelToken.source();
       axios.post(url
-        , self.getSearchObj(from, to, self.searchstr, self.searchExact, self.cols, self.extraSearch,
-          self.sortcol, self.sortdir)
+        , self.getSearchObj(fromReq, toReq, self.searchstr, self.searchExact, self.cols, self.dataType,
+          self.sortcol, self.sortdir, self.filters)
         , {
           headers: {
             'Content-Type': 'application/json'
@@ -317,312 +326,179 @@ class PVGrid extends PontusComponent
   {
     this.errCounter = 0;
     
-    this.onSuccess(resp);
+    this.onSuccessPVRestQuery(resp);
   };
   
-  onSuccess = (resp) =>
-  {
-    if (this.url === PontusComponent.getGraphURL(this.props))
-    {
-      this.onSuccessRawQuery(resp);
-    }
-    else
-    {
-      this.onSuccessPVRestQuery(resp);
-    }
-    
-  };
   
   onSuccessPVRestQuery = (resp) =>
   {
-    // var from = resp.data.from, to = from + resp.results.length;
-    // data.length = Math.min(parseInt(resp.hits),1000); // limitation of the API
-    
     
     let from = resp.data.from, to = from + resp.data.records.length;
-    this.data.length = Math.min(parseInt(resp.data.totalAvailable, 10), 1000000); // limitation of the API
+    let items = [];
     
     for (let i = 0; i < resp.data.records.length; i++)
     {
       let item = JSON.parse(resp.data.records[i]);
-      
-      // Old IE versions can't parse ISO dates, so change to universally-supported format.
-      // item.create_ts = item.create_ts.replace(/^(\d+)-(\d+)-(\d+)T(\d+:\d+:\d+)Z$/, "$2/$3/$1 $4 UTC");
-      // item.create_ts = new Date(item.create_ts);
-      
-      this.data[from + i] = item;
-      this.data[from + i].index = item.id;
+      for (let itemKey of Object.keys(item))
+      {
+        let val = item[itemKey];
+        // LPPM - need to get rid of any dots in the value.
+        let itemKeyClean = itemKey.replace(/\./g, '_');
+        item[itemKeyClean] = val;
+      }
+      items[i] = item;
     }
     
     this.req = null;
-    
-    this.onDataLoadedCb({from: from, to: to});
-    
-    // this.props.glEventHub.emit(this.namespace + 'pvgrid-on-data-loaded', {from: from, to: to});
-    
-    // this.onDataLoaded.notify({from: from, to: to});
-  };
-  
-  
-  onSuccessRawQuery = (resp) =>
-  {
-    
-    let respParsed = {};
-    let itemsParsed = [];
-    
-    
-    try
+    if (this.getRowsParams)
     {
-      if (typeof resp !== 'object')
-      {
-        respParsed = JSON.parse(resp);
-      }
-      else
-      {
-        respParsed = resp;
-      }
-      if (respParsed.status === 200)
-      {
-        let items = respParsed.data.result.data['@value'];
-        
-        
-        for (let i = 0, ilen = items.length; i < ilen; i++)
-        {
-          let vals = items[i]['@value'];
-          let itemParsed = {};
-          
-          for (let j = 0, jlen = vals.length; j < jlen; j += 2)
-          {
-            let key = vals[j];
-            let val = vals[j + 1];
-            if (val instanceof Object)
-            {
-              if (key === ("event_id"))
-              {
-                itemParsed['index'] = val['@value'];
-              }
-              else
-              {
-                if (val['@type'] === 'g:Date')
-                {
-                  itemParsed[key] = new Date(val['@value']);
-                  
-                }
-                else
-                {
-                  itemParsed[key] = val['@value'];
-                  
-                }
-              }
-            }
-            else
-            {
-              itemParsed[key] = val;
-            }
-          }
-          itemsParsed[i] = (itemParsed);
-          this.data[this.from + i] = itemsParsed[i];
-          
-        }
-      }
-      
-      this.data.length = Math.min(itemsParsed.length + this.from, this.to); // limitation of the API
-      
-      if (this.data.length === this.to)
-      {
-        this.data.length++;
-      }
-      // if (this.data.length == this.to)
-      
-      this.req = null;
-      
-      this.onDataLoadedCb({from: this.from, to: this.to});
-      
-      
-    }
-    catch (e)
-    {
-      // e;
+      this.getRowsParams.successCallback(items, to);
     }
     
-    
   };
   
-  addNewRow = (req) =>
-  {
-    if (undefined === (req))
-    {
-      return;
-    }
-    
-    
-    let url = this.url;
-    if (this.h_request_save !== null)
-    {
-      clearTimeout(this.h_request_save);
-    }
-    
-    
-    let self = this;
-    
-    this.h_request_save = setTimeout(() =>
-    {
-      
-      let CancelToken = axios.CancelToken;
-      self.req = CancelToken.source();
-      
-      
-      // http.post(url)
-      axios.post(url
-        , self.getAddRowQuery(req)
-        , {
-          headers: {
-            'Content-Type': 'application/json'
-            , 'Accept': 'application/json'
-          }
-          , cancelToken: self.req.token
-        }).then(self.onSuccessAddRowProxy).catch((thrown) =>
-      {
-        if (axios.isCancel(thrown))
-        {
-          console.log('Request canceled', thrown.message);
-        }
-        else
-        {
-          self.onErrorAddRow(thrown, req);
-        }
-      });
-      
-    }, 50);
-  };
   
-  onSuccessAddRowProxy = (req) =>{
-  
-  };
-  onErrorAddRow = (thrown, req) =>{
-  
-  };
-  
-  getAddRowQuery = (req) => {
-  
-  };
-  
-  reloadData = (from, to) =>
-  {
-    for (let i = from; i <= to; i++)
-      delete this.data[i];
-    
-    this.ensureData(from, to);
-  };
-  
-  setSort = (column, dir) =>
-  {
-    this.sortcol = column;
-    this.sortdir = dir;
-    this.clear();
-    this.ensureData(0, this.PAGESIZE);
-    
-  };
   setSearch = (str) =>
   {
     this.searchstr = str;
-    this.clear();
     this.ensureData(0, this.PAGESIZE);
   };
   setSearchExact = (exact) =>
   {
     this.searchExact = exact;
-    this.clear();
     this.ensureData(0, this.PAGESIZE);
+  };
+  
+  setDataType = (str) =>
+  {
+    this.dataType = str;
+    localStorage.setItem(`${this.namespace}${this.subNamespace?this.subNamespace:""}.PVGrid.dataType`, (this.dataType));
   };
   
   setExtraSearch = (str) =>
   {
     this.extraSearch = str;
+    if (str && str.value)
+    {
+      this.setDataType(str.value);
+    }
   };
   
   setColumns = (cols) =>
   {
-    this.cols = cols;
-    this.clear();
-    this.ensureData(0, this.PAGESIZE);
-    
+    // this.state.columnDefs = cols;
+    if (this.mountedSuccess){
+      this.setState({columnDefs: cols});
+      this.cols = cols;
+      this.ensureData(0, this.PAGESIZE);
+    }
   };
   
   
-  onClick = (e, clickInfo) =>
+  onClick = (
+    {
+      node, // the RowNode for the row in question
+      data, // the user provided data for the row in question
+      rowIndex, // the visible row index for the row in question
+      rowPinned, // either 'top', 'bottom' or undefined / null (if not pinned)
+      context, // bag of attributes, provided by user, see Context
+      event // if even was due to browser event (eg click), then this is browser event
+    }
+  ) =>
   {
     
     // { row: number, cell: number }
     
-    if (clickInfo)
+    if (data)
     {
-      let val = this.grid.getDataItem(clickInfo.row);
+      // let val = this.grid.getDataItem(clickInfo.row);
       // alert (val);
-      this.props.glEventHub.emit(this.namespace + '-pvgrid-on-click-row', val);
-      
+      this.props.glEventHub.emit(this.namespace + '-pvgrid-on-click-row', data);
     }
   };
   
   setColumnSettings = (colSettings) =>
   {
-    if (colSettings){
-      for (let i = 0; i < colSettings.length; i++){
+    this.colFieldTranslation = {};
+    
+    if (colSettings)
+    {
+      localStorage.setItem(`${this.namespace}${this.subNamespace?this.subNamespace:""}.PVGrid.colSettings`, JSON.stringify(colSettings));
+      
+      
+      for (let i = 0; i < colSettings.length; i++)
+      {
         let colSetting = colSettings[i];
-        colSetting.name = PontusComponent.t(colSetting.name);
+        colSetting.headerName = PontusComponent.t(colSetting.name);
+        let origField = colSetting.field;
+        // If the column starts with a #, it's indexed, and we can sort/filter;
+        // otherwise, we can't.
+        if (origField.startsWith('#'))
+        {
+          colSetting.sortable = true;
+          const isDate = (origField.toLowerCase().search(/date/)>= 0);
+          if (isDate){
+            colSetting.filter ="agDateColumnFilter";
+            colSetting.valueFormatter = (param) => {
+            
+            }
+  
+          }
+          else{
+            colSetting.filter = true;
+          }
+          origField = origField.toString().substring(1);
+        }
+        else
+        {
+          colSetting.sortable = false;
+          colSetting.filter = false;
+          
+        }
+        colSetting.field = origField.replace(/\./g, '_');
+        colSetting.id = origField;
+        
+        this.colFieldTranslation[colSetting.field] = origField;
       }
-      this.grid.setColumns(colSettings);
+      
       this.setColumns(colSettings);
+      this.cols = colSettings;
+  
     }
     
   };
   
   
-  componentWillUnmount()
+  componentWillUnmount = () =>
   {
-    // // this.props.glEventHub.off(this.namespace + 'pvgrid-on-data-loaded', this.onDataLoadedCb);
+    
     // this.props.glEventHub.off(this.namespace + '-pvgrid-on-search-changed', this.setSearch);
     // this.props.glEventHub.off(this.namespace + '-pvgrid-on-col-settings-changed', this.setColumnSettings);
     // this.props.glEventHub.off(this.namespace + '-pvgrid-on-extra-search-changed', this.setExtraSearch);
-    
-    this.props.glEventHub.off(this.namespace + '-pvgrid-on-search-changed', this.setSearch);
-    this.props.glEventHub.off(this.namespace + '-pvgrid-on-search-exact-changed', this.setSearchExact);
-    this.props.glEventHub.off(this.namespace + '-pvgrid-on-col-settings-changed', this.setColumnSettings);
-    this.props.glEventHub.off(this.namespace + '-pvgrid-on-extra-search-changed', this.setExtraSearch);
-    
-    // this.loader.onDataLoaded.subscribe(this.onDataLoadedCb);
-    this.grid.onClick.unsubscribe(this.onClick); //({ row: number, cell: number })
-    this.grid.onViewportChanged.unsubscribe(this.onViewportChanged);
-    this.grid.onSort.unsubscribe(this.onSort);
-    this.grid.onAddNewRow.unsubscribe(this.onNewRowAdded);
-    this.grid.onCellChange.unsubscribe(this.onCellChanged);
-    
-    
-    
-    
+  
+    this.props.glEventHub.off(`${this.namespace}${this.subNamespace?this.subNamespace:""}-pvgrid-on-search-changed`, this.setSearch);
+    this.props.glEventHub.off(`${this.namespace}${this.subNamespace?this.subNamespace:""}-pvgrid-on-search-exact-changed`, this.setSearchExact);
+    this.props.glEventHub.off(`${this.namespace}${this.subNamespace?this.subNamespace:""}-pvgrid-on-col-settings-changed`, this.setColumnSettings);
+    this.props.glEventHub.off(`${this.namespace}${this.subNamespace?this.subNamespace:""}-pvgrid-on-extra-search-changed`, this.setExtraSearch);
+  
   }
   
   
   onViewportChanged = (/*e, args*/) =>
   {
-    let vp = this.grid.getViewport();
-    this.ensureData(vp.top, vp.bottom);
+    // let vp = this.grid.getViewport();
+    // this.ensureData(vp.top, vp.bottom);
     
   };
-  onSort = (e, args) =>
-  {
-    this.setSort(args.sortCols[0].sortCol, args.sortCols[0].sortAsc ? 1 : -1);
-    let vp = this.grid.getViewport();
-    this.ensureData(vp.top, vp.bottom);
-  };
+  
+  
   onDataLoadedCb = (args) =>
   {
-    for (let i = args.from; i <= args.to; i++)
+    if (this.getRowsParams)
     {
-      this.grid.invalidateRow(i);
+      this.getRowsParams.successCallback(args.data, args.to);
     }
-    this.grid.updateRowCount();
-    this.grid.render();
+    
   };
   
   setTotalRecords(totalRecords)
@@ -630,7 +506,92 @@ class PVGrid extends PontusComponent
     this.setState({totalRecords: totalRecords})
   }
   
-  render()
+  dataSource = {
+    rowCount: null,
+    getRows: (params) =>
+    {
+      console.log("asking for " + params.startRow + " to " + params.endRow);
+      this.getRowsParams = params;
+      
+      //  {colId: "Object_Notification_Templates_Types_1", sort: "desc"}
+      // params.sortModel
+      if (params.sortModel && params.sortModel.length > 0)
+      {
+        this.sortcol = params.sortModel[0].colId.replace(/_1$/, '');
+        this.sortcol = this.colFieldTranslation[this.sortcol];
+        this.sortdir = `+${params.sortModel[0].sort}`;
+        
+      }
+      
+      if (params.filterModel)
+      {
+        
+        this.filters = [];
+        
+        for (let fm of Object.keys(params.filterModel))
+        {
+          
+          let colId = fm.replace(/_1$/g, '');
+          colId = this.colFieldTranslation[colId];
+          
+          let csJson = params.filterModel[fm];
+          
+          let colSearch = {
+            colId: colId,
+            ...csJson
+          };
+          
+          this.filters.push(colSearch);
+          
+          
+          /* when we have simple filters, the following format is used:
+           [
+           { colId: "Object_Notification_Templates_Label", filterType: "text", type: "contains", filter: "adfasdf"},
+           { colId: "Object_Notification_Templates_Types", filterType: "text", type: "contains", filter: "aaa"}
+           ]
+           */
+          
+          //            OR
+          /*
+           When we have complex filters, the following format is used:
+           [
+           {
+           colId: "Object_Notification_Templates_Label",
+           condition1: {filterType: "text", type: "notContains", filter: "ddd"},
+           condition2: {filterType: "text", type: "endsWith", filter: "aaaa"},
+           filterType: "text",
+           operator: "OR"
+           },
+           {
+           colId: "Object_Notification_Templates_Types:{
+           condition1: {filterType: "text", type: "notContains", filter: "aaaa"},
+           condition2: {filterType: "text", type: "startsWith", filter: "bbbb"},
+           filterType: "text",
+           operator: "AND"
+           }
+           ]
+           */
+          
+          
+        }
+      }
+      // (sortdir > 0) ? "+asc" : "+desc"
+      // this.ensureData(params.startRow, params.endRow);
+      this.ensureData(params.startRow, params.endRow);
+      
+    }
+  };
+  
+  
+  onGridReady = (params) =>
+  {
+    this.gridApi = params.api;
+    this.gridColumnApi = params.columnApi;
+    
+  };
+  
+  
+  render=()=>
   {
     // let eventHub = this.props.glEventHub;
     //
@@ -645,13 +606,57 @@ class PVGrid extends PontusComponent
         >
           <Box px={1} w={1} style={{width: '100%', height: '100%'}}>
             
+            <Menu noOverlay style={{position: "absolute", right: "10px"}} pageWrapId={"outer-wrap"} right
+                  outerContainerId={"outer-wrap"}>
+              <PVGridColSelector glEventHub={this.props.glEventHub} style={{height: '100%', width: '100%'}}
+                                 namespace={`${this.namespace}${this.subNamespace?this.subNamespace:""}`} colSettings={this.state.columnDefs}
+                                 dataType={this.dataType}/>
+            
+            </Menu>
             
             <div
               style={{width: '100%', height: '100%'}}
               charSet="utf-8"
-              className={"slickgrid-container"}
-              ref={this.setGridDiv}
-            />
+              className={"ag-theme-balham-dark"}
+              id={"outer-wrap"}
+              // ref={this.setGridDiv}>
+            >
+              <AgGridReact
+                columnDefs={this.state.columnDefs}
+                autoGroupColumnDef={this.state.autoGroupColumnDef}
+                defaultColDef={this.state.defaultColDef}
+                suppressRowClickSelection={true}
+                groupSelectsChildren={true}
+                debug={true}
+                rowSelection={this.state.rowSelection}
+                rowGroupPanelShow={this.state.rowGroupPanelShow}
+                pivotPanelShow={this.state.pivotPanelShow}
+                enableRangeSelection={false}
+                pagination={true}
+                paginationPageSize={this.state.paginationPageSize}
+                paginationNumberFormatter={this.state.paginationNumberFormatter}
+                localeTextFunc={this.state.localeTextFunc}
+                onGridReady={this.onGridReady}
+                rowData={this.state.rowData}
+                datasource={this.dataSource}
+                onRowClicked={this.onClick}
+                
+                components={this.state.components}
+                rowBuffer={this.state.rowBuffer}
+                rowDeselection={true}
+                rowModelType={this.state.rowModelType}
+                cacheOverflowSize={this.state.cacheOverflowSize}
+                maxConcurrentDatasourceRequests={this.state.maxConcurrentDatasourceRequests}
+                infiniteInitialRowCount={this.state.infiniteInitialRowCount}
+                maxBlocksInCache={this.state.maxBlocksInCache}
+              
+              >
+              
+              </AgGridReact>
+            
+            </div>
+          
+          
           </Box>
         </Flex>
       </ResizeAware>

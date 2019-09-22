@@ -7,6 +7,7 @@ import PVGridAwarenessCampaign from './PVGridAwarenessCampaign';
 
 import PVDoughnutChart from './PVDoughnutChart';
 import PVGoldenLayoutComponent from "./PVGoldenLayoutComponent";
+import PontusComponent from "./PontusComponent";
 
 class NavPanelAwareness extends PVGoldenLayoutComponent
 {
@@ -40,15 +41,15 @@ class NavPanelAwareness extends PVGoldenLayoutComponent
           type: 'column',
           content: [
             {
-              title: 'Awareness Campaigns',
+              title: PontusComponent.t('Awareness Campaigns'),
               type: 'react-component',
               component: 'awareness-campaign-data-grid'
             }, {
-              title: 'Employees',
+              title: PontusComponent.t('Employees'),
               type: 'react-component',
               component: 'employees-grid'
             }, {
-              title: 'Charts',
+              title: PontusComponent.t('Charts'),
               type: 'react-component',
               component: 'awareness-campaign-employees-pie-charts'
             }

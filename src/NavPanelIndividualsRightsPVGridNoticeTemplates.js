@@ -21,10 +21,11 @@ class NavPanelIndividualsRightsPVGridNoticeTemplates extends PVGrid
     // colSettings[3] = {id: "Object.Notification_Templates.Text", visible: false, name: "Text", field: "Object.Notification_Templates.Text",   sortable: true};
 
     
-    this.url = PontusComponent.getGraphURL(this.props);
+    this.url = PontusComponent.getRestUrlAg(this.props);
     
     this.setColumnSettings(colSettings);
-    this.setExtraSearch({value: "Object.Notification_Templates"});
+    // this.setExtraSearch({value: "Object.Notification_Templates"});
+    this.setDataType( "Object.Notification_Templates");
     
     
     
@@ -40,54 +41,54 @@ class NavPanelIndividualsRightsPVGridNoticeTemplates extends PVGrid
     
   }
   
-  
-  getSearchObj = (from, to, searchstr, searchExact, cols, extraSearch, sortcol, sortdir) =>
-  {
-    this.from = from;
-    this.to = to;
-  
-    let sortcolId = sortcol === null ? null : sortcol.id;
-  
-  
-    let selectBody =
-      "  .select('Object.Notification_Templates.Id'" +
-      "         ,'Object.Notification_Templates.Text'" +
-      "         ,'Object.Notification_Templates.Types'" +
-      "         ,'Object.Notification_Templates.Label'" +
-      "         ,'event_id'" +
-      "         )";
-  
-  
-    return {
-      gremlin: "g.V()" +
-      ".has('Metadata.Type.Object.Notification_Templates',eq('Object.Notification_Templates'))" +
-      ".order().by(pg_orderCol == null ? 'Object.Notification_Templates.Id' :pg_orderCol.toString() ,pg_orderDir == (1)? incr: decr)" +
-      ".range(pg_from,pg_to).as('dataProcs')" +
-      ".match(" +
-      "    __.as('dataProcs').values('Object.Notification_Templates.Id')  .as('Object.Notification_Templates.Id')" +
-      "  , __.as('dataProcs').values('Object.Notification_Templates.Text').as('Object.Notification_Templates.Text')" +
-      "  , __.as('dataProcs').values('Object.Notification_Templates.Types').as('Object.Notification_Templates.Types')" +
-      "  , __.as('dataProcs').values('Object.Notification_Templates.Label').as('Object.Notification_Templates.Label')" +
-      "  , __.as('dataProcs').id().as('event_id')" +
-      "  )" +
-      selectBody
-      , bindings: {
-        pg_from: from
-        , pg_to: to
-        , pg_orderCol: sortcolId
-        , pg_orderDir: sortdir
-      }
-    
-    
-    };
-  };
-  
-  // onError = (err, fromPage, toPage) =>
+  //
+  // getSearchObj = (from, to, searchstr, searchExact, cols, extraSearch, sortcol, sortdir) =>
   // {
-  //   // ignore.
+  //   this.from = from;
+  //   this.to = to;
+  //
+  //   let sortcolId = sortcol === null ? null : sortcol.id;
+  //
+  //
+  //   let selectBody =
+  //     "  .select('Object.Notification_Templates.Id'" +
+  //     "         ,'Object.Notification_Templates.Text'" +
+  //     "         ,'Object.Notification_Templates.Types'" +
+  //     "         ,'Object.Notification_Templates.Label'" +
+  //     "         ,'event_id'" +
+  //     "         )";
+  //
+  //
+  //   return {
+  //     gremlin: "g.V()" +
+  //     ".has('Metadata.Type.Object.Notification_Templates',eq('Object.Notification_Templates'))" +
+  //     ".order().by(pg_orderCol == null ? 'Object.Notification_Templates.Id' :pg_orderCol.toString() ,pg_orderDir == (1)? incr: decr)" +
+  //     ".range(pg_from,pg_to).as('dataProcs')" +
+  //     ".match(" +
+  //     "    __.as('dataProcs').values('Object.Notification_Templates.Id')  .as('Object.Notification_Templates.Id')" +
+  //     "  , __.as('dataProcs').values('Object.Notification_Templates.Text').as('Object.Notification_Templates.Text')" +
+  //     "  , __.as('dataProcs').values('Object.Notification_Templates.Types').as('Object.Notification_Templates.Types')" +
+  //     "  , __.as('dataProcs').values('Object.Notification_Templates.Label').as('Object.Notification_Templates.Label')" +
+  //     "  , __.as('dataProcs').id().as('event_id')" +
+  //     "  )" +
+  //     selectBody
+  //     , bindings: {
+  //       pg_from: from
+  //       , pg_to: to
+  //       , pg_orderCol: sortcolId
+  //       , pg_orderDir: sortdir
+  //     }
+  //
+  //
+  //   };
   // };
-  
-  
+  //
+  // // onError = (err, fromPage, toPage) =>
+  // // {
+  // //   // ignore.
+  // // };
+  //
+  //
   
 }
 

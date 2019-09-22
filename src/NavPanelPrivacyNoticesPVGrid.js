@@ -30,69 +30,70 @@ class NavPanelPrivacyNoticesPVGrid extends PVGrid
   
     this.setColumnSettings(colSettings);
     this.setExtraSearch({value:"Object.Privacy_Notice"});
-    this.url = PontusComponent.getGraphURL(this.props);
+    this.setDataType("Object.Privacy_Notice");
+    this.url = PontusComponent.getRestUrlAg(this.props);
   
   
   }
-  
-  getSearchObj = (from, to, searchstr, searchExact, cols, extraSearch, sortcol, sortdir) =>
-  {
-    this.from = from;
-    this.to = to;
-    
-    let sortcolId = sortcol === null ? null : sortcol.id;
-    
-    
-    let selectBody =
-      "  .select('Object.Privacy_Notice.Description' " +
-      "         ,'Object.Privacy_Notice.URL' " +
-      "         ,'Object.Privacy_Notice.Delivery_Date' " +
-      "         ,'Object.Privacy_Notice.Expiry_Date' " +
-      "         ,'Object.Privacy_Notice.Info_Collected' " +
-      "         ,'Object.Privacy_Notice.Who_Is_Collecting' " +
-      "         ,'Object.Privacy_Notice.How_Is_It_Collected' " +
-      "         ,'Object.Privacy_Notice.Why_Is_It_Collected' " +
-      "         ,'Object.Privacy_Notice.How_Will_It_Be_Used' " +
-      "         ,'Object.Privacy_Notice.Who_Will_It_Be_Shared' " +
-      "         ,'Object.Privacy_Notice.Effect_On_Individuals' " +
-      "         ,'Object.Privacy_Notice.Likely_To_Complain' " +
-      "         ,'event_id' " +
-      "         )";
-    
-    
-    return {
-      gremlin: "g.V().has('Metadata.Type.Object.Privacy_Notice',eq('Object.Privacy_Notice'))\n" +
-        " .order()\n" +
-        " .by(pg_orderCol == null ? 'Object.Privacy_Notice.Description' :pg_orderCol.toString() ,pg_orderDir == (1)? incr: decr)\n" +
-        " .range(pg_from,pg_to)\n" +
-        " .as('people')\n" +
-        " .match(\n" +
-        "   __.as('people').values('Object.Privacy_Notice.Description').as('Object.Privacy_Notice.Description')\n" +
-        "  ,__.as('people').values('Object.Privacy_Notice.URL').as('Object.Privacy_Notice.URL')\n" +
-        "  ,__.as('people').values('Object.Privacy_Notice.Delivery_Date').as('Object.Privacy_Notice.Delivery_Date')\n" +
-        "  ,__.as('people').values('Object.Privacy_Notice.Expiry_Date').as('Object.Privacy_Notice.Expiry_Date')\n" +
-        "  ,__.as('people').values('Object.Privacy_Notice.Info_Collected').as('Object.Privacy_Notice.Info_Collected')\n" +
-        "  ,__.as('people').values('Object.Privacy_Notice.Who_Is_Collecting').as('Object.Privacy_Notice.Who_Is_Collecting')\n" +
-        "  ,__.as('people').values('Object.Privacy_Notice.How_Is_It_Collected').as('Object.Privacy_Notice.How_Is_It_Collected')\n" +
-        "  ,__.as('people').values('Object.Privacy_Notice.Why_Is_It_Collected').as('Object.Privacy_Notice.Why_Is_It_Collected')\n" +
-        "  ,__.as('people').values('Object.Privacy_Notice.How_Will_It_Be_Used').as('Object.Privacy_Notice.How_Will_It_Be_Used')\n" +
-        "  ,__.as('people').values('Object.Privacy_Notice.Who_Will_It_Be_Shared').as('Object.Privacy_Notice.Who_Will_It_Be_Shared')\n" +
-        "  ,__.as('people').values('Object.Privacy_Notice.Effect_On_Individuals').as('Object.Privacy_Notice.Effect_On_Individuals')\n" +
-        "  ,__.as('people').values('Object.Privacy_Notice.Likely_To_Complain').as('Object.Privacy_Notice.Likely_To_Complain')\n" +
-        "  ,__.as('people').id().as('event_id')\n" +
-        " )\n" +
-        selectBody
-      , bindings: {
-        pg_from: from
-        , pg_to: to
-        , pg_orderCol: sortcolId
-        , pg_orderDir: sortdir
-      }
-      
-      
-    };
-  };
-  
+  //
+  // getSearchObj = (from, to, searchstr, searchExact, cols, extraSearch, sortcol, sortdir) =>
+  // {
+  //   this.from = from;
+  //   this.to = to;
+  //
+  //   let sortcolId = sortcol === null ? null : sortcol.id;
+  //
+  //
+  //   let selectBody =
+  //     "  .select('Object.Privacy_Notice.Description' " +
+  //     "         ,'Object.Privacy_Notice.URL' " +
+  //     "         ,'Object.Privacy_Notice.Delivery_Date' " +
+  //     "         ,'Object.Privacy_Notice.Expiry_Date' " +
+  //     "         ,'Object.Privacy_Notice.Info_Collected' " +
+  //     "         ,'Object.Privacy_Notice.Who_Is_Collecting' " +
+  //     "         ,'Object.Privacy_Notice.How_Is_It_Collected' " +
+  //     "         ,'Object.Privacy_Notice.Why_Is_It_Collected' " +
+  //     "         ,'Object.Privacy_Notice.How_Will_It_Be_Used' " +
+  //     "         ,'Object.Privacy_Notice.Who_Will_It_Be_Shared' " +
+  //     "         ,'Object.Privacy_Notice.Effect_On_Individuals' " +
+  //     "         ,'Object.Privacy_Notice.Likely_To_Complain' " +
+  //     "         ,'event_id' " +
+  //     "         )";
+  //
+  //
+  //   return {
+  //     gremlin: "g.V().has('Metadata.Type.Object.Privacy_Notice',eq('Object.Privacy_Notice'))\n" +
+  //       " .order()\n" +
+  //       " .by(pg_orderCol == null ? 'Object.Privacy_Notice.Description' :pg_orderCol.toString() ,pg_orderDir == (1)? incr: decr)\n" +
+  //       " .range(pg_from,pg_to)\n" +
+  //       " .as('people')\n" +
+  //       " .match(\n" +
+  //       "   __.as('people').values('Object.Privacy_Notice.Description').as('Object.Privacy_Notice.Description')\n" +
+  //       "  ,__.as('people').values('Object.Privacy_Notice.URL').as('Object.Privacy_Notice.URL')\n" +
+  //       "  ,__.as('people').values('Object.Privacy_Notice.Delivery_Date').as('Object.Privacy_Notice.Delivery_Date')\n" +
+  //       "  ,__.as('people').values('Object.Privacy_Notice.Expiry_Date').as('Object.Privacy_Notice.Expiry_Date')\n" +
+  //       "  ,__.as('people').values('Object.Privacy_Notice.Info_Collected').as('Object.Privacy_Notice.Info_Collected')\n" +
+  //       "  ,__.as('people').values('Object.Privacy_Notice.Who_Is_Collecting').as('Object.Privacy_Notice.Who_Is_Collecting')\n" +
+  //       "  ,__.as('people').values('Object.Privacy_Notice.How_Is_It_Collected').as('Object.Privacy_Notice.How_Is_It_Collected')\n" +
+  //       "  ,__.as('people').values('Object.Privacy_Notice.Why_Is_It_Collected').as('Object.Privacy_Notice.Why_Is_It_Collected')\n" +
+  //       "  ,__.as('people').values('Object.Privacy_Notice.How_Will_It_Be_Used').as('Object.Privacy_Notice.How_Will_It_Be_Used')\n" +
+  //       "  ,__.as('people').values('Object.Privacy_Notice.Who_Will_It_Be_Shared').as('Object.Privacy_Notice.Who_Will_It_Be_Shared')\n" +
+  //       "  ,__.as('people').values('Object.Privacy_Notice.Effect_On_Individuals').as('Object.Privacy_Notice.Effect_On_Individuals')\n" +
+  //       "  ,__.as('people').values('Object.Privacy_Notice.Likely_To_Complain').as('Object.Privacy_Notice.Likely_To_Complain')\n" +
+  //       "  ,__.as('people').id().as('event_id')\n" +
+  //       " )\n" +
+  //       selectBody
+  //     , bindings: {
+  //       pg_from: from
+  //       , pg_to: to
+  //       , pg_orderCol: sortcolId
+  //       , pg_orderDir: sortdir
+  //     }
+  //
+  //
+  //   };
+  // };
+  //
 }
 
 

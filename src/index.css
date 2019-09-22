@@ -10,7 +10,80 @@ body {
     height: 100%;
 }
 
+/* Position and sizing of burger button */
+.bm-burger-button {
+    position: absolute;
+    width: 12px;
+    height: 10px;
+    right: 20px;
+    top: 15px;
+}
 
+/* Color/shape of burger icon bars */
+.bm-burger-bars {
+    background: #ffffff;
+}
+
+/* Color/shape of burger icon bars on hover*/
+.bm-burger-bars-hover {
+    background: #a90000;
+}
+
+/* Position and sizing of clickable cross button */
+.bm-cross-button {
+    height: 8px;
+    width: 8px;
+    background: black;
+}
+
+/* Color/shape of close button cross */
+.bm-cross {
+    background: #bdc3c7;
+}
+
+/*
+Sidebar wrapper styles
+Note: Beware of modifying this element as it can break the animations - you should not need to touch it in most cases
+*/
+.bm-menu-wrap {
+    position: absolute;
+    right: 10px;
+
+    height: 100%;
+}
+
+/* General sidebar styles */
+.bm-menu {
+    /*background: #373a47;*/
+    background: rgba(0, 0, 0, 0.3);
+
+    padding: 2.5em 1.5em 0;
+    font-size: 10px;
+}
+
+/* Morph shape necessary with bubble or elastic */
+.bm-morph-shape {
+    /*fill: #373a47;*/
+    fill: rgba(0, 0, 0, 0.3);
+
+}
+
+/* Wrapper for item list */
+.bm-item-list {
+    color: #b8b7ad;
+    padding: 0.2em;
+    font-size: 12px;
+
+}
+/* Individual item */
+.bm-item {
+    display: inline-block;
+}
+
+/* Styling of overlay */
+.bm-overlay {
+    background: rgba(0, 0, 0, 0.3);
+}
 
 
 .react-grid-Cell:not(.editing) .react-grid-Cell__value {
@@ -534,11 +607,11 @@ div.outerBorder {
     padding-right: 6px;
 }
 
-.bm-menu {
-    background: rgb(59,59,59);
-    padding: 0.5em 0.5em 0;
-    font-size: 2.15em;
-}
+/*.bm-menu {*/
+/*    background: rgb(59,59,59);*/
+/*    padding: 0.5em 0.5em 0;*/
+/*    font-size: 2.15em;*/
+/*}*/
 
 
 .react-layout-components--box {

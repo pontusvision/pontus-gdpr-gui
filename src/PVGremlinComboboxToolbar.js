@@ -149,81 +149,99 @@ class PVGremlinComboboxToolbar extends PVGremlinComboBox
         const opacity = state.isDisabled ? 0.5 : 1;
         const transition = 'opacity 300ms';
         const top = '35%';
-  
-        return {...provided, opacity, transition,top};
+        
+        return {...provided, opacity, transition, top};
         
       },
       container: (provided, state) =>
       {
         const display = 'inline-block';
-        const  width = '20em';
-        const  height = '20px';
+        const width = '20em';
+        const height = '20px';
         const minHeight = '20px';
         const marginLeft = '2px';
         const marginRight = '2px';
         return {...provided, display, width, height, minHeight, marginLeft, marginRight};
-  
-  
+        
+        
       },
       control: (provided, state) =>
       {
         // const display = 'inline-block';
-        const  width = '20em';
-        const  height = '20px';
+        const width = '20em';
+        const height = '20px';
         const minHeight = '20px';
         return {...provided, width, height, minHeight};
-    
-    
+        
+        
       },
       placeholder: (provided, state) =>
       {
         // const display = 'inline-block';
-        const  width = '20em';
-        const  height = '20px';
+        const width = '20em';
+        const height = '20px';
         const minHeight = '20px';
         const fontSize = '12px';
         const top = '45%';
-        return {...provided, width, height, minHeight,fontSize,top};
-    
+        return {...provided, width, height, minHeight, fontSize, top};
+        
       },
-  
+      
       input: (provided, state) =>
       {
         // const display = 'inline-block';
-        const  width = '20em';
-        const  height = '20px';
+        const width = '20em';
+        const height = '20px';
         const minHeight = '20px';
         const fontSize = '12px';
         const top = '25%';
-        const  margin = '0px';   /* margin: 2px; */
-        const  paddingBottom =  '0px';  /* padding-bottom: 2px; */
-        const  paddingTop =  '1px';  /* padding-top: 2px; */
-        return {...provided, width, height, minHeight,fontSize,top, margin,paddingBottom,paddingTop};
-    
-    
+        const margin = '0px';   /* margin: 2px; */
+        const paddingBottom = '0px';  /* padding-bottom: 2px; */
+        const paddingTop = '1px';  /* padding-top: 2px; */
+        return {...provided, width, height, minHeight, fontSize, top, margin, paddingBottom, paddingTop};
+        
+        
       },
       indicatorsContainer: (provided, state) =>
       {
-        const  height = '20px';
+        const height = '20px';
         const minHeight = '20px';
         const fontSize = '12px';
         const top = '25%';
-        return {...provided, height, minHeight,fontSize,top};
+        return {...provided, height, minHeight, fontSize, top};
       }
-  
-  
+      
+      
     };
-  
+    
+    /*
+     <CreatableSelect
+     options={this.state.options}
+     placeholder='Select Label'
+     styles={customStyles}
+     />
+     */
+    
     return (
       
-      <CreatableSelect
-        options={this.state.options}
-        placeholder='Select Label'
-        styles={customStyles}
-      />
-    
-    
-    );
+
+    <CreatableSelect
+      name={this.props.name || "form-field-name"}
+      key={this.state.value ? this.state.value.length : 0}
+      value={this.state.value}
+      isMulti={this.props.multi === null ? true : this.props.multi}
+      isClearable
+      options={this.state.options}
+      joinValues={true}
+      delimiter={","}
+      onChange={this.onChange}
+      placeholder={this.props.placeholder}
+      styles={customStyles}
+    />
+  
+  
+  )
+    ;
     
     /*       return (
      <ul className="userlist">

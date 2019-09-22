@@ -5,6 +5,7 @@ import NavPanelConsentPVGridEventConsent from './NavPanelConsentPVGridEventConse
 import NavPanelConsentDataGraph from './NavPanelConsentDataGraph';
 import NavPanelConsentPVDoughnutChartConsentStatus from './NavPanelConsentPVDoughnutChartConsentStatus';
 import PVGoldenLayoutComponent from "./PVGoldenLayoutComponent";
+import PontusComponent from "./PontusComponent";
 
 
 class NavPanelConsent extends PVGoldenLayoutComponent
@@ -40,22 +41,22 @@ class NavPanelConsent extends PVGoldenLayoutComponent
           type: 'column',
           content: [
             {
-              title: 'Privacy Notices',
+              title: PontusComponent.t('Privacy Notices'),
               type: 'react-component',
               component: 'data-grid-privacy-notices'
             }
             , {
-              title: 'Consent Events',
+              title: PontusComponent.t('Consent Events'),
               type: 'react-component',
               component: 'data-grid-consent-events'
             }
             , {
-              title: 'Consent Chart (Privacy Notice)',
+              title: PontusComponent.t('Consent Chart (Privacy Notice)'),
               type: 'react-component',
               component: 'consent-chart'
             }
             , {
-              title: 'Data Graph',
+              title: PontusComponent.t('Data Graph'),
               type: 'react-component',
               component: 'data-graph'
             }

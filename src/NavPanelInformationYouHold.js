@@ -5,6 +5,7 @@ import NavPanelInformationYouHoldPVGridEventIngestion from './NavPanelInformatio
 import NavPanelInformationYouHoldIngestionTimeline from './NavPanelInformationYouHoldIngestionTimeline';
 import PVGoldenLayoutComponent from "./PVGoldenLayoutComponent";
 import NavPanelInformationYouHoldPVGrid from "./NavPanelInformationYouHoldPVGrid";
+import PontusComponent from "./PontusComponent";
 
 
 class NavPanelInformationYouHold extends PVGoldenLayoutComponent
@@ -40,7 +41,7 @@ class NavPanelInformationYouHold extends PVGoldenLayoutComponent
           type: 'column',
           content: [
             {
-              title: 'Data',
+              title: PontusComponent.t('NavPanelInformationYouHold_personGrid'),
               type: 'react-component',
               component: 'data-grid'
             },
@@ -51,22 +52,22 @@ class NavPanelInformationYouHold extends PVGoldenLayoutComponent
             // }
             // ,
             {
-              title: 'Data Graph',
+              title: PontusComponent.t('Data Graph'),
               type: 'react-component',
               component: 'data-graph'
             }
             , {
-              title: 'Data Types',
+              title: PontusComponent.t('Data Types'),
               type: 'react-component',
               component: 'data-types-doughnut'
             }
             , {
-              title: 'Unmatched Records',
+              title: PontusComponent.t('Unmatched Records'),
               type: 'react-component',
               component: 'data-grid-unmatched'
             }
             , {
-              title: 'Ingestion Events',
+              title: PontusComponent.t('Ingestion Events'),
               type: 'react-component',
               component: 'data-events-timeline'
               

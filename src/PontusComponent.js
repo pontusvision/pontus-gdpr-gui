@@ -132,6 +132,10 @@ class PontusComponent extends React.Component
   {
     return PontusComponent.getURLGeneric(props, 'pvgdpr_gui', 'pvgdpr_server/home/records', "/gateway/sandbox/pvgdpr_server/home/records");
   }
+  static getRestUrlAg(props)
+  {
+    return PontusComponent.getURLGeneric(props, 'pvgdpr_gui', 'pvgdpr_server/home/agrecords', "/gateway/sandbox/pvgdpr_server/home/agrecords");
+  }
   
   
   static getURLGeneric(props, pvgdprGuiStr, defaultSuffix, defaultSandbox)

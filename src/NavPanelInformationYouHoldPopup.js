@@ -2,6 +2,7 @@
 // import ResizeAware from 'react-resize-aware';
 import PVGDPRScores from './PVGDPRScores';
 import {info} from 'react-icons-kit-allreact/icomoon/info';
+import PontusComponent from "./PontusComponent";
 // import axios from 'axios';
 // import {Grid} from 'semantic-ui-react';
 // import {ic_multiline_chart} from 'react-icons-kit-allreact/md/ic_multiline_chart'
@@ -18,11 +19,8 @@ class NavPanelInformationYouHoldPopup extends PVGDPRScores
   {
     super(props);
     
-    this.text =
-      'You should document what personal data you hold,\n' +
-      'where it came from and who you share it with. You\n' +
-      'may need to organise an information audit.';
-    this.title = "Info You Hold";
+    this.text = PontusComponent.t("NavPanelInformationYouHoldPopup_text");
+    this.title = PontusComponent.t("NavPanelInformationYouHoldPopup_title");
     this.icon = info;
     
     
@@ -37,54 +35,7 @@ class NavPanelInformationYouHoldPopup extends PVGDPRScores
     
     
     return {
-      gremlin: "\n" +
-        "long numEvents = g.V().has('Metadata.Type.Event.Ingestion',eq('Event.Ingestion')).count().next();\n" +
-        "\n" +
-        "long numRecordsNoEdges =\n" +
-        "g.V()\n" +
-        " .has('Metadata.Type.Event.Ingestion',eq('Event.Ingestion'))\n" +
-        " .where(__.inE().count().is(eq(1)))\n" +
-        " .count().next()\n" +
-        "\n" +
-        "\n" +
-        "long scoreValue = 100L;\n" +
-        "if (numEvents > 0){\n" +
-        "  \n" +
-        "  long pcntNoEdges = (long) (100L*numRecordsNoEdges/numEvents);\n" +
-        "  if (pcntNoEdges > 5 && pcntNoEdges < 40){\n" +
-        "    scoreValue -= 40L;\n" +
-        "  }\n" +
-        "  else if (pcntNoEdges> 40) {\n" +
-        "    scoreValue -= (20L + 2L* pcntNoEdges)\n" +
-        "  }\n" +
-        "  else  {\n" +
-        "    scoreValue -= ( pcntNoEdges)\n" +
-        "  }\n" +
-        "  \n" +
-        "  \n" +
-        "   \n" +
-        "}else{\n" +
-        "  scoreValue = 0L; \n" +
-        "}\n" +
-        "\n" +
-        "StringBuffer sb = new StringBuffer ('{ \"scoreValue\": ');\n" +
-        "\n" +
-        "sb.append(scoreValue)\n" +
-        "  .append(', \"scoreExplanation\":\"');\n" +
-        "if (numRecordsNoEdges > 0)  {\n" +
-        "  sb.append('This score reflects that out of ')\n" +
-        "    .append(numEvents).append(' personally identifiable information ingestion records, ')\n" +
-        "    .append(numRecordsNoEdges).append(' have not been matched to an individual.')\n" +
-        "}\n" +
-        "else if (numEvents > 0) {\n" +
-        "  sb.append('All ').append(numEvents).append(' personally identifiable information ingestion records in the system have been matched against individuals.')\n" +
-        "}\n" +
-        "else {\n" +
-        "  sb.append('There are no personally identifiable information ingestion records in the system.')\n" +
-        "}\n" +
-        "sb.append('\" }')  \n" +
-        "\n" +
-        "sb.toString()\n"
+      gremlin: PontusComponent.t("NavPanelInformationYouHoldPopup_query")
       
       , bindings: {
         // pg_from: from

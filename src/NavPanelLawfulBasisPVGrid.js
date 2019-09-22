@@ -1,4 +1,5 @@
 import PVGrid from './PVGrid';
+import PontusComponent from "./PontusComponent";
 
 //
 
@@ -18,8 +19,10 @@ class NavPanelLawfulBasisPVGrid extends PVGrid
   
   
     this.setColumnSettings(colSettings);
+    this.setDataType("Object.Lawful_Basis");
     this.setExtraSearch({value:"Object.Lawful_Basis"});
   
+    this.url = PontusComponent.getRestUrlAg(this.props);
   
   }
   

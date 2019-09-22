@@ -20,8 +20,16 @@ class PVGremlinComboBox extends Component
       throw (err);
     }
     
+    let lastValStr =     localStorage.getItem(`${this.props.namespace}-value`);
+  
+    let lastVal = null;
+    if(lastValStr){
+      lastVal = JSON.parse(lastValStr);
+    }
+  
     this.state = {
-      value: this.props.multi ? [] : {}
+      ...props
+      , value: lastVal?lastVal: (this.props.value) ? this.props.value : (this.props.multi ? [] : {})
       // ,options: [{label : "one", value: "one"}, {label: "two", value: "two"}]
       , options: this.props.options === null ? [] : this.props.options
     };
@@ -32,6 +40,16 @@ class PVGremlinComboBox extends Component
   
   getOptions = (jsonRequest) =>
   {
+    if (jsonRequest)
+    {
+      let reqToSave = jsonRequest;
+      if (typeof jsonRequest === 'object')
+      {
+        reqToSave = JSON.stringify(jsonRequest);
+      }
+      localStorage.setItem(`${this.props.namespace}.optionsJsonRequest`, reqToSave);
+    }
+    
     
     let url = this.props.url;
     
@@ -108,6 +126,7 @@ class PVGremlinComboBox extends Component
     this.setState({
       value: value
     });
+    localStorage.setItem(`${this.props.namespace}-value`, JSON.stringify(value));
     
     if (this.props.onChange)
     {
@@ -121,8 +140,15 @@ class PVGremlinComboBox extends Component
   componentDidMount()
   {
     /* you can pass config as prop, or use a predefined one */
+    let savedReq = localStorage.getItem(`${this.props.namespace}.optionsJsonRequest`);
+    try
+    {
+      savedReq = JSON.parse(savedReq);
+    }
+    catch (e)
+    {}
     
-    this.getOptions();
+    this.getOptions(savedReq);
     
   }
   
@@ -154,15 +180,15 @@ class PVGremlinComboBox extends Component
       
       <CreatableSelect
         name={this.props.name || "form-field-name"}
-        key={this.state.value ? this.state.value.length : 0}
-        value={this.state.value}
+        // key={this.state.value}
+        defaultValue={this.state.value}
         isMulti={this.props.multi === null ? true : this.props.multi}
         isClearable
         options={this.state.options}
         joinValues={true}
         delimiter={","}
         onChange={this.onChange}
-        
+        placeholder={this.state.placeholder}
         styles={customStyles}
       />
     

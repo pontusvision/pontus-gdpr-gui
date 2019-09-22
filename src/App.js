@@ -1,31 +1,17 @@
 import React from 'react';
 import {Box} from 'reflexbox';
 import ResizeAware from 'react-resize-aware';
-
-// import darkBaseTheme from 'material-ui/styles/baseThemes/darkBaseTheme';
-// import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-// import getMuiTheme from 'material-ui/styles/getMuiTheme';
-
-// import GoldenLayout from 'golden-layout';
-
-import {Tab, Tabs, TabList, TabPanel} from 'react-tabs';
-// import {render} from 'react-dom';
-import {stack as Menu} from 'react-burger-menu';
-
-
-// import PontusGridPanel from './PontusGridPanel';
+import {Tab, TabList, TabPanel, Tabs} from 'react-tabs';
+import {scaleDown as Menu} from 'react-burger-menu';
 import TrackPanel from './TrackPanel';
 import ExtractPanel from './ExtractPanel';
 import {EventEmitter} from 'fbemitter';
 import ComplyPanel from './ComplyPanel';
+import PontusComponent from "./PontusComponent";
+
 
 let emitter = new EventEmitter();
 
-
-// import ReactDataGrid from 'react-data-grid';
-// import ReactSlickGrid from 'react-slickgrid';
-
-// import ReactDataGridPlugins from 'react-data-grid-addons';
 
 
 /***************************
@@ -35,11 +21,13 @@ let emitter = new EventEmitter();
 
 class MainPanel extends React.Component
 {
-  // constructor(props)
-  // {
-  //   super(props);
-  //
-  // }
+  constructor(props)
+  {
+    super(props);
+    this.title = PontusComponent.t("App_title");
+    this.message = PontusComponent.t("App_message");
+
+  }
   select = () =>
   {
   
@@ -51,9 +39,10 @@ class MainPanel extends React.Component
   };
   
   
-  componentWillMount()
+  componentDidMount()
   {
-    this.sub = emitter.addListener('panel-select', this.setPanel);
+    this.sub = emitter.addListener("panel-select", this.setPanel, this);
+    
   }
   
   componentWillUnmount()
@@ -76,13 +65,13 @@ class MainPanel extends React.Component
   clickOnExtract = () =>
   {
     this.props.appPointer.extractPanel.cb()
-  
+    
   };
   
   clickOnTrack = () =>
   {
     this.props.appPointer.trackPanel.cb()
-  
+    
   };
   
   clickOnComply = () =>
@@ -114,7 +103,11 @@ class MainPanel extends React.Component
           {/*<Flex >*/}
           
           <Box style={{display: "flex", justifyContent: "center", alignItems: "center"}} px={1} w={1}>
-            <div style={{color: "white", paddingTop: window.innerHeight/20, paddingBottom: window.innerHeight/10, fontSize: '72px'}}>GDPR</div>
+            <div style={{
+              color: "white", paddingTop: window.innerHeight / 20, paddingBottom: window.innerHeight / 10,
+              fontSize: '72px'
+            }}>{this.title}</div>
+          
           
           </Box>
           <Box style={{display: "flex", justifyContent: "center", alignItems: "center"}} px={1} w={1}>
@@ -125,8 +118,10 @@ class MainPanel extends React.Component
                  onClick={this.clickOnComply}/>
           </Box>
           <Box style={{display: "flex", justifyContent: "center", alignItems: "center"}} px={1} w={1}>
-            <div style={{color: "white", paddingTop: window.innerHeight/20, paddingBottom: window.innerHeight/20, fontSize: '26px'}}> Select a panel from the
-              menu on the top right
+            <div style={{
+              color: "white", paddingTop: window.innerHeight / 20, paddingBottom: window.innerHeight / 20,
+              fontSize: '26px'
+            }}>{this.message}
             </div>
           
           </Box>
@@ -143,7 +138,7 @@ class App extends React.Component
   {
     super(props);
     this.headerTitle = "";
-    this.mainPanelSource = <MainPanel appPointer={this}  style={{height: '100%', width: '100%'}}/>;
+    this.mainPanelSource = <MainPanel appPointer={this} style={{height: '100%', width: '100%'}}/>;
     this.state = {tabIndex: 0, height: window.innerHeight - 20, width: window.innerWidth - 20};
   }
   
@@ -157,51 +152,30 @@ class App extends React.Component
     }
   };
   
-  componentWillUnmount()
-  {
-    // super.componentWillUnmount();
-    // this.props.glEventHub.off(this.namespace + 'pvgrid-on-data-loaded', this.onDataLoadedCb);
-    // this.props.glEventHub.off(this.namespace + '-PVAceGremlinEditor-on-change', this.setValue);
-    // window.removeResizeListener(this.od.offsetParent, this.handleResize);
-    
-  }
+
   
   handleResize = () =>
   {
     try
     {
-      this.setState({height: window.innerHeight - 20, width: window.innerWidth -20});
-
+      this.setState({height: window.innerHeight - 20, width: window.innerWidth - 20});
+      
       // console.log(this);
     }
     catch (e)
     {
       // console.log(e);
     }
-
+    
   };
-  
-  // setOuter = (od) =>
-  // {
-  //   this.od = od;
-  //   try
-  //   {
-  //     window.addResizeListener(this.od.offsetParent, this.handleResize);
-  //     this.handleResize();
-  //   }
-  //   catch (e)
-  //   {
-  //
-  //   }
-  //
-  // };
   
   trackPanel = {
     cb: (event) =>
     {
-      if (event){
+      if (event)
+      {
         event.preventDefault();
-  
+        
       }
       this.node.setState({selectedIndex: 2});
       
@@ -214,9 +188,10 @@ class App extends React.Component
   extractPanel = {
     cb: (event) =>
     {
-      if (event){
+      if (event)
+      {
         event.preventDefault();
-    
+        
       }
       // emitter.emit('panel-select', this.extractPanel);
       // this.node.setSelected(1,true);
@@ -233,9 +208,10 @@ class App extends React.Component
   complyPanel = {
     cb: (event) =>
     {
-      if (event){
+      if (event)
+      {
         event.preventDefault();
-    
+        
       }
       // this.instance.selectItem(this.complyPanelInstance);
       this.node.setState({selectedIndex: 3});
@@ -291,8 +267,8 @@ class App extends React.Component
     for (var i = 0, ilen = items.length; i < ilen; i++)
     {
       var item = items[i];
-      menuItems.push(<a style={{color: 'white'}}  onClick={item.cb} key={item.panelId} className="menu-item"
-                        >{item.title}</a>);
+      menuItems.push(<a style={{color: 'white'}} onClick={item.cb} key={item.panelId} className="menu-item"
+      >{item.title}</a>);
     }
     
     
@@ -320,10 +296,10 @@ class App extends React.Component
         <Tabs
           ref={this.setNode}
           style={{height: '100%', width: '100%', flexDirection: 'column', flexGrow: 1}}
-
+          
           height={this.state.height}
           width={this.state.width}
-          selectedIndex={this.props.selIndex ? this.props.selIndex: 0}
+          selectedIndex={this.props.selIndex ? this.props.selIndex : 0}
           onSelect={tabIndex => this.setState({tabIndex})}
         >
           <TabList style={{display: 'none'}}>
