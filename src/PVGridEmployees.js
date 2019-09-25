@@ -6,30 +6,26 @@ class PVGridEmployees extends PVGrid
 {
   constructor(props){
     super({...props, namespace: "PVGridEmployees-", dataType:"Person.Employee", colSettings:PVGridEmployees.getDefaultColSettings()});
+    
   }
   
   static getDefaultColSettings()
   {
     let colSettings = [];
   
-    colSettings[0] = {id: "Person.Natural.Title", name: "Title", field: "Person.Natural.Title", sortable: true};
-    colSettings[1] = {id: "Person.Natural.Full_Name", name: "Full Name", field: "Person.Natural.Full_Name", sortable: true};
-    colSettings[2] = {id: "Person.Natural.Nationality", name: "Nationality", field: "Person.Natural.Nationality", sortable: true};
-    colSettings[3] = {id: "event_status", name: "Campaign Status", field: "event_status", sortable: false};
+    colSettings[0] = {id: "Person.Employee.Title", name: "Title", field: "#Person.Employee.Title", sortable: true};
+    colSettings[1] = {id: "Person.Employee.Full_Name", name: "Full Name", field: "#Person.Employee.Full_Name", sortable: true};
+    colSettings[2] = {id: "Person.Employee.Nationality", name: "Nationality", field: "#Person.Employee.Nationality", sortable: true};
   
     return colSettings;
   }
   
-  onClickedPVGridAwarenessCampaign = (val) =>
+  onClickedPVGridAwarenessCampaign = (obj) =>
   {
     try
     {
-      
-      
-      this.awarenessCampaignId = val.id;
   
-  
-      this.url = PontusComponent.getRestUrlAg(this.props);
+      this.setCustomFilter(`hasNeighbourId:${obj.id}`);
   
   
   
@@ -44,7 +40,7 @@ class PVGridEmployees extends PVGrid
   
   componentDidMount()
   {
-    this.setNamespace("PVGridEmployees-");
+    // this.setNamespace("PVGridEmployees-");
     
     super.componentDidMount();
     this.props.glEventHub.on('PVGridAwarenessCampaign-pvgrid-on-click-row', this.onClickedPVGridAwarenessCampaign);

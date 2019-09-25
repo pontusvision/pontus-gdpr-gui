@@ -77,9 +77,9 @@ class PVDoughnutChart extends PontusComponent
   
   onClickedPVGridAwarenessCampaign = (val) =>
   {
-    this.index = val.index;
+    this.index = val.id;
     
-    this.ensureData(val.index)
+    this.ensureData(val.id)
   }
   
   
