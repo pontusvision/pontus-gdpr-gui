@@ -1,3 +1,4 @@
+"use strict";
 /*!
  * html2canvas 1.0.0-alpha.9 <https://html2canvas.hertzen.com>
  * Copyright (c) 2018 Niklas von Hertzen <https://hertzen.com>

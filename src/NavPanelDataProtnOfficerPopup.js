@@ -19,7 +19,8 @@ class NavPanelDataProtnOfficerPopup extends PVGDPRScores
   {
     super(props);
 
-    this.text = 'You should designate someone to take responsibility\n' +
+    this.text =
+      'You should designate someone to take responsibility\n' +
       'for data protection compliance and assess where this\n' +
       'role will sit within your organisation’s structure and\n' +
       'governance arrangements. You should consider\n' +

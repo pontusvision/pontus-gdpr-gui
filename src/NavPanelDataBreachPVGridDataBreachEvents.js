@@ -5,50 +5,50 @@ import PontusComponent from "./PontusComponent";
 
 class NavPanelDataBreachPVGridDataBreachEvents extends PVGrid
 {
-  
-  componentDidMount()
+  constructor(props)
   {
-    this.setNamespace("NavPanelDataBreach");
+    super({
+      ...props, namespace: "NavPanelDataBreachPVGridDataBreachEvents", dataType: "Event.Data_Breach",
+      colSettings: NavPanelDataBreachPVGridDataBreachEvents.getDefaultColSettings()
+    });
     
-    super.componentDidMount();
-    
+  }
+  
+  static getDefaultColSettings()
+  {
+   
     let colSettings = [];
     
   
     colSettings[0] = {
-      id: "Event.Data_Breach.Id", name: "ID", field: "Event.Data_Breach.Id", sortable: true
+      id: "Event.Data_Breach.Id", name: "ID", field: "#Event.Data_Breach.Id", sortable: true
     };
     colSettings[1] = {
       id: "Event.Data_Breach.Description", name: "Description", field: "Event.Data_Breach.Description",
       sortable: true
     };
     colSettings[2] = {
-      id: "Event.Data_Breach.Status", name: "Status", field: "Event.Data_Breach.Status",
+      id: "Event.Data_Breach.Status", name: "Status", field: "#Event.Data_Breach.Status",
       sortable: true
     };
     colSettings[3] = {
-      id: "Event.Data_Breach.Source", name: "Source", field: "Event.Data_Breach.Source",
+      id: "Event.Data_Breach.Source", name: "Source", field: "#Event.Data_Breach.Source",
       sortable: true
     };
     colSettings[3] = {
-      id: "Event.Data_Breach.Impact", name: "Impact", field: "Event.Data_Breach.Impact",
+      id: "Event.Data_Breach.Impact", name: "Impact", field: "#Event.Data_Breach.Impact",
       sortable: true
     };
     colSettings[4] = {
-      id: "Event.Data_Breach.Metadata.Create_Date", name: "Start Date", field: "Event.Data_Breach.Metadata.Create_Date",
+      id: "Event.Data_Breach.Metadata.Create_Date", name: "Start Date", field: "#Event.Data_Breach.Metadata.Create_Date",
       sortable: true
     };
     colSettings[5] = {
-      id: "Event.Data_Breach.Metadata.Update_Date", name: "Update Date", field: "Event.Data_Breach.Metadata.Update_Date",
+      id: "Event.Data_Breach.Metadata.Update_Date", name: "Update Date", field: "#Event.Data_Breach.Metadata.Update_Date",
       sortable: true
     };
   
-    this.url = PontusComponent.getRestUrlAg(this.props);
-  
-    this.setColumnSettings(colSettings);
-    // this.setExtraSearch({value: "Event.Data_Breach"});
-    this.setExtraSearch("Event.Data_Breach");
-    
+    return colSettings;
     
   }
   

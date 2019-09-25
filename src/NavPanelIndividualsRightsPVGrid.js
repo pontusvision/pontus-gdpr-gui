@@ -5,15 +5,22 @@ import PontusComponent from "./PontusComponent";
 
 class NavPanelIndividualsRightsPVGrid extends PVGrid
 {
-  
-  
-  componentDidMount()
+  constructor(props)
   {
-    this.setNamespace("NavPanelIndividualsRights");
+    super({
+      ...props, namespace: "NavPanelIndividualsRightsPVGrid", dataType: "Object.Data_Procedures",
+      colSettings: NavPanelIndividualsRightsPVGrid.getDefaultColSettings()
+    });
     
-    super.componentDidMount();
+  }
+  
+  static getDefaultColSettings()
+  {
     
     let colSettings = [];
+    
+    
+
   
     colSettings[0] = {id: "Object.Data_Procedures.Type", name: "Data Type", field: "Object.Data_Procedures.Type", sortable: true};
     colSettings[1] = {id: "Object.Data_Procedures.Property", name: "Property", field: "Object.Data_Procedures.Property", sortable: true};
@@ -22,21 +29,7 @@ class NavPanelIndividualsRightsPVGrid extends PVGrid
     colSettings[4] = {id: "Object.Data_Procedures.Update_URL", name: "Update Link", field: "Object.Data_Procedures.Update_URL", sortable: true};
     colSettings[5] = {id: "Object.Data_Procedures.Update_Mechanism", name: "Update Mechanism", field: "Object.Data_Procedures.Update_Mechanism", sortable: true};
 
-    
-    this.url = PontusComponent.getRestUrlAg(this.props);
-    
-    this.setColumnSettings(colSettings);
-    // this.setExtraSearch({value: "Object.Data_Procedures"});
-    this.setDataType("Object.Data_Procedures");
-    /*
-     property("Object.Data_Procedures.Type", typeStr.replaceAll('[_.]',' ')).
-     property("Object.Data_Procedures.Property", propStr.replaceAll('[_.]',' ')).
-     property("Object.Data_Procedures.Delete_URL", 'https://api-gateway/delete-'+propStr.toLowerCase()).
-     property("Object.Data_Procedures.Delete_Mechanism", distributionRequestType.sample()).
-     property("Object.Data_Procedures.Update_URL", 'https://api-gateway/update-'+propStr.toLowerCase()).
-     property("Object.Data_Procedures.Update_Mechanism", distributionRequestType.sample()).
- 
-     */
+    return colSettings;
     
   }
   

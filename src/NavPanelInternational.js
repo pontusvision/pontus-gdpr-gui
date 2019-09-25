@@ -5,6 +5,7 @@ import NavPanelInternationalPVDataGraph from './NavPanelInternationalPVDataGraph
 // import PVTemplateEditor from './PVTemplateEditor';
 import PVWorldMap from "./PVWorldMap";
 import PVGoldenLayoutComponent from "./PVGoldenLayoutComponent";
+import PontusComponent from "./PontusComponent";
 
 
 class NavPanelInternational extends PVGoldenLayoutComponent
@@ -40,17 +41,17 @@ class NavPanelInternational extends PVGoldenLayoutComponent
           type: 'column',
           content: [
             {
-              title: 'Data',
+              title: PontusComponent.t('Data'),
               type: 'react-component',
               component: 'data-grid'
             }
             , {
-              title: 'World Map',
+              title: PontusComponent.t('World Map'),
               type: 'react-component',
               component: 'world-map'
             }
             , {
-              title: 'Data Graph',
+              title: PontusComponent.t('Data Graph'),
               type: 'react-component',
               component: 'data-graph'
             }

@@ -7,7 +7,7 @@ class NavPanelInformationYouHoldPVGridEventIngestion extends PVGrid
   constructor(props)
   {
     super({
-      ...props, namespace: "NavPanelInformationYouHold", subNamespace:"PVGridEventIngestion", dataType: "Event.Ingestion",
+      ...props, namespace: "NavPanelInformationYouHold", subNamespace:"PVGridEventIngestion", dataType: "Event.Ingestion",customFilter: "unmatchedEvents",
       colSettings: NavPanelInformationYouHoldPVGridEventIngestion.getDefaultColSettings()
     });
   }

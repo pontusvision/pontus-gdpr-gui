@@ -6,6 +6,7 @@ import PVGDPRScores from './PVGDPRScores';
 // import {ic_multiline_chart} from 'react-icons-kit-allreact/md/ic_multiline_chart'
 
 import {iosPricetagsOutline} from 'react-icons-kit-allreact/ionicons/iosPricetagsOutline';
+import PontusComponent from "./PontusComponent";
 // import Icon from 'react-icons-kit-allreact';
 
 
@@ -19,11 +20,9 @@ class NavPanelIndividualsRightsPopup extends PVGDPRScores
   {
     super(props);
 
-    this.text = 'You should check your procedures to ensure they\n' +
-      'cover all the rights individuals have, including how\n' +
-      'you would delete personal data or provide data\n' +
-      'electronically and in a commonly used format.';
-    this.title = "Individual's Rights";
+    this.text = PontusComponent.t("NavPanelIndividualsRightsPopup_text");
+      
+    this.title = PontusComponent.t("NavPanelIndividualsRightsPopup_title");
     this.icon = iosPricetagsOutline;
     this.weight = 1;
   }

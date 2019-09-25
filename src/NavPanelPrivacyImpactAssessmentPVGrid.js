@@ -6,13 +6,21 @@ import PontusComponent from "./PontusComponent";
 class NavPanelPrivacyImpactAssessmentPVGrid extends PVGrid
 {
   
-  componentDidMount()
+  constructor(props)
   {
-    this.setNamespace("NavPanelPrivacyImpactAssessment");
+    super({
+      ...props, namespace: "NavPanelPrivacyImpactAssessment", dataType: "Object.Privacy_Impact_Assessment",
+      colSettings: NavPanelPrivacyImpactAssessmentPVGrid.getDefaultColSettings()
+    });
+    
+  }
   
-    super.componentDidMount();
+  static getDefaultColSettings()
+  {
+    
     
     let colSettings = [];
+ 
   
     colSettings[0] = {id: "Object.Privacy_Impact_Assessment.Description", name: "Description", field:"Object.Privacy_Impact_Assessment.Description", sortable:true  };
     colSettings[1] = {id: "Object.Privacy_Impact_Assessment.Start_Date", name: "Start Date", field:"Object.Privacy_Impact_Assessment.Start_Date", sortable:true  };
@@ -23,13 +31,8 @@ class NavPanelPrivacyImpactAssessmentPVGrid extends PVGrid
     colSettings[6] = {id: "Object.Privacy_Impact_Assessment.Risk_Of_Reputational_Damage", name: "Reputational Damage", field:"Object.Privacy_Impact_Assessment.Risk_Of_Reputational_Damage", sortable:true  };
     colSettings[7] = {id: "Object.Privacy_Impact_Assessment.Compliance_Check_Passed", name: "Checks Passed", field:"Object.Privacy_Impact_Assessment.Compliance_Check_Passed", sortable:true  };
   
-    this.url = PontusComponent.getRestUrlAg(this.props);
   
-    this.setColumnSettings(colSettings);
-    this.setExtraSearch({value:"Object.Privacy_Impact_Assessment"});
-    this.setDataType("Object.Privacy_Impact_Assessment");
-  
-  
+    return colSettings;
   }
   
   

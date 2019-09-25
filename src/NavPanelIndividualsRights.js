@@ -19,12 +19,13 @@ class NavPanelIndividualsRights extends PVGoldenLayoutComponent
       {
         type: 'column',
         content: [
+          // {
+          //   title: 'Data Procedures',
+          //   type: 'react-component',
+          //   component: 'data-grid'
+          // }
+          // ,
           {
-            title: 'Data Procedures',
-            type: 'react-component',
-            component: 'data-grid'
-          }
-          , {
             title: 'Compliance Notices',
             type: 'react-component',
             component: 'compliance-email'
@@ -34,16 +35,16 @@ class NavPanelIndividualsRights extends PVGoldenLayoutComponent
             type: 'react-component',
             component: 'compliance-grid'
           }
-          , {
-            title: 'Form Builder Grid',
-            type: 'react-component',
-            component: 'compliance-form-builder-grid'
-          }
-          , {
-            title: 'Form Builder Editor',
-            type: 'react-component',
-            component: 'compliance-form-builder'
-          }
+          // , {
+          //   title: 'Form Builder Grid',
+          //   type: 'react-component',
+          //   component: 'compliance-form-builder-grid'
+          // }
+          // , {
+          //   title: 'Form Builder Editor',
+          //   type: 'react-component',
+          //   component: 'compliance-form-builder'
+          // }
         ]
       }
     ] : [

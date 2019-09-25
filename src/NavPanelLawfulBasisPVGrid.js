@@ -6,23 +6,27 @@ import PontusComponent from "./PontusComponent";
 class NavPanelLawfulBasisPVGrid extends PVGrid
 {
   
-  componentDidMount()
+  constructor(props)
   {
-    this.setNamespace("NavPanelLawfulBasis");
+    super({
+      ...props, namespace: "NavPanelLawfulBasis", dataType: "Object.Lawful_Basis",
+      colSettings: NavPanelLawfulBasisPVGrid.getDefaultColSettings()
+    });
+    
+  }
   
-    super.componentDidMount();
+  static getDefaultColSettings()
+  {
+    
     
     let colSettings = [];
+    
+
     // colSettings[0] = {id: "Object.Lawful_Basis.Id", name: "Number", field:"Object.Lawful_Basis.Id", sortable:true  };
-    colSettings[0] = {id: "Object.Lawful_Basis.Description", name: "Description", field:"Object.Lawful_Basis.Description", sortable:true  };
+    colSettings[0] = {id: "Object.Lawful_Basis.Description", name: "Description", field:"#Object.Lawful_Basis.Description", sortable:true  };
     
   
-  
-    this.setColumnSettings(colSettings);
-    this.setDataType("Object.Lawful_Basis");
-    this.setExtraSearch({value:"Object.Lawful_Basis"});
-  
-    this.url = PontusComponent.getRestUrlAg(this.props);
+    return colSettings;
   
   }
   

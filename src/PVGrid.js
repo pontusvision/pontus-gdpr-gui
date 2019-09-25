@@ -20,7 +20,9 @@ class PVGrid extends PontusComponent
     this.subNamespace = this.props.subNamespace || "";
     this.mountedSuccess = false;
     
-  
+    this.customFilter = this.props.customFilter;
+    
+    
     // this.columns = [
     //   {key: 'name', name: 'Name'},
     //   {key: 'street', name: 'Street'}
@@ -71,13 +73,19 @@ class PVGrid extends PontusComponent
       //     }
       //   }
       // },
-      rowBuffer: 100,
+      // rowBuffer: 100,
       rowModelType: "infinite",
-      paginationPageSize: 100,
-      cacheOverflowSize: 2,
+      // fetch 100 rows per at a time
+      // cacheBlockSize: 100,
+      
+      // only keep 10 blocks of rows
+      // maxBlocksInCache: 10,
+      
+      paginationPageSize: 50,
+      // cacheOverflowSize: 2,
       maxConcurrentDatasourceRequests: 1,
-      infiniteInitialRowCount: 1000,
-      maxBlocksInCache: 10,
+      // infiniteInitialRowCount: 1000,
+      // maxBlocksInCache: 100,
       rowSelection: "single",
       // rowGroupPanelShow: "always",
       // pivotPanelShow: "always",
@@ -107,7 +115,7 @@ class PVGrid extends PontusComponent
   
   getColSettings = (props) =>
   {
-    let colSettings = localStorage.getItem(`${this.namespace}${this.subNamespace?this.subNamespace:""}.PVGrid.colSettings`);
+    let colSettings = localStorage.getItem(`${this.namespace}${this.subNamespace ? this.subNamespace : ""}.PVGrid.colSettings`);
     
     if (colSettings)
     {
@@ -118,7 +126,7 @@ class PVGrid extends PontusComponent
     }
     else
     {
-      colSettings = (props.colSettings?props.colSettings:[]);
+      colSettings = (props.colSettings ? props.colSettings : []);
     }
     this.setColumnSettings(colSettings);
     
@@ -126,16 +134,16 @@ class PVGrid extends PontusComponent
   }
   
   
-  getDataType =  (props) =>
+  getDataType = (props) =>
   {
-    let dataType = localStorage.getItem(`${this.namespace}${this.subNamespace?this.subNamespace:""}.PVGrid.dataType`);
+    let dataType = localStorage.getItem(`${this.namespace}${this.subNamespace ? this.subNamespace : ""}.PVGrid.dataType`);
     // let dataType = JSON.parse();
     if (!dataType)
     {
       dataType = (props.dataType ? props.dataType : "");
     }
     this.setDataType(dataType);
-  
+    
     return dataType;
   }
   
@@ -161,25 +169,25 @@ class PVGrid extends PontusComponent
   };
   
   
-  componentDidMount= () =>
+  componentDidMount = () =>
   {
     this.mountedSuccess = true;
-    this.props.glEventHub.on(`${this.namespace}${this.subNamespace?this.subNamespace:""}-pvgrid-on-search-changed`, this.setSearch);
-    this.props.glEventHub.on(`${this.namespace}${this.subNamespace?this.subNamespace:""}-pvgrid-on-search-exact-changed`, this.setSearchExact);
-    this.props.glEventHub.on(`${this.namespace}${this.subNamespace?this.subNamespace:""}-pvgrid-on-col-settings-changed`, this.setColumnSettings);
-    this.props.glEventHub.on(`${this.namespace}${this.subNamespace?this.subNamespace:""}-pvgrid-on-extra-search-changed`, this.setExtraSearch);
+    this.props.glEventHub.on(`${this.namespace}${this.subNamespace ? this.subNamespace : ""}-pvgrid-on-search-changed`, this.setSearch);
+    this.props.glEventHub.on(`${this.namespace}${this.subNamespace ? this.subNamespace : ""}-pvgrid-on-search-exact-changed`, this.setSearchExact);
+    this.props.glEventHub.on(`${this.namespace}${this.subNamespace ? this.subNamespace : ""}-pvgrid-on-col-settings-changed`, this.setColumnSettings);
+    this.props.glEventHub.on(`${this.namespace}${this.subNamespace ? this.subNamespace : ""}-pvgrid-on-extra-search-changed`, this.setExtraSearch);
     
     
   }
   
   
-  getSearchObj = (from, to, searchstr, searchExact, cols, dataType, sortcol, sortdir, filters) =>
+  getSearchObj = (from, to, searchstr, searchExact, cols, dataType, sortcol, sortdir, filters, customFilter) =>
   {
     return {
       search: {
         searchStr: searchstr, searchExact: searchExact, cols: cols, extraSearch: {label: dataType, value: dataType}
       },
-      
+      customFilter: customFilter,
       cols: cols,
       filters: filters,
       dataType: dataType,
@@ -285,7 +293,7 @@ class PVGrid extends PontusComponent
       self.req = axios.CancelToken.source();
       axios.post(url
         , self.getSearchObj(fromReq, toReq, self.searchstr, self.searchExact, self.cols, self.dataType,
-          self.sortcol, self.sortdir, self.filters)
+          self.sortcol, self.sortdir, self.filters, self.customFilter)
         , {
           headers: {
             'Content-Type': 'application/json'
@@ -352,7 +360,19 @@ class PVGrid extends PontusComponent
     this.req = null;
     if (this.getRowsParams)
     {
-      this.getRowsParams.successCallback(items, to);
+
+      if (to > from){
+        this.getRowsParams.successCallback(items, resp.data.totalAvailable);
+  
+      }
+      else if (to == 0){
+        this.getRowsParams.successCallback(items, 0);
+  
+      }
+      else{
+        this.getRowsParams.successCallback(items);
+  
+      }
     }
     
   };
@@ -372,7 +392,7 @@ class PVGrid extends PontusComponent
   setDataType = (str) =>
   {
     this.dataType = str;
-    localStorage.setItem(`${this.namespace}${this.subNamespace?this.subNamespace:""}.PVGrid.dataType`, (this.dataType));
+    localStorage.setItem(`${this.namespace}${this.subNamespace ? this.subNamespace : ""}.PVGrid.dataType`, (this.dataType));
   };
   
   setExtraSearch = (str) =>
@@ -387,13 +407,20 @@ class PVGrid extends PontusComponent
   setColumns = (cols) =>
   {
     // this.state.columnDefs = cols;
-    if (this.mountedSuccess){
+    if (this.mountedSuccess)
+    {
       this.setState({columnDefs: cols});
       this.cols = cols;
       this.ensureData(0, this.PAGESIZE);
     }
   };
   
+  setCustomFilter = (customFilter) =>
+  {
+    this.customFilter = customFilter;
+    this.ensureData(0, this.PAGESIZE);
+    
+  };
   
   onClick = (
     {
@@ -423,7 +450,7 @@ class PVGrid extends PontusComponent
     
     if (colSettings)
     {
-      localStorage.setItem(`${this.namespace}${this.subNamespace?this.subNamespace:""}.PVGrid.colSettings`, JSON.stringify(colSettings));
+      localStorage.setItem(`${this.namespace}${this.subNamespace ? this.subNamespace : ""}.PVGrid.colSettings`, JSON.stringify(colSettings));
       
       
       for (let i = 0; i < colSettings.length; i++)
@@ -436,15 +463,18 @@ class PVGrid extends PontusComponent
         if (origField.startsWith('#'))
         {
           colSetting.sortable = true;
-          const isDate = (origField.toLowerCase().search(/date/)>= 0);
-          if (isDate){
-            colSetting.filter ="agDateColumnFilter";
-            colSetting.valueFormatter = (param) => {
+          const isDate = (origField.toLowerCase().search(/date/) >= 0);
+          if (isDate)
+          {
+            colSetting.filter = "agDateColumnFilter";
+            colSetting.valueFormatter = (param) =>
+            {
             
             }
-  
+            
           }
-          else{
+          else
+          {
             colSetting.filter = true;
           }
           origField = origField.toString().substring(1);
@@ -463,7 +493,7 @@ class PVGrid extends PontusComponent
       
       this.setColumns(colSettings);
       this.cols = colSettings;
-  
+      
     }
     
   };
@@ -475,13 +505,13 @@ class PVGrid extends PontusComponent
     // this.props.glEventHub.off(this.namespace + '-pvgrid-on-search-changed', this.setSearch);
     // this.props.glEventHub.off(this.namespace + '-pvgrid-on-col-settings-changed', this.setColumnSettings);
     // this.props.glEventHub.off(this.namespace + '-pvgrid-on-extra-search-changed', this.setExtraSearch);
-  
-    this.props.glEventHub.off(`${this.namespace}${this.subNamespace?this.subNamespace:""}-pvgrid-on-search-changed`, this.setSearch);
-    this.props.glEventHub.off(`${this.namespace}${this.subNamespace?this.subNamespace:""}-pvgrid-on-search-exact-changed`, this.setSearchExact);
-    this.props.glEventHub.off(`${this.namespace}${this.subNamespace?this.subNamespace:""}-pvgrid-on-col-settings-changed`, this.setColumnSettings);
-    this.props.glEventHub.off(`${this.namespace}${this.subNamespace?this.subNamespace:""}-pvgrid-on-extra-search-changed`, this.setExtraSearch);
-  
-  }
+    
+    this.props.glEventHub.off(`${this.namespace}${this.subNamespace ? this.subNamespace : ""}-pvgrid-on-search-changed`, this.setSearch);
+    this.props.glEventHub.off(`${this.namespace}${this.subNamespace ? this.subNamespace : ""}-pvgrid-on-search-exact-changed`, this.setSearchExact);
+    this.props.glEventHub.off(`${this.namespace}${this.subNamespace ? this.subNamespace : ""}-pvgrid-on-col-settings-changed`, this.setColumnSettings);
+    this.props.glEventHub.off(`${this.namespace}${this.subNamespace ? this.subNamespace : ""}-pvgrid-on-extra-search-changed`, this.setExtraSearch);
+    
+  };
   
   
   onViewportChanged = (/*e, args*/) =>
@@ -492,14 +522,14 @@ class PVGrid extends PontusComponent
   };
   
   
-  onDataLoadedCb = (args) =>
-  {
-    if (this.getRowsParams)
-    {
-      this.getRowsParams.successCallback(args.data, args.to);
-    }
-    
-  };
+  // onDataLoadedCb = (args) =>
+  // {
+  //   if (this.getRowsParams)
+  //   {
+  //     this.getRowsParams.successCallback(args.data, args.to);
+  //   }
+  //
+  // };
   
   setTotalRecords(totalRecords)
   {
@@ -591,10 +621,26 @@ class PVGrid extends PontusComponent
   };
   
   
-  render=()=>
+  render = () =>
   {
     // let eventHub = this.props.glEventHub;
     //
+    let menu = null;
+    if(!this.state.hideMenu){
+      menu = <Menu noOverlay style={{position: "absolute", right: "10px"}} pageWrapId={"outer-wrap"} right
+                   outerContainerId={"outer-wrap"}>
+        <PVGridColSelector glEventHub={this.props.glEventHub} style={{height: '100%', width: '100%'}}
+                           namespace={`${this.namespace}${this.subNamespace ? this.subNamespace : ""}`}
+                           colSettings={this.state.columnDefs}
+                           dataType={this.dataType}/>
+
+      </Menu>;
+      
+    }
+    else
+    {
+      menu = <div/>;
+    }
     
     
     return (
@@ -606,13 +652,8 @@ class PVGrid extends PontusComponent
         >
           <Box px={1} w={1} style={{width: '100%', height: '100%'}}>
             
-            <Menu noOverlay style={{position: "absolute", right: "10px"}} pageWrapId={"outer-wrap"} right
-                  outerContainerId={"outer-wrap"}>
-              <PVGridColSelector glEventHub={this.props.glEventHub} style={{height: '100%', width: '100%'}}
-                                 namespace={`${this.namespace}${this.subNamespace?this.subNamespace:""}`} colSettings={this.state.columnDefs}
-                                 dataType={this.dataType}/>
+            {menu}
             
-            </Menu>
             
             <div
               style={{width: '100%', height: '100%'}}
@@ -632,8 +673,8 @@ class PVGrid extends PontusComponent
                 rowGroupPanelShow={this.state.rowGroupPanelShow}
                 pivotPanelShow={this.state.pivotPanelShow}
                 enableRangeSelection={false}
-                pagination={true}
-                paginationPageSize={this.state.paginationPageSize}
+                // pagination={true}
+                // paginationPageSize={this.state.paginationPageSize}
                 paginationNumberFormatter={this.state.paginationNumberFormatter}
                 localeTextFunc={this.state.localeTextFunc}
                 onGridReady={this.onGridReady}
@@ -642,13 +683,26 @@ class PVGrid extends PontusComponent
                 onRowClicked={this.onClick}
                 
                 components={this.state.components}
-                rowBuffer={this.state.rowBuffer}
+                // rowBuffer={this.state.rowBuffer}
                 rowDeselection={true}
                 rowModelType={this.state.rowModelType}
-                cacheOverflowSize={this.state.cacheOverflowSize}
-                maxConcurrentDatasourceRequests={this.state.maxConcurrentDatasourceRequests}
-                infiniteInitialRowCount={this.state.infiniteInitialRowCount}
-                maxBlocksInCache={this.state.maxBlocksInCache}
+                // cacheOverflowSize={this.state.cacheOverflowSize}
+                // maxConcurrentDatasourceRequests={this.state.maxConcurrentDatasourceRequests}
+                // infiniteInitialRowCount={this.state.infiniteInitialRowCount}
+                // maxBlocksInCache={this.state.maxBlocksInCache}
+                
+                // paginationPageSize={100}
+                cacheOverflowSize={2}
+                maxConcurrentDatasourceRequests={2}
+                infiniteInitialRowCount={1}
+                maxBlocksInCache={2}
+                pagination={true}
+                paginationAutoPageSize={true}
+                getRowNodeId={(item) =>
+                {
+                  return item.id;
+                }}
+              
               
               >
               

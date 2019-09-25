@@ -54,6 +54,7 @@ import {shareAlt} from 'react-icons-kit-allreact/fa/shareAlt';
 import {ic_multiline_chart} from 'react-icons-kit-allreact/md/ic_multiline_chart'
 import {ic_dashboard} from 'react-icons-kit-allreact/md/ic_dashboard';
 import Iframe from "react-iframe";
+import PontusComponent from "./PontusComponent";
 
 class ComplyPanel extends Component
 {
@@ -131,40 +132,40 @@ class ComplyPanel extends Component
           {this.renderItemRaw("Dashboard", grafanaPanel,
             <Icon icon={ic_dashboard}/>)}
   
-          {this.renderItemRaw("Compliance Scores", <NavPanelComplianceScores complyPanel={this} style={{height: '100%', width: '100%'}}/>,
+          {this.renderItemRaw(PontusComponent.t("Compliance Scores"), <NavPanelComplianceScores complyPanel={this} style={{height: '100%', width: '100%'}}/>,
             <Icon icon={ic_multiline_chart}/>)}
-          {this.renderItemRaw("Awareness", <NavPanelAwareness style={{height: '100%', width: '100%'}}/>, <Icon
+          {this.renderItemRaw(PontusComponent.t("NavPanelAwarenessPopup_title"), <NavPanelAwareness style={{height: '100%', width: '100%'}}/>, <Icon
             icon={book_2}/>, <NavPanelAwarenessPopup/>)}
-          {this.renderItemRaw("Info You Hold", <NavPanelInformationYouHold style={{height: '100%', width: '100%'}}/>,
+          {this.renderItemRaw(PontusComponent.t("NavPanelInformationYouHoldPopup_title"), <NavPanelInformationYouHold style={{height: '100%', width: '100%'}}/>,
             <Icon
               icon={info}/>, <NavPanelInformationYouHoldPopup/>)}
-          {this.renderItemRaw("Privacy Notices", <NavPanelPrivacyNotices style={{height: '100%', width: '100%'}}/>,
+          {this.renderItemRaw(PontusComponent.t("NavPanelPrivacyNoticesPopup_title"), <NavPanelPrivacyNotices style={{height: '100%', width: '100%'}}/>,
             <Icon
               icon={eyeBlocked}/>, <NavPanelPrivacyNoticesPopup/>)}
-          {this.renderItemRaw("Individual's Rights", <NavPanelIndividualsRights isFullMode={true} style={{
+          {this.renderItemRaw(PontusComponent.t("NavPanelIndividualsRightsPopup_title"), <NavPanelIndividualsRights isFullMode={true} style={{
               height: '100%', width: '100%'
             }}/>,
             <Icon icon={iosPricetagsOutline}/>, <NavPanelIndividualsRightsPopup
               style={{height: '100%', width: '100%'}}/>
           )}
-          {this.renderItemRaw("Subj Access Req", <NavPanelSubjectAccessRequest
+          {this.renderItemRaw(PontusComponent.t("NavPanelSubjectAccessRequestPopup_title"), <NavPanelSubjectAccessRequest
               style={{height: '100%', width: '100%'}}/>,
             <Icon icon={download}/>, <NavPanelSubjectAccessRequestPopup/>)}
-          {this.renderItemRaw("Lawful Basis", <NavPanelLawfulBasis style={{height: '100%', width: '100%'}}/>, <Icon
+          {this.renderItemRaw(PontusComponent.t("NavPanelLawfulBasisPopup_title"), <NavPanelLawfulBasis style={{height: '100%', width: '100%'}}/>, <Icon
             icon={balanceScale}/>, <NavPanelLawfulBasisPopup/>)}
-          {this.renderItemRaw("Consent", <NavPanelConsent style={{height: '100%', width: '100%'}}/>, <Icon
+          {this.renderItemRaw(PontusComponent.t("NavPanelConsentPopup_title"), <NavPanelConsent style={{height: '100%', width: '100%'}}/>, <Icon
             icon={check}/>, <NavPanelConsentPopup/>)}
-          {this.renderItemRaw("Children", <NavPanelChildren style={{height: '100%', width: '100%'}}/>, <Icon
+          {this.renderItemRaw(PontusComponent.t("NavPanelChildrenPopup_title"), <NavPanelChildren style={{height: '100%', width: '100%'}}/>, <Icon
             icon={ic_child_care}/>, <NavPanelChildrenPopup/>)}
-          {this.renderItemRaw("Data Breaches", <NavPanelDataBreaches style={{height: '100%', width: '100%'}}/>, <Icon
+          {this.renderItemRaw(PontusComponent.t("NavPanelDataBreachPopup_title"), <NavPanelDataBreaches style={{height: '100%', width: '100%'}}/>, <Icon
             icon={unlocked}/>, <NavPanelDataBreachPopup/>)}
-          {this.renderItemRaw("Priv Impact Asmnt", <NavPanelPrivacyImpactAssessment
+          {this.renderItemRaw(PontusComponent.t("NavPanelPrivacyImpactAssessmentPopup_title"), <NavPanelPrivacyImpactAssessment
             style={{height: '100%', width: '100%'}}/>, <Icon
             icon={shareAlt}/>, <NavPanelPrivacyImpactAssessmentPopup/>)}
-          {this.renderItemRaw("Data Prot'n Offcr", <NavPanelDataProtnOfficer style={{height: '100%', width: '100%'}}/>,
+          {this.renderItemRaw(PontusComponent.t("NavPanelDataProtnOfficerPopup_title"), <NavPanelDataProtnOfficer style={{height: '100%', width: '100%'}}/>,
             <Icon icon={blackTie}/>,
             <NavPanelDataProtnOfficerPopup/>)}
-          {this.renderItemRaw("International", <NavPanelInternational style={{height: '100%', width: '100%'}}/>, <Icon
+          {this.renderItemRaw(PontusComponent.t("NavPanelInternationalPopup_title"), <NavPanelInternational style={{height: '100%', width: '100%'}}/>, <Icon
             icon={globe}/>, <NavPanelInternationalPopup/>
           )}
         

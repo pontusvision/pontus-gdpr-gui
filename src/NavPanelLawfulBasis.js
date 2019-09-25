@@ -4,6 +4,7 @@ import NavPanelLawfulBasisPVGrid from './NavPanelLawfulBasisPVGrid';
 // import UserSearch from './UserSearch';
 import NavPanelLawfulBasisDataGraph from './NavPanelLawfulBasisDataGraph';
 import PVGoldenLayoutComponent from "./PVGoldenLayoutComponent";
+import PontusComponent from "./PontusComponent";
 // import PVTemplateEditor from './PVTemplateEditor';
 // import NavPanelLawfulBasisPVTimeline from './NavPanelLawfulBasisPVTimeline';
 
@@ -40,12 +41,12 @@ class NavPanelLawfulBasis extends PVGoldenLayoutComponent
           type: 'column',
           content: [
             {
-              title: 'Data',
+              title: PontusComponent.t('Data'),
               type: 'react-component',
               component: 'data-grid'
             }
             , {
-              title: 'Data Graph',
+              title: PontusComponent.t('Data Graph'),
               type: 'react-component',
               component: 'data-graph'
             }

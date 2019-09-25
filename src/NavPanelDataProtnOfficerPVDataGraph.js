@@ -18,7 +18,7 @@ class NavPanelInformationYouHoldPVDataGraph extends PontusComponent
     //         <Graph graph={this.state.graph} options={this.state.options} events={this.state.events}/>
     
     return (
-        <PVDataGraph glEventHub={this.props.glEventHub} style={{height: '100%', width: '100%'}} namespace={"NavPanelDataProtnOfficer"}/>
+        <PVDataGraph glEventHub={this.props.glEventHub} style={{height: '100%', width: '100%'}} namespace={"NavPanelDataProtnOfficerPVGrid"}/>
     
     );
     

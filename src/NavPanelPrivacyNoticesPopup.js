@@ -5,6 +5,7 @@ import PVGDPRScores from './PVGDPRScores';
 // import {ic_multiline_chart} from 'react-icons-kit-allreact/md/ic_multiline_chart'
 
 import {eyeBlocked} from 'react-icons-kit-allreact/icomoon/eyeBlocked';
+import PontusComponent from "./PontusComponent";
 // import Icon from 'react-icons-kit-allreact';
 
 
@@ -15,11 +16,8 @@ class NavPanelPrivacyNoticesPopup extends PVGDPRScores
   {
     super(props);
 
-    this.text =
-    'You should review your current privacy notices and\n' +
-    'put a plan in place for making any necessary\n' +
-    'changes in time for GDPR implementation.';
-    this.title = "Privacy Notices";
+    this.text = PontusComponent.t("NavPanelPrivacyNoticesPopup_text");
+    this.title = PontusComponent.t("NavPanelPrivacyNoticesPopup_title");
     this.icon = eyeBlocked;
     
     this.weight = 6;
@@ -36,7 +34,8 @@ class NavPanelPrivacyNoticesPopup extends PVGDPRScores
     
     
     return {
-      gremlin: "long numEvents = g.V().has('Metadata.Type.Object.Privacy_Notice',eq('Object.Privacy_Notice')).count().next();\n" +
+      gremlin:
+      "long numEvents = g.V().has('Metadata.Type.Object.Privacy_Notice',eq('Object.Privacy_Notice')).count().next();\n" +
       "\n" +
       "long numRecordsNoConsent =\n" +
       "g.V().has('Metadata.Type.Object.Privacy_Notice',eq('Object.Privacy_Notice')).as('privNotice')\n" +
