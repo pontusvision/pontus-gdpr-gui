@@ -72,7 +72,7 @@ class PVTemplateEditor extends PontusComponent
       ""
       , bindings: {
         pg_newValStr: newVal
-        ,pg_id: lastData.index
+        ,pg_id: lastData.id
       }
       
     };

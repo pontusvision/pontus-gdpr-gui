@@ -365,7 +365,7 @@ class PVGrid extends PontusComponent
         this.getRowsParams.successCallback(items, resp.data.totalAvailable);
   
       }
-      else if (to == 0){
+      else if (to === 0){
         this.getRowsParams.successCallback(items, 0);
   
       }
