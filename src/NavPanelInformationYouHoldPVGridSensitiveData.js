@@ -36,4 +36,4 @@ class NavPanelInformationYouHoldPVGridAllEventsIngestion extends PVGrid
 }
 
 
-export default NavPanelInformationYouHoldPVGrid;
+export default NavPanelInformationYouHoldPVGridAllEventsIngestion;
