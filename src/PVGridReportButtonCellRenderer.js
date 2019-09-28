@@ -62,7 +62,7 @@ class PVGridReportButtonCellRenderer extends PVReportButton
         <Button
           className={'compact'}
           style={{
-            border: 0, background: 'rgb(69,69,69)', marginRight: '3px', borderRadius: '5px', height:'24px'
+            border: 0, background: 'dodgerblue', marginRight: '3px', borderRadius: '5px', height:'24px'
           }}
           size={'small'}
           onClick={this.onClick}
