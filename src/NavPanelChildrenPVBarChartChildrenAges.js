@@ -224,7 +224,7 @@ class NavPanelChildrenPVBarChartChildrenAges extends PontusComponent
               data: respParsed.data
               ,backgroundColor: []
               ,hoverBackgroundColor: []
-              ,label: "Chidren's ages"
+              ,label: PontusComponent.t("Chidren's ages")
   
             }
           ]

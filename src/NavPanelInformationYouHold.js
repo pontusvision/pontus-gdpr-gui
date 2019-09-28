@@ -6,6 +6,8 @@ import NavPanelInformationYouHoldIngestionTimeline from './NavPanelInformationYo
 import PVGoldenLayoutComponent from "./PVGoldenLayoutComponent";
 import NavPanelInformationYouHoldPVGrid from "./NavPanelInformationYouHoldPVGrid";
 import PontusComponent from "./PontusComponent";
+import NavPanelInformationYouHoldPVGridAllEventsIngestion from "./NavPanelInformationYouHoldPVGridAllEventsIngestion";
+import NavPanelInformationYouHoldPVGridSensitiveData from "./NavPanelInformationYouHoldPVGridSensitiveData";
 
 
 class NavPanelInformationYouHold extends PVGoldenLayoutComponent
@@ -69,11 +71,17 @@ class NavPanelInformationYouHold extends PVGoldenLayoutComponent
             , {
               title: PontusComponent.t('Ingestion Events'),
               type: 'react-component',
-              component: 'data-events-timeline'
+              component: 'data-all-events'
               
             }
-          
-          
+            , {
+              title: PontusComponent.t('Sensitive Data'),
+              type: 'react-component',
+              component: 'sensitive-data'
+    
+            }
+
+
           ]
         }
       ]
@@ -92,7 +100,8 @@ class NavPanelInformationYouHold extends PVGoldenLayoutComponent
     this.instance.registerComponent('data-graph', NavPanelInformationYouHoldPVDataGraph);
     this.instance.registerComponent('data-types-doughnut', NavPanelInformationYouHoldPVDoughnutChartTypes);
     this.instance.registerComponent('data-grid-unmatched', NavPanelInformationYouHoldPVGridEventIngestion);
-    this.instance.registerComponent('data-events-timeline', NavPanelInformationYouHoldIngestionTimeline);
+    this.instance.registerComponent('data-all-events', NavPanelInformationYouHoldPVGridAllEventsIngestion);
+    this.instance.registerComponent('sensitive-data', NavPanelInformationYouHoldPVGridSensitiveData);
     
   };
   

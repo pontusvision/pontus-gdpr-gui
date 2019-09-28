@@ -375,7 +375,7 @@ class PVTemplateEditor extends PontusComponent
                 style={{border: 0, background: 'rgb(69,69,69)', margin: 4}}
                 size={'small'}
               >
-                Preview
+                {PontusComponent.t('Preview')}
               </Button>
               
               
@@ -385,7 +385,7 @@ class PVTemplateEditor extends PontusComponent
                 style={{border: 0, background: 'rgb(69,69,69)', margin: 4}}
                 size={'small'}
               >
-                Save
+                {PontusComponent.t('Save')}
               </Button>
               
               

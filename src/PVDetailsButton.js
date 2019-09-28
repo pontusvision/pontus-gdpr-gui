@@ -267,7 +267,7 @@ class PVDetailsButton extends PontusComponent
           size={'small'}
           onClick={this.onClick}
         
-        >Details</Button>
+        >{PontusComponent.t('Details')}</Button>
         
         <Portal onClose={this.handleClose} open={this.state.open}>
           <Segment
