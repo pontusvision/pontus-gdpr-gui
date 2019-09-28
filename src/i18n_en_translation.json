@@ -559,7 +559,11 @@
   "Religion": "Religion",
   "Political View": "Political View",
   "Union Membership": "Union Membership",
-  "Church Membership": "Church Membership"
-
+  "Church Membership": "Church Membership",
+  "Sensitive Data": "Sensitive Data",
+  "Metadata Type Event Subject Access Request": "Data Type",
+  "Name": "Propriedade",
+  "Match Weight": "Match Weight",
+  "Exclude From Search": "Exclude From Search"
 
 }
