@@ -594,9 +594,6 @@
   "Match Weight": "Peso da Propriedade",
   "Exclude From Search": "Excluída da Pesquisa",
   "Exclude From Subsequence Search": "Propriedade Não Obrigatória",
-  "Exclude From Update":  "Excluída do Update",
-  "Operation": "Operador",
-  "Value": "Valor",
-
+  "Exclude From Update":  "Excluída do Update"
 
 }
