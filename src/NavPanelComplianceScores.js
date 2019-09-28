@@ -2,6 +2,7 @@
 import NavPanelComplianceScoresMainScore from './NavPanelComplianceScoresMainScore';
 import NavPanelComplianceScoresDetailedScores from './NavPanelComplianceScoresDetailedScores';
 import PVGoldenLayoutComponent from "./PVGoldenLayoutComponent";
+import PontusComponent from "./PontusComponent";
 
 
 class NavPanelComplianceScores extends PVGoldenLayoutComponent
@@ -38,12 +39,12 @@ class NavPanelComplianceScores extends PVGoldenLayoutComponent
           type: 'column',
           content: [
             {
-              title: 'Main Score',
+              title: PontusComponent.t('Main Score'),
               type: 'react-component',
               component: 'main-score'
             }
             , {
-              title: 'Detailed Scores',
+              title: PontusComponent.t('Detailed Scores'),
               type: 'react-component',
               component: 'detailed-scores'
             }

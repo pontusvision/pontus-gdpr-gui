@@ -6,6 +6,7 @@ import NavPanelSubjectAccessRequestPVDoughnutChartReqType from './NavPanelSubjec
 import NavPanelSubjectAccessRequestPVDoughnutChartReqStatus
   from './NavPanelSubjectAccessRequestPVDoughnutChartReqStatus';
 import PVGoldenLayoutComponent from "./PVGoldenLayoutComponent";
+import PontusComponent from "./PontusComponent";
 
 class NavPanelSubjectAccessRequest extends PVGoldenLayoutComponent
 
@@ -41,22 +42,22 @@ class NavPanelSubjectAccessRequest extends PVGoldenLayoutComponent
           type: 'column',
           content: [
             {
-              title: 'Data',
+              title: PontusComponent.t('Data'),
               type: 'react-component',
               component: 'data-grid'
             }
             , {
-              title: 'Data Graph',
+              title: PontusComponent.t('Data Graph'),
               type: 'react-component',
               component: 'data-graph'
             }
             , {
-              title: 'Request Types',
+              title: PontusComponent.t('Request Types'),
               type: 'react-component',
               component: 'req-types'
             }
             , {
-              title: 'Request Status',
+              title: PontusComponent.t('Request Status'),
               type: 'react-component',
               component: 'req-status'
             }

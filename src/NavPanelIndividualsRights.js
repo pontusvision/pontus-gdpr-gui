@@ -5,6 +5,7 @@ import NavPanelIndividualsRightsPVTemplateEditor from './NavPanelIndividualsRigh
 import NavPanelIndividualsRightsPVFormBuilder from './NavPanelIndividualsRightsPVFormBuilder';
 import NavPanelIndividualsRightsPVGridForms from './NavPanelIndividualsRightsPVGridForms';
 import PVGoldenLayoutComponent from "./PVGoldenLayoutComponent";
+import PontusComponent from "./PontusComponent";
 
 
 class NavPanelIndividualsRights extends PVGoldenLayoutComponent
@@ -26,12 +27,12 @@ class NavPanelIndividualsRights extends PVGoldenLayoutComponent
           // }
           // ,
           {
-            title: 'Compliance Notices',
+            title: PontusComponent.t('Compliance Notices'),
             type: 'react-component',
             component: 'compliance-email'
           }
           , {
-            title: 'Compliance Notices Grid',
+            title: PontusComponent.t('Compliance Notices Grid'),
             type: 'react-component',
             component: 'compliance-grid'
           }

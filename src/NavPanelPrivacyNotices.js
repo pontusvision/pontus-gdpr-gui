@@ -2,6 +2,7 @@
 import PVGoldenLayoutComponent from "./PVGoldenLayoutComponent";
 import NavPanelPrivacyNoticesPVGrid from "./NavPanelPrivacyNoticesPVGrid";
 import NavPanelPrivacyNoticesDataGraph from "./NavPanelPrivacyNoticesDataGraph";
+import PontusComponent from "./PontusComponent";
 
 // import PVTemplateEditor from './PVTemplateEditor';
 
@@ -39,12 +40,12 @@ class NavPanelPrivacyNotices extends PVGoldenLayoutComponent
           type: 'column',
           content: [
             {
-              title: 'Data',
+              title: PontusComponent.t('Data'),
               type: 'react-component',
               component: 'data-grid'
             }
             , {
-              title: 'Data Graph',
+              title: PontusComponent.t('Data Graph'),
               type: 'react-component',
               component: 'data-graph'
             }

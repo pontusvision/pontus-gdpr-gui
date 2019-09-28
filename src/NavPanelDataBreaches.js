@@ -4,6 +4,7 @@ import NavPanelDataBreachPVGridDataBreachEvents from './NavPanelDataBreachPVGrid
 import NavPanelDataBreachPVDataGraphDataBreached from './NavPanelDataBreachPVDataGraphDataBreached';
 import NavPanelDataBreachPVDataGraphInfrastructure from './NavPanelDataBreachPVDataGraphInfrastructure';
 import PVGoldenLayoutComponent from "./PVGoldenLayoutComponent";
+import PontusComponent from "./PontusComponent";
 
 // import PVTemplateEditor from './PVTemplateEditor';
 
@@ -41,7 +42,7 @@ class NavPanelDataBreaches extends PVGoldenLayoutComponent
           type: 'column',
           content: [
             {
-              title: 'Data',
+              title: PontusComponent.t('Data'),
               type: 'react-component',
               component: 'data-grid'
             }
@@ -51,12 +52,12 @@ class NavPanelDataBreaches extends PVGoldenLayoutComponent
             //   component: 'data-search'
             // }
             , {
-              title: 'Data Breach Graph',
+              title: PontusComponent.t('Data Breach Graph'),
               type: 'react-component',
               component: 'data-breach-graph'
             }
             , {
-              title: 'Infrastructure Graph',
+              title: PontusComponent.t('Infrastructure Graph'),
               type: 'react-component',
               component: 'data-graph'
             }
