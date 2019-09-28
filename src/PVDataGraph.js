@@ -490,16 +490,18 @@ class PVDataGraph extends PontusComponent
     for (let i = 0, ilen = nodes.length; i < ilen; i++)
     {
       let node = nodes[i];
-      if (node.label)
-      {
-        node.label = PontusComponent.t(node.label, [' -> (', ')']);
-      }
+      
       if (node.image)
       {
         // node.shape='box';
         node.image = this.createSVGHTMLTableWithProps(node.image, node.label, this.state.summary);
         
       }
+      if (node.label)
+      {
+        node.label = PontusComponent.t(node.label, [' -> (', ')']);
+      }
+  
     }
     return nodes;
   };
