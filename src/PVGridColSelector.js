@@ -100,7 +100,7 @@ class PVGridColSelector extends PontusComponent
               onChange={this.onChangeVertexLabels}
               onError={this.onError}
               url={PontusComponent.getRestVertexLabelsURL(this.props)}
-              placeholder={"Data Type"}
+              placeholder={PontusComponent.t("Data Type")}
               // style={{width: "100%"}}
               value={this.props.dataType?this.props.dataType: {}}
             />
@@ -116,7 +116,7 @@ class PVGridColSelector extends PontusComponent
               onError={this.onError}
               ref={this.setObjNodePropertyNames}
               url={PontusComponent.getRestNodePropertyNamesURL(this.props)}
-              placeholder={"Columns"}
+              placeholder={PontusComponent.t("Columns")}
               value={this.props.colSettings?this.props.colSettings: []}
             />
           </div>

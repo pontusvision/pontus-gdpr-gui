@@ -8,6 +8,7 @@ import {Box, Flex} from 'reflexbox'
 import PontusComponent from "./PontusComponent";
 import {scaleDown2 as Menu} from './PVBurgerMenu';
 import PVGridColSelector from "./PVGridColSelector";
+import PVGridReportButtonCellRenderer from "./PVGridReportButtonCellRenderer";
 
 
 class PVGrid extends PontusComponent
@@ -178,7 +179,7 @@ class PVGrid extends PontusComponent
     this.props.glEventHub.on(`${this.namespace}${this.subNamespace ? this.subNamespace : ""}-pvgrid-on-extra-search-changed`, this.setExtraSearch);
     
     
-  }
+  };
   
   
   getSearchObj = (from, to, searchstr, searchExact, cols, dataType, sortcol, sortdir, filters, customFilter) =>
@@ -478,6 +479,20 @@ class PVGrid extends PontusComponent
             colSetting.filter = true;
           }
           origField = origField.toString().substring(1);
+        }
+        else if (origField.startsWith('@')){
+  
+          // origField = origField.toString().substring(1);
+  
+          // let parsedText = origField.toString().split('@');
+          // origField = parsedText[1];
+          // let text = parsedText[2];
+  
+  
+          colSetting.cellRendererFramework= PVGridReportButtonCellRenderer;
+          colSetting.sortable = false;
+          colSetting.filter = false;
+  
         }
         else
         {

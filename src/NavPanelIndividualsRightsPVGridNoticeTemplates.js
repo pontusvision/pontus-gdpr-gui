@@ -31,7 +31,7 @@ class NavPanelIndividualsRightsPVGridNoticeTemplates extends PVGrid
       sortable: true
     };
     colSettings[3] = {
-      id: "Object.Notification_Templates.Text", name: "Label", field: "Object.Notification_Templates.Text",
+      id: "Object.Notification_Templates.Text", name: "Text", field: "Object.Notification_Templates.Text",
       sortable: true
     };
   
