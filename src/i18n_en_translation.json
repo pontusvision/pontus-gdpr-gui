@@ -569,5 +569,7 @@
   "Metadata Type Person Employee": "Data Type",
   "Assigned SAR Request": "Assigned SAR Request",
   "Event Training Person": "was trained",
-  "Metadata Type Event Training": "Data Type"
+  "Metadata Type Event Training": "Data Type",
+  "Metadata Type Object AWS Security Group": "Data Type"
+
 }
