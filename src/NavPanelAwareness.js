@@ -29,7 +29,7 @@ class NavPanelAwareness extends PVGoldenLayoutComponent
         showMaximiseIcon: false,
         showCloseIcon: false
       }
-      , _dimensions: {
+      , dimensions: {
         borderWidth: 5,
         minItemHeight: 10,
         minItemWidth: 10,
