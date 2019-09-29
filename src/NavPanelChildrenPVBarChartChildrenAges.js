@@ -35,7 +35,7 @@ class NavPanelChildrenPVBarChartChildrenAges extends PontusComponent
     
     this.errorCounter = 0;
     
-    this.datamaps = new PVDatamaps(props);
+    // this.datamaps = new PVDatamaps(props);
     
     this.url = PontusComponent.getGraphURL(props);
     
@@ -232,7 +232,7 @@ class NavPanelChildrenPVBarChartChildrenAges extends PontusComponent
         
         
         
-        let colorScale =  this.datamaps.getColorScale(0, respParsed.data.length - 1);
+        let colorScale =  PontusComponent.getColorScale(0, respParsed.data.length - 1);
 
         let datasetData = data.datasets[0].data;
         for (let i = 0, ilen = datasetData.length; i < ilen; i++){

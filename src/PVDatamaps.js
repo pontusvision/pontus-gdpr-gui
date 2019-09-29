@@ -147,7 +147,7 @@ export default class Datamap extends PontusComponent
   resizeMap = () =>
   {
     this.drawMap();
-  
+    
     this.map.resize();
   }
   
@@ -181,7 +181,7 @@ export default class Datamap extends PontusComponent
     this.map.svg
       .call(this.d3Zoom.on("zoom", this._handleScroll))
       .on("dblclick.zoom", null); // disable zoom on double-click
-  
+    
     //   var obj = {DE:1214, FI:1189, DK:1284, FR:1316, NZ:1260, BR:1214,  GB:1188, IE:1185, US:1216, CA:1183, CH:1135, IR:1233};
     // this.updateColours(obj);
     
@@ -387,36 +387,36 @@ export default class Datamap extends PontusComponent
     var colors = d3.scale.linear()
       .domain([minVal, (maxVal-minVal)/2, maxVal])
       .range(['green', 'orange', 'red']);
-  
+    
     return colors;
-  
+    
   }
   
   updateColours = (vals) =>{
-  
+    
     
     if (this.lastVals ){
-  
+      
       var defaultFill = this.props.fills ? this.props.fills.defaultFill||'#eddc4e': '#eddc4e';
       for (var prop in this.lastVals) {
         this.lastVals[prop] =  defaultFill;
       }
-  
+      
       this.map.updateChoropleth(this.lastVals);
-  
+      
     }
-  
-  
-  
+    
+    
+    
     this.drawMap();
     
     // var colors = d3.scale.category10();
-  
+    
     this.map.updateChoropleth(vals);
     
     this.lastVals = vals;
-  
-  
+    
+    
   }
   
   

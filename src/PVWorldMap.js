@@ -1,6 +1,6 @@
 import React from 'react';
 
-import Datamap from './PVDatamaps';
+import PVDatamaps from './PVDatamaps';
 
 import ResizeAware from 'react-resize-aware';
 
@@ -126,16 +126,16 @@ class PVWorldMap extends React.Component
   };
   onSuccess = (resp) =>{
   
-    var  colParam = {};
+    let  colParam = {};
 
-    var rawList = JSON.parse(resp.data.result.data['@value'][0]).countryData.entry;
+    let rawList = JSON.parse(resp.data.result.data['@value'][0]).countryData.entry;
     
-    var max = 0;
-    var min = 9999999999999999999999;
+    let max = 0;
+    let min = 9999999999999999999999;
     
-    for (var i = 0, ilen = rawList.length; i < ilen; i ++){
-      var entry = rawList[i];
-      var iso3country = Countries.alpha2ToAlpha3(entry.key);
+    for (let i = 0, ilen = rawList.length; i < ilen; i ++){
+      let entry = rawList[i];
+      let iso3country = Countries.alpha2ToAlpha3(entry.key);
       if (iso3country){
         colParam[iso3country] = entry.value;
         if (max < entry.value){
@@ -148,11 +148,11 @@ class PVWorldMap extends React.Component
       }
     }
   
-    var colors = this.obj.getColorScale(min,max);
+    let colors = PontusComponent.getColorScale(min,max);
   
     this.popupData = {};
     
-    for (var prop in colParam) {
+    for (let prop in colParam) {
       this.popupData[prop] = colParam[prop];
   
       colParam[prop] = colors(this.popupData[prop]);
@@ -170,8 +170,8 @@ class PVWorldMap extends React.Component
   };
   popupTemplate = (geography, data) =>
   {
-    var val = this.popupData[geography.id];
-    var label = geography.properties.name;
+    let val = this.popupData[geography.id];
+    let label = geography.properties.name;
     return val == null?
       "<div style='background-color:lightblue' >"+label+"</div>":
       "<div style='background-color:lightblue' >"+label+" "+val +"</div>";
@@ -212,7 +212,7 @@ class PVWorldMap extends React.Component
         <Flex p={1} align='center' style={{width: '100%', height: '100%'}}
         >
           <Box px={1} w={1} style={{width: '100%', height: '100%'}}>
-            <Datamap
+            <PVDatamaps
               scope="world"
               geographyConfig={geographyConfig}
               fills={fills}

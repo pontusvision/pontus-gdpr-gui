@@ -2,6 +2,12 @@ import React from 'react';
 // import i18next from 'i18next';
 // import { useTranslation } from 'react-i18next';
 import i18next from './i18n';
+import {scaleLinear} from "d3-scale";
+
+import * as d3 from "d3";
+// let d3 = window.d3;
+
+// import * as d3 from "d3";
 
 // const { t, i18n } = useTranslation();
 
@@ -12,6 +18,14 @@ class PontusComponent extends React.Component
   {
     super(props);
     this.url = PontusComponent.getGraphURL(props);
+  }
+  
+  
+  static getColorScale(minVal, maxVal) {
+    return scaleLinear.linear()
+      .domain([minVal, (maxVal - minVal) / 2, maxVal])
+      .range(['green', 'orange', 'red']);
+    
   }
   
   static recursiveSplitTranslateJoin(itemToSplit, splitArrayPattern)
@@ -146,7 +160,7 @@ class PontusComponent extends React.Component
     }
     else if (window.location && window.location.pathname)
     {
-      let pvgdprGuiIndex = window.location.pathname.indexOf(pvgdprGuiStr)
+      let pvgdprGuiIndex = window.location.pathname.indexOf(pvgdprGuiStr);
       if (pvgdprGuiIndex > 0)
       {
         let retVal = window.location.pathname.substr(0, pvgdprGuiIndex);
