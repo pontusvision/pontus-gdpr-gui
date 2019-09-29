@@ -3,7 +3,7 @@ import React from 'react';
 import Datamaps from 'datamaps';
 import PontusComponent from "./PontusComponent";
 
-var d3 = window.d3;
+let d3 = window.d3;
 const MAP_CLEARING_PROPS = [
   'height', 'scope', 'setProjection', 'width'
 ];
@@ -158,7 +158,7 @@ export default class Datamap extends PontusComponent
   
   zoomSetup = () =>
   {
-    var paths = this.map.svg.selectAll("path"),
+    let paths = this.map.svg.selectAll("path"),
       subunits = this.map.svg.selectAll(".maps-subunit");
     
     // preserve stroke thickness
@@ -181,7 +181,7 @@ export default class Datamap extends PontusComponent
       .call(this.d3Zoom.on("zoom", this._handleScroll))
       .on("dblclick.zoom", null); // disable zoom on double-click
   
-    //   var obj = {DE:1214, FI:1189, DK:1284, FR:1316, NZ:1260, BR:1214,  GB:1188, IE:1185, US:1216, CA:1183, CH:1135, IR:1233};
+    //   let obj = {DE:1214, FI:1189, DK:1284, FR:1316, NZ:1260, BR:1214,  GB:1188, IE:1185, US:1216, CA:1183, CH:1135, IR:1233};
     // this.updateColours(obj);
     
   };
@@ -203,7 +203,7 @@ export default class Datamap extends PontusComponent
   
   _shift = (direction) =>
   {
-    var center = [this.container.offsetWidth / 2, this.container.offsetHeight / 2],
+    let center = [this.container.offsetWidth / 2, this.container.offsetHeight / 2],
       translate = this.d3Zoom.translate(), translate0 = [], l = [],
       view = {
         x: translate[0],
@@ -238,7 +238,7 @@ export default class Datamap extends PontusComponent
   
   _bound = (translate, scale) =>
   {
-    var width = this.container.offsetWidth,
+    let width = this.container.offsetWidth,
       height = this.container.offsetHeight;
     
     translate[0] = Math.min(
@@ -254,7 +254,7 @@ export default class Datamap extends PontusComponent
   
   _handleScroll = () =>
   {
-    var translate = d3.event.translate,
+    let translate = d3.event.translate,
       scale = d3.event.scale,
       limited = this._bound(translate, scale);
     
@@ -263,20 +263,6 @@ export default class Datamap extends PontusComponent
     this._update(limited.translate, limited.scale);
   };
   
-  _bound = (translate, scale) =>
-  {
-    var width = this.container.offsetWidth,
-      height = this.container.offsetHeight;
-    
-    translate[0] = Math.min(
-      (width / height) * (scale - 1),
-      Math.max(width * (1 - scale), translate[0])
-    );
-    
-    translate[1] = Math.min(0, Math.max(height * (1 - scale), translate[1]));
-    
-    return {translate: translate, scale: scale};
-  };
   
   _update = (translate, scale) =>
   {
@@ -290,14 +276,14 @@ export default class Datamap extends PontusComponent
     this._displayPercentage(scale);
   };
   
-  _animate = function (translate, scale)
+  _animate =  (translate, scale) =>
   {
-    var _this = this,
+    let _this = this,
       d3Zoom = this.d3Zoom;
     
     d3.transition().duration(350).tween("zoom", function ()
     {
-      var iTranslate = d3.interpolate(d3Zoom.translate(), translate),
+      let iTranslate = d3.interpolate(d3Zoom.translate(), translate),
         iScale = d3.interpolate(d3Zoom.scale(), scale);
       
       return function (t)
@@ -307,9 +293,9 @@ export default class Datamap extends PontusComponent
     });
   };
   
-  _displayPercentage = function (scale)
+  _displayPercentage =  (scale) =>
   {
-    var value;
+    let value;
     
     value = Math.round(Math.log(scale) / Math.log(this.scale.max) * 100);
     
@@ -320,10 +306,10 @@ export default class Datamap extends PontusComponent
   
   _getScalesArray = () =>
   {
-    var array = [],
+    let array = [],
       scaleMaxLog = Math.log(this.scale.max);
     
-    for (var i = 0; i <= 10; i++)
+    for (let i = 0; i <= 10; i++)
     {
       array.push(Math.pow(Math.E, 0.1 * i * scaleMaxLog));
     }
@@ -333,7 +319,7 @@ export default class Datamap extends PontusComponent
   
   _getNextScale = (direction) =>
   {
-    var scaleSet = this.scale.set,
+    let scaleSet = this.scale.set,
       currentScale = this.d3Zoom.scale(),
       lastShift = scaleSet.length - 1,
       shift, temp = [];
@@ -382,8 +368,8 @@ export default class Datamap extends PontusComponent
   };
   
   
-  getColorScale(minVal, maxVal) {
-    var colors = d3.scale.linear()
+  static getColorScale(minVal, maxVal) {
+    let colors = d3.scale.linear()
       .domain([minVal, (maxVal-minVal)/2, maxVal])
       .range(['green', 'orange', 'red']);
   
@@ -396,8 +382,8 @@ export default class Datamap extends PontusComponent
     
     if (this.lastVals ){
   
-      var defaultFill = this.props.fills ? this.props.fills.defaultFill||'#eddc4e': '#eddc4e';
-      for (var prop in this.lastVals) {
+      let defaultFill = this.props.fills ? this.props.fills.defaultFill||'#eddc4e': '#eddc4e';
+      for (let prop in this.lastVals) {
         this.lastVals[prop] =  defaultFill;
       }
   
@@ -409,7 +395,7 @@ export default class Datamap extends PontusComponent
   
     this.drawMap();
     
-    // var colors = d3.scale.category10();
+    // let colors = d3.scale.category10();
   
     this.map.updateChoropleth(vals);
     

@@ -3,8 +3,6 @@ import React from 'react';
 // import { useTranslation } from 'react-i18next';
 import i18next from './i18n';
 import {scaleLinear} from "d3-scale";
-
-import * as d3 from "d3";
 // let d3 = window.d3;
 
 // import * as d3 from "d3";
@@ -21,12 +19,13 @@ class PontusComponent extends React.Component
   }
   
   
-  static getColorScale(minVal, maxVal) {
-    return scaleLinear.linear()
-      .domain([minVal, (maxVal - minVal) / 2, maxVal])
-      .range(['green', 'orange', 'red']);
-    
-  }
+  // static getColorScale(minVal, maxVal)
+  // {
+  //   return scaleLinear.linear()
+  //     .domain([minVal, (maxVal - minVal) / 2, maxVal])
+  //     .range(['green', 'orange', 'red']);
+  //
+  // }
   
   static recursiveSplitTranslateJoin(itemToSplit, splitArrayPattern)
   {
@@ -146,6 +145,7 @@ class PontusComponent extends React.Component
   {
     return PontusComponent.getURLGeneric(props, 'pvgdpr_gui', 'pvgdpr_server/home/records', "/gateway/sandbox/pvgdpr_server/home/records");
   }
+  
   static getRestUrlAg(props)
   {
     return PontusComponent.getURLGeneric(props, 'pvgdpr_gui', 'pvgdpr_server/home/agrecords', "/gateway/sandbox/pvgdpr_server/home/agrecords");

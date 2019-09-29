@@ -148,7 +148,7 @@ class PVWorldMap extends React.Component
       }
     }
   
-    let colors = PontusComponent.getColorScale(min,max);
+    let colors = PVDatamaps.getColorScale(min,max);
   
     this.popupData = {};
     

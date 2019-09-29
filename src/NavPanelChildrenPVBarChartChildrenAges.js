@@ -232,7 +232,7 @@ class NavPanelChildrenPVBarChartChildrenAges extends PontusComponent
         
         
         
-        let colorScale =  PontusComponent.getColorScale(0, respParsed.data.length - 1);
+        let colorScale =  PVDatamaps.getColorScale(0, respParsed.data.length - 1);
 
         let datasetData = data.datasets[0].data;
         for (let i = 0, ilen = datasetData.length; i < ilen; i++){
