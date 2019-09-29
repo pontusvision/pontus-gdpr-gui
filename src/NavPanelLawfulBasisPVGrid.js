@@ -1,5 +1,4 @@
 import PVGrid from './PVGrid';
-import PontusComponent from "./PontusComponent";
 
 //
 
@@ -21,13 +20,16 @@ class NavPanelLawfulBasisPVGrid extends PVGrid
     
     let colSettings = [];
     
-
-    // colSettings[0] = {id: "Object.Lawful_Basis.Id", name: "Number", field:"Object.Lawful_Basis.Id", sortable:true  };
-    colSettings[0] = {id: "Object.Lawful_Basis.Description", name: "Description", field:"#Object.Lawful_Basis.Description", sortable:true  };
     
-  
+    // colSettings[0] = {id: "Object.Lawful_Basis.Id", name: "Number", field:"Object.Lawful_Basis.Id", sortable:true  };
+    colSettings[0] = {
+      id: "Object.Lawful_Basis.Description", name: "Description", field: "#Object.Lawful_Basis.Description",
+      sortable: true
+    };
+    
+    
     return colSettings;
-  
+    
   }
   
   

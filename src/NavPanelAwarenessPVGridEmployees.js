@@ -1,22 +1,29 @@
 import PVGrid from './PVGrid';
-import PontusComponent from "./PontusComponent";
 
 
 class NavPanelAwarenessPVGridEmployees extends PVGrid
 {
-  constructor(props){
-    super({...props, namespace: "NavPanelAwarenessPVGridEmployees", dataType:"Person.Employee", colSettings:NavPanelAwarenessPVGridEmployees.getDefaultColSettings()});
+  constructor(props)
+  {
+    super({
+      ...props, namespace: "NavPanelAwarenessPVGridEmployees", dataType: "Person.Employee",
+      colSettings: NavPanelAwarenessPVGridEmployees.getDefaultColSettings()
+    });
     
   }
   
   static getDefaultColSettings()
   {
     let colSettings = [];
-  
+    
     colSettings[0] = {id: "Person.Employee.Title", name: "Title", field: "#Person.Employee.Title", sortable: true};
-    colSettings[1] = {id: "Person.Employee.Full_Name", name: "Full Name", field: "#Person.Employee.Full_Name", sortable: true};
-    colSettings[2] = {id: "Person.Employee.Nationality", name: "Nationality", field: "#Person.Employee.Nationality", sortable: true};
-  
+    colSettings[1] = {
+      id: "Person.Employee.Full_Name", name: "Full Name", field: "#Person.Employee.Full_Name", sortable: true
+    };
+    colSettings[2] = {
+      id: "Person.Employee.Nationality", name: "Nationality", field: "#Person.Employee.Nationality", sortable: true
+    };
+    
     return colSettings;
   }
   
@@ -24,11 +31,10 @@ class NavPanelAwarenessPVGridEmployees extends PVGrid
   {
     try
     {
-  
+      
       this.setCustomFilter(`hasNeighbourId:${obj.id}`);
-  
-  
-  
+      
+      
       // this.setColumnSettings(colSettings);
     }
     catch (e)

@@ -1,5 +1,4 @@
 import PVGrid from './PVGrid';
-import PontusComponent from "./PontusComponent";
 
 //
 
@@ -13,11 +12,14 @@ class NavPanelConsentPVGridEventConsent extends PVGrid
       colSettings: NavPanelConsentPVGridEventConsent.getDefaultColSettings()
     });
     this.props.glEventHub.on('NavPanelConsent-pvgrid-on-click-row', this.onClickPrivNotice);
-  
+    
   }
-  onClickPrivNotice = (obj)=> {
+  
+  onClickPrivNotice = (obj) =>
+  {
     this.setCustomFilter(`hasNeighbourId:${obj.id}`);
   };
+  
   static getDefaultColSettings()
   {
     let colSettings = [];
@@ -33,7 +35,6 @@ class NavPanelConsentPVGridEventConsent extends PVGrid
     return colSettings;
     
   }
-
   
   
 }

@@ -1,18 +1,21 @@
 import PVGrid from './PVGrid';
-import PontusComponent from "./PontusComponent";
 
 //
 
 class NavPanelAwarenessPVGrid extends PVGrid
 {
-  constructor(props){
-    super({...props, namespace: "NavPanelAwarenessPVGrid", dataType:"Object.Awareness_Campaign", colSettings:NavPanelAwarenessPVGrid.getDefaultColSettings()});
+  constructor(props)
+  {
+    super({
+      ...props, namespace: "NavPanelAwarenessPVGrid", dataType: "Object.Awareness_Campaign",
+      colSettings: NavPanelAwarenessPVGrid.getDefaultColSettings()
+    });
   }
   
   static getDefaultColSettings()
   {
     let colSettings = [];
-  
+    
     colSettings[0] = {
       id: "Object.Awareness_Campaign.Description", name: "Description",
       field: "Object.Awareness_Campaign.Description", sortable: true
@@ -32,7 +35,6 @@ class NavPanelAwarenessPVGrid extends PVGrid
     return colSettings;
   };
   
- 
   
 }
 

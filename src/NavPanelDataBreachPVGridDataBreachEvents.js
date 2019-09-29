@@ -1,5 +1,4 @@
 import PVGrid from './PVGrid';
-import PontusComponent from "./PontusComponent";
 
 //
 
@@ -16,10 +15,10 @@ class NavPanelDataBreachPVGridDataBreachEvents extends PVGrid
   
   static getDefaultColSettings()
   {
-   
+    
     let colSettings = [];
     
-  
+    
     colSettings[0] = {
       id: "Event.Data_Breach.Id", name: "ID", field: "#Event.Data_Breach.Id", sortable: true
     };
@@ -40,14 +39,16 @@ class NavPanelDataBreachPVGridDataBreachEvents extends PVGrid
       sortable: true
     };
     colSettings[4] = {
-      id: "Event.Data_Breach.Metadata.Create_Date", name: "Start Date", field: "#Event.Data_Breach.Metadata.Create_Date",
+      id: "Event.Data_Breach.Metadata.Create_Date", name: "Start Date",
+      field: "#Event.Data_Breach.Metadata.Create_Date",
       sortable: true
     };
     colSettings[5] = {
-      id: "Event.Data_Breach.Metadata.Update_Date", name: "Update Date", field: "#Event.Data_Breach.Metadata.Update_Date",
+      id: "Event.Data_Breach.Metadata.Update_Date", name: "Update Date",
+      field: "#Event.Data_Breach.Metadata.Update_Date",
       sortable: true
     };
-  
+    
     return colSettings;
     
   }
@@ -63,40 +64,17 @@ class NavPanelDataBreachPVGridDataBreachEvents extends PVGrid
   //   return {
   //     gremlin: "g.V()" +
   //     ".has('Metadata.Type.Event.Data_Breach',eq('Event.Data_Breach'))" +
-  //     ".order().by(pg_orderCol == null ? 'Event.Data_Breach.Metadata.Create_Date' :pg_orderCol.toString() ,pg_orderDir == (1)? incr: decr)" +
-  //     ".range(pg_from,pg_to).as('data_breaches')" +
-  //     ".match(" +
-  //     "    __.as('data_breaches').values('Event.Data_Breach.Id').as('Event.Data_Breach.Id')" +
-  //     "  , __.as('data_breaches').values('Event.Data_Breach.Description').as('Event.Data_Breach.Description')" +
-  //     "  , __.as('data_breaches').values('Event.Data_Breach.Status').as('Event.Data_Breach.Status')" +
-  //     "  , __.as('data_breaches').values('Event.Data_Breach.Source').as('Event.Data_Breach.Source')" +
-  //     "  , __.as('data_breaches').values('Event.Data_Breach.Impact').as('Event.Data_Breach.Impact')" +
-  //     "  , __.as('data_breaches').values('Event.Data_Breach.Metadata.Create_Date').as('Event.Data_Breach.Metadata.Create_Date')" +
-  //     "  , __.as('data_breaches').values('Event.Data_Breach.Metadata.Update_Date').as('Event.Data_Breach.Metadata.Update_Date')" +
-  //     "  , __.as('data_breaches').id().as('event_id')" +
-  //     "  )" +
-  //     ".select (" +
-  //     "  'Event.Data_Breach.Id'" +
-  //     " ,'Event.Data_Breach.Description'" +
-  //     " ,'Event.Data_Breach.Status'" +
-  //     " ,'Event.Data_Breach.Source'" +
-  //     " ,'Event.Data_Breach.Impact'" +
-  //     " ,'Event.Data_Breach.Metadata.Create_Date'" +
-  //     " ,'Event.Data_Breach.Metadata.Update_Date'" +
-  //     " ,'event_id'" +
-  //     ")"
-  //     , bindings: {
-  //       pg_from: from
-  //       , pg_to: to
-  //       , pg_orderCol: sortcolId
-  //       , pg_orderDir: sortdir
-  //     }
-  //
-  //   };
-  //
-  //
-  // };
-  
+  //     ".order().by(pg_orderCol == null ? 'Event.Data_Breach.Metadata.Create_Date' :pg_orderCol.toString()
+  // ,pg_orderDir == (1)? incr: decr)" + ".range(pg_from,pg_to).as('data_breaches')" + ".match(" + "
+  // __.as('data_breaches').values('Event.Data_Breach.Id').as('Event.Data_Breach.Id')" + "  ,
+  // __.as('data_breaches').values('Event.Data_Breach.Description').as('Event.Data_Breach.Description')" + "  ,
+  // __.as('data_breaches').values('Event.Data_Breach.Status').as('Event.Data_Breach.Status')" + "  ,
+  // __.as('data_breaches').values('Event.Data_Breach.Source').as('Event.Data_Breach.Source')" + "  ,
+  // __.as('data_breaches').values('Event.Data_Breach.Impact').as('Event.Data_Breach.Impact')" + "  ,
+  // __.as('data_breaches').values('Event.Data_Breach.Metadata.Create_Date').as('Event.Data_Breach.Metadata.Create_Date')"
+  // + "  ,
+  // __.as('data_breaches').values('Event.Data_Breach.Metadata.Update_Date').as('Event.Data_Breach.Metadata.Update_Date')"
+  // + "  , __.as('data_breaches').id().as('event_id')" + "  )" + ".select (" + "  'Event.Data_Breach.Id'" + " ,'Event.Data_Breach.Description'" + " ,'Event.Data_Breach.Status'" + " ,'Event.Data_Breach.Source'" + " ,'Event.Data_Breach.Impact'" + " ,'Event.Data_Breach.Metadata.Create_Date'" + " ,'Event.Data_Breach.Metadata.Update_Date'" + " ,'event_id'" + ")" , bindings: { pg_from: from , pg_to: to , pg_orderCol: sortcolId , pg_orderDir: sortdir }  };   };
   
   
 }

@@ -2,7 +2,6 @@
 import NavPanelInformationYouHoldPVDataGraph from './NavPanelInformationYouHoldPVDataGraph';
 import NavPanelInformationYouHoldPVDoughnutChartTypes from './NavPanelInformationYouHoldPVDoughnutChartTypes';
 import NavPanelInformationYouHoldPVGridEventIngestion from './NavPanelInformationYouHoldPVGridEventIngestion';
-import NavPanelInformationYouHoldIngestionTimeline from './NavPanelInformationYouHoldIngestionTimeline';
 import PVGoldenLayoutComponent from "./PVGoldenLayoutComponent";
 import NavPanelInformationYouHoldPVGrid from "./NavPanelInformationYouHoldPVGrid";
 import PontusComponent from "./PontusComponent";
@@ -78,10 +77,10 @@ class NavPanelInformationYouHold extends PVGoldenLayoutComponent
               title: PontusComponent.t('Sensitive Data'),
               type: 'react-component',
               component: 'sensitive-data'
-    
+              
             }
-
-
+          
+          
           ]
         }
       ]

@@ -2,7 +2,6 @@ import React from 'react';
 // import i18next from 'i18next';
 // import { useTranslation } from 'react-i18next';
 import i18next from './i18n';
-import {scaleLinear} from "d3-scale";
 // let d3 = window.d3;
 
 // import * as d3 from "d3";

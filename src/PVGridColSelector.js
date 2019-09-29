@@ -1,9 +1,7 @@
 import React from 'react';
 import PVGremlinComboBox from './PVGremlinComboBox';
 import {Flex} from 'reflexbox'
-import ResizeAware from 'react-resize-aware';
 import PontusComponent from "./PontusComponent";
-
 
 
 class PVGridColSelector extends PontusComponent
@@ -91,8 +89,8 @@ class PVGridColSelector extends PontusComponent
         onResize={this.handleResize}
       >
         
-        <Flex wrap={true} align={'stretch'}  width={"100%"}>
-          <div style={{display:"block", width:"100%", padding: "10px" }} >
+        <Flex wrap={true} align={'stretch'} width={"100%"}>
+          <div style={{display: "block", width: "100%", padding: "10px"}}>
             <PVGremlinComboBox
               namespace={`${this.namespace}-node-types`}
               name="node-types"
@@ -102,12 +100,12 @@ class PVGridColSelector extends PontusComponent
               url={PontusComponent.getRestVertexLabelsURL(this.props)}
               placeholder={PontusComponent.t("Data Type")}
               // style={{width: "100%"}}
-              value={this.props.dataType?this.props.dataType: {}}
+              value={this.props.dataType ? this.props.dataType : {}}
             />
           </div>
           <Flex h={1} w={1} align='center' style={{height: "30px"}}/>
-  
-          <div style={{display:"block", width:"100%", padding: "10px" }} >
+          
+          <div style={{display: "block", width: "100%", padding: "10px"}}>
             <PVGremlinComboBox
               name="node-property-types"
               namespace={`${this.namespace}-node-property-types`}
@@ -117,7 +115,7 @@ class PVGridColSelector extends PontusComponent
               ref={this.setObjNodePropertyNames}
               url={PontusComponent.getRestNodePropertyNamesURL(this.props)}
               placeholder={PontusComponent.t("Columns")}
-              value={this.props.colSettings?this.props.colSettings: []}
+              value={this.props.colSettings ? this.props.colSettings : []}
             />
           </div>
         

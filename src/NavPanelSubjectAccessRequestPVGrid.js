@@ -1,5 +1,4 @@
 import PVGrid from './PVGrid';
-import PontusComponent from "./PontusComponent";
 
 //
 
@@ -20,20 +19,24 @@ class NavPanelSubjectAccessRequestPVGrid extends PVGrid
     
     
     let colSettings = [];
-  
+    
     
     colSettings[0] = {
-      id: "Event.Subject_Access_Request.Status", name: "SAR Status", field: "#Event.Subject_Access_Request.Status", sortable: true
+      id: "Event.Subject_Access_Request.Status", name: "SAR Status", field: "#Event.Subject_Access_Request.Status",
+      sortable: true
     };
     colSettings[1] = {
-      id: "Event.Subject_Access_Request.Request_Type", name: "SAR Type", field: "#Event.Subject_Access_Request.Request_Type", sortable: true
+      id: "Event.Subject_Access_Request.Request_Type", name: "SAR Type",
+      field: "#Event.Subject_Access_Request.Request_Type", sortable: true
     };
     colSettings[2] = {
-      id: "Event.Subject_Access_Request.Metadata.Create_Date", name: "Request Date", field: "Event.Subject_Access_Request.Metadata.Create_Date",
+      id: "Event.Subject_Access_Request.Metadata.Create_Date", name: "Request Date",
+      field: "Event.Subject_Access_Request.Metadata.Create_Date",
       sortable: true
     };
     colSettings[3] = {
-      id: "Event.Subject_Access_Request.Metadata.Update_Date", name: "Update Date", field: "Event.Subject_Access_Request.Metadata.Update_Date", sortable: true
+      id: "Event.Subject_Access_Request.Metadata.Update_Date", name: "Update Date",
+      field: "Event.Subject_Access_Request.Metadata.Update_Date", sortable: true
     };
     
     return colSettings;
@@ -41,7 +44,6 @@ class NavPanelSubjectAccessRequestPVGrid extends PVGrid
     
   }
   
-
   
 }
 
