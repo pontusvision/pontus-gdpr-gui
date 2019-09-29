@@ -1,13 +1,14 @@
 // import React from 'react';
 
 
-import PVGridEmployees from './PVGridEmployees';
-import PVGridAwarenessCampaign from './PVGridAwarenessCampaign';
+import NavPanelAwarenessPVGridEmployees from './NavPanelAwarenessPVGridEmployees';
+import NavPanelAwarenessPVGrid from './NavPanelAwarenessPVGrid';
 
 
 import PVDoughnutChart from './PVDoughnutChart';
 import PVGoldenLayoutComponent from "./PVGoldenLayoutComponent";
 import PontusComponent from "./PontusComponent";
+import NavPanelAwarenessPVDataGraph from "./NavPanelAwarenessPVDataGraph";
 
 class NavPanelAwareness extends PVGoldenLayoutComponent
 {
@@ -28,7 +29,7 @@ class NavPanelAwareness extends PVGoldenLayoutComponent
         showMaximiseIcon: false,
         showCloseIcon: false
       }
-      , dimensions: {
+      , _dimensions: {
         borderWidth: 5,
         minItemHeight: 10,
         minItemWidth: 10,
@@ -40,25 +41,57 @@ class NavPanelAwareness extends PVGoldenLayoutComponent
         {
           type: 'column',
           content: [
+
             {
-              title: PontusComponent.t('Awareness Campaigns'),
-              type: 'react-component',
-              component: 'awareness-campaign-data-grid'
+              "type": "stack", "height": 50, "isClosable": true, "reorderEnabled": true, "title": "",
+              "activeItemIndex": 0, "content": [
+                {
+                  "title": PontusComponent.t('Awareness Campaigns'), "type": "component",
+                  "component": "awareness-campaign-data-grid", "componentName": "lm-react-component",
+                  "isClosable": true, "reorderEnabled": true
+                }
+              ]
             }, {
-              title: PontusComponent.t('Employees'),
-              type: 'react-component',
-              component: 'employees-grid'
-            }, {
-              title: PontusComponent.t('Charts'),
-              type: 'react-component',
-              component: 'awareness-campaign-employees-pie-charts'
+              "type": "row", "isClosable": true, "reorderEnabled": true, "title": "", "height": 50, "content": [
+                {
+                  "type": "stack", "height": 50, "isClosable": true, "reorderEnabled": true, "title": "",
+                  "activeItemIndex": 0, "width": 59.50752393980848, "content": [
+                    {
+                      "title": PontusComponent.t('Employees'), "type": "component", "component": "employees-grid",
+                      "componentName": "lm-react-component", "isClosable": true, "reorderEnabled": true
+                    }
+                  ]
+                }, {
+                  "type": "stack", "header": {}, "isClosable": true, "reorderEnabled": true, "title": "",
+                  "activeItemIndex": 0, "width": 40.49247606019152, "content": [
+                    {
+                      "title": PontusComponent.t('Charts'), "type": "component",
+                      "component": "awareness-campaign-employees-pie-charts", "componentName": "lm-react-component",
+                      "isClosable": true, "reorderEnabled": true
+                    }
+                  ]
+                },
+                {
+                  "type": "stack", "header": {}, "isClosable": true, "reorderEnabled": true, "title": "",
+                  "activeItemIndex": 0, "width": 40.49247606019152, "content": [
+                    {
+                      "title": PontusComponent.t('Data Graph'), "type": "component",
+                      "component": "awareness-campaign-data-graph", "componentName": "lm-react-component",
+                      "isClosable": true, "reorderEnabled": true
+                    }
+                  ]
+                }
+              ]
             }
-          
+            
+            
           ]
         }
       ]
       
     };
+    
+    
     
   }
   
@@ -67,9 +100,10 @@ class NavPanelAwareness extends PVGoldenLayoutComponent
   {
     this.registerComponentsPreamble(instance);
     
-    this.instance.registerComponent('awareness-campaign-data-grid', PVGridAwarenessCampaign);
-    this.instance.registerComponent('employees-grid', PVGridEmployees);
+    this.instance.registerComponent('awareness-campaign-data-grid', NavPanelAwarenessPVGrid);
+    this.instance.registerComponent('employees-grid', NavPanelAwarenessPVGridEmployees);
     this.instance.registerComponent('awareness-campaign-employees-pie-charts', PVDoughnutChart);
+    this.instance.registerComponent('awareness-campaign-data-graph', NavPanelAwarenessPVDataGraph);
     
   };
   

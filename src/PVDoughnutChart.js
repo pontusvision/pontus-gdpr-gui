@@ -62,14 +62,14 @@ class PVDoughnutChart extends PontusComponent
   componentDidMount()
   {
     // super.componentDidMount();
-    this.props.glEventHub.on('PVGridAwarenessCampaign-pvgrid-on-click-row', this.onClickedPVGridAwarenessCampaign);
+    this.props.glEventHub.on('NavPanelAwarenessPVGrid-pvgrid-on-click-row', this.onClickedPVGridAwarenessCampaign);
     
     
   }
   
   componentWillUnmount()
   {
-    this.props.glEventHub.off('PVGridAwarenessCampaign-pvgrid-on-click-row', this.onClickedPVGridAwarenessCampaign);
+    this.props.glEventHub.off('NavPanelAwarenessPVGrid-pvgrid-on-click-row', this.onClickedPVGridAwarenessCampaign);
     
     // super.componentWillUnmount();
   }

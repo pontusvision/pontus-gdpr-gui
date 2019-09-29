@@ -2,10 +2,10 @@ import PVGrid from './PVGrid';
 import PontusComponent from "./PontusComponent";
 
 
-class PVGridEmployees extends PVGrid
+class NavPanelAwarenessPVGridEmployees extends PVGrid
 {
   constructor(props){
-    super({...props, namespace: "PVGridEmployees-", dataType:"Person.Employee", colSettings:PVGridEmployees.getDefaultColSettings()});
+    super({...props, namespace: "NavPanelAwarenessPVGridEmployees", dataType:"Person.Employee", colSettings:NavPanelAwarenessPVGridEmployees.getDefaultColSettings()});
     
   }
   
@@ -40,10 +40,10 @@ class PVGridEmployees extends PVGrid
   
   componentDidMount()
   {
-    // this.setNamespace("PVGridEmployees-");
+    // this.setNamespace("NavPanelAwarenessPVGridEmployees-");
     
     super.componentDidMount();
-    this.props.glEventHub.on('PVGridAwarenessCampaign-pvgrid-on-click-row', this.onClickedPVGridAwarenessCampaign);
+    this.props.glEventHub.on('NavPanelAwarenessPVGrid-pvgrid-on-click-row', this.onClickedPVGridAwarenessCampaign);
     
     // this.setExtraSearch({value:"Person.Employee"});
     
@@ -52,11 +52,11 @@ class PVGridEmployees extends PVGrid
   
   componentWillUnmount()
   {
-    this.props.glEventHub.off('PVGridAwarenessCampaign-pvgrid-on-click-row', this.onClickedPVGridAwarenessCampaign);
+    this.props.glEventHub.off('NavPanelAwarenessPVGrid-pvgrid-on-click-row', this.onClickedPVGridAwarenessCampaign);
     
     super.componentWillUnmount();
   }
 }
 
 
-export default PVGridEmployees;
+export default NavPanelAwarenessPVGridEmployees;

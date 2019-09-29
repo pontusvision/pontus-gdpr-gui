@@ -3,10 +3,10 @@ import PontusComponent from "./PontusComponent";
 
 //
 
-class PVGridAwarenessCampaign extends PVGrid
+class NavPanelAwarenessPVGrid extends PVGrid
 {
   constructor(props){
-    super({...props, namespace: "PVGridAwarenessCampaign", dataType:"Object.Awareness_Campaign", colSettings:PVGridAwarenessCampaign.getDefaultColSettings()});
+    super({...props, namespace: "NavPanelAwarenessPVGrid", dataType:"Object.Awareness_Campaign", colSettings:NavPanelAwarenessPVGrid.getDefaultColSettings()});
   }
   
   static getDefaultColSettings()
@@ -37,4 +37,4 @@ class PVGridAwarenessCampaign extends PVGrid
 }
 
 
-export default PVGridAwarenessCampaign;
+export default NavPanelAwarenessPVGrid;
