@@ -8,7 +8,7 @@ class NavPanelDataBreachPVGridDataBreachEvents extends PVGrid
   constructor(props)
   {
     super({
-      ...props, namespace: "NavPanelDataBreachPVGridDataBreachEvents", dataType: "Event.Data_Breach",
+      ...props, namespace: "NavPanelDataBreach", dataType: "Event.Data_Breach",
       colSettings: NavPanelDataBreachPVGridDataBreachEvents.getDefaultColSettings()
     });
     

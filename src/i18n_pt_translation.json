@@ -594,6 +594,11 @@
   "Match Weight": "Peso da Propriedade",
   "Exclude From Search": "Excluída da Pesquisa",
   "Exclude From Subsequence Search": "Propriedade Não Obrigatória",
-  "Exclude From Update":  "Excluída do Update"
+  "Exclude From Update":  "Excluída do Update",
+  "Reports To": "Subordinado",
+  "Metadata Type Person Employee": "Classificação",
+  "Assigned SAR Request": "Responsável por cumprir",
+  "Event Training Person": "foi treinado",
+  "Metadata Type Event Training": "Classificação"
 
 }
