@@ -28,7 +28,7 @@ if [[ ! -d $DISTDIR ]]; then
 fi
 
 cd $DISTDIR/../..
-unlink current
+#unlink current
 ln -s $VERSION current
 
 cp -r $DIR/build/* $DISTDIR 
