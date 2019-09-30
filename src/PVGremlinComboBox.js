@@ -20,7 +20,7 @@ class PVGremlinComboBox extends Component
       throw (err);
     }
     
-    let lastValStr =     localStorage.getItem(`${this.props.namespace}-value`);
+    let lastValStr =     PontusComponent.getItem(`${this.props.namespace}-value`);
   
     let lastVal = null;
     if(lastValStr){
@@ -47,7 +47,7 @@ class PVGremlinComboBox extends Component
       {
         reqToSave = JSON.stringify(jsonRequest);
       }
-      localStorage.setItem(`${this.props.namespace}.optionsJsonRequest`, reqToSave);
+      PontusComponent.setItem(`${this.props.namespace}.optionsJsonRequest`, reqToSave);
     }
     
     
@@ -126,7 +126,7 @@ class PVGremlinComboBox extends Component
     this.setState({
       value: value
     });
-    localStorage.setItem(`${this.props.namespace}-value`, JSON.stringify(value));
+    PontusComponent.setItem(`${this.props.namespace}-value`, JSON.stringify(value));
     
     if (this.props.onChange)
     {
@@ -140,7 +140,7 @@ class PVGremlinComboBox extends Component
   componentDidMount()
   {
     /* you can pass config as prop, or use a predefined one */
-    let savedReq = localStorage.getItem(`${this.props.namespace}.optionsJsonRequest`);
+    let savedReq = PontusComponent.getItem(`${this.props.namespace}.optionsJsonRequest`);
     try
     {
       savedReq = JSON.parse(savedReq);

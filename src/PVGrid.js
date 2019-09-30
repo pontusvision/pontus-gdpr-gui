@@ -116,7 +116,7 @@ class PVGrid extends PontusComponent
   
   getColSettings = (props) =>
   {
-    let colSettings = localStorage.getItem(`${this.namespace}${this.subNamespace ? this.subNamespace : ""}.PVGrid.colSettings`);
+    let colSettings = PontusComponent.getItem(`${this.namespace}${this.subNamespace ? this.subNamespace : ""}.PVGrid.colSettings`);
     
     if (colSettings)
     {
@@ -137,7 +137,7 @@ class PVGrid extends PontusComponent
   
   getDataType = (props) =>
   {
-    let dataType = localStorage.getItem(`${this.namespace}${this.subNamespace ? this.subNamespace : ""}.PVGrid.dataType`);
+    let dataType = PontusComponent.getItem(`${this.namespace}${this.subNamespace ? this.subNamespace : ""}.PVGrid.dataType`);
     // let dataType = JSON.parse();
     if (!dataType)
     {
@@ -393,7 +393,7 @@ class PVGrid extends PontusComponent
   setDataType = (str) =>
   {
     this.dataType = str;
-    localStorage.setItem(`${this.namespace}${this.subNamespace ? this.subNamespace : ""}.PVGrid.dataType`, (this.dataType));
+    PontusComponent.setItem(`${this.namespace}${this.subNamespace ? this.subNamespace : ""}.PVGrid.dataType`, (this.dataType));
   };
   
   setExtraSearch = (str) =>
@@ -451,7 +451,7 @@ class PVGrid extends PontusComponent
     
     if (colSettings)
     {
-      localStorage.setItem(`${this.namespace}${this.subNamespace ? this.subNamespace : ""}.PVGrid.colSettings`, JSON.stringify(colSettings));
+      PontusComponent.setItem(`${this.namespace}${this.subNamespace ? this.subNamespace : ""}.PVGrid.colSettings`, JSON.stringify(colSettings));
       
       
       for (let i = 0; i < colSettings.length; i++)

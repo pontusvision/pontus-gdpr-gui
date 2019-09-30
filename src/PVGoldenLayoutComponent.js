@@ -28,7 +28,7 @@ class PVGoldenLayoutComponent extends PontusComponent
     try
     {
       let state = JSON.stringify(this.instance.toConfig());
-      localStorage.setItem(this.getStateVar(), state);
+      PontusComponent.setItem(this.getStateVar(), state);
       
     }
     catch (e)
@@ -77,7 +77,7 @@ class PVGoldenLayoutComponent extends PontusComponent
   
   render()
   {
-    let savedState = localStorage.getItem(this.getStateVar());
+    let savedState = PontusComponent.getItem(this.getStateVar());
     if (savedState !== null)
     {
       savedState = JSON.parse(savedState);

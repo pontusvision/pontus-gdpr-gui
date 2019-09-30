@@ -8,10 +8,10 @@ import ExtractPanel from './ExtractPanel';
 import {EventEmitter} from 'fbemitter';
 import ComplyPanel from './ComplyPanel';
 import PontusComponent from "./PontusComponent";
+import {getDefaultLang, setLang} from "./i18n";
 
 
 let emitter = new EventEmitter();
-
 
 
 /***************************
@@ -26,8 +26,9 @@ class MainPanel extends React.Component
     super(props);
     this.title = PontusComponent.t("App_title");
     this.message = PontusComponent.t("App_message");
-
+    
   }
+  
   select = () =>
   {
   
@@ -152,7 +153,6 @@ class App extends React.Component
     }
   };
   
-
   
   handleResize = () =>
   {
@@ -223,6 +223,12 @@ class App extends React.Component
     // , actionJSX: <ComplyPanel/>
   };
   
+  setLanguage = async (event) =>
+  {
+    await setLang(event.target.value);
+    window.location.reload(true);
+    
+  };
   
   render()
   {
@@ -267,7 +273,7 @@ class App extends React.Component
     for (var i = 0, ilen = items.length; i < ilen; i++)
     {
       var item = items[i];
-      menuItems.push(<a style={{color: 'white'}} onClick={item.cb} key={item.panelId} className="menu-item"
+      menuItems.push(<a style={{color: 'white', fontSize: '20px'}} onClick={item.cb} key={item.panelId} className="menu-item"
       >{item.title}</a>);
     }
     
@@ -287,7 +293,24 @@ class App extends React.Component
         <header style={{background: 'black', height: 30}}> {this.headerTitle}
           <Menu id={"menu"} right={true} styles={styles} pageWrapId={"page-wrap"}
                 outerContainerId={"outer-container"}>
+            <hr/>
+  
             {menuItems}
+            <hr/>
+            <br/><br/><br/><br/><br/><br/><br/><br/>
+            <div onChange={this.setLanguage} style={{color: 'white', fontSize: '15px'}}>
+              <Box >
+                <div style={{color: 'white', fontSize: '20px'}}> {PontusComponent.t('Legislation')} </div>
+              </Box>
+              <hr/>
+  
+              <Box>
+                <input checked={getDefaultLang() === 'pt'} type="radio" value="pt" name="language"/> LGPD
+              </Box>
+              <Box>
+                <input checked={getDefaultLang() === 'en'} type="radio" value="en" name="language"/> GDPR
+              </Box>
+            </div>
           
           </Menu>
         </header>

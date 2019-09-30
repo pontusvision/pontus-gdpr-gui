@@ -40,7 +40,7 @@ class PVAceGremlinEditor extends PontusComponent
   
   runQuery = () =>
   {
-    let val = localStorage.getItem('LGPD-savedStatePVAceGremlinEditor') || "";
+    let val = PontusComponent.getItem('LGPD-savedStatePVAceGremlinEditor') || "";
     
     this.props.glEventHub.emit(this.namespace + '-PVAceGremlinEditor-on-before-run-query', val);
     
@@ -134,7 +134,7 @@ class PVAceGremlinEditor extends PontusComponent
   onChange = (val, ev) =>
   {
     
-    localStorage.setItem('LGPD-savedStatePVAceGremlinEditor', val);
+    PontusComponent.setItem('LGPD-savedStatePVAceGremlinEditor', val);
     // this.setState({value: val})
   };
   
@@ -163,7 +163,7 @@ class PVAceGremlinEditor extends PontusComponent
   {
     // let eventHub = this.props.glEventHub;
     //
-    let val = localStorage.getItem('LGPD-savedStatePVAceGremlinEditor') || "";
+    let val = PontusComponent.getItem('LGPD-savedStatePVAceGremlinEditor') || "";
     //
     // <ResizeAware
     //   style={{width: '100%', height: 'calc(100% - 20px)', flex: 1 }}

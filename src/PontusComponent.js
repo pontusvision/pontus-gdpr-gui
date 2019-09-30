@@ -1,7 +1,7 @@
 import React from 'react';
 // import i18next from 'i18next';
 // import { useTranslation } from 'react-i18next';
-import i18next from './i18n';
+import i18next, {getDefaultLang} from './i18n';
 // let d3 = window.d3;
 
 // import * as d3 from "d3";
@@ -255,6 +255,25 @@ class PontusComponent extends React.Component
     
     return state;
   };
+  
+  
+  static setItem(key, val)
+  {
+    
+    localStorage.setItem(getDefaultLang() + key, val);
+  }
+  
+  static getItem(key, defVal = null)
+  {
+    
+    let retVal = localStorage.getItem(getDefaultLang() + key);
+    if (!retVal && defVal)
+    {
+      PontusComponent.setItem(key, defVal);
+      retVal = defVal;
+    }
+    return retVal;
+  }
   
   
 }
