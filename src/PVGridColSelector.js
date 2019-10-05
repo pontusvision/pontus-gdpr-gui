@@ -86,7 +86,6 @@ class PVGridColSelector extends PontusComponent
     return (
       <div
         style={{width: '100%', height: '100%'}}
-        onResize={this.handleResize}
       >
         
         <Flex wrap={true} align={'stretch'} width={"100%"}>

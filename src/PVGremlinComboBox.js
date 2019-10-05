@@ -20,16 +20,17 @@ class PVGremlinComboBox extends Component
       throw (err);
     }
     
-    let lastValStr =     PontusComponent.getItem(`${this.props.namespace}-value`);
-  
+    let lastValStr = PontusComponent.getItem(`${this.props.namespace}-value`);
+    
     let lastVal = null;
-    if(lastValStr){
+    if (lastValStr)
+    {
       lastVal = JSON.parse(lastValStr);
     }
-  
+    
     this.state = {
       ...props
-      , value: lastVal?lastVal: (this.props.value) ? this.props.value : (this.props.multi ? [] : {})
+      , value: lastVal ? lastVal : (this.props.value) ? this.props.value : (this.props.multi ? [] : {})
       // ,options: [{label : "one", value: "one"}, {label: "two", value: "two"}]
       , options: this.props.options === null ? [] : this.props.options
     };
@@ -48,61 +49,61 @@ class PVGremlinComboBox extends Component
         reqToSave = JSON.stringify(jsonRequest);
       }
       PontusComponent.setItem(`${this.props.namespace}.optionsJsonRequest`, reqToSave);
-    }
-    
-    
-    let url = this.props.url;
-    
-    if (this.req)
-    {
-      this.req.cancel();
-    }
-    
-    
-    let CancelToken = axios.CancelToken;
-    this.req = CancelToken.source();
-    
-    axios.post(url, jsonRequest,
+      
+      
+      let url = this.props.url;
+      
+      if (this.req)
       {
-        headers: {'Content-Type': 'application/json', 'Accept': 'application/json'}
-        , cancelToken: this.req.token
-      }).then(
-      (response) =>
-      {
-        // this.reactSelect.options = response.data.labels || [];
-        if (response.data && response.data.labels)
+        this.req.cancel();
+      }
+      
+      
+      let CancelToken = axios.CancelToken;
+      this.req = CancelToken.source();
+      
+      axios.post(url, jsonRequest,
         {
-          for (let i = 0; i < response.data.labels.length; i++)
+          headers: {'Content-Type': 'application/json', 'Accept': 'application/json'}
+          , cancelToken: this.req.token
+        }).then(
+        (response) =>
+        {
+          // this.reactSelect.options = response.data.labels || [];
+          if (response.data && response.data.labels)
           {
-            let lbl = response.data.labels[i];
-            lbl.label = PontusComponent.t(lbl.label);
+            for (let i = 0; i < response.data.labels.length; i++)
+            {
+              let lbl = response.data.labels[i];
+              lbl.label = PontusComponent.t(lbl.label);
+              lbl.key = lbl.label;
+            }
+            this.setState({
+              options: response.data.labels
+            });
+            
+            
           }
-          this.setState({
-            options: response.data.labels
-          });
           
-          
+          // callback(null, {
+          //   options: response.data.labels || [],
+          //   complete: true
+          //
+          // });
         }
-        
-        // callback(null, {
-        //   options: response.data.labels || [],
-        //   complete: true
-        //
-        // });
-      }
-    ).catch((thrown) =>
-    {
-      if (axios.isCancel(thrown))
+      ).catch((thrown) =>
       {
-        console.log('Request canceled', thrown.message);
-      }
-      else
-      {
-        this.onError(thrown);
-      }
-    });
-    
-    
+        if (axios.isCancel(thrown))
+        {
+          console.log('Request canceled', thrown.message);
+        }
+        else
+        {
+          this.onError(thrown);
+        }
+      });
+      
+    }
     // return retVal;
     
   };

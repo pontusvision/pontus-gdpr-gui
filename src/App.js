@@ -305,10 +305,10 @@ class App extends React.Component
               <hr/>
   
               <Box>
-                <input checked={getDefaultLang() === 'pt'} type="radio" value="pt" name="language"/> LGPD
+                <input defaultChecked={getDefaultLang() === 'pt'} type="radio" value="pt" name="language"/> LGPD
               </Box>
               <Box>
-                <input checked={getDefaultLang() === 'en'} type="radio" value="en" name="language"/> GDPR
+                <input defaultChecked={getDefaultLang() === 'en'} type="radio" value="en" name="language"/> GDPR
               </Box>
             </div>
           

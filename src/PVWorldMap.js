@@ -1,6 +1,6 @@
 import React from 'react';
 
-import PVDatamaps from './PVDatamaps';
+import Datamap from './PVDatamaps';
 
 import ResizeAware from 'react-resize-aware';
 
@@ -148,7 +148,7 @@ class PVWorldMap extends React.Component
       }
     }
   
-    let colors = PVDatamaps.getColorScale(min,max);
+    let colors = Datamap.getColorScale(min,max);
   
     this.popupData = {};
     
@@ -175,7 +175,7 @@ class PVWorldMap extends React.Component
     return val == null?
       "<div style='background-color:lightblue' >"+label+"</div>":
       "<div style='background-color:lightblue' >"+label+" "+val +"</div>";
-  }
+  };
   
   
   
@@ -212,7 +212,7 @@ class PVWorldMap extends React.Component
         <Flex p={1} align='center' style={{width: '100%', height: '100%'}}
         >
           <Box px={1} w={1} style={{width: '100%', height: '100%'}}>
-            <PVDatamaps
+            <Datamap
               scope="world"
               geographyConfig={geographyConfig}
               fills={fills}

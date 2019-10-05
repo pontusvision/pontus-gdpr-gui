@@ -54,7 +54,7 @@ export default class Datamap extends PontusComponent
     
   }
   
-  componentWillReceiveProps(newProps)
+  componentWillReceiveProps(newProps,newConf)
   {
     if (propChangeRequiresMapClear(this.props, newProps))
     {
@@ -62,11 +62,7 @@ export default class Datamap extends PontusComponent
     }
   }
   
-  componentDidUpdate()
-  {
-    // this.drawMap();
-  }
-  
+
   componentWillUnmount()
   {
     this.clear();
@@ -110,7 +106,7 @@ export default class Datamap extends PontusComponent
     if (!map)
     {
       map = this.map = new Datamaps({
-        data,
+        ...this.props,
         element: this.container
       });
       
@@ -141,19 +137,19 @@ export default class Datamap extends PontusComponent
     }
     this.zoomSetup();
     
-  }
+  };
   
   resizeMap = () =>
   {
     this.drawMap();
   
     this.map.resize();
-  }
+  };
   
   setObj = (obj) =>
   {
     this.container = obj;
-  }
+  };
   
   
   zoomSetup = () =>
@@ -402,7 +398,7 @@ export default class Datamap extends PontusComponent
     this.lastVals = vals;
   
   
-  }
+  };
   
   
   render()
