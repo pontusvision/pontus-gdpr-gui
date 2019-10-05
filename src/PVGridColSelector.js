@@ -83,6 +83,23 @@ class PVGridColSelector extends PontusComponent
   
   render()
   {
+    
+    let nodeTypesVal = this.props.dataType ?
+      { label: PontusComponent.replaceAll('.',' ',
+          PontusComponent.replaceAll('_',' ',this.props.dataType)),
+        value: this.props.dataType }:
+      {};
+    
+    let nodeTypesReq = {"labels":  nodeTypesVal};
+    
+    let propTypesVal= [];
+    
+    if (this.props.colSettings){
+      for (let setting of this.props.colSettings){
+        propTypesVal.push({ label: setting.name, value: setting.id})
+      }
+    }
+    
     return (
       <div
         style={{width: '100%', height: '100%'}}
@@ -99,7 +116,7 @@ class PVGridColSelector extends PontusComponent
               url={PontusComponent.getRestVertexLabelsURL(this.props)}
               placeholder={PontusComponent.t("Data Type")}
               // style={{width: "100%"}}
-              value={this.props.dataType ? this.props.dataType : {}}
+              value={nodeTypesVal}
             />
           </div>
           <Flex h={1} w={1} align='center' style={{height: "30px"}}/>
@@ -114,7 +131,9 @@ class PVGridColSelector extends PontusComponent
               ref={this.setObjNodePropertyNames}
               url={PontusComponent.getRestNodePropertyNamesURL(this.props)}
               placeholder={PontusComponent.t("Columns")}
-              value={this.props.colSettings ? this.props.colSettings : []}
+              optionsRequest={nodeTypesReq}
+
+              value={propTypesVal}
             />
           </div>
         

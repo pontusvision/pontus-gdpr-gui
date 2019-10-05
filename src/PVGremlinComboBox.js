@@ -20,19 +20,34 @@ class PVGremlinComboBox extends Component
       throw (err);
     }
     
-    let lastValStr = PontusComponent.getItem(`${this.props.namespace}-value`);
+    let lastValStr =     PontusComponent.getItem(`${this.props.namespace}-value`);
+  
+    let optionsStr =  PontusComponent.getItem(`${this.props.namespace}-options`);
     
     let lastVal = null;
-    if (lastValStr)
-    {
+    if(lastValStr){
       lastVal = JSON.parse(lastValStr);
+      
     }
+    else {
+      lastVal = lastVal?lastVal: (this.props.value) ? this.props.value : (this.props.multi ? [] : {});
+  
+      let options = (!this.props.options) ? this.props.multi? lastVal: [lastVal] : this.props.options;
+  
+  
+    }
+  
+    lastVal = lastVal?lastVal: (this.props.value) ? this.props.value : (this.props.multi ? [] : {});
+
+    let options = (!this.props.options) ? this.props.multi? lastVal: [lastVal] : this.props.options;
     
+    
+  
     this.state = {
       ...props
-      , value: lastVal ? lastVal : (this.props.value) ? this.props.value : (this.props.multi ? [] : {})
+      , value: lastVal
       // ,options: [{label : "one", value: "one"}, {label: "two", value: "two"}]
-      , options: this.props.options === null ? [] : this.props.options
+      , options: options
     };
     
     
@@ -49,61 +64,61 @@ class PVGremlinComboBox extends Component
         reqToSave = JSON.stringify(jsonRequest);
       }
       PontusComponent.setItem(`${this.props.namespace}.optionsJsonRequest`, reqToSave);
-      
-      
-      let url = this.props.url;
-      
-      if (this.req)
-      {
-        this.req.cancel();
-      }
-      
-      
-      let CancelToken = axios.CancelToken;
-      this.req = CancelToken.source();
-      
-      axios.post(url, jsonRequest,
-        {
-          headers: {'Content-Type': 'application/json', 'Accept': 'application/json'}
-          , cancelToken: this.req.token
-        }).then(
-        (response) =>
-        {
-          // this.reactSelect.options = response.data.labels || [];
-          if (response.data && response.data.labels)
-          {
-            for (let i = 0; i < response.data.labels.length; i++)
-            {
-              let lbl = response.data.labels[i];
-              lbl.label = PontusComponent.t(lbl.label);
-              lbl.key = lbl.label;
-            }
-            this.setState({
-              options: response.data.labels
-            });
-            
-            
-          }
-          
-          // callback(null, {
-          //   options: response.data.labels || [],
-          //   complete: true
-          //
-          // });
-        }
-      ).catch((thrown) =>
-      {
-        if (axios.isCancel(thrown))
-        {
-          console.log('Request canceled', thrown.message);
-        }
-        else
-        {
-          this.onError(thrown);
-        }
-      });
-      
     }
+    
+    
+    let url = this.props.url;
+    
+    if (this.req)
+    {
+      this.req.cancel();
+    }
+    
+    
+    let CancelToken = axios.CancelToken;
+    this.req = CancelToken.source();
+    
+    axios.post(url, jsonRequest,
+      {
+        headers: {'Content-Type': 'application/json', 'Accept': 'application/json'}
+        , cancelToken: this.req.token
+      }).then(
+      (response) =>
+      {
+        // this.reactSelect.options = response.data.labels || [];
+        if (response.data && response.data.labels)
+        {
+          for (let i = 0; i < response.data.labels.length; i++)
+          {
+            let lbl = response.data.labels[i];
+            lbl.label = PontusComponent.t(lbl.label);
+          }
+          this.setState({
+            options: response.data.labels
+          });
+          
+          
+        }
+        
+        // callback(null, {
+        //   options: response.data.labels || [],
+        //   complete: true
+        //
+        // });
+      }
+    ).catch((thrown) =>
+    {
+      if (axios.isCancel(thrown))
+      {
+        console.log('Request canceled', thrown.message);
+      }
+      else
+      {
+        this.onError(thrown);
+      }
+    });
+    
+    
     // return retVal;
     
   };
@@ -144,7 +159,13 @@ class PVGremlinComboBox extends Component
     let savedReq = PontusComponent.getItem(`${this.props.namespace}.optionsJsonRequest`);
     try
     {
-      savedReq = JSON.parse(savedReq);
+      if (savedReq){
+        savedReq = JSON.parse(savedReq);
+  
+      }
+      else {
+        savedReq = this.props.optionsRequest;
+      }
     }
     catch (e)
     {}
