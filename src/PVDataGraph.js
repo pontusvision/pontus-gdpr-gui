@@ -351,7 +351,9 @@ class PVDataGraph extends PontusComponent
   
   selectData = (event) =>
   {
-    this.origNodeId = event !== null ? (+(event.id || event.index)) : -1;// the + converts to number just in case
+    // this.origNodeId = event !== null ? (+(event.id || event.index)) : -1;// the + converts to number just in case
+    // LPPM - 31Dec2019 - we no longer have numeric ids; remove the + converter
+    this.origNodeId = event !== null ? ((event.id || event.index)) : "-1";// the + converts to number just in case
     // this.origNodeId = (+(this.origNodeId));
     let url = this.url; // "/gateway/sandbox/pvgdpr_server/home/graph";
     if (this.h_request !== null)
