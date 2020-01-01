@@ -62,9 +62,9 @@ class NavPanelConsentPVDoughnutChartConsentStatus extends PontusComponent
     
     return {
       "bindings": {
-        "pg_privNoticeId": parseInt(id, 10)
+        "pg_privNoticeId": id // Use strings parseInt(id, 10)
       },
-      "gremlin": "g.V((long)pg_privNoticeId).in().has('Metadata.Type.Event.Consent',eq('Event.Consent'))" +
+      "gremlin": "g.V(pg_privNoticeId).in().has('Metadata.Type.Event.Consent',eq('Event.Consent'))" +
       ".groupCount().by('Event.Consent.Status')"
    
       
