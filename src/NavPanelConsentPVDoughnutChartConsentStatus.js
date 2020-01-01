@@ -64,7 +64,7 @@ class NavPanelConsentPVDoughnutChartConsentStatus extends PontusComponent
       "bindings": {
         "pg_privNoticeId": id // Use strings parseInt(id, 10)
       },
-      "gremlin": "g.V(pg_privNoticeId).in().has('Metadata.Type.Event.Consent',eq('Event.Consent'))" +
+      "gremlin": "g.V(new com.orientechnologies.orient.core.id.ORecordId(pg_privNoticeId)).in().has('Metadata.Type.Event.Consent',eq('Event.Consent'))" +
       ".groupCount().by('Event.Consent.Status')"
    
       
@@ -133,7 +133,7 @@ class NavPanelConsentPVDoughnutChartConsentStatus extends PontusComponent
     
     try{
       
-      var data = {
+      let data = {
         labels: []
         ,datasets: [
           {
@@ -142,17 +142,17 @@ class NavPanelConsentPVDoughnutChartConsentStatus extends PontusComponent
             ,hoverBackgroundColor: []
           }
         ]
-      }
+      };
       
       if (resp.status === 200)
       {
-        var items = resp.data.result.data['@value'][0]['@value'];
+        let items = resp.data.result.data['@value'][0]['@value'];
         
         
         
         
-        var counter = 0;
-        for (var i = 0, ilen = items.length; i < ilen; i+=2){
+        let counter = 0;
+        for (let i = 0, ilen = items.length; i < ilen; i+=2){
           let label = items[i];
           let datasetData = items[i+1]['@value'];
           data.labels[counter] = label;
