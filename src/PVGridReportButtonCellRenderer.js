@@ -16,7 +16,7 @@ class PVGridReportButtonCellRenderer extends PVReportButton
     // this.state.contextId = props.params;
     if (props.node && props.node.data)
     {
-      this.state.contextId = parseInt(props.node.data.id, 10);
+      this.state.contextId = props.node.data.id; // LPPM - use Strings instead of longs for IDs  parseInt(props.node.data.id, 10);
       
     }
     this.state.buttonLabel = parsedStaticData[1].substring(1, parsedStaticData[1].length - 1);

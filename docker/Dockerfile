@@ -6,7 +6,7 @@ RUN  git clone  --depth 1    --single-branch   --branch master https://github.co
      ./build-local.sh
 
 
-FROM alpine
-RUN mkdir -p /opt/pontus/pontus-gui-gdpr
+FROM scratch
+#RUN mkdir -p /opt/pontus/pontus-gui-gdpr
 COPY --from=builder /pontus-gdpr-gui/build /opt/pontus/pontus-gui-gdpr/lib
 
