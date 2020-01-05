@@ -110,7 +110,7 @@ class PVDataGraphShowAllNodes extends PVDataGraph
   getQuery = (eventId) =>
   {
     
-    let startOfQuery = eventId <=0 ?
+    let startOfQuery = eventId ?
       "g.V()\n" :
       "g.V(pg_vid).repeat(__.inE().subgraph('subGraph').outV()).times(4).cap('subGraph')\n" +
       ".next().traversal()\n" +
@@ -140,8 +140,8 @@ class PVDataGraphShowAllNodes extends PVDataGraph
       "  String labelStr = it.values(groupStr+'.Id').next();\n" +
       "  Long vid = it.id();\n" +
       "  sb.append(counter == 0? '{':',{')\n" +
-      "    .append('\"id\":').append(vid)\n" +
-      "    .append(',\"group\":\"').append(groupStr)\n" +
+      "    .append('\"id\":\"').append(vid)\n" +
+      "    .append('\",\"group\":\"').append(groupStr)\n" +
       "    .append('\",\"label\":\"').append(labelStr)\n" +
       "    .append('\",\"shape\":\"').append('image')\n" +
       "    .append('\",\"image\":\"').append(getPropsNonMetadataAsHTMLTableRows(g,vid,labelStr).toString())\n" +
@@ -165,8 +165,8 @@ class PVDataGraphShowAllNodes extends PVDataGraph
       "  .dedup()" +
       "  .each{ \n" +
       "  sb.append(counter == 0? '{':',{')\n" +
-      "    .append('\"from\": ').append(it.inVertex().id())\n" +
-      "    .append(' ,\"to\": \"').append(it.outVertex().id())\n" +
+      "    .append('\"from\": \"').append(it.inVertex().id())\n" +
+      "    .append('\" ,\"to\": \"').append(it.outVertex().id())\n" +
       "    .append('\",\"label\": \"').append(it.label().toString().replaceAll('[_.]',' '))\n" +
       "    .append('\"}')\n" +
       "    \n" +
