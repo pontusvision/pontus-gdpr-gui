@@ -110,78 +110,12 @@ class PVDataGraphShowAllNodes extends PVDataGraph
   getQuery = (eventId) =>
   {
     
-    let startOfQuery = eventId ?
-      "g.V()\n" :
-      "g.V(pg_vid).repeat(__.inE().subgraph('subGraph').outV()).times(4).cap('subGraph')\n" +
-      ".next().traversal()\n" +
-      ".V()";
-  
-  
+    
     return {
       bindings: {
         pg_vid: eventId
       }
-      , gremlin: "StringBuffer sb = new StringBuffer();\n" +
-      "int counter = 0;\n" +
-      "\n" +
-      "try {\n" +
-      "  \n" +
-      "sb.append('{ \"nodes\":[' )\n" +
-      "  \n" +
-      startOfQuery +
-      "  .or(\n" +
-      "    __.has('Metadata.Type.Object.AWS_VPC',eq('Object.AWS_VPC'))\n" +
-      "  , __.has('Metadata.Type.Object.AWS_Security_Group',eq('Object.AWS_Security_Group'))\n" +
-      "  , __.has('Metadata.Type.Object.AWS_Instance',eq('Object.AWS_Instance'))\n" +
-      "  )" +
-      "  .dedup()\n" +
-      "  .each{ \n" +
-      "  String groupStr = it.values('Metadata.Type').next();\n" +
-      "  String labelStr = it.values(groupStr+'.Id').next();\n" +
-      "  Long vid = it.id();\n" +
-      "  sb.append(counter == 0? '{':',{')\n" +
-      "    .append('\"id\":\"').append(vid)\n" +
-      "    .append('\",\"group\":\"').append(groupStr)\n" +
-      "    .append('\",\"label\":\"').append(labelStr)\n" +
-      "    .append('\",\"shape\":\"').append('image')\n" +
-      "    .append('\",\"image\":\"').append(getPropsNonMetadataAsHTMLTableRows(g,vid,labelStr).toString())\n" +
-      "    .append('\"}')\n" +
-      "    \n" +
-      "  counter++;\n" +
-      "  \n" +
-      "}\n" +
-      "\n" +
-      "sb.append('], \"edges\":[' )\n" +
-      "\n" +
-      "\n" +
-      "counter = 0;\n" +
-      startOfQuery +
-      "  .or(\n" +
-      "    __.has('Metadata.Type.Object.AWS_VPC',eq('Object.AWS_VPC'))\n" +
-      "  , __.has('Metadata.Type.Object.AWS_Security_Group',eq('Object.AWS_Security_Group'))\n" +
-      "  , __.has('Metadata.Type.Object.AWS_Instance',eq('Object.AWS_Instance'))\n" +
-      "  )\n" +
-      "  .bothE()\n" +
-      "  .dedup()" +
-      "  .each{ \n" +
-      "  sb.append(counter == 0? '{':',{')\n" +
-      "    .append('\"from\": \"').append(it.inVertex().id())\n" +
-      "    .append('\" ,\"to\": \"').append(it.outVertex().id())\n" +
-      "    .append('\",\"label\": \"').append(it.label().toString().replaceAll('[_.]',' '))\n" +
-      "    .append('\"}')\n" +
-      "    \n" +
-      "  counter++;\n" +
-      "  \n" +
-      "}\n" +
-      "\n" +
-      "sb.append(']}' );\n" +
-      "\n" +
-      "\n" +
-      "}catch (Throwable t){\n" +
-      "  sb.append(t.toString());\n" +
-      "}\n" +
-      "  \n" +
-      "sb.toString()"
+      , gremlin: "VisJSGraph.getInfraGraph(pg_vid)"
       
     };
   };
