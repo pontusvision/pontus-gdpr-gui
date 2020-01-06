@@ -1,8 +1,13 @@
 FROM node as builder
 WORKDIR /
 
+COPY package.json package-lock.json /
+
+RUN  npm install
+
 RUN  git clone  --depth 1    --single-branch   --branch master https://github.com/pontusvision/pontus-gdpr-gui.git && \
      cd pontus-gdpr-gui && \
+     mv ../node_modules . && \
      ./build-local.sh
 
 

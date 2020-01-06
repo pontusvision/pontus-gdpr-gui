@@ -11,7 +11,7 @@ export DISTDIR="$DIR/../pontus-dist/opt/pontus/pontus-gui/$VERSION/lib";
 
 CURDIR=`pwd`
 cd $DIR
-npm install
+#npm install
 npm run-script build
 
 #if [[ ! -d $NODE_DISTDIR ]]; then
