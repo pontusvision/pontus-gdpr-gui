@@ -69,7 +69,7 @@ class PVDetailsButton extends PontusComponent
   {
     
     return {
-      gremlin: "getPropsNonMetadataAsHTMLTableRows(g, pg_id as Long,  pg_origLabel)"
+      gremlin: "getPropsNonMetadataAsHTMLTableRows(g, pg_id ,  pg_origLabel)"
       , bindings: {
         pg_id: contextId
         , pg_origLabel: templateText
