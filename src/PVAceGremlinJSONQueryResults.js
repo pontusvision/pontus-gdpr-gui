@@ -140,7 +140,7 @@ class PVAceGremlinJSONQueryResults extends PontusComponent
                 className={'compact'}
                 onClick={() => {
                   this.props.glEventHub.emit((this.props.namespace ? this.props.namespace : "" ) + '-pvgrid-on-click-row',
-                    {id: +(this.obj.editor.getSelectedText())} ); }}
+                    {id: (this.obj.editor.getSelectedText())} ); }}
                 // inverted={false}
                 // color={'black'}
                 style={{border:0, background:'rgb(69,69,69)'}}

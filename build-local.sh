@@ -1,6 +1,6 @@
 #!/bin/bash
 set -e 
-git pull
+#git pull
 DIR="$( cd "$(dirname "$0")" ; pwd -P )"
 VERSION=PVGDPR_Sandbox-001
 NODE_VERSION=10.9.0
