@@ -49,6 +49,12 @@ class PontusComponent extends React.Component
     
   }
   
+  static t(str)
+  {
+      return i18next.t(str);
+   
+  }
+  
   static t(str, conf)
   {
     if (!conf)

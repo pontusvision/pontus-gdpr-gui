@@ -556,7 +556,7 @@ class PVFormBuilder extends PontusComponent
   {
     return {
       gremlin: "" +
-      "long randId = g.V().has('Metadata.Type.'+pg_dataType,eq(pg_dataType)).order().by(shuffle).range(0,1).id().next();\n" +
+      "String randId = g.V().has('Metadata.Type.'+pg_dataType,eq(pg_dataType)).order().by(shuffle).range(0,1).id().next().toString();\n" +
       "renderReportInBase64(randId, pg_templateText);" +
       ""
       , bindings: {
