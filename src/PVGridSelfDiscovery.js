@@ -235,10 +235,10 @@ class PVGridSelfDiscovery extends PontusComponent
       "      sb.append(',');\n" +
       "    }\n" +
       "    topCounter++;\n" +
-      "    sb.append ('{ \"index\":').append(it.get('id'))\n" +
+      "    sb.append ('{ \"index\":\"').append(it.get('id'))\n" +
       "    \n" +
       "    it.get('valueMap').each{ key, val ->\n" +
-      "      sb.append(', \"').append(key).append('\":');\n" +
+      "      sb.append('\", \"').append(key).append('\":');\n" +
       "      headers.add(key);\n" +
       "      if (val.size() == 1){\n" +
       "        def rawVal = val[0];\n" +
