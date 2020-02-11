@@ -238,28 +238,11 @@ class PVGridSelfDiscovery extends PontusComponent
       "    sb.append ('{ \"index\":\"').append(it.get('id')).append('\"')\n" +
       "    \n" +
       "    it.get('valueMap').each{ key, val ->\n" +
-      "      sb.append(', \"').append(key).append('\":');\n" +
-      "      headers.add(key);\n" +
-      "      if (val.size() == 1){\n" +
-      "        def rawVal = val[0];\n" +
-      "        if (rawVal instanceof String || rawVal instanceof Date)\n" +
-      "        {\n" +
-      "          sb.append('\"').append(rawVal.toString().replaceAll('[\"]',\"'\")).append('\"');\n" +
-      "        }\n" +
-      "        else\n" +
-      "        {\n" +
-      "          sb.append(rawVal);\n" +
-      "        }\n" +
-      "\n" +
-      "      }\n" +
-      "      else{\n" +
-      "        sb.append('[')\n" +
-      "        int counter = 0;\n" +
-      "        val.each { rawVal ->\n" +
-      "          if (counter > 0){\n" +
-      "            sb.append(',');\n" +
-      "          }\n" +
-      "          counter ++;\n" +
+      "      if (\"Event.Ingestion.Business_Rules\" != key){\n" +
+      "        sb.append(', \"').append(key).append('\":');\n" +
+      "        headers.add(key);\n" +
+      "        if (val.size() == 1){\n" +
+      "          def rawVal = val[0];\n" +
       "          if (rawVal instanceof String || rawVal instanceof Date)\n" +
       "          {\n" +
       "            sb.append('\"').append(rawVal.toString().replaceAll('[\"]',\"'\")).append('\"');\n" +
@@ -267,19 +250,38 @@ class PVGridSelfDiscovery extends PontusComponent
       "          else\n" +
       "          {\n" +
       "            sb.append(rawVal);\n" +
-      "  \n" +
       "          }\n" +
-      "        \n" +
-      "          \n" +
+      "  \n" +
       "        }\n" +
-      "        sb.append(']')\n" +
-      "\n" +
+      "        else{\n" +
+      "          sb.append('[')\n" +
+      "          int counter = 0;\n" +
+      "          val.each { rawVal ->\n" +
+      "            if (counter > 0){\n" +
+      "              sb.append(',');\n" +
+      "            }\n" +
+      "            counter ++;\n" +
+      "            if (rawVal instanceof String || rawVal instanceof Date)\n" +
+      "            {\n" +
+      "              sb.append('\"').append(rawVal.toString().replaceAll('[\"]',\"'\")).append('\"');\n" +
+      "            }\n" +
+      "            else\n" +
+      "            {\n" +
+      "              sb.append(rawVal);\n" +
+      "    \n" +
+      "            }\n" +
+      "          \n" +
+      "            \n" +
+      "          }\n" +
+      "          sb.append(']')\n" +
+      "  \n" +
+      "        }\n" +
+      "        \n" +
+      "        \n" +
+      "        \n" +
       "      }\n" +
-      "      \n" +
-      "      \n" +
-      "      \n" +
-      "    }\n" +
-      "    sb.append('}')\n" +
+      "   }\n " +
+      "   sb.append('}')\n" +
       "    \n" +
       "  }\n" +
       "  \n" +
