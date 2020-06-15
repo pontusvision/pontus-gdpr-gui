@@ -156,7 +156,8 @@ class PVDataGraph extends PontusComponent
       }
       if (param.nodes.length > 0){
         let event = {id: param.nodes[0]};
-        let isEdge = (typeof (event.id) === 'string' || event.id instanceof String) && (event.id.indexOf("->") >= 0);
+        let isEdge = (typeof (event.id) === 'string' || event.id instanceof String) &&
+          ( event.id.indexOf("->") >= 0 || event.id.indexOf("<-") >= 0);
         if (isEdge)
         {
           let edgeDir = event.id.indexOf('<-') !== -1 ? '<-' : '->';
@@ -231,11 +232,12 @@ class PVDataGraph extends PontusComponent
   {
     this.eventId = eventId;
     
-    let query = this.state.depth !== 1 ?
-      "getVisJsGraph(pg_vid,pg_depth as int);" :
-      "getVisJsGraph(pg_vid);";
-    
-    
+    let query = this.state.depth === 1 ?
+      "getVisJsGraph(pg_vid);":
+      "getVisJsGraph(pg_vid,pg_depth as int);";
+  
+  
+  
     return {
       bindings: {
         pg_vid: eventId,
@@ -501,7 +503,10 @@ class PVDataGraph extends PontusComponent
       }
       if (node.label)
       {
-        node.label = PontusComponent.t(node.label, [' -> (', ')']);
+        node.label = PontusComponent.t(node.label, node.label.indexOf('->')>0 ?
+          [' -> (', ')']:
+          [' <- (', ')']
+        );
       }
   
     }
