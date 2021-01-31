@@ -235,7 +235,9 @@ class PVGridSelfDiscovery extends PontusComponent
       "      sb.append(',');\n" +
       "    }\n" +
       "    topCounter++;\n" +
-      "    sb.append ('{ \"index\":\"').append(it.get('id').id()).append('\"')\n" +
+      "    def tmpId = it.get('id').toString();\n" +
+      "    tmpId= tmpId.startsWith('v')? tmpId.substring(2,tmpId.size()-1): tmpId;\n" +
+      "    sb.append ('{ \"index\":\"').append(tmpId).append('\"')\n" +
       "    \n" +
       "    it.get('valueMap').each{ key, val ->\n" +
       "      if (\"Event.Ingestion.Business_Rules\" != key){\n" +
