@@ -1,4 +1,5 @@
 FROM node as builder
+
 WORKDIR /
 
 COPY package.json package-lock.json /pontus-gdpr-gui/
