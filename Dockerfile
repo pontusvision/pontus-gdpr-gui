@@ -1,4 +1,5 @@
 FROM node as builder
+
 WORKDIR /
 
 COPY package.json package-lock.json /pontus-gdpr-gui/
@@ -15,8 +16,10 @@ COPY . /pontus-gdpr-gui/
 COPY --from=pontusvisiongdpr/pontus-i18n:latest /*.json  /pontus-gdpr-gui/src/
 #RUN  cd /pontus-gdpr-gui && \
 #     mv ../node_modules . && \
-RUN   ./build-local.sh
-
+#RUN   ./build-local.sh
+ENV PUBLIC_URL=pvgdpr
+ENV NODE_ENV=production
+RUN npm run build
 
 FROM scratch
 #RUN mkdir -p /opt/pontus/pontus-gui-gdpr

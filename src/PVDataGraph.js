@@ -35,7 +35,8 @@ class PVDataGraph extends PontusComponent
       reportButtons: [],
       graph: {
         nodes: [
-          // {id: 1, label: 'Jackson Turner', title:"asdfasfdasfd",  color: '#e04141'}
+          {id: 1, label: 'Pontus Vision', title: 'Pontus Vision',
+            color: '#0000ff'}
           // {id: 2, label: 'Megan Perry', color: '#e09c41'},
           // {id: 3, label: 'Ryan Harris', color: '#e0df41'},
           // {id: 4, label: 'Jennifer Edwards', color: '#7be041'},
